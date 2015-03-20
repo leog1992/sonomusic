@@ -583,6 +583,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jLabel20.setBackground(new java.awt.Color(204, 204, 204));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/almacen.png"))); // NOI18N
 
         javax.swing.GroupLayout jp_prod_almLayout = new javax.swing.GroupLayout(jp_prod_alm);
         jp_prod_alm.setLayout(jp_prod_almLayout);
@@ -1405,9 +1406,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("nick", usu.getNick());
-        ven.ver_reporte("rpt_ventas_vendedor", parametros);
+       frm_rpt_fechas fec = new frm_rpt_fechas();
+       fec.rpt="venta_vendedor";
+       ven.llamar_ventana(fec);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed

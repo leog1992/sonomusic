@@ -9,20 +9,11 @@ import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
-import java.awt.Desktop;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import sonomusic.frm_menu;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -180,6 +171,16 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fec_ini", fec_ini);
                 ven.ver_reporte("rpt_compras_producto", parametros);
             }
+
+            if (rpt.equals("venta_vendedor")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("usuario", frm_menu.lbl_user.getText());
+                parametros.put("fecha_inicio", fec_ini);
+                parametros.put("fehca_fin", fec_fin);
+                ven.ver_reporte("rpt_ventas_vendedor", parametros);
+                System.out.println(frm_menu.lbl_user.getText()+" - "+fec_ini+" - "+fec_fin);
+            }
+
             this.dispose();
         }
     }//GEN-LAST:event_txt_fec_finKeyPressed
