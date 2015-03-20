@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_compras" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f85c6f5-b95e-46d0-9db1-9f7091a4dc30">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="proveedor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     compra.`idCompra` AS compra_idCompra,
+     compra.`serie_doc` AS compra_serie_doc,
+     compra.`nro_doc` AS compra_nro_doc,
+     compra.`fecha_doc` AS compra_fecha_doc,
+     compra.`fecha_pago` AS compra_fecha_pago,
+     compra.`total` AS compra_total,
+     sum(detalle_compra.`cant_compra`) AS detalle_compra_cant_compra,
+     sum(detalle_compra.`cant_compra` * detalle_compra.`precio_compra`) AS suma_precio,
+     productos.`idProductos` AS productos_idProductos,
+     productos.`desc_pro` AS productos_desc_pro,
+     productos.`marca` AS productos_marca,
+     productos.`modelo` AS productos_modelo,
+     productos.`serie` AS productos_serie,
+     productos.`idUnd_medida` AS productos_idUnd_medida,
+     proveedor.`raz_soc_pro` AS proveedor_raz_soc_pro,
+     proveedor.`ruc_pro` AS proveedor_ruc_pro,
+     und_medida.`desc_und` AS und_medida_desc_und
+FROM
+     `compra` compra INNER JOIN `detalle_compra` detalle_compra ON compra.`idCompra` = detalle_compra.`idCompra`
+     INNER JOIN `proveedor` proveedor ON compra.`ruc_pro` = proveedor.`ruc_pro`
+     INNER JOIN `productos` productos ON detalle_compra.`idProductos` = productos.`idProductos`
+     INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida` where proveedor.`ruc_pro` = $P{proveedor} group by  productos.`idProductos` ]]>
+	</queryString>
+	<field name="compra_idCompra" class="java.lang.Integer"/>
+	<field name="compra_serie_doc" class="java.lang.Long"/>
+	<field name="compra_nro_doc" class="java.lang.Long"/>
+	<field name="compra_fecha_doc" class="java.sql.Date"/>
+	<field name="compra_fecha_pago" class="java.sql.Date"/>
+	<field name="compra_total" class="java.math.BigDecimal"/>
+	<field name="detalle_compra_cant_compra" class="java.math.BigDecimal"/>
+	<field name="suma_precio" class="java.math.BigDecimal"/>
+	<field name="productos_idProductos" class="java.lang.Integer"/>
+	<field name="productos_desc_pro" class="java.lang.String"/>
+	<field name="productos_marca" class="java.lang.String"/>
+	<field name="productos_modelo" class="java.lang.String"/>
+	<field name="productos_serie" class="java.lang.String"/>
+	<field name="productos_idUnd_medida" class="java.lang.Long"/>
+	<field name="proveedor_raz_soc_pro" class="java.lang.String"/>
+	<field name="proveedor_ruc_pro" class="java.lang.String"/>
+	<field name="und_medida_desc_und" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<staticText>
+				<reportElement x="141" y="0" width="661" height="35" uuid="612fcb0f-9ff1-40b4-af39-b199c3d07382"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registro de Compras por Proveedor]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="702" y="49" width="100" height="20" uuid="699d1250-1875-437b-b287-0488988484bc"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="72" width="80" height="20" uuid="7cbb0f60-04a0-46d6-a360-ca4023062f2c"/>
+				<textElement textAlignment="Right">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="72" width="40" height="20" uuid="7316ec66-572e-481a-938b-5eafe376ff8b"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="141" height="92" uuid="1dd39c77-63a4-4c16-a144-da8318c70ef1"/>
+				<imageExpression><![CDATA["C:\\Users\\pc\\Desktop\\proyecto\\Reportes_Sonomusic\\logo_sonomusic.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="583" y="96" width="50" height="13" uuid="0d3f0738-f2cb-489a-b011-56bc6ebcc652"/>
+				<text><![CDATA[Proveedor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="633" y="96" width="40" height="13" uuid="75b694fa-1494-493d-b950-c692ece426b0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{proveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="673" y="96" width="129" height="13" uuid="90ad355a-cde8-431c-9b82-9d881b24f431"/>
+				<textFieldExpression><![CDATA[$F{proveedor_raz_soc_pro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="-1" width="802" height="15" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="b3564053-08a3-4550-8196-6f9fd6d0cfcb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="30" height="13" uuid="c02ed950-dc9e-484a-8280-a891b8b967d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="0" width="205" height="13" uuid="4ddf03ac-ae63-47fe-ac03-3f71db2cad5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="0" width="121" height="13" uuid="196ce67f-019e-41e0-bc37-e814723fbd2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ruc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="0" width="245" height="13" uuid="d8d599ec-ff86-4109-a166-8c09f72aa6fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Raz. Soc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="0" width="54" height="13" uuid="be33d50b-227b-432e-b341-64aa03a39871"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="655" y="0" width="68" height="13" uuid="a935325b-a1ef-40ea-8a70-898d9b416fae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[U. M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="723" y="0" width="79" height="13" uuid="5cf27a10-2729-491e-972e-bebb433fb0bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="235" y="0" width="121" height="13" uuid="6cceacdc-9327-43a5-b770-df91eb39e29a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{proveedor_ruc_pro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="245" height="13" uuid="d9143f39-8998-4d54-8da3-c89e4dec76e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{proveedor_raz_soc_pro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="601" y="0" width="54" height="13" uuid="d79b41f3-e2b5-4f44-8ea1-2aa31ac3490f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{detalle_compra_cant_compra}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="738" y="0" width="64" height="13" uuid="c5e6dbb1-8008-491c-b8ed-25d338ab8089"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{suma_precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="723" y="0" width="15" height="13" uuid="fc6a3a91-c054-4ce5-9617-e4a94a0f3a53"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="655" y="0" width="68" height="13" uuid="6b7365d8-a760-4d8a-8ed6-45de5f4b285e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{und_medida_desc_und}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="30" height="13" uuid="3e6703dd-8b43-41e2-8f60-7e7766685ff6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_idProductos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="0" width="205" height="13" uuid="d124c30b-5bc5-48bd-ae42-8fe74397146e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{productos_desc_pro}+" - "+$F{productos_modelo}+" - "+$F{productos_serie}+" - "+$F{productos_marca}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

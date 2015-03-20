@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rotulo_pro" language="groovy" columnCount="4" pageWidth="595" pageHeight="842" columnWidth="140" leftMargin="17" rightMargin="17" topMargin="17" bottomMargin="17" uuid="e80ebc1e-96bf-4bcb-8c8a-791cb6e34d2c">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idalmacen" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     Producto_Almacen.`idProductos` AS idProductos,
+     Producto_Almacen.`idAlmacen` AS idAlmacen,
+     Almacen.`nom_alm` AS nombre,
+     Und_medida.`desc_und` AS Und_medida,
+     Productos.`desc_pro` AS desc_pro,
+     Productos.`marca` AS marca,
+     Productos.`grado` AS grado,
+     Productos.`precio_venta` AS venta,
+     Productos.`idProductos` AS Productos_idProductos
+FROM
+     `productos` Productos INNER JOIN `producto_almacen` Producto_Almacen ON Productos.`idProductos` = Producto_Almacen.`idProductos`
+     INNER JOIN `almacen` Almacen ON Producto_Almacen.`idAlmacen` = Almacen.`idAlmacen`
+     INNER JOIN `und_medida` Und_medida ON Productos.`idUnd_medida` = Und_medida.`idUnd_medida`
+WHERE
+     Producto_Almacen.`idAlmacen` = $P{idalmacen}
+ORDER BY
+     Productos.`desc_pro` ASC]]>
+	</queryString>
+	<field name="idProductos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idAlmacen" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="Und_medida" class="java.lang.String"/>
+	<field name="desc_pro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="grado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta" class="java.math.BigDecimal"/>
+	<field name="Productos_idProductos" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="71" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="16" width="139" height="20" backcolor="#CCCCCC" uuid="be6dc136-f981-4bcb-a751-fd571c78e40c"/>
+				<graphicElement>
+					<pen lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="0" y="2" width="139" height="69" uuid="d2a4b0f5-b29f-4ad9-b13b-3c06e62e542e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="42" y="4" width="55" height="12" uuid="e5311679-87b4-4371-b7d7-a32f74b2a044"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="16" width="125" height="20" uuid="27daf5fa-eaba-4ee9-93ee-cd5d780f4b56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desc_pro} + " - " + $F{grado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="36" width="85" height="10" uuid="5c230bdf-efe6-4eb3-9dc2-d2ee55881522"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Marca: " + $F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="56" width="125" height="15" uuid="ed23160a-b206-46b4-84a9-16abbdeaff88"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Precio: " + $F{venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="46" width="125" height="10" uuid="ec878c69-44b1-42a8-ae3a-a6b8a78ef39b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Presentacion " + $F{Und_medida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
