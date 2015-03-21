@@ -450,146 +450,152 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             int i = t_productos.getSelectedRow();
-            try {
-                if (ventana.equals("cotizacion")) {
+            System.out.println(ventana + "\n");
+            System.out.println(t_productos.getValueAt(i, 0).toString());
+            pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
+//            try {
+            if (ventana.equals("cotizacion")) {
 
-                    frm_reg_cotizacion coti = null;
-                    int tabla = coti.t_productos.getRowCount();                   //obtener la cantidad de filas de la tabla cotizacion
-                    String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos(formulario actual)
-                    String id_prod = "";
-                    int contar_repetidos = 0;
-                    if (tabla > 0) {            //verifica si existen registros
-                        for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_cotizaciones
-                            id_prod = coti.t_productos.getValueAt(j, 0).toString();// captura el id reg_cotizaciones
+                frm_reg_cotizacion coti = null;
+                int tabla = coti.t_productos.getRowCount();                   //obtener la cantidad de filas de la tabla cotizacion
+                String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos(formulario actual)
+                String id_prod = "";
+                int contar_repetidos = 0;
+                if (tabla > 0) {            //verifica si existen registros
+                    for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_cotizaciones
+                        id_prod = coti.t_productos.getValueAt(j, 0).toString();// captura el id reg_cotizaciones
 
-                            if (id_prod.equals(id)) {
-                                contar_repetidos++;
-                            }
+                        if (id_prod.equals(id)) {
+                            contar_repetidos++;
                         }
-                        if (contar_repetidos == 0) {
-                            coti.detalle.addRow(dato);
-                            coti.t_productos.setModel(frm_reg_cotizacion.detalle);
-                            coti.subtotal();
-                            coti.total();
-                            coti.btn_reg.setEnabled(true);
-                            coti.btn_reg.requestFocus();
-                            this.dispose();
-                        }
-
-                    } else {
+                    }
+                    if (contar_repetidos == 0) {
                         coti.detalle.addRow(dato);
                         coti.t_productos.setModel(frm_reg_cotizacion.detalle);
+                        coti.subtotal();
+                        coti.total();
                         coti.btn_reg.setEnabled(true);
                         coti.btn_reg.requestFocus();
                         this.dispose();
                     }
+
+                } else {
+                    coti.detalle.addRow(dato);
+                    coti.t_productos.setModel(frm_reg_cotizacion.detalle);
+                    coti.btn_reg.setEnabled(true);
+                    coti.btn_reg.requestFocus();
+                    this.dispose();
+                }
+            }
+
+            if (ventana.equals("compra_prod")) {
+                frm_reg_compra_prod prod = null;
+                int tabla = prod.t_detalle.getRowCount();                   //obtener la cantidad de filas
+                String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
+                String id_prod = "";
+                int contar_repetidos = 0;
+                Object[] fila_compra = new Object[6];
+                fila_compra[0] = t_productos.getValueAt(a, 0);         //idproducto
+                fila_compra[1] = t_productos.getValueAt(a, 2);         //descripcion
+                fila_compra[2] = t_productos.getValueAt(a, 3);         //marca
+                fila_compra[3] = "1";                                  //cantidad
+                fila_compra[4] = t_productos.getValueAt(a, 8);         //und. med
+
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_cos = "select costo_compra from productos where idProductos = '" + id + "'";
+                    ResultSet rs1 = con.consulta(st1, ver_cos);
+                    if (rs1.next()) {
+                        fila_compra[5] = rs1.getObject("costo_compra"); // Costo Compra
+                    }
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                } catch (SQLException ex) {
+                    System.out.print(ex);
                 }
 
-                if (ventana.equals("compra_prod")) {
-                    frm_reg_compra_prod prod = null;
-                    int tabla = prod.t_detalle.getRowCount();                   //obtener la cantidad de filas
-                    String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
-                    String id_prod = "";
-                    int contar_repetidos = 0;
-                    Object[] fila_compra = new Object[6];
-                    fila_compra[0] = t_productos.getValueAt(a, 0);         //idproducto
-                    fila_compra[1] = t_productos.getValueAt(a, 2);         //descripcion
-                    fila_compra[2] = t_productos.getValueAt(a, 3);         //marca
-                    fila_compra[3] = "1";                                  //cantidad
-                    fila_compra[4] = t_productos.getValueAt(a, 8);         //und. med
+                if (tabla > 0) {            //verifica si existen registros
+                    for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_compra
+                        id_prod = prod.t_detalle.getValueAt(j, 0).toString();// captura el id reg_compra
 
-                    try {
-                        Statement st1 = con.conexion();
-                        String ver_cos = "select costo_compra from productos where idProductos = '" + id + "'";
-                        ResultSet rs1 = con.consulta(st1, ver_cos);
-                        if (rs1.next()) {
-                            fila_compra[5] = rs1.getObject("costo_compra"); // Costo Compra
+                        if (id_prod.equals(id)) {
+                            contar_repetidos++;
                         }
-                        con.cerrar(rs1);
-                        con.cerrar(st1);
-                    } catch (SQLException ex) {
-                        System.out.print(ex);
                     }
 
-                    if (tabla > 0) {            //verifica si existen registros
-                        for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_compra
-                            id_prod = prod.t_detalle.getValueAt(j, 0).toString();// captura el id reg_compra
-
-                            if (id_prod.equals(id)) {
-                                contar_repetidos++;
-                            }
-                        }
-
-                        if (contar_repetidos == 0) {
-                            prod.detalle.addRow(fila_compra);
-                            prod.txt_sub.setText(formato.format(prod.subtotal()));
-                            prod.txt_igv.setText(formato.format(prod.igv()));
-                            prod.txt_tot.setText(formato.format(prod.total()));
-                            prod.btn_reg.setEnabled(true);
-                            frm_reg_compra_prod.txt_idp.requestFocus();
-                            this.dispose();
-                        }
-
-                    } else {
+                    if (contar_repetidos == 0) {
                         prod.detalle.addRow(fila_compra);
-                        prod.t_detalle.setModel(prod.detalle);
                         prod.txt_sub.setText(formato.format(prod.subtotal()));
                         prod.txt_igv.setText(formato.format(prod.igv()));
                         prod.txt_tot.setText(formato.format(prod.total()));
                         prod.btn_reg.setEnabled(true);
-                        frm_reg_compra_prod.txt_idp.setText(t_productos.getValueAt(a, 0).toString());
-                        frm_reg_compra_prod.txt_desp.setText(t_productos.getValueAt(a, 1).toString());
                         frm_reg_compra_prod.txt_idp.requestFocus();
                         this.dispose();
                     }
+
+                } else {
+                    prod.detalle.addRow(fila_compra);
+                    prod.t_detalle.setModel(prod.detalle);
+                    prod.txt_sub.setText(formato.format(prod.subtotal()));
+                    prod.txt_igv.setText(formato.format(prod.igv()));
+                    prod.txt_tot.setText(formato.format(prod.total()));
+                    prod.btn_reg.setEnabled(true);
+                    frm_reg_compra_prod.txt_idp.setText(t_productos.getValueAt(a, 0).toString());
+                    frm_reg_compra_prod.txt_desp.setText(t_productos.getValueAt(a, 1).toString());
+                    frm_reg_compra_prod.txt_idp.requestFocus();
+                    this.dispose();
                 }
+            }
 
-                //ventana ver_ofertas
-                if (ventana.equals("oferta")) {
-                    frm_reg_ofertas ofer = null;
-                    int tabla = frm_reg_ofertas.t_oferta.getRowCount();                   //obtener la cantidad de filas de oferta                                                                                                                                                   
-                    String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
-                    String id_prod = "";
-                    int contar_repetidos = 0;
-                    if (tabla > 0) {            //verifica si existen registros
-                        for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_cotizaciones
-                            id_prod = frm_reg_ofertas.t_oferta.getValueAt(j, 0).toString();// captura el id reg_oferta
+            //ventana ver_ofertas
+            if (ventana.equals("oferta")) {
+                frm_reg_ofertas ofer = null;
+                int tabla = frm_reg_ofertas.t_oferta.getRowCount();                   //obtener la cantidad de filas de oferta                                                                                                                                                   
+                String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
+                String id_prod = "";
+                int contar_repetidos = 0;
+                if (tabla > 0) {            //verifica si existen registros
+                    for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_cotizaciones
+                        id_prod = frm_reg_ofertas.t_oferta.getValueAt(j, 0).toString();// captura el id reg_oferta
 
-                            if (id_prod.equals(id)) {
-                                contar_repetidos++;
-                            }
+                        if (id_prod.equals(id)) {
+                            contar_repetidos++;
                         }
+                    }
 
-                        if (contar_repetidos == 0) {
-                            ofer.modelo.addRow(dato);
-                            ofer.t_oferta.setModel(frm_reg_ofertas.modelo);
-                            ofer.btn_reg.setEnabled(true);
-                            this.dispose();
-                        }
-
-                    } else {
+                    if (contar_repetidos == 0) {
                         ofer.modelo.addRow(dato);
                         ofer.t_oferta.setModel(frm_reg_ofertas.modelo);
-                        frm_reg_ofertas.txt_id_pro.setText(t_productos.getValueAt(a, 0).toString());
-                        frm_reg_ofertas.txt_des_pro.setText(t_productos.getValueAt(a, 1).toString());
                         ofer.btn_reg.setEnabled(true);
                         this.dispose();
                     }
-                }
 
-                if (ventana.equals("compra_prod")) {
-                    frm_rpt_fechas fec_rpt = new frm_rpt_fechas();
-                    fec_rpt.pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
-                    fec_rpt.rpt = "compra_producto";
-                    ven.llamar_ventana(fec_rpt);
+                } else {
+                    ofer.modelo.addRow(dato);
+                    ofer.t_oferta.setModel(frm_reg_ofertas.modelo);
+                    frm_reg_ofertas.txt_id_pro.setText(t_productos.getValueAt(a, 0).toString());
+                    frm_reg_ofertas.txt_des_pro.setText(t_productos.getValueAt(a, 1).toString());
+                    ofer.btn_reg.setEnabled(true);
                     this.dispose();
                 }
-                ventana = "productos";
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex + " en: " + ex.getLocalizedMessage());
-                System.out.println();
             }
+
+            if (ventana.equals("compra_productos")) {
+                System.out.println(t_productos.getValueAt(a, 0).toString());
+                frm_rpt_fechas fec_rpt;
+                fec_rpt = new frm_rpt_fechas();
+                fec_rpt.pro.setId_pro(pro.getId_pro());
+                fec_rpt.rpt = "compra_producto";
+                ven.llamar_ventana(fec_rpt);
+                this.dispose();
+            }
+            ventana = "productos";
+
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(null, ex + " en: " + ex.getLocalizedMessage());
+//                System.out.println(ex);
+//                System.out.print(ex);
+//            }
         }
 
     }//GEN-LAST:event_t_productosKeyPressed

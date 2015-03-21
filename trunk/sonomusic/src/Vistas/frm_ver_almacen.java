@@ -11,6 +11,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Clases.table_render;
 import Forms.frm_reg_almacen;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,13 +36,14 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     DefaultTableModel mostrar;
     Integer i;
+    public static String ventana = "almacen";
 
     /**
      * Creates new form frm_ver_almacen
      */
     public frm_ver_almacen() {
         initComponents();
-        
+
         String query = "select * from almacen order by nom_alm asc";
         ver_almacen(query);
     }
@@ -154,6 +158,11 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         t_almacen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_almacenMousePressed(evt);
+            }
+        });
+        t_almacen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                t_almacenKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(t_almacen);
@@ -275,6 +284,15 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_verActionPerformed
+
+    private void t_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_almacenKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idalm", alm.getId());
+            ven.ver_reporte("rpt_productos_almacen_ganacia", parametros);
+        }
+    }//GEN-LAST:event_t_almacenKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

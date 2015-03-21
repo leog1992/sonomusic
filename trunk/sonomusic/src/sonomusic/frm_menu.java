@@ -234,6 +234,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem23 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
@@ -1080,6 +1081,15 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem27);
 
+        jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem32.setText("Rpt. Articulos x Almacen");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem32);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Contabilidad");
@@ -1457,7 +1467,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
         frm_ver_productos prod = new frm_ver_productos();
-        prod.ventana = "compra_prod";
+        prod.ventana = "compra_productos";
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
@@ -1472,6 +1482,12 @@ public class frm_menu extends javax.swing.JFrame {
         prov.funcion = "compras_prov";
         ven.llamar_ventana(prov);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        
+        ven.llamar_ventana(almacen);
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1566,6 +1582,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.6500000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="nom" class="java.lang.String">
+	<parameter name="idalm" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -31,8 +31,8 @@ FROM
      INNER JOIN `productos` productos ON producto_almacen.`idProductos` = productos.`idProductos`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
      INNER JOIN `detalle_pedido` detalle_pedido ON productos.`idProductos` = detalle_pedido.`idProductos`
-WHERE
-     almacen.`nom_alm` = $P{nom} group by  productos.`idProductos`]]>
+where almacen.`idAlmacen` = $P{idalm}
+group by  productos.`idProductos`]]>
 	</queryString>
 	<field name="almacen_idAlmacen" class="java.lang.Integer"/>
 	<field name="almacen_nom_alm" class="java.lang.String"/>
@@ -65,7 +65,7 @@ WHERE
 		<band height="168" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="160" height="95" uuid="daf20faa-4a9b-4760-ad40-71364dca2217"/>
-				<imageExpression><![CDATA["C:\\Users\\pc\\Desktop\\proyecto\\Reportes_Sonomusic\\logo_sonomusic.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_sonomusic.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="160" y="0" width="395" height="41" uuid="b9b386e2-ac8c-4129-adea-050c3cd96b60"/>
@@ -242,14 +242,14 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="270" y="0" width="65" height="15" uuid="aa93ee77-2bdb-44ad-bb96-8e78c4bb42e6"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productos_costo_compra}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="335" y="0" width="44" height="15" uuid="d55c22aa-279d-41b6-be6b-4a62cc8c3e70"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_precio}]]></textFieldExpression>
@@ -261,7 +261,7 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productos_comision}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="500" y="0" width="55" height="15" uuid="ac68d999-1afa-4358-8d38-4a616ae269c9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
@@ -298,7 +298,7 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="380" y="0" width="38" height="15" uuid="667086d2-8c57-4640-8f19-bb980ba0b5d1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
