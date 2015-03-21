@@ -44,7 +44,7 @@ FROM
      INNER JOIN `cliente` cliente ON pedido.`cli_doc` = cliente.`nro_doc`
 WHERE
 pedido.`nick`  = $P{usuario} and
-pedido.`est_ped`=1 and
+pedido.`est_ped` = 1 and
 pedido.`fec_ped` between $P{fecha_inicio} and $P{fecha_fin}]]>
 	</queryString>
 	<field name="pedido_idPedido" class="java.lang.Integer"/>

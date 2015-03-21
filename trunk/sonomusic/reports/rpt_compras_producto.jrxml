@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_compras" language="groovy" pageWidth="830" pageHeight="595" orientation="Landscape" columnWidth="790" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f85c6f5-b95e-46d0-9db1-9f7091a4dc30">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="23"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="58"/>
 	<parameter name="fecha_doc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>

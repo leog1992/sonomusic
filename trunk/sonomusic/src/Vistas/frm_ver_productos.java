@@ -15,11 +15,16 @@ import Forms.frm_reg_compra_prod;
 import Forms.frm_reg_cotizacion;
 import Forms.frm_reg_ofertas;
 import Forms.frm_reg_productos;
+import Forms.frm_rpt_fechas;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -37,7 +42,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     Cl_Productos pro = new Cl_Productos();
     Cl_Varios ven = new Cl_Varios();
     public static String ventana = "productos";
-    DecimalFormat formato = new DecimalFormat("####0.00");
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
+    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
     Integer i;
     public static DefaultTableModel mostrar;
 
@@ -432,17 +438,19 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_claActionPerformed
 
     private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
-        try {
-            int a = t_productos.getSelectedRow();
-            Object[] dato = new Object[6];
-            dato[0] = t_productos.getValueAt(a, 0);         //idproducto
-            dato[1] = t_productos.getValueAt(a, 1);         //descripcion
-            dato[2] = t_productos.getValueAt(a, 2);         //marca
-            dato[3] = "1";                                  //cantidad
-            dato[4] = t_productos.getValueAt(a, 7);         //und. med
-            dato[5] = t_productos.getValueAt(a, 3);         //precio
 
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        int a = t_productos.getSelectedRow();
+        Object[] dato = new Object[6];
+        dato[0] = t_productos.getValueAt(a, 0);         //idproducto
+        dato[1] = t_productos.getValueAt(a, 1);         //descripcion
+        dato[2] = t_productos.getValueAt(a, 2);         //marca
+        dato[3] = "1";                                  //cantidad
+        dato[4] = t_productos.getValueAt(a, 7);         //und. med
+        dato[5] = t_productos.getValueAt(a, 3);         //precio
+
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            int i = t_productos.getSelectedRow();
+            try {
                 if (ventana.equals("cotizacion")) {
 
                     frm_reg_cotizacion coti = null;
@@ -569,11 +577,19 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     }
                 }
 
-            }
+                if (ventana.equals("compra_prod")) {
+                    frm_rpt_fechas fec_rpt = new frm_rpt_fechas();
+                    fec_rpt.pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
+                    fec_rpt.rpt = "compra_producto";
+                    ven.llamar_ventana(fec_rpt);
+                    this.dispose();
+                }
+                ventana = "productos";
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex + " en: " + ex.getLocalizedMessage());
-            System.out.println();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex + " en: " + ex.getLocalizedMessage());
+                System.out.println();
+            }
         }
 
     }//GEN-LAST:event_t_productosKeyPressed
