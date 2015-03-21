@@ -210,6 +210,8 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         m_ofertas = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -847,6 +849,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu1.setText("RR.HH.");
         jMenu1.setToolTipText("");
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cargo.png"))); // NOI18N
         jMenuItem7.setText("Cargos");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -855,6 +858,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem7);
 
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/meta.png"))); // NOI18N
         jMenuItem10.setText("Metas");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -873,9 +877,11 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem8);
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/adelanto.png"))); // NOI18N
         jMenuItem9.setText("Adelantos");
         jMenu1.add(jMenuItem9);
 
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
         jMenuItem11.setText("Pago Colaborador");
         jMenu1.add(jMenuItem11);
 
@@ -911,6 +917,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem13);
 
+        m_ofertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/basket.png"))); // NOI18N
         m_ofertas.setText("Ofertas");
         m_ofertas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -927,6 +934,24 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem28);
+
+        jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem32.setText(" Reporte de Venta");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem32);
+
+        jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem33.setText("Reporte de Venta por Almacen");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem33);
 
         jMenuBar1.add(jMenu2);
 
@@ -1484,10 +1509,17 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        frm_ver_almacen almacen = new frm_ver_almacen();
-        
-        ven.llamar_ventana(almacen);
+       frm_rpt_fechas fec = new frm_rpt_fechas();
+       fec.rpt="ventas";
+       ven.llamar_ventana(fec);
+       
     }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        frm_rpt_fechas fec = new frm_rpt_fechas();
+        fec.rpt="venta_almacen";
+        ven.llamar_ventana(fec);
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1583,6 +1615,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

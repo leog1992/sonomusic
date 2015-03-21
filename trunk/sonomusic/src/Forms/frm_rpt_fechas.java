@@ -188,6 +188,21 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_ventas_vendedor", parametros);
                 System.out.println(frm_menu.lbl_user.getText()+" - "+fec_ini+" - "+fec_fin);
             }
+            
+            if (rpt.equals("ventas")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fecha_inicio", fec_ini);
+                parametros.put("fecha_fin", fec_fin);
+                ven.ver_reporte("rpt_ventas", parametros);
+            }
+            
+            if (rpt.equals("venta_almacen")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fecha_inicio", fec_ini);
+                parametros.put("fecha_fin", fec_fin);
+                parametros.put("almacen", frm_menu.lbl_alm.getText());
+                ven.ver_reporte("rpt_ventas_almacen", parametros);
+            }
 
             this.dispose();
         }

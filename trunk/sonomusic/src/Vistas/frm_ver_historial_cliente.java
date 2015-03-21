@@ -6,6 +6,9 @@
 package Vistas;
 
 import Clases.Cl_Varios;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,10 +17,7 @@ import Clases.Cl_Varios;
 public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
     
     Cl_Varios ven = new Cl_Varios();
-    
-    /**
-     * Creates new form frm_ver_historial_cliente
-     */
+    int i;
     public frm_ver_historial_cliente() {
         initComponents();
     }
@@ -45,6 +45,7 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setTitle("Listar Ventas por Producto y Cliente");
 
@@ -59,6 +60,12 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
         txt_tel.setEditable(false);
 
         txt_tel1.setEditable(false);
+
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jScrollPane1MousePressed(evt);
+            }
+        });
 
         t_historial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,6 +98,14 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Direccion:");
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/exportar.png"))); // NOI18N
+        jButton2.setText("Exportar a PDF");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,7 +126,8 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -149,7 +165,9 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -162,9 +180,26 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            String id= txt_doc.getText();
+            Map<String,Object> parametros = new HashMap<>();
+             parametros.put("cliente", id);            
+            ven.ver_reporte("rpt_ventas_cliente",parametros);
+            System.out.println("Impresion correcta");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "error: "+e.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
+        i=t_historial.getSelectedRow();
+    }//GEN-LAST:event_jScrollPane1MousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
