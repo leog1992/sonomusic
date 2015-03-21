@@ -846,6 +846,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu1.setText("RR.HH.");
         jMenu1.setToolTipText("");
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cargo.png"))); // NOI18N
         jMenuItem7.setText("Cargos");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -854,6 +855,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem7);
 
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/meta.png"))); // NOI18N
         jMenuItem10.setText("Metas");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -872,9 +874,11 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem8);
 
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/adelanto.png"))); // NOI18N
         jMenuItem9.setText("Adelantos");
         jMenu1.add(jMenuItem9);
 
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
         jMenuItem11.setText("Pago Colaborador");
         jMenu1.add(jMenuItem11);
 
@@ -910,6 +914,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem13);
 
+        m_ofertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/basket.png"))); // NOI18N
         m_ofertas.setText("Ofertas");
         m_ofertas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
