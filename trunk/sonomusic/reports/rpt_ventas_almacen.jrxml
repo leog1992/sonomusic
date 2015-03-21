@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_vendedor" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f65db704-b029-4c1d-a7d9-80c31b038d5a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_almacen" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f65db704-b029-4c1d-a7d9-80c31b038d5a">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="189"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha_inicio" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$F{pedido_fec_ped}]]></defaultValueExpression>
@@ -80,7 +80,7 @@ pedido.`est_ped`=1 and pedido.`fec_ped` between $P{fecha_inicio} and $P{fecha_fi
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="25" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Venta Detallada por Vendedor]]></text>
+				<text><![CDATA[Venta Detallada por Almacen]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="684" y="43" width="118" height="21" uuid="1611620a-1137-4b72-8276-4bce470bbfc2"/>
@@ -105,7 +105,7 @@ pedido.`est_ped`=1 and pedido.`fec_ped` between $P{fecha_inicio} and $P{fecha_fi
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="132" height="88" uuid="0c306b99-c701-41d0-a46f-e1a1c4814278"/>
-				<imageExpression><![CDATA["C:\\Users\\Pitufina\\Desktop\\Reportes_Sonomusic\\logo_sonomusic.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_sonomusic.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="149" y="46" width="63" height="20" uuid="bc4ad8d6-6de4-47a0-8eda-f91360462553"/>

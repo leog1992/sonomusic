@@ -182,7 +182,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txt_tot = new javax.swing.JTextField();
         btn_anu = new javax.swing.JButton();
-        btn_det = new javax.swing.JButton();
 
         setTitle("Registro de Ventas");
 
@@ -251,15 +250,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_det.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        btn_det.setText("Ver Detalle");
-        btn_det.setEnabled(false);
-        btn_det.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_detActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -281,8 +271,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(148, 148, 148)
                         .addComponent(btn_anu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_det)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
@@ -297,14 +285,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbx_estado, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_det, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -518,49 +505,17 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         String est = t_facturas.getValueAt(i, 10).toString();
         if (est.equals("ANULADO")) {
             btn_anu.setEnabled(false);
-            btn_det.setEnabled(false);
+           
         } else {
             btn_anu.setEnabled(true);
-            btn_det.setEnabled(true);
+           
         }
 
     }//GEN-LAST:event_t_facturasMousePressed
 
-    private void btn_detActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detActionPerformed
-        ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
-        Connection st = con.conx();
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("idped", ped.getId_ped());
-
-//        try {
-//            JasperReport jasperReport;
-//            JasperPrint jasperPrint;
-//            jasperReport = JasperCompileManager.compileReport("Reports//rpt_ver_det_venta.jrxml");
-//            jasperPrint = JasperFillManager.fillReport(
-//                    jasperReport, parametros, st);
-//            JasperExportManager.exportReportToPdfFile(
-//                    jasperPrint, "Reports/rpt_ver_det_venta.pdf");
-//
-//            try {
-//                File file = new File("Reports/rpt_ver_det_venta.pdf");
-//                Desktop.getDesktop().open(file);
-//            } catch (IOException e) {
-//                System.out.print(e);
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//
-//        } catch (JRException ex) {
-//            System.out.print(ex);
-//            JOptionPane.showMessageDialog(null, ex);
-//
-//        }
-
-    }//GEN-LAST:event_btn_detActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
-    private javax.swing.JButton btn_det;
     private javax.swing.JComboBox cbx_estado;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

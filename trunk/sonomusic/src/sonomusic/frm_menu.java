@@ -210,6 +210,8 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         m_ofertas = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -932,6 +934,24 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem28);
 
+        jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem32.setText(" Reporte de Venta");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem32);
+
+        jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem33.setText("Reporte de Venta por Almacen");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem33);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Compras");
@@ -1477,6 +1497,19 @@ public class frm_menu extends javax.swing.JFrame {
         prov.funcion = "compras_prov";
         ven.llamar_ventana(prov);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+       frm_rpt_fechas fec = new frm_rpt_fechas();
+       fec.rpt="ventas";
+       ven.llamar_ventana(fec);
+       
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        frm_rpt_fechas fec = new frm_rpt_fechas();
+        fec.rpt="venta_almacen";
+        ven.llamar_ventana(fec);
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1571,6 +1604,8 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
