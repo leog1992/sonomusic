@@ -21,6 +21,7 @@ import Vistas.frm_metas;
 import Vistas.frm_moneda;
 import Vistas.frm_movimientos;
 import Vistas.frm_und_medida;
+import Vistas.frm_ver_adelantos;
 import Vistas.frm_ver_almacen;
 import Vistas.frm_ver_clasificacion;
 import Vistas.frm_ver_cliente;
@@ -878,6 +879,11 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/adelanto.png"))); // NOI18N
         jMenuItem9.setText("Adelantos");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem9);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
@@ -1510,6 +1516,11 @@ public class frm_menu extends javax.swing.JFrame {
         fec.rpt="venta_almacen";
         ven.llamar_ventana(fec);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        frm_ver_adelantos ad = new frm_ver_adelantos();
+        ven.llamar_ventana(ad);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
     /**
      * @param args the command line arguments
      */

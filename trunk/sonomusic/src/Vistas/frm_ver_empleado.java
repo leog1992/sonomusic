@@ -1,6 +1,7 @@
 package Vistas;
 
 import Clases.*;
+import Forms.frm_reg_adelanto;
 import Forms.frm_reg_empleado;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -420,6 +421,26 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     }
                 } catch (SQLException ex) {
                     System.out.print(ex);
+                }
+            }
+            if (ventana.equals("adelantos")) {
+                frm_reg_adelanto ade= null;
+                String id=t_empleado.getValueAt(i, 0).toString();
+                String nom=t_empleado.getValueAt(i, 1).toString();
+                String car=t_empleado.getValueAt(i, 2).toString();
+                String tel1=t_empleado.getValueAt(i, 3).toString();
+                String tel2=t_empleado.getValueAt(i, 4).toString();
+                try {
+                    ade.txt_dni.setText(id);
+                    ade.txt_empleado.setText(nom);
+                    ade.txtcargo.setText(car);
+                    ade.txttelefono1.setText(tel1);
+                    ade.txttelefono2.setText(tel2);
+                    ade.txt_fec.setEditable(true);
+                    ade.txt_fec.requestFocus();                    
+                    this.dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
                 }
             }
         }
