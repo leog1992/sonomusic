@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_caja_movimiento_caja" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0c68044f-97a0-4a60-99ba-eec4cf83fc97">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fec_mov" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     movimiento.`glosa` AS glosa,
+     movimiento.`fec_mov` AS fec_mov,
+     movimiento.`entrada` AS entrada,
+     movimiento.`salida` AS salida,
+     almacen.`nom_alm` AS nom_alm,
+     almacen.`idAlmacen` AS idAlmacen,
+     almacen.`dir_alm` AS dir_alm,
+     almacen.`ruc` AS ruc,
+     almacen.`raz_soc` AS raz_soc,
+     movimiento.`destino` AS destino,
+     movimiento.`iddestino` AS iddestino,
+     empleados.`nom_per` AS nom_per
+FROM
+     `usuario` usuario INNER JOIN `movimiento` movimiento ON usuario.`nick` = movimiento.`nick`
+     INNER JOIN `almacen` almacen ON movimiento.`idAlmacen` = almacen.`idAlmacen`
+     INNER JOIN `empleados` empleados ON usuario.`dni` = empleados.`dni`
+WHERE
+     movimiento.`destino` = 'C'
+and movimiento.`fec_mov` = $P{fec_mov}
+    ]]>
+	</queryString>
+	<field name="glosa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fec_mov" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="entrada" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salida" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom_alm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idAlmacen" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dir_alm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ruc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="raz_soc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="destino" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="iddestino" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom_per" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="parcial" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{entrada} - $F{salida}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="85" height="20" uuid="2c039ec4-1510-4441-9eef-62729b384e65"/>
+				<text><![CDATA[Movimiento en :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="0" width="100" height="20" uuid="6790f9c2-6368-4443-a329-93af830d3fa3"/>
+				<textFieldExpression><![CDATA[( ($F{destino}.equals("C")) ? "CAJA" : "BANCO")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="266" height="20" uuid="e12d5b1c-059e-4081-925b-fea2ba816471"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Concepto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="0" width="50" height="20" uuid="4ec158e6-c113-4d05-9a7c-690c62809a31"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="50" height="20" uuid="e985fc10-77c6-485d-bd1a-c89b9a3417e2"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="139" height="20" uuid="f4a2b188-0de9-4728-b8aa-dfcbd1ab9d62"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="266" height="20" uuid="8c3e8bc2-5ee2-409f-ae72-2360c243f098"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{glosa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="0" width="50" height="20" uuid="2b24dbcd-fbdb-4db9-bea1-6f62ebf83a1b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{entrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="50" height="20" uuid="10d769de-8ba4-4e6b-9076-b0597f06df8d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="505" y="0" width="50" height="20" uuid="0515b727-732c-4743-9622-2c1f53eeddbb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{parcial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="139" height="20" uuid="903c7c22-e8dc-47f6-ac06-6493da4cc395"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nom_per}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="505" y="17" width="50" height="20" uuid="f488a146-490b-4887-8866-4302b1228769"/>
+				<textFieldExpression><![CDATA[$V{parcial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

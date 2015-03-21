@@ -49,7 +49,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
      */
     public frm_ver_compras_prod() {
         initComponents();
-        
+
         String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
                 + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' order by c.fecha_doc desc, c.idCompra desc";
@@ -499,11 +499,15 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         pagar.txt_nro.setText(t_compras.getValueAt(i, 5).toString());
         pagar.txt_deu.setText(t_compras.getValueAt(i, 8).toString());
 
+        Double actual = 0.0;
+        Double pagado = 0.0;
+        actual = Double.parseDouble(t_compras.getValueAt(i, 8).toString());
         try {
             Statement st = con.conexion();
             String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
             ResultSet rs = con.consulta(st, ver_pagos);
             if (rs.next()) {
+                pagado = rs.getDouble("pagos");
                 pagar.pagado = rs.getDouble("pagos");
                 pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
             } else {
@@ -512,8 +516,11 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         } catch (SQLException es) {
             System.out.print(es);
         }
-        
+        Double restante = 0.0;
+        restante = actual - pagado;
         pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+        pagar.txt_sal.setText(formato.format(restante));
+        pagar.restante = restante;
         pagar.funcion = "productos";
         ven.llamar_ventana(pagar);
         this.dispose();
