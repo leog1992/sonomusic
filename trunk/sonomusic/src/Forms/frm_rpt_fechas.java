@@ -176,7 +176,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("usuario", frm_menu.lbl_user.getText());
                 parametros.put("fecha_inicio", fec_ini);
-                parametros.put("fehca_fin", fec_fin);
+                parametros.put("fecha_fin", fec_fin);
                 ven.ver_reporte("rpt_ventas_vendedor", parametros);
                 System.out.println(frm_menu.lbl_user.getText()+" - "+fec_ini+" - "+fec_fin);
             }
