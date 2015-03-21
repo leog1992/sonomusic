@@ -145,7 +145,7 @@ group by  productos.`idProductos`]]>
 			<textField>
 				<reportElement x="54" y="128" width="202" height="20" uuid="714c44a7-26ad-4070-948b-477e79fc1ae8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{almacen_nom_alm}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="321" y="128" width="234" height="20" uuid="c98c6610-a9f1-4f60-ad5d-ef5e24a84aa9"/>

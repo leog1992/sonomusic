@@ -1509,15 +1509,15 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-       frm_rpt_fechas fec = new frm_rpt_fechas();
-       fec.rpt="ventas";
-       ven.llamar_ventana(fec);
-       
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana = "rpt";
+        ven.llamar_ventana(almacen);
+
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         frm_rpt_fechas fec = new frm_rpt_fechas();
-        fec.rpt="venta_almacen";
+        fec.rpt = "venta_almacen";
         ven.llamar_ventana(fec);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
     /**

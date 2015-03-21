@@ -287,10 +287,14 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
     private void t_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_almacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("idalm", alm.getId());
-            ven.ver_reporte("rpt_productos_almacen_ganacia", parametros);
+            if (ventana.equals("rpt")) {
+                alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idalm", alm.getId());
+                ven.ver_reporte("rpt_productos_almacen_ganancia", parametros);
+                ventana = "";
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_t_almacenKeyPressed
 
