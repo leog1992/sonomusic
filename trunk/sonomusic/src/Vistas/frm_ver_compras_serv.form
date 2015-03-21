@@ -33,7 +33,9 @@
                       <Component id="btn_reg" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_anu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="268" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_pagar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="199" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_bus" min="-2" max="-2" attributes="0"/>
@@ -58,6 +60,7 @@
                   <Component id="btn_anu" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_cer" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="cbx_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_pagar" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="479" max="32767" attributes="0"/>
@@ -150,5 +153,14 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btn_pagar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pagar"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pagarActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

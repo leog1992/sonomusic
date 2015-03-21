@@ -9,10 +9,13 @@ import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_compra_serv;
+import Forms.frm_reg_pago_compra;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,7 +31,8 @@ Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
 Cl_Almacen alm = new Cl_Almacen();
 Cl_Productos mat = new Cl_Productos();
 DefaultTableModel mostrar;
-DecimalFormat formato = new DecimalFormat("####.00");
+DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
+DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
 Integer i;
 
     /**
@@ -135,6 +139,7 @@ Integer i;
         cbx_bus = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_compras = new javax.swing.JTable();
+        btn_pagar = new javax.swing.JButton();
 
         setTitle("Ver Compras de Servicios");
 
@@ -189,6 +194,14 @@ Integer i;
         });
         jScrollPane1.setViewportView(t_compras);
 
+        btn_pagar.setText("Pagar");
+        btn_pagar.setEnabled(false);
+        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pagarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,7 +216,9 @@ Integer i;
                         .addComponent(btn_reg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_anu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_pagar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,7 +238,8 @@ Integer i;
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addContainerGap())
@@ -245,6 +261,7 @@ Integer i;
     private void t_comprasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_comprasMousePressed
         i = t_compras.getSelectedRow();
         btn_anu.setEnabled(true);
+        btn_pagar.setEnabled(true);
     }//GEN-LAST:event_t_comprasMousePressed
 
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
@@ -395,10 +412,50 @@ Integer i;
 //    }
     }//GEN-LAST:event_btn_anuActionPerformed
 
+    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
+ frm_reg_pago_compra pagar = new frm_reg_pago_compra();
+        pagar.txt_ruc.setText(t_compras.getValueAt(i, 7).toString());
+        pagar.txt_raz.setText(t_compras.getValueAt(i, 8).toString());
+        pagar.txt_tido.setText(t_compras.getValueAt(i, 4).toString());
+        pagar.txt_ser.setText(t_compras.getValueAt(i, 5).toString());
+        pagar.txt_nro.setText(t_compras.getValueAt(i, 6).toString());
+        pagar.txt_deu.setText(t_compras.getValueAt(i, 9).toString());
+
+        Double actual = 0.0;
+        Double pagado = 0.0;
+        actual = Double.parseDouble(t_compras.getValueAt(i, 9).toString());
+        try {
+            Statement st = con.conexion();
+            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
+            ResultSet rs = con.consulta(st, ver_pagos);
+            if (rs.next()) {
+                pagado = rs.getDouble("pagos");
+                pagar.pagado = rs.getDouble("pagos");
+                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
+            } else {
+                pagar.txt_pag.setText("0.00");
+            }
+        } catch (SQLException es) {
+            System.out.print(es);
+        }
+        Double restante = 0.0;
+        restante = actual - pagado;
+        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+        pagar.txt_sal.setText(formato.format(restante));
+        pagar.restante = restante;
+        pagar.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        pagar.funcion = "servicio";
+        pagar.glosa = "PAGO DE SERVICIO - " + t_compras.getValueAt(i, 4).toString() + " / " + t_compras.getValueAt(i, 5).toString() + 
+                " - " + t_compras.getValueAt(i, 6).toString() + " - " + t_compras.getValueAt(i, 7).toString();
+        ven.llamar_ventana(pagar);
+        this.dispose();
+    }//GEN-LAST:event_btn_pagarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
     private javax.swing.JButton btn_cer;
+    private javax.swing.JButton btn_pagar;
     private javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_bus;
     private javax.swing.JLabel jLabel1;

@@ -204,6 +204,13 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_ventas_almacen", parametros);
             }
 
+            if (rpt.equals("cajas_tienda")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fec_mov", fec_ini);
+                parametros.put("idalm", frm_menu.alm.getId());
+                parametros.put("fec_fin", fec_fin);
+                ven.ver_reporte("rpt_caja_movimiento_cajas", parametros);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_txt_fec_finKeyPressed

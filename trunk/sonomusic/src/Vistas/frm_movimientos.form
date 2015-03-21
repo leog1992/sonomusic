@@ -31,9 +31,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="btn_rep" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_rep_caja" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btn_rep_fec" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_rep_banco" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_clo" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -149,8 +149,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_clo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btn_rep" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btn_rep_fec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_rep_caja" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_rep_banco" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -372,28 +372,26 @@
         <Property name="text" type="java.lang.String" value="Fecha"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_rep">
+    <Component class="javax.swing.JButton" name="btn_rep_caja">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Recursos/clipboard_text.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Imprimir Reporte"/>
-        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Imprimir Reporte Caja"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_repActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_rep_cajaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_rep_fec">
+    <Component class="javax.swing.JButton" name="btn_rep_banco">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Recursos/clipboard_text.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Imprimir Por Fecha"/>
-        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Imprimir Reporte Bancos"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_rep_fecActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_rep_bancoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">

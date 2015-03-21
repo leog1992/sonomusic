@@ -9,6 +9,7 @@ import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import Vistas.frm_ver_compras_prod;
+import Vistas.frm_ver_compras_serv;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import sonomusic.frm_menu;
 
 /**
  *
@@ -30,10 +32,11 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     public static Double pagado = 0.00;
     public static Double restante = 0.00;
     public static String funcion = "pagar";
+    public static String glosa = "";
     Double queda = 0.00;
     Double real = 0.00;
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00");
+    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
 
     /**
      * Creates new form frm_pagar_compra
@@ -335,60 +338,93 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cloActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        String fecha = txt_fec.getText();
-        if (queda<=0.00) {
+        String fecha = ven.fechabase(txt_fec.getText());
+
+        if (queda <= 0.00) {
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into Pagos_Compra Values (null, '"+fecha+"', '"+restante+"', '"+com.getId()+"')";
+                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + restante + "', '" + com.getId() + "')";
                 con.actualiza(st, ins_pago);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-            
+
             try {
                 Statement st = con.conexion();
-                String upd_com = "update Compra set estado = '1', idTipo_pago = '1' where idCompra = '"+com.getId()+"'";
+                String upd_com = "update Compra set estado = '1', idTipo_pago = '1' where idCompra = '" + com.getId() + "'";
                 con.actualiza(st, upd_com);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-            
-            try {
-                String glosa = "PAGO DE COMPRA NRO. " + com.getId();
-                Statement st = con.conexion();
-                String add_mov = "insert into Movimiento Values (null, '"+glosa+"', '"+fecha+"' , '0.00', '"+restante+"', '"+frm_menu.usu.getNick()+"')";
-                con.actualiza(st, add_mov);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }      
-        frm_ver_compra compra = new frm_ver_compra();
-        ven.llamar_ventana(compra);
-        this.dispose();
+
+            if (cbx_tipopago.getSelectedIndex() == 0) {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+                            + "'" + frm_menu.caja.getId() + "')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            } else {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+                            + "'"+frm_menu.cue.getId_cuen()+"')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            }
+
         } else {
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into Pagos_Compra Values (null, '"+fecha+"', '"+real+"', '"+com.getId()+"')";
+                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + real + "', '" + com.getId() + "')";
                 con.actualiza(st, ins_pago);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-            
-            try {
-                String glosa = "PAGO DE COMPRA NRO. " + com.getId();
-                Statement st = con.conexion();
-                String add_mov = "insert into Movimiento Values (null, '"+glosa+"', '"+fecha+"' , '0.00', '"+real+"', '"+frm_menu.usu.getNick()+"')";
-                con.actualiza(st, add_mov);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }   
-        frm_ver_compra compra = new frm_ver_compra();
-        ven.llamar_ventana(compra);
-        this.dispose();
+
+            if (cbx_tipopago.getSelectedIndex() == 0) {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+                            + "'" + frm_menu.caja.getId() + "')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            } else {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+                            + "'"+frm_menu.cue.getId_cuen()+"')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            }
+
+        }
+
+        if (funcion.equals("productos")) {
+            frm_ver_compras_prod compra = new frm_ver_compras_prod();
+            ven.llamar_ventana(compra);
+            this.dispose();
+            funcion = "pagar";
+        } else {
+            frm_ver_compras_serv compra = new frm_ver_compras_serv();
+            ven.llamar_ventana(compra);
+            this.dispose();
+            funcion = "pagar";
         }
 
     }//GEN-LAST:event_btn_addActionPerformed

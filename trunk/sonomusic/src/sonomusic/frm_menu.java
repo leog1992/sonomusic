@@ -8,6 +8,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Usuario;
 import Vistas.frm_ver_ofertas;
 import Clases.Cl_Varios;
+import Clases.Cl_cuenta;
 import Clases.table_render;
 import Forms.frm_conf_doc;
 import Forms.frm_reg_deposito;
@@ -19,6 +20,7 @@ import Vistas.frm_cargos;
 import Vistas.frm_cuentas;
 import Vistas.frm_metas;
 import Vistas.frm_moneda;
+import Vistas.frm_mov_bancos;
 import Vistas.frm_movimientos;
 import Vistas.frm_und_medida;
 import Vistas.frm_ver_almacen;
@@ -54,6 +56,7 @@ public class frm_menu extends javax.swing.JFrame {
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
     Cl_Hilo_Notificacion noti = null;
+    public static Cl_cuenta cue = new Cl_cuenta();
     public static Cl_Almacen alm = new Cl_Almacen();
     public static Cl_Usuario usu = new Cl_Usuario();
     public static Cl_Caja caja = new Cl_Caja();
@@ -110,7 +113,7 @@ public class frm_menu extends javax.swing.JFrame {
     private void ver_id_almacen() {
         try {
             Statement st = con.conexion();
-            String ver_id = "select idAlmacen, nom_alm, dir_alm, ciudad, raz_soc, ruc from almacen where nom_alm = '" + leer_almacen() + "'";
+            String ver_id = "select idAlmacen, nom_alm, dir_alm, ciudad, raz_soc, ruc, cuenta from almacen where nom_alm = '" + leer_almacen() + "'";
             ResultSet rs = con.consulta(st, ver_id);
             if (rs.next()) {
                 alm.setId(rs.getInt("idAlmacen"));
@@ -119,6 +122,7 @@ public class frm_menu extends javax.swing.JFrame {
                 alm.setRuc(rs.getString("ruc"));
                 alm.setRaz_soc(rs.getString("raz_soc"));
                 alm.setDireccion(rs.getString("dir_alm"));
+                cue.setId_cuen(rs.getInt("cuenta"));
                 caja.setId(caja.id_caja(alm.getId()));
             } else {
                 alm.setId(0);
@@ -236,10 +240,13 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem23 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem36 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem24 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -1106,14 +1113,14 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem27);
 
-        jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem32.setText("Rpt. Articulos x Almacen");
-        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem34.setText("Rpt. Articulos x Almacen");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem32ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem32);
+        jMenu4.add(jMenuItem34);
 
         jMenuBar1.add(jMenu4);
 
@@ -1136,6 +1143,25 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem19);
+
+        jMenuItem35.setText("Cierre de Caja");
+        jMenu5.add(jMenuItem35);
+
+        jMenuItem36.setText("Mov. Caja en Tienda");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem36ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem36);
+
+        jMenuItem37.setText("Mov. Bancos");
+        jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem37ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem37);
 
         jMenuBar1.add(jMenu5);
 
@@ -1520,6 +1546,17 @@ public class frm_menu extends javax.swing.JFrame {
         fec.rpt = "venta_almacen";
         ven.llamar_ventana(fec);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+        frm_rpt_fechas fec = new frm_rpt_fechas();
+        fec.rpt = "cajas_tienda";
+        ven.llamar_ventana(fec);
+    }//GEN-LAST:event_jMenuItem36ActionPerformed
+
+    private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
+        frm_mov_bancos mov_ban = new frm_mov_bancos();
+        ven.llamar_ventana(mov_ban);
+    }//GEN-LAST:event_jMenuItem37ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1616,6 +1653,10 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

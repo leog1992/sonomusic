@@ -50,7 +50,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
      */
     public frm_movimientos() {
         initComponents();
-        
+
         fecha = ven.getFechaActual();
         String query = "select * from movimiento where fec_mov = '" + fecha + "' and"
                 + " idAlmacen = '" + frm_menu.alm.getId() + "' order by idMovimiento asc";
@@ -155,8 +155,8 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         btn_clo = new javax.swing.JButton();
         btn_buse = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        btn_rep = new javax.swing.JButton();
-        btn_rep_fec = new javax.swing.JButton();
+        btn_rep_caja = new javax.swing.JButton();
+        btn_rep_banco = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -268,21 +268,19 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Fecha");
 
-        btn_rep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        btn_rep.setText("Imprimir Reporte");
-        btn_rep.setEnabled(false);
-        btn_rep.addActionListener(new java.awt.event.ActionListener() {
+        btn_rep_caja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        btn_rep_caja.setText("Imprimir Reporte Caja");
+        btn_rep_caja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_repActionPerformed(evt);
+                btn_rep_cajaActionPerformed(evt);
             }
         });
 
-        btn_rep_fec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        btn_rep_fec.setText("Imprimir Por Fecha");
-        btn_rep_fec.setEnabled(false);
-        btn_rep_fec.addActionListener(new java.awt.event.ActionListener() {
+        btn_rep_banco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        btn_rep_banco.setText("Imprimir Reporte Bancos");
+        btn_rep_banco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_rep_fecActionPerformed(evt);
+                btn_rep_bancoActionPerformed(evt);
             }
         });
 
@@ -332,9 +330,9 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_rep)
+                        .addComponent(btn_rep_caja)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_rep_fec)
+                        .addComponent(btn_rep_banco)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_clo))
                     .addGroup(layout.createSequentialGroup()
@@ -427,8 +425,8 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_rep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_rep_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_rep_caja, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_rep_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -564,42 +562,21 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_motKeyPressed
 
-    private void btn_repActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_repActionPerformed
-//        Connection st = con.conx();
-//        String fecha = ven.getFechaActual();
-//        Map<String, Object> parametros = new HashMap<>();
-//        parametros.put("fecha", fecha);
-//
-//        try {
-//            JasperReport jasperReport;
-//            JasperPrint jasperPrint;
-//            jasperReport = JasperCompileManager.compileReport("Reports//rpt_ver_movimiento_hoy.jrxml");
-//            jasperPrint = JasperFillManager.fillReport(
-//                    jasperReport, parametros, st);
-//            JasperExportManager.exportReportToPdfFile(
-//                    jasperPrint, "Reports/rpt_ver_movimiento_" + fecha + ".pdf");
-//
-//            try {
-//                File file = new File("Reports/rpt_ver_movimiento_" + fecha + ".pdf");
-//                Desktop.getDesktop().open(file);
-//            } catch (IOException e) {
-//                System.out.print(e);
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//
-//        } catch (JRException ex) {
-//            System.out.print(ex);
-//            JOptionPane.showMessageDialog(null, ex);
-//
-//        }
-    }//GEN-LAST:event_btn_repActionPerformed
+    private void btn_rep_cajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rep_cajaActionPerformed
+        String fec = ven.getFechaActual();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("idalm", frm_menu.alm.getId());
+        parametros.put("fec_mov", fec);
+        ven.ver_reporte("rpt_caja_movimiento_caja", parametros);
+    }//GEN-LAST:event_btn_rep_cajaActionPerformed
 
-    private void btn_rep_fecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rep_fecActionPerformed
-        // frm_rpt_fec rpt_fec = new frm_rpt_fec();
-        // rpt_fec.rpt = "mov_det";
-        // ven.llamar_ventana(rpt_fec);
-        this.dispose();
-    }//GEN-LAST:event_btn_rep_fecActionPerformed
+    private void btn_rep_bancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rep_bancoActionPerformed
+        String fec = ven.getFechaActual();
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("idalm", frm_menu.alm.getId());
+        parametros.put("fec_mov", fec);
+        ven.ver_reporte("rpt_caja_movimiento_banco", parametros);
+    }//GEN-LAST:event_btn_rep_bancoActionPerformed
 
     private void txt_fechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fechaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -613,8 +590,8 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btn_buse;
     private javax.swing.JButton btn_clo;
     private javax.swing.JButton btn_reg;
-    private javax.swing.JButton btn_rep;
-    private javax.swing.JButton btn_rep_fec;
+    private javax.swing.JButton btn_rep_banco;
+    private javax.swing.JButton btn_rep_caja;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

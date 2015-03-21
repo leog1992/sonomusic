@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_caja_movimiento_caja" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c68044f-97a0-4a60-99ba-eec4cf83fc97">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_caja_movimiento_cajas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c68044f-97a0-4a60-99ba-eec4cf83fc97">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -7,6 +7,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idalm" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fec_fin" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -29,8 +32,9 @@ FROM
      INNER JOIN `empleados` empleados ON usuario.`dni` = empleados.`dni`
 WHERE
      movimiento.`destino` = 'C'
-and movimiento.`fec_mov` = $P{fec_mov}
-and almacen.`idAlmacen` = $P{idalm}]]>
+and movimiento.`fec_mov` between $P{fec_mov} and $P{fec_fin}
+and almacen.`idAlmacen` = $P{idalm}
+order by movimiento.`fec_mov`]]>
 	</queryString>
 	<field name="glosa" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -124,7 +128,7 @@ and almacen.`idAlmacen` = $P{idalm}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[MOVIMIENTO DE CAJA DURANTE EL DIA EN TIENDA]]></text>
+				<text><![CDATA[MOVIMIENTO DE DINERO EN CAJA EN TIENDA]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="339" y="37" width="100" height="20" uuid="8fbe2441-538a-4872-b954-aeea4d3b93ac"/>
@@ -138,18 +142,6 @@ and almacen.`idAlmacen` = $P{idalm}]]>
 				</textElement>
 				<text><![CDATA[Fecha de Impresion:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="77" width="69" height="20" uuid="75c38db7-bffa-4a58-80c1-7831358646fc"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fecha Mov.:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="69" y="77" width="88" height="20" uuid="74ba83f0-3835-40b2-ab88-6a2c0bd13e76"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fec_mov}]]></textFieldExpression>
-			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="395" y="77" width="79" height="20" uuid="d1230baf-e4c8-49e9-a762-8e171c073722"/>
 				<textElement verticalAlignment="Middle"/>
@@ -166,7 +158,7 @@ and almacen.`idAlmacen` = $P{idalm}]]>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="2" y="0" width="312" height="20" uuid="e12d5b1c-059e-4081-925b-fea2ba816471"/>
+				<reportElement x="69" y="0" width="245" height="20" uuid="e12d5b1c-059e-4081-925b-fea2ba816471"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -200,12 +192,19 @@ and almacen.`idAlmacen` = $P{idalm}]]>
 				</textElement>
 				<text><![CDATA[Parcial]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="69" height="20" uuid="75c38db7-bffa-4a58-80c1-7831358646fc"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Mov.:]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="2" y="0" width="312" height="20" uuid="8c3e8bc2-5ee2-409f-ae72-2360c243f098"/>
+				<reportElement x="69" y="0" width="245" height="20" uuid="8c3e8bc2-5ee2-409f-ae72-2360c243f098"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
@@ -238,6 +237,11 @@ and almacen.`idAlmacen` = $P{idalm}]]>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nom_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="2" y="0" width="67" height="20" uuid="6bab27d4-6b17-474e-95c4-70bb54733461"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fec_mov}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
