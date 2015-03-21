@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_compras" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f85c6f5-b95e-46d0-9db1-9f7091a4dc30">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="254"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="proveedor" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -29,7 +29,9 @@ FROM
      `compra` compra INNER JOIN `detalle_compra` detalle_compra ON compra.`idCompra` = detalle_compra.`idCompra`
      INNER JOIN `proveedor` proveedor ON compra.`ruc_pro` = proveedor.`ruc_pro`
      INNER JOIN `productos` productos ON detalle_compra.`idProductos` = productos.`idProductos`
-     INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida` where proveedor.`ruc_pro` = $P{proveedor} group by  productos.`idProductos` ]]>
+     INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
+where proveedor.`ruc_pro` = $P{proveedor}
+group by  productos.`idProductos` ]]>
 	</queryString>
 	<field name="compra_idCompra" class="java.lang.Integer"/>
 	<field name="compra_serie_doc" class="java.lang.Long"/>
@@ -83,7 +85,7 @@ FROM
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="141" height="92" uuid="1dd39c77-63a4-4c16-a144-da8318c70ef1"/>
-				<imageExpression><![CDATA["C:\\Users\\pc\\Desktop\\proyecto\\Reportes_Sonomusic\\logo_sonomusic.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo_sonomusic.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="583" y="96" width="50" height="13" uuid="0d3f0738-f2cb-489a-b011-56bc6ebcc652"/>
@@ -120,21 +122,21 @@ FROM
 				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="235" y="0" width="121" height="13" uuid="196ce67f-019e-41e0-bc37-e814723fbd2d"/>
+				<reportElement x="235" y="0" width="80" height="13" uuid="196ce67f-019e-41e0-bc37-e814723fbd2d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ruc]]></text>
+				<text><![CDATA[Marca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="356" y="0" width="245" height="13" uuid="d8d599ec-ff86-4109-a166-8c09f72aa6fc"/>
+				<reportElement x="400" y="0" width="210" height="13" uuid="d8d599ec-ff86-4109-a166-8c09f72aa6fc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Raz. Soc.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="601" y="0" width="54" height="13" uuid="be33d50b-227b-432e-b341-64aa03a39871"/>
+				<reportElement x="610" y="0" width="45" height="13" uuid="be33d50b-227b-432e-b341-64aa03a39871"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true" isStrikeThrough="false"/>
 				</textElement>
@@ -154,22 +156,29 @@ FROM
 				</textElement>
 				<text><![CDATA[SubTotal]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="315" y="1" width="80" height="13" uuid="2e18ca0c-2367-4d57-a430-b47bd212475f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField>
-				<reportElement x="235" y="0" width="121" height="13" uuid="6cceacdc-9327-43a5-b770-df91eb39e29a"/>
+				<reportElement x="235" y="0" width="80" height="13" uuid="6cceacdc-9327-43a5-b770-df91eb39e29a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{proveedor_ruc_pro}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{productos_marca}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="356" y="0" width="245" height="13" uuid="d9143f39-8998-4d54-8da3-c89e4dec76e4"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="400" y="0" width="210" height="13" uuid="d9143f39-8998-4d54-8da3-c89e4dec76e4"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{proveedor_raz_soc_pro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="601" y="0" width="54" height="13" uuid="d79b41f3-e2b5-4f44-8ea1-2aa31ac3490f"/>
+				<reportElement x="610" y="0" width="45" height="13" uuid="d79b41f3-e2b5-4f44-8ea1-2aa31ac3490f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{detalle_compra_cant_compra}]]></textFieldExpression>
 			</textField>
@@ -196,7 +205,12 @@ FROM
 			<textField>
 				<reportElement x="30" y="0" width="205" height="13" uuid="d124c30b-5bc5-48bd-ae42-8fe74397146e"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{productos_desc_pro}+" - "+$F{productos_modelo}+" - "+$F{productos_serie}+" - "+$F{productos_marca}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{productos_desc_pro}+" - "+$F{productos_modelo}+" - "+$F{productos_serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="80" height="13" uuid="c90b5bde-d84e-44ad-9188-150c671eec28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{proveedor_ruc_pro}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

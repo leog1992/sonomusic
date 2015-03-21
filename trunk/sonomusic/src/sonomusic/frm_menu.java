@@ -216,6 +216,8 @@ public class frm_menu extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
+        jSeparator15 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem31 = new javax.swing.JMenuItem();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenuItem30 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -951,7 +953,18 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem21);
+        jMenu3.add(jSeparator15);
 
+        jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem31.setText("Rpt. Compras por Fecha");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem31);
+
+        jMenuItem29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem29.setText("Rpt. Compras por Producto");
         jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -960,7 +973,13 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem29);
 
+        jMenuItem30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem30.setText("Rpt. Compras por Proveedor");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem30);
 
         jMenuBar1.add(jMenu3);
@@ -1389,8 +1408,8 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
-       frm_banco ban = new frm_banco();
-       ven.llamar_ventana(ban);
+        frm_banco ban = new frm_banco();
+        ven.llamar_ventana(ban);
     }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
@@ -1406,16 +1425,28 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-       frm_rpt_fechas fec = new frm_rpt_fechas();
-       fec.rpt="venta_vendedor";
-       ven.llamar_ventana(fec);
+        frm_rpt_fechas fec = new frm_rpt_fechas();
+        fec.rpt = "venta_vendedor";
+        ven.llamar_ventana(fec);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
-        frm_rpt_fechas rpt_fec = new frm_rpt_fechas();
-        rpt_fec.rpt = "compra_producto";
-        ven.llamar_ventana(rpt_fec);
+        frm_ver_productos prod = new frm_ver_productos();
+        prod.ventana = "compra_prod";
+        ven.llamar_ventana(prod);
     }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        frm_rpt_fechas rpt_fec = new frm_rpt_fechas();
+        rpt_fec.rpt = "compras";
+        ven.llamar_ventana(rpt_fec);
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        frm_ver_proveedores prov = new frm_ver_proveedores();
+        prov.funcion = "compras_prov";
+        ven.llamar_ventana(prov);
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1509,6 +1540,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -1523,6 +1555,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;

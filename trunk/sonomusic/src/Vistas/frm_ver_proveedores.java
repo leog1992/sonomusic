@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -268,6 +270,13 @@ int i;
                 }
                 
             } 
+                if (funcion.equals("compras_prov")) {
+                   pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                   Map<String, Object> parametros = new HashMap<>();
+                   parametros.put("proveedor", pro.getRuc());
+                   ven.ver_reporte("rpt_compras_proveedor", parametros);
+                   this.dispose();
+                }
                 funcion = "proveedor";
         }
         

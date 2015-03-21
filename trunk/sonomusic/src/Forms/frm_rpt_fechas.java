@@ -164,11 +164,19 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("idmat", pro.getId_pro());
                 ven.ver_reporte("rpt_kardex", parametros);
             }
+            
+            if (rpt.equals("compras")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fecha_pago", fec_fin);
+                parametros.put("fecha_doc", fec_ini);
+                ven.ver_reporte("rpt_compras", parametros);
+            }
 
             if (rpt.equals("compra_producto")) {
                 Map<String, Object> parametros = new HashMap<>();
-                parametros.put("fec_fin", fec_fin);
-                parametros.put("fec_ini", fec_ini);
+                parametros.put("idproducto", pro.getId_pro());
+                parametros.put("fecha_pago", fec_fin);
+                parametros.put("fecha_doc", fec_ini);
                 ven.ver_reporte("rpt_compras_producto", parametros);
             }
 
@@ -176,7 +184,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("usuario", frm_menu.lbl_user.getText());
                 parametros.put("fecha_inicio", fec_ini);
-                parametros.put("fehca_fin", fec_fin);
+                parametros.put("fecha_fin", fec_fin);
                 ven.ver_reporte("rpt_ventas_vendedor", parametros);
                 System.out.println(frm_menu.lbl_user.getText()+" - "+fec_ini+" - "+fec_fin);
             }
