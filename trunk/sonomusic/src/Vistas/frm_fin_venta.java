@@ -545,7 +545,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '1')";
+                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '"+frm_menu.cue.getId_cuen()+"')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {

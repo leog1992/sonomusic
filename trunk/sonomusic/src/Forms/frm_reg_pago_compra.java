@@ -9,9 +9,15 @@ import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import Vistas.frm_ver_compras_prod;
+import Vistas.frm_ver_compras_serv;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import sonomusic.frm_menu;
 
 /**
  *
@@ -26,19 +32,39 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     public static Double pagado = 0.00;
     public static Double restante = 0.00;
     public static String funcion = "pagar";
+    public static String glosa = "";
     Double queda = 0.00;
     Double real = 0.00;
-    DecimalFormat formato = new DecimalFormat("####0.00");
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
+    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
 
     /**
      * Creates new form frm_pagar_compra
      */
     public frm_reg_pago_compra() {
         initComponents();
-        
         txt_fec.setText(ven.getFechaActual());
+        String query = "select * from tipo_pago";
+        ver_tipo(query);
     }
-    
+
+    private void ver_tipo(String query) {
+        try {
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+
+            while (rs.next()) {
+                String fila;
+                fila = rs.getString("desc");
+                cbx_tipopago.addItem(fila);
+            }
+            con.cerrar(st);
+            con.cerrar(rs);
+        } catch (SQLException e) {
+            System.err.print(e);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,6 +96,8 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         btn_add = new javax.swing.JButton();
         btn_clo = new javax.swing.JButton();
         txt_fec = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        cbx_tipopago = new javax.swing.JComboBox();
 
         setTitle("Pago de Compras");
 
@@ -181,6 +209,15 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("Forma de Pago");
+
+        cbx_tipopago.setEnabled(false);
+        cbx_tipopago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_tipopagoKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,13 +240,13 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_tido, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_tido)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_nro))))
+                                .addComponent(txt_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -237,7 +274,12 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btn_add)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_clo)))))
+                                .addComponent(btn_clo))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbx_tipopago, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -257,7 +299,11 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                     .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_tipopago, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_deu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,7 +321,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -285,68 +331,101 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         if (funcion.equals("productos")) {
             frm_ver_compras_prod compras = new frm_ver_compras_prod();
             ven.llamar_ventana(compras);
-            
+
         }
         funcion = "pagar";
         this.dispose();
     }//GEN-LAST:event_btn_cloActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-//        String fecha = txt_fec.getText();
-//        if (queda<=0.00) {
-//            try {
-//                Statement st = con.conexion();
-//                String ins_pago = "insert into Pagos_Compra Values (null, '"+fecha+"', '"+restante+"', '"+com.getId()+"')";
-//                con.actualiza(st, ins_pago);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }
-//            
-//            try {
-//                Statement st = con.conexion();
-//                String upd_com = "update Compra set estado = '1', idTipo_pago = '1' where idCompra = '"+com.getId()+"'";
-//                con.actualiza(st, upd_com);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }
-//            
-//            try {
-//                String glosa = "PAGO DE COMPRA NRO. " + com.getId();
-//                Statement st = con.conexion();
-//                String add_mov = "insert into Movimiento Values (null, '"+glosa+"', '"+fecha+"' , '0.00', '"+restante+"', '"+frm_menu.usu.getNick()+"')";
-//                con.actualiza(st, add_mov);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }      
-//        frm_ver_compra compra = new frm_ver_compra();
-//        ven.llamar_ventana(compra);
-//        this.dispose();
-//        } else {
-//            try {
-//                Statement st = con.conexion();
-//                String ins_pago = "insert into Pagos_Compra Values (null, '"+fecha+"', '"+real+"', '"+com.getId()+"')";
-//                con.actualiza(st, ins_pago);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }
-//            
-//            try {
-//                String glosa = "PAGO DE COMPRA NRO. " + com.getId();
-//                Statement st = con.conexion();
-//                String add_mov = "insert into Movimiento Values (null, '"+glosa+"', '"+fecha+"' , '0.00', '"+real+"', '"+frm_menu.usu.getNick()+"')";
-//                con.actualiza(st, add_mov);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }   
-//        frm_ver_compra compra = new frm_ver_compra();
-//        ven.llamar_ventana(compra);
-//        this.dispose();
-//        }
+        String fecha = ven.fechabase(txt_fec.getText());
+
+        if (queda <= 0.00) {
+            try {
+                Statement st = con.conexion();
+                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + restante + "', '" + com.getId() + "')";
+                con.actualiza(st, ins_pago);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.print(ex);
+            }
+
+            try {
+                Statement st = con.conexion();
+                String upd_com = "update Compra set estado = '1', idTipo_pago = '1' where idCompra = '" + com.getId() + "'";
+                con.actualiza(st, upd_com);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.print(ex);
+            }
+
+            if (cbx_tipopago.getSelectedIndex() == 0) {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+                            + "'" + frm_menu.caja.getId() + "')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            } else {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+                            + "'"+frm_menu.cue.getId_cuen()+"')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            }
+
+        } else {
+            try {
+                Statement st = con.conexion();
+                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + real + "', '" + com.getId() + "')";
+                con.actualiza(st, ins_pago);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.print(ex);
+            }
+
+            if (cbx_tipopago.getSelectedIndex() == 0) {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+                            + "'" + frm_menu.caja.getId() + "')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            } else {
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+                            + "'"+frm_menu.cue.getId_cuen()+"')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+            }
+
+        }
+
+        if (funcion.equals("productos")) {
+            frm_ver_compras_prod compra = new frm_ver_compras_prod();
+            ven.llamar_ventana(compra);
+            this.dispose();
+            funcion = "pagar";
+        } else {
+            frm_ver_compras_serv compra = new frm_ver_compras_serv();
+            ven.llamar_ventana(compra);
+            this.dispose();
+            funcion = "pagar";
+        }
 
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -358,10 +437,9 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_fec.getText().length() == 10) {
-                txt_real.setEditable(true);
-                txt_real.setText("");
-                txt_real.requestFocus();
+            if (txt_fec.getText().trim().length() == 10) {
+                cbx_tipopago.setEnabled(true);
+                cbx_tipopago.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_fecKeyPressed
@@ -388,11 +466,21 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_realKeyPressed
 
+    private void cbx_tipopagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tipopagoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_real.setEditable(true);
+            txt_real.setText("");
+            txt_real.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_tipopagoKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_clo;
+    private javax.swing.JComboBox cbx_tipopago;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -406,7 +494,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txt_nro;
     public static javax.swing.JTextField txt_pag;
     public static javax.swing.JTextField txt_raz;
-    private javax.swing.JTextField txt_real;
+    public static javax.swing.JTextField txt_real;
     private javax.swing.JTextField txt_rest;
     public static javax.swing.JTextField txt_ruc;
     public static javax.swing.JTextField txt_sal;

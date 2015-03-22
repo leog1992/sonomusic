@@ -5,6 +5,7 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Moneda;
 import Clases.Cl_Varios;
 import Clases.Cl_cuenta;
+import Forms.frm_reg_almacen;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,6 +26,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
     DefaultTableModel mostrar;
     int i;
     public static String ventana="grabar";
+    public static String funcion = "cuenta";
 
     public frm_cuentas() {
         initComponents();
@@ -63,7 +65,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
                 dato[0] = rs.getObject("idcuenta");
                 dato[1] = rs.getObject("tipo_cuenta");
                 dato[2] = rs.getObject("nro_cuenta");
-                dato[3] = rs.getObject("nombre");
+                dato[3] = rs.getObject("b.nombre");
                 dato[4] = rs.getObject("moneda");
                 dato[5] = rs.getObject("siglas");
                 dato[6] = rs.getObject("monto");
@@ -232,6 +234,11 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
         t_cuentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_cuentasMousePressed(evt);
+            }
+        });
+        t_cuentas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                t_cuentasKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(t_cuentas);
@@ -507,6 +514,20 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_montoKeyTyped
+
+    private void t_cuentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_cuentasKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_SPACE) {
+            if (funcion.equals("almacen")){
+                String banco = t_cuentas.getValueAt(i, 3).toString();
+                String cuenta = t_cuentas.getValueAt(i, 2).toString();
+                frm_reg_almacen almacen = null;
+                almacen.txt_banco.setText(banco);
+                almacen.txt_cuenta.setText(cuenta);
+                almacen.lbl_idc.setText(t_cuentas.getValueAt(i, 0).toString());
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_t_cuentasKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

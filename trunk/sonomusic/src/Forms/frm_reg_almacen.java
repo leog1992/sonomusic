@@ -9,6 +9,7 @@ import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Empresa;
 import Clases.Cl_Varios;
+import Vistas.frm_cuentas;
 import Vistas.frm_ver_almacen;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -26,6 +27,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Empresa emp = new Cl_Empresa();
+    public String idcuenta = "";
 
     /**
      * Creates new form frm_reg_almacen
@@ -60,6 +62,13 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         txt_ruc = new javax.swing.JTextField();
         txt_raz = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txt_banco = new javax.swing.JTextField();
+        txt_cuenta = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        lbl_idc = new javax.swing.JLabel();
 
         setTitle("Registrar Almacen");
 
@@ -149,6 +158,26 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Datos de Almacen");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setText("Cuenta Predeterminada para Ventas");
+
+        jLabel10.setText("Banco:");
+
+        jLabel11.setText("Cuenta:");
+
+        txt_banco.setEditable(false);
+
+        txt_cuenta.setEditable(false);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        lbl_idc.setText("IdCuenta");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,6 +216,25 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel8))
                         .addGap(376, 376, 376))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_idc)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_banco)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,11 +267,26 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_raz, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_banco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_idc)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -269,6 +332,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         alm.setCiudad(txt_ciudad.getText());
         emp.setRuc(txt_ruc.getText());
         emp.setRaz_soc(txt_raz.getText());
+        idcuenta = lbl_idc.getText();
     }
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
@@ -276,7 +340,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String ins_alm = "insert into almacen Values (null, '" + alm.getNom() + "', '" + alm.getDireccion() + "', '" + alm.getEst() + "', "
-                    + "'" + alm.getCiudad() + "', '"+emp.getRuc()+"', '"+emp.getRaz_soc()+"')";
+                    + "'" + alm.getCiudad() + "', '" + emp.getRuc() + "', '" + emp.getRaz_soc() + "', '" + idcuenta + "')";
             con.actualiza(st, ins_alm);
             con.cerrar(st);
             this.dispose();
@@ -311,13 +375,24 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                 } catch (Exception ex) {
                     System.out.print(ex);
                 }
+
+                try {
+                    Statement st1 = con.conexion();
+                    String nombre  = "CAJA SOLES - " + alm.getNom();
+                    String ins_caja = "insert into caja Values (null, '" + nombre + "', "
+                            + "'" + alm.getId() + "', '0')";
+                    con.actualiza(st1, ins_caja);
+                    con.cerrar(st1);
+                } catch (Exception e) {
+                    System.out.print(e);
+                }
             }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException ex) {
             System.out.print(ex);
         }
-        
+
         JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
         frm_ver_almacen almacen = new frm_ver_almacen();
         ven.llamar_ventana(almacen);
@@ -346,11 +421,11 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
 
     private void txt_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_ruc.getText().length()==11) {
+            if (txt_ruc.getText().length() == 11) {
                 try {
                     emp.setRuc(txt_ruc.getText());
                     Statement st = con.conexion();
-                    String ver_ruc = "select raz_soc from Almacen where ruc = '"+emp.getRuc()+"'";
+                    String ver_ruc = "select raz_soc from almacen where ruc = '" + emp.getRuc() + "'";
                     ResultSet rs = con.consulta(st, ver_ruc);
                     if (rs.next()) {
                         txt_raz.setText(rs.getString("raz_soc"));
@@ -363,7 +438,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
-                
+
             }
         }
     }//GEN-LAST:event_txt_rucKeyPressed
@@ -378,24 +453,41 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_razKeyPressed
 
     private void txt_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyTyped
-       if(txt_ruc.getText().length()==11) evt.consume();
-       char car = evt.getKeyChar();
-        if((car<'0' || car>'9')) evt.consume();
+        if (txt_ruc.getText().length() == 11) {
+            evt.consume();
+        }
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_rucKeyTyped
 
     private void txt_razKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_razKeyTyped
-       if(txt_raz.getText().length()==245) evt.consume();
+        if (txt_raz.getText().length() == 245) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_razKeyTyped
 
     private void txt_dirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dirKeyTyped
-    if(txt_dir.getText().length()==245) evt.consume();
+        if (txt_dir.getText().length() == 245) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_dirKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        frm_cuentas cuentas = new frm_cuentas();
+        cuentas.funcion = "almacen";
+        ven.llamar_ventana(cuentas);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_reg;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -403,7 +495,11 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    public static javax.swing.JLabel lbl_idc;
+    public static javax.swing.JTextField txt_banco;
     private javax.swing.JTextField txt_ciudad;
+    public static javax.swing.JTextField txt_cuenta;
     private javax.swing.JTextField txt_dir;
     private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_nom;
