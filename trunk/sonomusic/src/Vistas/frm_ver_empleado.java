@@ -3,6 +3,7 @@ package Vistas;
 import Clases.*;
 import Forms.frm_reg_adelanto;
 import Forms.frm_reg_empleado;
+import Forms.frm_reg_pago;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,13 +27,14 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     Integer i;
     String valor;
     DefaultTableModel mostrar;
+    public static String fecha;
 
     /**
      * Creates new form frm_ver_empleado
      */
     public frm_ver_empleado() {
         initComponents();
-        
+
         String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, m.monto, c.tipo_cargo from empleados as e "
                 + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c "
                 + "on e.idCargo=c.idCargo order by dni asc";
@@ -276,24 +278,6 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
 
         String dni = t_empleado.getValueAt(i, 0).toString();
         String nom = t_empleado.getValueAt(i, 1).toString();
-
-//        if (ventana.equals("movimiento")) {
-//            if (!estado.equals("-")) {
-//                frm_movimientos mov = null;
-//                mov.txt_dni.setText(dni);
-//                mov.txt_nom.setText(nom);
-//                mov.rbt_ini.setEnabled(true);
-//                mov.rbt_ing.setEnabled(true);
-//                mov.rbt_sal.setEnabled(true);
-//                mov.rbt_sal.setSelected(true);
-//                mov.txt_mot.setEditable(true);
-//                mov.txt_mot.requestFocus();
-//                ventana = "empleado";
-//                this.dispose();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "El empleado no esta habilitado para esta operacion");
-//            }
-//        }
     }//GEN-LAST:event_t_empleadoMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
@@ -424,12 +408,12 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 }
             }
             if (ventana.equals("adelantos")) {
-                frm_reg_adelanto ade= null;
-                String id=t_empleado.getValueAt(i, 0).toString();
-                String nom=t_empleado.getValueAt(i, 1).toString();
-                String car=t_empleado.getValueAt(i, 2).toString();
-                String tel1=t_empleado.getValueAt(i, 3).toString();
-                String tel2=t_empleado.getValueAt(i, 4).toString();
+                frm_reg_adelanto ade = null;
+                String id = t_empleado.getValueAt(i, 0).toString();
+                String nom = t_empleado.getValueAt(i, 1).toString();
+                String car = t_empleado.getValueAt(i, 2).toString();
+                String tel1 = t_empleado.getValueAt(i, 3).toString();
+                String tel2 = t_empleado.getValueAt(i, 4).toString();
                 try {
                     ade.txt_dni.setText(id);
                     ade.txt_empleado.setText(nom);
@@ -437,10 +421,59 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     ade.txttelefono1.setText(tel1);
                     ade.txttelefono2.setText(tel2);
                     ade.txt_fec.setEditable(true);
-                    ade.txt_fec.requestFocus();                    
+                    ade.txt_fec.requestFocus();
                     this.dispose();
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
+                }
+            }
+
+            if (ventana.equals("pago")) {
+                frm_reg_pago pago = null;
+                int id = (int) t_empleado.getValueAt(i, 0);
+                String nom = t_empleado.getValueAt(i, 1).toString();
+                String car = t_empleado.getValueAt(i, 2).toString();
+                //
+                try {
+                    Statement st = con.conexion();
+                    String comision = "select  pr.comision,  dp.cantidad, dp.precio from pedido as p "
+                            + "inner join detalle_pedido as dp on p.idPedido=dp.idPedido inner join productos as pr "
+                            + "on dp.idProductos=pr.idProductos where p.nick='" + id + "' and MONTH(p.fec_ped)=03";
+                    ResultSet rs = con.consulta(st, comision);
+                    System.out.println(id+" / "+fecha);
+                    double comi=0;
+                    while (rs.next()) {
+                        comi+= (rs.getDouble("comision")/100) * rs.getDouble("cantidad") * rs.getDouble("precio");
+                    }
+                    pago.txt_comision.setText(comi+"");
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
+                }
+                
+                try {
+                    Statement st = con.conexion();
+                    String sql="select monto from adelanto where dni='"+id+"'";
+                    ResultSet rs = con.consulta(st, sql);
+                    double ade=0;
+                    while (rs.next()) {
+                        ade+=rs.getDouble("monto");
+                    }
+                    pago.txt_adelanto.setText(ade+"");
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
+                }
+                
+                //envios
+                try {
+                    pago.txtdni.setText(id+"");
+                    pago.txtempleado.setText(nom);
+                    pago.txt_cargo.setText(car);
+                    pago.txt_otro_ingreso.setEditable(true);
+                    pago.txt_otro_ingreso.requestFocus();
+                    this.dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
                 }
             }
         }

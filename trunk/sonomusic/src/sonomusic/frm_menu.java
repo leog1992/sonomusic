@@ -31,6 +31,7 @@ import Vistas.frm_ver_cotizacion;
 import Vistas.frm_ver_empleado;
 import Vistas.frm_ver_guias;
 import Vistas.frm_ver_notas;
+import Vistas.frm_ver_pago;
 import Vistas.frm_ver_prod_alm;
 import Vistas.frm_ver_prod_alm_det;
 import Vistas.frm_ver_productos;
@@ -888,6 +889,11 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
         jMenuItem11.setText("Pago Colaborador");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem11);
 
         jMenuBar1.add(jMenu1);
@@ -1521,6 +1527,11 @@ public class frm_menu extends javax.swing.JFrame {
         frm_ver_adelantos ad = new frm_ver_adelantos();
         ven.llamar_ventana(ad);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        frm_ver_pago pago = new frm_ver_pago();
+        ven.llamar_ventana(pago);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
     /**
      * @param args the command line arguments
      */
