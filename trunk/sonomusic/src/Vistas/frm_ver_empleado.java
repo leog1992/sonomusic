@@ -9,15 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author CONTABILIDAD 02
- */
 public class frm_ver_empleado extends javax.swing.JInternalFrame {
 
     Cl_Varios ven = new Cl_Varios();
@@ -28,10 +27,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     String valor;
     DefaultTableModel mostrar;
     public static String fecha;
+    DecimalFormatSymbols sim = new DecimalFormatSymbols(Locale.US);
+    DecimalFormat formato = new DecimalFormat("####0.00",sim);
 
-    /**
-     * Creates new form frm_ver_empleado
-     */
     public frm_ver_empleado() {
         initComponents();
 
@@ -445,7 +443,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     while (rs.next()) {
                         comi+= (rs.getDouble("comision")/100) * rs.getDouble("cantidad") * rs.getDouble("precio");
                     }
-                    pago.txt_comision.setText(comi+"");
+                    pago.txt_comision.setText(formato.format(comi)+"");
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
@@ -459,18 +457,31 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     while (rs.next()) {
                         ade+=rs.getDouble("monto");
                     }
-                    pago.txt_adelanto.setText(ade+"");
+                    pago.txt_adelanto.setText(formato.format(ade)+"");
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
                 }
+                
+                 try {
+                    Statement st = con.conexion();
+                    String sql="select sueldo from empleados where dni='"+id+"'";
+                    ResultSet rs = con.consulta(st, sql);
+                    double ade=0;
+                    while (rs.next()) {
+                        ade+=rs.getDouble("sueldo");
+                    }
+                    pago.txt_salario.setText(formato.format(ade)+"");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
+                }
+                
                 
                 //envios
                 try {
                     pago.txtdni.setText(id+"");
                     pago.txtempleado.setText(nom);
-                    pago.txt_cargo.setText(car);
-                    pago.txt_otro_ingreso.setEditable(true);
-                    pago.txt_otro_ingreso.requestFocus();
+                    pago.txt_cargo.setText(car);                    
+                    pago.txt_fec.requestFocus();
                     this.dispose();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());

@@ -30,7 +30,6 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
         String sql = "select p.idpago, p.fecha , p.comisiones, p.otrosingresos, p.adelantos, p.otrosdescuentos"
                 + ", p.dni, e.nom_per, e.tel_per, e.tel2_per, c.tipo_cargo, p.salario from pago as p inner join empleados as e "
                 + "on p.dni=e.dni inner join cargo as c on e.idCargo=c.idCargo order by p.idpago";
-        //String sql2="select precio_venta, cant_actual, comision from productos";
         ver_pago(sql);
     }
     
@@ -52,11 +51,10 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
             modelo.addColumn("Otros Ingresos");
             modelo.addColumn("Adelantos");
             modelo.addColumn("Otros Descuentos");
-            modelo.addColumn("Salario");
-            modelo.addColumn("Total");
-            //ResultSet rs2=con.consulta(st, sql2);
+            modelo.addColumn("Salario");            
+           
             ResultSet rs = con.consulta(st, sql);
-            Object[] dato = new Object[11];
+            Object[] dato = new Object[10];
             while (rs.next()) {
                 dato[0] = rs.getObject("idpago");
                 dato[1] = rs.getObject("fecha");
@@ -67,13 +65,7 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
                 dato[6] = rs.getObject("otrosingresos");
                 dato[7] = rs.getObject("adelantos");
                 dato[8] = rs.getObject("otrosdescuentos");
-                dato[9] = rs.getObject("salario");
-                double sal=rs.getDouble("salario");
-                double com = rs.getDouble("comisiones");
-                double ingresos = rs.getDouble("otrosingresos");
-                double adelan = rs.getDouble("adelantos");
-                double descu = rs.getDouble("otrosdescuentos");
-                dato[10] = (sal+com + ingresos) - (adelan - descu);
+                dato[9] = rs.getObject("salario");                             
                 modelo.addRow(dato);
             }
             con.cerrar(st);
@@ -88,8 +80,7 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
             t_pago.getColumnModel().getColumn(6).setPreferredWidth(50);
             t_pago.getColumnModel().getColumn(7).setPreferredWidth(20);
             t_pago.getColumnModel().getColumn(8).setPreferredWidth(50);
-            t_pago.getColumnModel().getColumn(9).setPreferredWidth(20);
-            t_pago.getColumnModel().getColumn(10).setPreferredWidth(90);
+            t_pago.getColumnModel().getColumn(9).setPreferredWidth(80);            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
@@ -258,7 +249,7 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             String id = t_pago.getValueAt(i, 0).toString();
             String sql = "delete from pago where idpago= '" + id + "'";
-            con.actualiza(st, id);
+            con.actualiza(st, sql);
             con.cerrar(st);
             String query = "select p.idpago, p.fecha , p.comisiones, p.otrosingresos, p.adelantos, p.otrosdescuentos"
                     + ", p.dni, e.nom_per, e.tel_per, e.tel2_per, c.tipo_cargo, p.salario from pago as p inner join empleados as e "

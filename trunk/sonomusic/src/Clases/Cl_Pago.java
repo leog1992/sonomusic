@@ -16,6 +16,7 @@ public class Cl_Pago {
     private double otro_ing_pag;
     private double ade_pag ;
     private double otro_des_pag;
+    private double salario;
 
     public int getId() {
         return id;
@@ -63,6 +64,14 @@ public class Cl_Pago {
 
     public void setOtro_des_pag(double otro_des_pag) {
         this.otro_des_pag = otro_des_pag;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
     
     
