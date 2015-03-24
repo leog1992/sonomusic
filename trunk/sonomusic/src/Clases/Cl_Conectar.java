@@ -27,7 +27,7 @@ public class Cl_Conectar {
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
     // Ruta del servidor.
-    String server = "jdbc:mysql://190.42.219.184:3306/" + bd;//10.42.0.1
+    String server = "jdbc:mysql://190.234.182.216:3306/" + bd;//10.42.0.1
     //String server = "jdbc:mysql://208.43.223.210:3306/" + bd;//10.42.0.1
 
     // String server = "jdbc:mysql://"+leer(
