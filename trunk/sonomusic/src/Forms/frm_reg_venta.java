@@ -414,6 +414,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fecKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecKeyTyped(evt);
+            }
         });
 
         jLabel1.setText("Tipo Venta:");
@@ -1075,10 +1078,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_fec.getText().length() == 10) {
+            if (txt_fec.getText().trim().length() == 10) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
                 btn_reg.doClick();
+            }else{
+                txt_fec.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_fecKeyPressed
@@ -1137,6 +1142,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             btn_cam_can.doClick();
         }
     }//GEN-LAST:event_t_detalleKeyPressed
+
+    private void txt_fecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyTyped
+        
+    }//GEN-LAST:event_txt_fecKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

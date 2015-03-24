@@ -416,20 +416,14 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
         if (txt_tel.getText().length() == 9) {
             evt.consume();
         }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9')) {
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txt_telKeyTyped
 
     private void txt_tel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel1KeyTyped
         if (txt_tel1.getText().length() == 9) {
             evt.consume();
         }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9')) {
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txt_tel1KeyTyped
 
     private void cbx_cliKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_cliKeyPressed

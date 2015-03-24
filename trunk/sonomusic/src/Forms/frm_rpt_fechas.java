@@ -9,11 +9,11 @@ import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
+import Vistas.frm_ver_usuarios;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 import sonomusic.frm_menu;
-import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -210,6 +210,13 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("idalm", frm_menu.alm.getId());
                 parametros.put("fec_fin", fec_fin);
                 ven.ver_reporte("rpt_caja_movimiento_cajas", parametros);
+            }
+            if (rpt.equals("vendedor")) {
+                Map<String,Object> parametros = new HashMap<>();
+                parametros.put("usuario", frm_ver_usuarios.id);
+                parametros.put("fecha_inicio", fec_ini);
+                parametros.put("fecha_fin", fec_fin);
+                ven.ver_reporte("rpt_ventas_vendedor", parametros);
             }
             this.dispose();
         }

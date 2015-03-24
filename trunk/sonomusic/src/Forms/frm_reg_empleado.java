@@ -27,7 +27,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
     public frm_reg_empleado() {
         initComponents();
-        
+
         String k = "select * from metas";
         cargarmetas(k);
         String a = "select * from almacen";
@@ -138,6 +138,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_lim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
         btn_lim.setText("Limpiar");
         btn_lim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +146,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         btn_reg.setText("Registrar");
         btn_reg.setEnabled(false);
         btn_reg.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +160,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         btn_cer.setText("Cerrar");
         btn_cer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,13 +342,13 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                             .addComponent(txt_ndoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_tel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbx_almacen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_tel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_sue, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txt_fec, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(txt_tel2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(cbx_almacen, 0, 100, Short.MAX_VALUE)
+                                        .addComponent(txt_tel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(cbx_cargo, 0, 100, Short.MAX_VALUE)
+                                        .addComponent(txt_sue))
                                     .addGap(100, 100, 100)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -403,10 +406,8 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                                 .addComponent(cbx_almacen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cbx_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -459,7 +460,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        alm.setId(cbx_almacen.getSelectedIndex()+1);
+        alm.setId(cbx_almacen.getSelectedIndex() + 1);
         met.setId(cbx_mon.getSelectedIndex() + 1);
         car.setId(cbx_cargo.getSelectedIndex() + 1);
 
@@ -479,6 +480,9 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 con.cerrar(st);
                 JOptionPane.showMessageDialog(null, "Se ha ingresado los datos corectamente");
                 btn_lim.doClick();
+                this.dispose();
+                frm_ver_empleado empleado = new frm_ver_empleado();
+                ven.llamar_ventana(empleado);
             }
             if (win.equals("mod")) {
                 Statement st = con.conexion();
@@ -492,8 +496,8 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 win = "reg";
                 this.dispose();
                 frm_ver_empleado empleado = new frm_ver_empleado();
-
                 ven.llamar_ventana(empleado);
+                
             }
         } catch (Exception e) {
             System.out.println("Ocurrio un error " + e.getMessage() + " en :" + e.getLocalizedMessage());
@@ -591,10 +595,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         if (txt_tel1.getText().length() == 9) {
             evt.consume();
         }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9')) {
-            evt.consume();
-        }
     }//GEN-LAST:event_txt_tel1KeyTyped
 
     private void txt_tel2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel2KeyTyped
@@ -679,8 +679,10 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_almacen.setEnabled(true);
-            cbx_almacen.requestFocus();
+            if (txt_fec.getText().trim().length() == 10) {
+                cbx_almacen.setEnabled(true);
+                cbx_almacen.requestFocus();
+            }
         }
     }//GEN-LAST:event_txt_fecKeyPressed
 

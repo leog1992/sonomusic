@@ -221,6 +221,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_metas);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
         jButton1.setText("Eliminar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +229,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         jButton2.setText("Cerrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +237,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         btn_reg.setText("Registrar");
         btn_reg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,16 +346,15 @@ public class frm_metas extends javax.swing.JInternalFrame {
                     + "'" + met.getFec_fin() + "','" + car.getId() + "')";
             con.actualiza(st, query);
             con.cerrar(st);
-            JOptionPane.showMessageDialog(null, "Operacion realizada con exito");
+            //JOptionPane.showMessageDialog(null, "Operacion realizada con exito");
             //mostrar
             String sql2 = "select m.idMetas, m.monto, m.estado, m.fec_inicio, m.fec_fin, "
-                    + "c.tipo_cargo from metas as m inner join cargo as c on m.idcargo=c.idCargo order by idMetas asc;";
+                    + "c.tipo_cargo from metas as m inner join cargo as c on m.idcargo=c.idCargo order by idMetas asc";
             ver_metas(sql2);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e + "en: " + e.getLocalizedMessage());
         }
-
         limpiar();
 
     }//GEN-LAST:event_btn_regActionPerformed
@@ -376,7 +378,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_fec_iniKeyPressed
 
     private void txt_fec_finKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_finKeyPressed
-        if (!txt_fec_fin.getText().isEmpty()) {
+        if (txt_fec_fin.getText().trim().length()==10) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 cbx_cargo.setEnabled(true);
                 cbx_cargo.requestFocus();

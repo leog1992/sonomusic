@@ -20,7 +20,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
@@ -462,33 +464,14 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void btn_detActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detActionPerformed
-//            com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-//            Connection st = con.conx();
-//            Map<String, Object> parametros = new HashMap<>();
-//            parametros.put("idcom", com.getId());
-//
-//            try {
-//                JasperReport jasperReport;
-//                JasperPrint jasperPrint;
-//                jasperReport = JasperCompileManager.compileReport("Reports//rpt_ver_det_compra.jrxml");
-//                jasperPrint = JasperFillManager.fillReport(
-//                jasperReport, parametros, st);
-//                JasperExportManager.exportReportToPdfFile(
-//                jasperPrint, "Reports/rpt_ver_det_compra.pdf");
-//
-//                    try {
-//                        File file = new File("Reports/rpt_ver_det_compra.pdf");
-//                        Desktop.getDesktop().open(file);
-//                    } catch(IOException e) {
-//                        System.out.print(e);
-//                        JOptionPane.showMessageDialog(null, e);
-//                    }
-//
-//            } catch (JRException ex) {
-//                System.out.print(ex);
-//                JOptionPane.showMessageDialog(null, ex);
-//
-//            }
+        try {
+            String id=t_compras.getValueAt(i, 0).toString();
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("compra", id);
+            ven.ver_reporte("rpt_ver_det_compra", parametros);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
+        }
     }//GEN-LAST:event_btn_detActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
