@@ -61,7 +61,11 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         detalle = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
-                return false;
+                if (columna == 3 || columna == 5) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         };
         detalle.addColumn("Id");
@@ -732,6 +736,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
                 + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
         ver_productos(query);
+        prod.btn_reg.setEnabled(false);
+        prod.btn_mod.setEnabled(false);
+        prod.btn_eli.setEnabled(false);
         prod.btn_enviar.setEnabled(true);
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_btn_busmActionPerformed
@@ -848,11 +855,27 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         btn_ca.setEnabled(true);
         btn_va.setEnabled(true);
         btn_el.setEnabled(true);
+        t_detalle.setFocusable(true);
     }//GEN-LAST:event_t_detalleMouseClicked
 
     private void t_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_detalleKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
             btn_ca.doClick();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_sub.setText(formato.format(subtotal()));
+            txt_igv.setText(formato.format(igv()));
+            txt_tot.setText(formato.format(total()));
+            txt_idp.requestFocus();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            i = t_detalle.getSelectedRow();
+            detalle.removeRow(i);
+            txt_sub.setText(formato.format(subtotal()));
+            txt_igv.setText(formato.format(igv()));
+            txt_tot.setText(formato.format(total()));
         }
     }//GEN-LAST:event_t_detalleKeyPressed
 
@@ -1001,7 +1024,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + com.getFec_com() + "', '0.00' , '" + com.getTotal() + "', '" + frm_menu.lbl_user.getText() + "'"
-                        + ",'" + frm_menu.alm.getId() + "', 'C', '"+frm_menu.caja.getId()+"')";
+                        + ",'" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                 con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
