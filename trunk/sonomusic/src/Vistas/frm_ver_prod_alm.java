@@ -84,15 +84,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_productos);
 
-        txt_bus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_busActionPerformed(evt);
-            }
-        });
         txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_busKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_busKeyTyped(evt);
             }
@@ -323,19 +315,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_t_productosKeyPressed
 
-    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            String texto = txt_bus.getText();
-//            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-//                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-//                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-//                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and p.desc_pro like '%" + texto + "%' or p.modelo "
-//                    + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%'  order by p.desc_pro asc";
-//            pro.mostrar_productos(query);
-//            t_productos.requestFocus();
-//        }
-    }//GEN-LAST:event_txt_busKeyPressed
-
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
         funcion = "material_almacen";
         this.dispose();
@@ -358,10 +337,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomaActionPerformed
 
-    private void txt_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_busActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_busActionPerformed
-
     private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
         if (cbx_bus.getSelectedIndex() == 0) {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
@@ -381,8 +356,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                 + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and p.desc_pro like '%" + texto + "%' or p.modelo "
-                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%'  order by p.desc_pro asc";
+                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
         pro.mostrar_productos(query);
         //t_productos.requestFocus();
 
