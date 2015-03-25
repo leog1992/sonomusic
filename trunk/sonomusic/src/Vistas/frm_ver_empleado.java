@@ -329,8 +329,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         String retira = "update empleados set est_per = '0' where dni = '" + emp.getDni() + "'";
         con.actualiza(st, retira);
         con.cerrar(st);
-        String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e\n"
-                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c \n"
+        String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e"
+                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c"
                 + "on e.idCargo=c.idCargo order by dni asc";
         ver_empleado(query);
         //} else {
