@@ -174,7 +174,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
 
         txt_fec_ini.setEditable(false);
         try {
-            txt_fec_ini.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+            txt_fec_ini.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -192,7 +192,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
 
         txt_fec_fin.setEditable(false);
         try {
-            txt_fec_fin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+            txt_fec_fin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

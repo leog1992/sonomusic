@@ -26,7 +26,7 @@ import sonomusic.frm_menu;
  * @author luis-d
  */
 public class frm_reg_solicitud extends javax.swing.JInternalFrame {
-    
+
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
     Cl_Almacen alm = new Cl_Almacen();
@@ -379,9 +379,11 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
 
     private void spn_diasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spn_diasKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_id_pro.setEditable(true);
-            btn_bus.setEnabled(true);
-            txt_id_pro.requestFocus();
+            if (!spn_dias.getValue().equals("0")) {
+                txt_id_pro.setEditable(true);
+                btn_bus.setEnabled(true);
+                txt_id_pro.requestFocus();
+            }
         }
     }//GEN-LAST:event_spn_diasKeyPressed
 
@@ -413,7 +415,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private void txt_id_proActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id_proActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_id_proActionPerformed
-    
+
     private void llenar() {
         frm_menu menu = null;
         req.setAlm_ori(menu.alm.getId());
@@ -453,7 +455,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         try {
             int nro_filas = t_solicitud.getRowCount();
             for (int j = 0; j < nro_filas; j++) {
@@ -507,10 +509,10 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             System.out.println(e);
         }
         traslado.idsol = idsol;
-        
+
         traslado.txt_fec.setEditable(true);
         traslado.txt_fec.requestFocus();
-        
+
         int filas_tabla = t_solicitud.getRowCount();
         for (int j = 0; j < filas_tabla; j++) {
             if (Integer.parseInt(t_solicitud.getValueAt(j, 5).toString()) != 0) {

@@ -32,15 +32,13 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txt_dni" pref="70" max="32767" attributes="0"/>
-                          <Component id="txtcargo" max="32767" attributes="0"/>
-                          <Component id="txt_fec" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="txt_empleado" min="-2" pref="285" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtcargo" max="32767" attributes="0"/>
+                                  <Component id="txt_fec" alignment="1" pref="70" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -58,8 +56,13 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txttelefono2" min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txt_dni" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txt_empleado" min="-2" pref="340" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_bus" pref="81" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -164,6 +167,7 @@
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
           <Format format="##/##/####" subtype="-1" type="5"/>
         </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fecKeyPressed"/>

@@ -55,13 +55,17 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
         setTitle("Imprimir Reportes");
 
         jLabel1.setText("Ingrese Fechas:");
+        jLabel1.setFocusable(false);
 
         jLabel2.setText("Fecha Inicio:");
+        jLabel2.setFocusable(false);
 
         jLabel3.setText("Fecha Fin:");
+        jLabel3.setFocusable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         jButton1.setText("Cerrar");
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -74,6 +78,11 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txt_fec_ini.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_ini.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fec_iniActionPerformed(evt);
+            }
+        });
         txt_fec_ini.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fec_iniKeyPressed(evt);
@@ -87,6 +96,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txt_fec_fin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_fin.setFocusable(false);
         txt_fec_fin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fec_finKeyPressed(evt);
@@ -144,6 +154,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
     private void txt_fec_iniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_iniKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec_ini.getText().trim().length() == 10) {
+                txt_fec_fin.setFocusable(true);
                 txt_fec_fin.setEditable(true);
                 txt_fec_fin.requestFocus();
             }
@@ -221,6 +232,10 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
             this.dispose();
         }
     }//GEN-LAST:event_txt_fec_finKeyPressed
+
+    private void txt_fec_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fec_iniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fec_iniActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
