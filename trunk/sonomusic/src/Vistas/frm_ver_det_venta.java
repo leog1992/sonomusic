@@ -32,8 +32,6 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_nom = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txt_tipd = new javax.swing.JTextField();
-        txt_serd = new javax.swing.JTextField();
-        txt_nrod = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_fec = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -50,20 +48,24 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         jLabel1.setText("Cliente");
 
         txt_nro.setEditable(false);
+        txt_nro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         txt_nom.setEditable(false);
 
         jLabel2.setText("Tipo Doc:");
 
         txt_tipd.setEditable(false);
-
-        txt_serd.setEditable(false);
-
-        txt_nrod.setEditable(false);
+        txt_tipd.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel3.setText("Fecha Compra:");
 
         txt_fec.setEditable(false);
+        try {
+            txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setText("Detalle:");
 
@@ -127,11 +129,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_tipd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_serd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nrod, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_tipd, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -156,8 +154,6 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tipd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_serd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nrod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -199,8 +195,6 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txt_igv;
     public static javax.swing.JTextField txt_nom;
     public static javax.swing.JTextField txt_nro;
-    public static javax.swing.JTextField txt_nrod;
-    public static javax.swing.JTextField txt_serd;
     public static javax.swing.JTextField txt_sub;
     public static javax.swing.JTextField txt_tipd;
     public static javax.swing.JTextField txt_tot;
