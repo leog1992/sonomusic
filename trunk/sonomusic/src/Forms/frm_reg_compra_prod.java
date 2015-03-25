@@ -1048,9 +1048,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_rucKeyTyped
 
     private void txt_serKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyTyped
-        if (txt_ser.getText().length() == 3) {
-            evt.consume();
-        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();
@@ -1058,9 +1055,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_serKeyTyped
 
     private void txt_nroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nroKeyTyped
-        if (txt_ser.getText().length() == 7) {
-            evt.consume();
-        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();
