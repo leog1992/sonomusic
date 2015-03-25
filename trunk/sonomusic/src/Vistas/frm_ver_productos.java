@@ -22,11 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -157,7 +153,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         txt_bus = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_productos = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btn_reg = new javax.swing.JButton();
         btn_mod = new javax.swing.JButton();
         btn_eli = new javax.swing.JButton();
         cbx_cla = new javax.swing.JComboBox();
@@ -218,11 +214,11 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(6).setPreferredWidth(40);
         }
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_add.png"))); // NOI18N
-        jButton1.setText("Registrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_add.png"))); // NOI18N
+        btn_reg.setText("Registrar");
+        btn_reg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_regActionPerformed(evt);
             }
         });
 
@@ -274,7 +270,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btn_reg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_mod))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -293,7 +289,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +305,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
 //if (frm_menu.usu.getPpr_reg().equals("1")) {
         frm_reg_productos productos = new frm_reg_productos();
         productos.win = "reg";
@@ -319,19 +315,24 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
         // JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         //      }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_regActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        ventana = "productos";
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        String bus = txt_bus.getText();
+        String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
+                + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
+                + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%'  order by p.desc_pro asc";
+        ver_productos(query);
+//        }
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String bus = txt_bus.getText();
-            String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
-                    + "from Productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
-                    + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%'  order by p.desc_pro asc";
-            ver_productos(query);
+            t_productos.requestFocus();
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -649,6 +650,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                             prod.txt_igv.setText(formato.format(prod.igv()));
                             prod.txt_tot.setText(formato.format(prod.total()));
                             prod.btn_reg.setEnabled(true);
+                            ventana = "productos";
                         }
 
                     } else {
@@ -658,6 +660,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         prod.txt_igv.setText(formato.format(prod.igv()));
                         prod.txt_tot.setText(formato.format(prod.total()));
                         prod.btn_reg.setEnabled(true);
+                        ventana = "productos";
 
                     }
                 }
@@ -669,11 +672,11 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_eli;
+    public static javax.swing.JButton btn_eli;
     public static javax.swing.JButton btn_enviar;
-    private javax.swing.JButton btn_mod;
+    public static javax.swing.JButton btn_mod;
+    public static javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_cla;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
