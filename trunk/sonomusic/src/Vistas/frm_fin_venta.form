@@ -276,6 +276,7 @@
     <Component class="javax.swing.JCheckBox" name="chk_incluir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Incluir 5%"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_incluirActionPerformed"/>

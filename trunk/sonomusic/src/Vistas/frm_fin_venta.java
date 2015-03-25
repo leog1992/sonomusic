@@ -52,12 +52,15 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     public static String modo;
     public static String doc;
     String accion = "venta";
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
     Double entrega;
+    double comision;
     
     public frm_fin_venta() {
         initComponents();
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
         String query = "select * from tipo_pago";
         ver_tipo(query);
         txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
@@ -226,6 +229,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         });
 
         chk_incluir.setText("Incluir 5%");
+        chk_incluir.setEnabled(false);
         chk_incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chk_incluirActionPerformed(evt);
@@ -649,6 +653,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (cbx_tipopago.getSelectedItem().equals("TARJETA")) {
                 chk_incluir.setEnabled(true);
+                total = total;
+                comision = total * 0.05;
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
                 txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
@@ -702,10 +708,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void chk_incluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_incluirActionPerformed
-        Double comision=0.0;               
-        System.out.println(total);
         if (chk_incluir.isSelected()) {   
-            comision=total*(5/100);
             total+=comision;
             lbl_tot.setText("S/. "+formato.format(total));
             System.out.println("el total "+total);
