@@ -119,6 +119,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             System.out.println(ex.getMessage());
         }
     }
+    //fin del constructor
 
     private void ver_tipodoc(String query) {
         try {
@@ -255,6 +256,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         ));
         t_detalle.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         t_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_detalleMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_detalleMousePressed(evt);
             }
@@ -499,7 +503,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     .addComponent(txt_nro_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btn_cpre.setText("Cambiar Precio");
@@ -617,7 +621,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1082,7 +1086,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
                 btn_reg.doClick();
-            }else{
+            } else {
                 txt_fec.requestFocus();
             }
         }
@@ -1135,7 +1139,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             } catch (SQLException | HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
             }
-            txt_id.requestFocus();
+            //txt_id.requestFocus();
+            cbx_tip_venta.setEnabled(true);
+            cbx_tip_venta.requestFocus();
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
@@ -1143,9 +1149,20 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_t_detalleKeyPressed
 
+ 
     private void txt_fecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyTyped
         
     }//GEN-LAST:event_txt_fecKeyTyped
+
+    private void t_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMouseClicked
+        
+        if (t_detalle.getSelectedColumn()==3) {
+            t_detalle.setValueAt("", i, 3);
+        }else if (t_detalle.getSelectedColumn()==5) {
+            t_detalle.setValueAt("", i, 5);
+        }
+       
+    }//GEN-LAST:event_t_detalleMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
