@@ -86,9 +86,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(t_productos);
 
         txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_busKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_busKeyTyped(evt);
             }
