@@ -31,9 +31,9 @@
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_cerrar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_guardar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -49,8 +49,8 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_cerrar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_guardar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -142,21 +142,21 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox3" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox4" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox5" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox6" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_panel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_reportes" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_ventas" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_adelantos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_cotizacion_cliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_menu" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jCheckBox12" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox11" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox10" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox9" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox8" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox7" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_depositos" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_notas" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_cierre_caja" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_caja_chica" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_documentos" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_compra_servicios" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="161" max="32767" attributes="0"/>
               </Group>
@@ -167,103 +167,175 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_compra_servicios" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_panel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox8" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_documentos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_menu" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox9" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_reportes" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_caja_chica" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox10" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_ventas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_cierre_caja" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox11" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_adelantos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_notas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jCheckBox6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox12" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_cotizacion_cliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chk_depositos" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ver Menu Aministrativo"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+        <Component class="javax.swing.JCheckBox" name="chk_panel">
           <Properties>
             <Property name="text" type="java.lang.String" value="ver Panel"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_panelActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+        <Component class="javax.swing.JCheckBox" name="chk_reportes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Reportes"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_reportesActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+        <Component class="javax.swing.JCheckBox" name="chk_ventas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Ventas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_ventasActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+        <Component class="javax.swing.JCheckBox" name="chk_adelantos">
           <Properties>
             <Property name="text" type="java.lang.String" value="ver Adelantos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_adelantosActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox6">
+        <Component class="javax.swing.JCheckBox" name="chk_cotizacion_cliente">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Cotizacion Cliente"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_cotizacion_clienteActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox7">
+        <Component class="javax.swing.JCheckBox" name="chk_compra_servicios">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Compra Servicios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_compra_serviciosActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox8">
+        <Component class="javax.swing.JCheckBox" name="chk_documentos">
           <Properties>
             <Property name="text" type="java.lang.String" value="ver Configurar Documentos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_documentosActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox9">
+        <Component class="javax.swing.JCheckBox" name="chk_caja_chica">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Caja Chica"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_caja_chicaActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox10">
+        <Component class="javax.swing.JCheckBox" name="chk_cierre_caja">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Cierre de Caja"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_cierre_cajaActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox11">
+        <Component class="javax.swing.JCheckBox" name="chk_notas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Notas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_notasActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox12">
+        <Component class="javax.swing.JCheckBox" name="chk_depositos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Depositos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_depositosActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="chk_menu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ver Menu Aministrativo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_menuActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btn_cerrar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Recursos/cancel.png"/>
@@ -271,16 +343,19 @@
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cerrarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btn_guardar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Recursos/disk.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_guardarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
