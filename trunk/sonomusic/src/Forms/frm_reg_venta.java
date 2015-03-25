@@ -558,7 +558,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                 .addComponent(btn_cpre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_eli)
-                                .addGap(0, 49, Short.MAX_VALUE))
+                                .addGap(0, 193, Short.MAX_VALUE))
                             .addComponent(txt_desc))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_add_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))

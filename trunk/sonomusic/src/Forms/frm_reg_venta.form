@@ -52,7 +52,7 @@
                               <Component id="btn_cpre" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btn_eli" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="49" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="193" max="32767" attributes="0"/>
                           </Group>
                           <Component id="txt_desc" max="32767" attributes="0"/>
                       </Group>
