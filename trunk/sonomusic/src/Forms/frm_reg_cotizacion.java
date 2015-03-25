@@ -40,7 +40,7 @@ Integer i;
     public frm_reg_cotizacion() {
         initComponents();
         
-        txt_fec.setText(ven.getFechaActual());
+        txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
         detalle = new DefaultTableModel()
         
  {@Override
@@ -95,7 +95,6 @@ Integer i;
         txt_nom = new javax.swing.JTextField();
         btn_bus = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txt_fec = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_tel = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -114,6 +113,7 @@ Integer i;
         btn_add = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
+        txt_fec = new javax.swing.JFormattedTextField();
 
         setTitle("Registrar Cotizacion");
 
@@ -132,9 +132,6 @@ Integer i;
         });
 
         jLabel2.setText("Fecha:");
-
-        txt_fec.setEditable(false);
-        txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel3.setText("Telefono:");
 
@@ -233,6 +230,14 @@ Integer i;
 
         txt_user.setEditable(false);
 
+        txt_fec.setEditable(false);
+        try {
+            txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -242,7 +247,7 @@ Integer i;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -250,10 +255,10 @@ Integer i;
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_fec)))
+                                .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
+                                .addGap(50, 50, 50)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,8 +293,9 @@ Integer i;
                                 .addComponent(txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_reg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_cer, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -305,10 +311,10 @@ Integer i;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -493,7 +499,7 @@ Integer i;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable t_productos;
     public static javax.swing.JTextField txt_doc;
-    public static javax.swing.JTextField txt_fec;
+    private javax.swing.JFormattedTextField txt_fec;
     public static javax.swing.JTextField txt_igv;
     public static javax.swing.JTextField txt_nom;
     public static javax.swing.JTextField txt_sub;

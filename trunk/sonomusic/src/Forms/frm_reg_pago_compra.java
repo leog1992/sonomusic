@@ -43,7 +43,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
      */
     public frm_reg_pago_compra() {
         initComponents();
-        txt_fec.setText(ven.getFechaActual());
+        txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
         String query = "select * from tipo_pago";
         ver_tipo(query);
     }

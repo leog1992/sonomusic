@@ -45,7 +45,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         initComponents();
         simbolo.setDecimalSeparator('.');
         formato = new DecimalFormat("####0.00", simbolo);
-        txt_fec.setText(ven.getFechaActual());
+        txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
         String query = "select * from tipo_pago";
         ver_tipo(query);
     }

@@ -54,14 +54,18 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     public frm_reg_compra_prod() {
         initComponents();
         ver_almacen();
-        txt_fec_com.setText(ven.getFechaActual());
-        txt_fec_pag.setText(ven.getFechaActual());
+        txt_fec_com.setText(ven.fechaformateada(ven.getFechaActual()));
+        txt_fec_pag.setText(ven.fechaformateada(ven.getFechaActual()));
         ver_tido();
         //dar formato a tabla
         detalle = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
-                return false;
+                if (columna == 3 || columna == 5) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         };
         detalle.addColumn("Id");
@@ -170,9 +174,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cbx_alm = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        txt_fec_com = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txt_fec_pag = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_dir = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -204,6 +206,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         txt_nro = new javax.swing.JTextField();
         cbx_tipa = new javax.swing.JComboBox();
         jLabel17 = new javax.swing.JLabel();
+        txt_fec_com = new javax.swing.JFormattedTextField();
+        txt_fec_pag = new javax.swing.JFormattedTextField();
 
         setTitle("Registrar Compra");
 
@@ -252,31 +256,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel4.setText("Fecha de Compra:");
         jLabel4.setFocusable(false);
 
-        txt_fec_com.setEditable(false);
-        txt_fec_com.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_fec_com.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_fec_comKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_fec_comKeyTyped(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Fecha de Pago:");
         jLabel5.setFocusable(false);
-
-        txt_fec_pag.setEditable(false);
-        txt_fec_pag.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_fec_pag.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_fec_pagKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_fec_pagKeyTyped(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Direccion:");
@@ -472,6 +454,32 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel17.setText("Tipo de Pago:");
 
+        txt_fec_com.setEditable(false);
+        try {
+            txt_fec_com.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fec_com.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_com.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_fec_comKeyPressed(evt);
+            }
+        });
+
+        txt_fec_pag.setEditable(false);
+        try {
+            txt_fec_pag.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fec_pag.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_pag.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_fec_pagKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -500,8 +508,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addComponent(txt_fec_com, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_fec_pag, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_fec_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -530,9 +538,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btn_cer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel9)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -584,8 +590,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_alm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fec_com, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fec_com, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,7 +640,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -681,21 +687,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             txt_fec_com.requestFocus();
         }
     }//GEN-LAST:event_cbx_almKeyPressed
-
-    private void txt_fec_comKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_comKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_fec_pag.setText(txt_fec_com.getText());
-            txt_fec_pag.setEditable(true);
-            txt_fec_pag.requestFocus();
-        }
-    }//GEN-LAST:event_txt_fec_comKeyPressed
-
-    private void txt_fec_pagKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_pagKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_tipa.setEnabled(true);
-            cbx_tipa.requestFocus();
-        }
-    }//GEN-LAST:event_txt_fec_pagKeyPressed
 
     private void cbx_tidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -745,6 +736,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
                 + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
         ver_productos(query);
+        prod.btn_reg.setEnabled(false);
+        prod.btn_mod.setEnabled(false);
+        prod.btn_eli.setEnabled(false);
         prod.btn_enviar.setEnabled(true);
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_btn_busmActionPerformed
@@ -861,11 +855,27 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         btn_ca.setEnabled(true);
         btn_va.setEnabled(true);
         btn_el.setEnabled(true);
+        t_detalle.setFocusable(true);
     }//GEN-LAST:event_t_detalleMouseClicked
 
     private void t_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_detalleKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
             btn_ca.doClick();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_sub.setText(formato.format(subtotal()));
+            txt_igv.setText(formato.format(igv()));
+            txt_tot.setText(formato.format(total()));
+            txt_idp.requestFocus();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            i = t_detalle.getSelectedRow();
+            detalle.removeRow(i);
+            txt_sub.setText(formato.format(subtotal()));
+            txt_igv.setText(formato.format(igv()));
+            txt_tot.setText(formato.format(total()));
         }
     }//GEN-LAST:event_t_detalleKeyPressed
 
@@ -1014,7 +1024,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + com.getFec_com() + "', '0.00' , '" + com.getTotal() + "', '" + frm_menu.lbl_user.getText() + "'"
-                        + ",'" + frm_menu.alm.getId() + "', 'C', '"+frm_menu.caja.getId()+"')";
+                        + ",'" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                 con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -1037,27 +1047,10 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_rucKeyTyped
 
-    private void txt_fec_comKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_comKeyTyped
-        if (txt_fec_com.getText().length() == 10) {
-            evt.consume();
-        }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9') && car != '-') {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txt_fec_comKeyTyped
-
-    private void txt_fec_pagKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_pagKeyTyped
-        if (txt_fec_pag.getText().length() == 10) {
-            evt.consume();
-        }
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9') && car != '-') {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txt_fec_pagKeyTyped
-
     private void txt_serKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyTyped
+        if (txt_ser.getText().length() == 3) {
+            evt.consume();
+        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();
@@ -1065,6 +1058,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_serKeyTyped
 
     private void txt_nroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nroKeyTyped
+        if (txt_ser.getText().length() == 7) {
+            evt.consume();
+        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();
@@ -1082,6 +1078,21 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             cbx_tido.requestFocus();
         }
     }//GEN-LAST:event_cbx_tipaKeyPressed
+
+    private void txt_fec_comKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_comKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_fec_pag.setText(txt_fec_com.getText());
+            txt_fec_pag.setEditable(true);
+            txt_fec_pag.requestFocus();
+        }
+    }//GEN-LAST:event_txt_fec_comKeyPressed
+
+    private void txt_fec_pagKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_pagKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbx_tipa.setEnabled(true);
+            cbx_tipa.requestFocus();
+        }
+    }//GEN-LAST:event_txt_fec_pagKeyPressed
 
     public static Double subtotal() {
         int totalRow = t_detalle.getRowCount();
@@ -1138,8 +1149,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     public static javax.swing.JTable t_detalle;
     public static javax.swing.JTextField txt_desp;
     public static javax.swing.JTextField txt_dir;
-    private javax.swing.JTextField txt_fec_com;
-    private javax.swing.JTextField txt_fec_pag;
+    private javax.swing.JFormattedTextField txt_fec_com;
+    private javax.swing.JFormattedTextField txt_fec_pag;
     public static javax.swing.JTextField txt_idp;
     public static javax.swing.JTextField txt_igv;
     private javax.swing.JTextField txt_nro;
