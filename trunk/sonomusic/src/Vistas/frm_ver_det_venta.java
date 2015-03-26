@@ -36,7 +36,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_fec = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        t_detalle = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -44,6 +44,10 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_sub = new javax.swing.JTextField();
         txt_igv = new javax.swing.JTextField();
         txt_tot = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        lbl_id = new javax.swing.JLabel();
+
+        setTitle("Ver Detalle de Compra");
 
         jLabel1.setText("Cliente");
 
@@ -69,7 +73,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Detalle:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,7 +84,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(t_detalle);
 
         jLabel5.setText("Sub Total:");
 
@@ -88,6 +92,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Total:");
 
+        btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         btn_cer.setText("Cerrar");
         btn_cer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +105,10 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_igv.setEditable(false);
 
         txt_tot.setEditable(false);
+
+        jLabel8.setText("IdPed:");
+
+        lbl_id.setText("id");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,6 +139,10 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_tipd, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_id)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,7 +168,9 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tipd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(lbl_id))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,8 +204,10 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
+    public static javax.swing.JLabel lbl_id;
+    public static javax.swing.JTable t_detalle;
     public static javax.swing.JFormattedTextField txt_fec;
     public static javax.swing.JTextField txt_igv;
     public static javax.swing.JTextField txt_nom;
