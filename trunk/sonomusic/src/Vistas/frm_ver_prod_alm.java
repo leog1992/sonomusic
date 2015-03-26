@@ -86,6 +86,9 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(t_productos);
 
         txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_busKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_busKeyTyped(evt);
             }
@@ -348,11 +351,12 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
                 + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
         pro.mostrar_productos(query);          
+        
     }//GEN-LAST:event_txt_busKeyTyped
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            if (!txt_bus.getText().isEmpty()) {
+            if (!txt_bus.getText().trim().isEmpty()) {
                 t_productos.requestFocus();
             }
         }
