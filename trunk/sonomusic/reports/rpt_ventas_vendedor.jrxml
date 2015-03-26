@@ -255,7 +255,7 @@ WHERE
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{pedido_est_ped}.equals( "1" )?"VENTA":
-$F{pedido_est_ped}.equals( "2" )?"TARJETA":$F{pedido_est_ped})]]></textFieldExpression>
+$F{pedido_est_ped}.equals( "2" )?"SEPARACION":$F{pedido_est_ped})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="133" y="0" width="103" height="14" uuid="a6cb6112-a505-41c0-9612-29be7a39338e"/>

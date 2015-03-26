@@ -95,7 +95,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         cbx_tipopago = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         txt_entrega = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jlabelvuelto = new javax.swing.JLabel();
         txt_vuelto = new javax.swing.JTextField();
         btn_reg = new javax.swing.JButton();
         btn_imp_guiar = new javax.swing.JButton();
@@ -160,7 +160,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setText("Vuelto:");
+        jlabelvuelto.setText("Vuelto:");
 
         txt_vuelto.setEditable(false);
         txt_vuelto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -273,7 +273,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                                         .addComponent(txt_fec_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5)
+                                        .addComponent(jlabelvuelto)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txt_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -307,7 +307,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlabelvuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_vuelto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,10 +331,13 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     private void txt_entregaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_entregaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             entrega = Double.parseDouble(txt_entrega.getText());
-            Double vuelto = entrega - total;
+            Double vuelto = entrega - total;            
             System.out.println(vuelto);
+            //accion = tipo de venta
             if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("SEPARACION")) {
                 accion = "separacion";
+                vuelto = total-entrega;
+                jlabelvuelto.setText("Restante:");
                 txt_vuelto.setText(formato.format(vuelto));
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
@@ -576,10 +579,10 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 }
 
             }
-
+            //insertar separacion
         } else {
             ped.setEst_ped("2");
-            total = entrega;
+            
             try {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
@@ -591,14 +594,43 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.out.println(ex.getLocalizedMessage());
             }
-
+            
+            //buscar ultimo pedido
+            try {
+                Statement st = con.conexion();
+                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
+                        + "and fec_ped = '" + frm_reg_venta.ped.getFec_ped() + "' and idAlmacen = "
+                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+                ResultSet rs = con.consulta(st, buscar_pedido);
+                if (rs.next()) {
+                    ped.setId_ped(rs.getString("idPedido"));
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print(ex.getLocalizedMessage());
+            }
+            
+            //insertar datos en letras_pedido
+            try {                
+                Statement st = con.conexion();
+                String sql="insert into letras_pedido values(null, '"+Double.parseDouble(txt_entrega.getText())+"', '"+frm_reg_venta.ped.getFec_ped()+"', '"+ped.getId_ped()+"' )";
+                con.actualiza(st, sql);
+                con.cerrar(st);                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error en letras_pedido: "+e);
+            }
+            
+            //imprimir resultados ingresados
             mostrarinsert();
+            
+            //insertar datos en movimiento
             try {
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
             } catch (Exception e) {
                 System.out.println(e);
             }
-
+            total = entrega;
             String glosa = "SEPARACION / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
             try {
                 Statement st = con.conexion();
@@ -733,8 +765,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jlabelvuelto;
     public static javax.swing.JLabel lbl_tot;
     public static javax.swing.JTextField txt_doc;
     private javax.swing.JTextField txt_entrega;

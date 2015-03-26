@@ -214,7 +214,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 "Id Ped.", "Glosa", "Nro Placa.", "Cliente", "Monto", "Estado", "Title 7", "Title 8", "Title 9", "Title 10"
             }
         ));
-        t_facturas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        t_facturas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         t_facturas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_facturasMousePressed(evt);
@@ -282,7 +282,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 570, Short.MAX_VALUE)
                         .addComponent(btn_anu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
@@ -537,7 +537,17 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_facturasMousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //frm_
+        try {
+            String estado = t_facturas.getValueAt(i, 10).toString();
+            if (estado.equals("SEPARACION")) {
+                btn_anu.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: "+e);
+        }
+        
+        frm_ver_letras_pedido letras = new frm_ver_letras_pedido();
+        ven.llamar_ventana(letras);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_detActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detActionPerformed
