@@ -880,8 +880,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_detalleKeyPressed
 
     private void llenar() {
-        com.setFec_com(txt_fec_com.getText());
-        com.setFec_pag(txt_fec_pag.getText());
+        com.setFec_com(ven.fechabase(txt_fec_com.getText()));
+        com.setFec_pag(ven.fechabase(txt_fec_pag.getText()));
         tido.setId(cbx_tido.getSelectedIndex() + 1);
         com.setSerie(Integer.parseInt(txt_ser.getText()));
         com.setNro(Integer.parseInt(txt_nro.getText()));

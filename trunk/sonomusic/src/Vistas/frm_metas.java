@@ -107,8 +107,8 @@ public class frm_metas extends javax.swing.JInternalFrame {
 
     void llenar() {
         met.setMonto(Double.parseDouble(txt_monto.getText()));
-        met.setFec_ini(txt_fec_ini.getText());
-        met.setFec_fin(txt_fec_fin.getText());
+        met.setFec_ini(ven.fechabase(txt_fec_ini.getText()));
+        met.setFec_fin(ven.fechabase(txt_fec_fin.getText()));
         car.setId(cbx_cargo.getSelectedIndex() + 1);
 
     }
