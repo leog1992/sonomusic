@@ -61,6 +61,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         cbx_bus = new javax.swing.JComboBox();
         btn_mod = new javax.swing.JButton();
 
+        setResizable(true);
         setTitle("Ver Productos en Almacen");
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
