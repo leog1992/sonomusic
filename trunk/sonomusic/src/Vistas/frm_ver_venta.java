@@ -545,6 +545,37 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         detalle.txt_nro.setText(t_facturas.getValueAt(i, 4).toString());
         detalle.txt_nom.setText(t_facturas.getValueAt(i, 5).toString());
         detalle.txt_tipd.setText(t_facturas.getValueAt(i, 3).toString());
+        detalle.txt_fec.setText(ven.fechaformateada(t_facturas.getValueAt(i, 1).toString()));
+        detalle.lbl_id.setText(t_facturas.getValueAt(i, 0).toString());
+        ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Id");
+            modelo.addColumn("Descripcion");
+            modelo.addColumn("Marca");
+            modelo.addColumn("Cant.");
+            modelo.addColumn("Und. Med.");
+            modelo.addColumn("Precio");
+            Statement st = con.conexion();
+            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, dp.precio, u.desc_und, dp.cantidad from detalle_pedido as dp inner join productos as p on "
+                    + "p.idProductos=dp.idProductos inner join und_medida as u on p.idUnd_medida=u.idUnd_medida where dp.idPedido = '"+ped.getId_ped()+"'";
+            ResultSet rs =con.consulta(st, query);
+            Object fila[] = new Object[6];
+            while (rs.next()) {
+                fila[0] = rs.getString("idProductos");
+                fila[1] = rs.getString("desc_pro") + " - " + rs.getString("modelo");
+                fila[2] = rs.getString("marca");
+                fila[3] = formato.format(rs.getDouble("cantidad"));
+                fila[4] = rs.getString("desc_und");
+                fila[5] = formato.format(rs.getDouble("precio"));
+                modelo.addRow(fila);
+            }
+            detalle.t_detalle.setModel(modelo);
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         ven.llamar_ventana(detalle);
         
     }//GEN-LAST:event_btn_detActionPerformed
