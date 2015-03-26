@@ -557,10 +557,11 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             modelo.addColumn("Und. Med.");
             modelo.addColumn("Precio");
             Statement st = con.conexion();
-            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, dp.precio, u.desc_und, dp.cantidad from detalle_pedido as dp inner join productos as p on "
-                    + "p.idProductos=dp.idProductos inner join und_medida as u on p.idUnd_medida=u.idUnd_medida where dp.idPedido = '"+ped.getId_ped()+"'";
+            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, dp.precio, sum(dp.precio*dp.cantidad) as sump, u.desc_und, dp.cantidad from detalle_pedido as dp inner join productos as p on "
+                    + "p.idProductos=dp.idProductos inner join und_medida as u on p.idUnd_medida=u.idUnd_medida where dp.idPedido = '"+ped.getId_ped()+"' group by p.idProductos";
             ResultSet rs =con.consulta(st, query);
             Object fila[] = new Object[6];
+            double total = 0;
             while (rs.next()) {
                 fila[0] = rs.getString("idProductos");
                 fila[1] = rs.getString("desc_pro") + " - " + rs.getString("modelo");
@@ -569,10 +570,17 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 fila[4] = rs.getString("desc_und");
                 fila[5] = formato.format(rs.getDouble("precio"));
                 modelo.addRow(fila);
+                total += rs.getDouble("sump");
             }
             detalle.t_detalle.setModel(modelo);
             con.cerrar(rs);
             con.cerrar(st);
+            detalle.t_detalle.getColumnModel().getColumn(0).setPreferredWidth(30);
+            detalle.t_detalle.getColumnModel().getColumn(1).setPreferredWidth(250);
+            detalle.t_detalle.getColumnModel().getColumn(2).setPreferredWidth(60);
+            detalle.t_detalle.getColumnModel().getColumn(3).setPreferredWidth(80);
+            detalle.t_detalle.getColumnModel().getColumn(4).setPreferredWidth(60);
+            detalle.txt_tot.setText(formato.format(total));
         } catch (Exception e) {
             System.out.println(e);
         }
