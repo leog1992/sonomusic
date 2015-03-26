@@ -373,7 +373,7 @@ Integer i;
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void llenar () {
-        cot.setFec_cot(txt_fec.getText());
+        cot.setFec_cot(ven.fechabase(txt_fec.getText()));
         per.setNro_doc(txt_doc.getText());
         usu.setNick(txt_user.getText());
     }

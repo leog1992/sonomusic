@@ -451,15 +451,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         emp.setTel2(txt_tel2.getText());
         emp.setImg("noimage.jpg");
         emp.setSueldo(Double.parseDouble(txt_sue.getText()));
-        try {
-            DateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date fec = dt.parse(txt_fec.getText());
-            emp.setFec_nac(df.format(fec));
-            System.out.println(emp.getFec_nac());
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+        emp.setFec_nac(ven.fechabase(txt_fec.getText()));
         alm.setId(cbx_almacen.getSelectedIndex() + 1);
         met.setId(cbx_mon.getSelectedIndex() + 1);
         car.setId(cbx_cargo.getSelectedIndex() + 1);
@@ -497,7 +489,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 this.dispose();
                 frm_ver_empleado empleado = new frm_ver_empleado();
                 ven.llamar_ventana(empleado);
-                
+
             }
         } catch (Exception e) {
             System.out.println("Ocurrio un error " + e.getMessage() + " en :" + e.getLocalizedMessage());

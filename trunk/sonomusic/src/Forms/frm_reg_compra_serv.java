@@ -563,8 +563,8 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
 
     private void llenar() {
         com.setGlosa(txt_glosa.getText());
-        com.setFec_com(txt_fec_com.getText());
-        com.setFec_pag(txt_fec_pag.getText());
+        com.setFec_com(ven.fechabase(txt_fec_com.getText()));
+        com.setFec_pag(ven.fechabase(txt_fec_pag.getText()));
         tido.setId(cbx_tido.getSelectedIndex() + 1);
         tipa.setId(cbx_tipa.getSelectedIndex() + 1);
         com.setSerie(Integer.parseInt(txt_ser.getText()));
@@ -624,6 +624,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_rucKeyTyped
 
     private void txt_serKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyTyped
+        if (txt_ser.getText().length() == 3) {
+            evt.consume();
+        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();
@@ -631,6 +634,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_serKeyTyped
 
     private void txt_nroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nroKeyTyped
+        if (txt_nro.getText().length() == 7) {
+            evt.consume();
+        }
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
             evt.consume();

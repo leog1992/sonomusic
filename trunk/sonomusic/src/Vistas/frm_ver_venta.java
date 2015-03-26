@@ -557,6 +557,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         detalle.txt_tipd.setText(t_facturas.getValueAt(i, 3).toString());
         detalle.txt_fec.setText(ven.fechaformateada(t_facturas.getValueAt(i, 1).toString()));
         detalle.lbl_id.setText(t_facturas.getValueAt(i, 0).toString());
+        detalle.txt_pago.setText(t_facturas.getValueAt(i, 7).toString());
+        detalle.txt_tipv.setText(t_facturas.getValueAt(i, 10).toString());
         ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -586,10 +588,17 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             con.cerrar(rs);
             con.cerrar(st);
             detalle.t_detalle.getColumnModel().getColumn(0).setPreferredWidth(30);
-            detalle.t_detalle.getColumnModel().getColumn(1).setPreferredWidth(250);
+            detalle.t_detalle.getColumnModel().getColumn(1).setPreferredWidth(350);
             detalle.t_detalle.getColumnModel().getColumn(2).setPreferredWidth(60);
             detalle.t_detalle.getColumnModel().getColumn(3).setPreferredWidth(80);
             detalle.t_detalle.getColumnModel().getColumn(4).setPreferredWidth(60);
+            ven.derecha_celda(detalle.t_detalle, 0);
+            ven.derecha_celda(detalle.t_detalle, 3);
+            ven.derecha_celda(detalle.t_detalle, 5);
+            double sub = total / 1.18;
+            double igv = sub * 0.18;
+            detalle.txt_sub.setText(formato.format(sub));
+            detalle.txt_igv.setText(formato.format(igv));
             detalle.txt_tot.setText(formato.format(total));
         } catch (Exception e) {
             System.out.println(e);
