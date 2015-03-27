@@ -579,6 +579,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 }
 
             }
+            //SEPARACION
             //insertar separacion
         } else {
             ped.setEst_ped("2");
@@ -592,7 +593,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println("Error en pedido: "+ex);
             }
             
             //buscar ultimo pedido
@@ -608,7 +609,23 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 con.cerrar(rs);
                 con.cerrar(st);
             } catch (SQLException ex) {
-                System.out.print(ex.getLocalizedMessage());
+                System.out.print("Error lectura de pedido: "+ex);
+            }
+            
+            //insertar en detalle pedido
+            int filas = frm_reg_venta.t_detalle.getRowCount();
+            for (int j = 0; j <= (filas - 1); j++) {
+                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
+                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
+                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
+                try {
+                    Statement st = con.conexion();
+                    String ins_det_ped = "insert into detalle_pedido Values ('" + idPro + "', '" + ped.getId_ped() + "', '" + precio + "', '" + cantidad + "')";
+                    con.actualiza(st, ins_det_ped);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error detalle pedido: "+ex);
+                }
             }
             
             //insertar datos en letras_pedido

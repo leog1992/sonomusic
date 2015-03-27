@@ -7,6 +7,7 @@ package sonomusic;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

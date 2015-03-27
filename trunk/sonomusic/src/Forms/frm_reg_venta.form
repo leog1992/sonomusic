@@ -568,7 +568,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nro. Doc.:"/>
+            <Property name="text" type="java.lang.String" value="D.N.I / R.U.C"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel12">

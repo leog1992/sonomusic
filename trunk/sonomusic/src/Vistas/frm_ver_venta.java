@@ -10,17 +10,13 @@ import Clases.Cl_Productos;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Varios;
-import Forms.frm_reg_venta;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
@@ -81,7 +77,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             mostrar.addColumn("Fecha Venta");
             mostrar.addColumn("Fecha Pago");
             mostrar.addColumn("Tipo Doc.");
-            mostrar.addColumn("Nro. Doc.");
+            mostrar.addColumn("D.N.I / R.U.C");
             mostrar.addColumn("Cliente");
             mostrar.addColumn("Total");
             mostrar.addColumn("Tipo Pago");
@@ -182,7 +178,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txt_tot = new javax.swing.JTextField();
         btn_anu = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_pagar = new javax.swing.JButton();
         btn_det = new javax.swing.JButton();
 
         setTitle("Registro de Ventas");
@@ -252,14 +248,16 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Pagar");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_pagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagar.png"))); // NOI18N
+        btn_pagar.setText("Pagar");
+        btn_pagar.setEnabled(false);
+        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_pagarActionPerformed(evt);
             }
         });
 
+        btn_det.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/blog.png"))); // NOI18N
         btn_det.setText("Ver Detalle");
         btn_det.setEnabled(false);
         btn_det.addActionListener(new java.awt.event.ActionListener() {
@@ -282,10 +280,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 570, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 530, Short.MAX_VALUE)
                         .addComponent(btn_anu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btn_pagar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_det))
                     .addGroup(layout.createSequentialGroup()
@@ -306,7 +304,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_det, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -528,27 +526,26 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         i = t_facturas.getSelectedRow();
         String est = t_facturas.getValueAt(i, 10).toString();
         if (est.equals("ANULADO")) {
-            btn_anu.setEnabled(false);
-           
+            btn_anu.setEnabled(false);           
         } else {
             btn_anu.setEnabled(true);
             btn_det.setEnabled(true);
         }
+        if (est.equals("SEPARADO")) {
+            btn_pagar.setEnabled(true);
+        }else{
+            btn_pagar.setEnabled(false);
+        }
     }//GEN-LAST:event_t_facturasMousePressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String estado = t_facturas.getValueAt(i, 10).toString();
-            if (estado.equals("SEPARACION")) {
-                btn_anu.setEnabled(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: "+e);
-        }
-        
+    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
         frm_ver_letras_pedido letras = new frm_ver_letras_pedido();
+        letras.lbl_dni.setText(t_facturas.getValueAt(i, 4).toString());
+        letras.lbl_nombre.setText(t_facturas.getValueAt(i, 5).toString());
+        letras.lbl_tipo_doc.setText(t_facturas.getValueAt(i, 3).toString());
+        letras.lbl_fecha.setText(t_facturas.getValueAt(i, 1).toString());
         ven.llamar_ventana(letras);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_pagarActionPerformed
 
     private void btn_detActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detActionPerformed
         frm_ver_det_venta detalle = new frm_ver_det_venta();
@@ -603,16 +600,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-        ven.llamar_ventana(detalle);
-        
+        ven.llamar_ventana(detalle);        
     }//GEN-LAST:event_btn_detActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
     private javax.swing.JButton btn_det;
+    private javax.swing.JButton btn_pagar;
     private javax.swing.JComboBox cbx_estado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

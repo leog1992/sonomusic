@@ -41,6 +41,7 @@ import Vistas.frm_ver_proveedores;
 import Vistas.frm_ver_solicitudes;
 import Vistas.frm_ver_usuarios;
 import Vistas.frm_ver_venta;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -257,6 +258,8 @@ public class frm_menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - SONOMUSIC");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("logo_sonomusic.png")
+        );
 
         contenedor.setBackground(new java.awt.Color(102, 102, 102));
         contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
