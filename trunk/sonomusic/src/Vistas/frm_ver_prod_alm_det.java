@@ -10,6 +10,7 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.table_render;
 import Clases.Cl_Varios;
+import Forms.frm_reg_productos;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -162,6 +163,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         cbx_clas = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        btn_mod = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Ver Productos en los Almacen");
@@ -221,6 +223,15 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Ver por Tienda");
 
+        btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N
+        btn_mod.setText("Modificar");
+        btn_mod.setEnabled(false);
+        btn_mod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,7 +249,8 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_clas, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_mod)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
         );
@@ -254,7 +266,9 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -288,6 +302,8 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
+        i = t_productos.getSelectedRow();
+        btn_mod.setEnabled(true);
     }//GEN-LAST:event_t_productosMousePressed
 
     private void cbx_clasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_clasKeyPressed
@@ -319,9 +335,76 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cbx_clasActionPerformed
 
+    private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
+        frm_reg_productos prod = new frm_reg_productos();
+        int ida = 0;
+        String nom_alm = t_productos.getValueAt(i, 8).toString();
+        
+        try {
+            Statement st = con.conexion();
+            String query = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "' ";
+            ResultSet rs = con.consulta(st, query);
+            if (rs.next()) {
+                ida = rs.getInt("idAlmacen");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        try {
+            int id = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
+            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.idUnd_medida, p.costo_compra, pa.precio, p.id_clas, "
+                    + "p.cant_min, p.comision from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos where pa.idProductos = '" + id + "'"
+                    + " and pa.idAlmacen =  '"+ida+"'";
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+            if (rs.next()) {
+                prod.txt_cod.setText(rs.getString("idProductos"));
+                prod.txt_cod.setEditable(false);
+                prod.txt_des.setText(rs.getString("desc_pro"));
+                prod.txt_des.setEditable(false);
+                prod.txt_mar.setText(rs.getString("marca"));
+                prod.txt_mar.setEditable(false);
+                prod.txt_mod.setText(rs.getString("modelo"));
+                prod.txt_mod.setEditable(false);
+                prod.txt_ser.setText(rs.getString("serie"));
+                prod.txt_ser.setEditable(false);
+                prod.cbo_gra.setSelectedItem(rs.getString("grado"));
+                prod.cbo_gra.setEnabled(false);
+                prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
+                prod.cbx_und.setEnabled(false);
+                prod.txt_pcom.setText(rs.getString("costo_compra"));
+                prod.txt_pcom.setEditable(false);
+                prod.txt_pven.requestFocus();
+                prod.txt_pven.setText(rs.getString("precio"));
+                prod.txt_pven.setEditable(true);
+                prod.cbx_cla.setSelectedIndex(rs.getInt("id_clas") - 1);
+                prod.cbx_cla.setEnabled(false);
+                prod.txt_cantm.setText(rs.getString("cant_min"));
+                prod.txt_cantm.setEditable(false);
+                prod.txt_com.setText(rs.getString("comision"));
+                prod.txt_com.setEditable(false);
+                prod.btn_reg.setEnabled(false);
+            }
+
+            prod.win = "mod";
+            prod.ventana = "producto_almacen";
+            prod.id = id;
+            prod.ida=ida;
+            ven.llamar_ventana(prod);
+            this.dispose();
+
+        } catch (SQLException ex) {
+            System.out.print(ex);
+        }
+    }//GEN-LAST:event_btn_modActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
+    private javax.swing.JButton btn_mod;
     private javax.swing.JComboBox cbx_clas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

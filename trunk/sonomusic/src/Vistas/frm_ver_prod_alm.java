@@ -10,6 +10,7 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_solicitud;
+import Forms.frm_reg_traslado_almacen;
 import Forms.frm_reg_venta;
 import Forms.frm_rpt_fechas;
 import java.awt.Color;
@@ -275,43 +276,41 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
             //traslado
             if (funcion.equals("traslado")) {
-//                Object fila[] = new Object[5];
-//                fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
-//                fila[1] = t_productos.getValueAt(i, 1);                                         // DESCRIPCION
-//                fila[2] = t_productos.getValueAt(i, 2);                                         // MARCA
-//                fila[3] = "1.00";                                                               // CANTIDAD
-//                fila[4] = t_productos.getValueAt(i, 4);                                         // UND MED
-//
-//                frm_reg_venta venta = null;
-//                int prod=(int) t_productos.getValueAt(i, 0);
-//                Integer filas_tabla = frm_reg_venta.t_detalle.getRowCount();
-//                Integer copiado = 0;
-//                if (filas_tabla > 0) {
-//                    for (int x = 0; x < filas_tabla; x++) {
-//                        Integer id_pro_tabla;
-//                        id_pro_tabla = Integer.parseInt(venta.t_detalle.getValueAt(x, 0).toString());
-//                        if (id_pro_tabla==prod) {
-//                            copiado++;
-//                        }
-//                    }
-//                    if (copiado == 0) {
-//                        frm_reg_venta.detalle.addRow(fila);
-//                        frm_reg_venta.t_detalle.setModel(frm_reg_venta.detalle);
-//                        frm_reg_venta.txt_id.requestFocus();
-//                        frm_reg_venta.btn_reg.setEnabled(true);
-//                        funcion = "material_almacen";
-//                        this.dispose();
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
-//                    }
-//                } else {
-//                    frm_reg_venta.detalle.addRow(fila);
-//                    frm_reg_venta.t_detalle.setModel(frm_reg_venta.detalle);
-//                    frm_reg_venta.txt_id.requestFocus();
-//                    frm_reg_venta.btn_reg.setEnabled(true);
-//                    funcion = "material_almacen";
-//                    this.dispose();
-//                }
+                Object fila[] = new Object[5];
+                fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
+                fila[1] = t_productos.getValueAt(i, 1);                                         // DESCRIPCION
+                fila[2] = t_productos.getValueAt(i, 2);                                         // MARCA
+                fila[3] = "1.00";                                                               // CANTIDAD
+                fila[4] = t_productos.getValueAt(i, 4);                                         // UND MED
+
+                frm_reg_traslado_almacen traslado = null;
+                int prod=(int) t_productos.getValueAt(i, 0);
+                Integer filas_tabla = frm_reg_traslado_almacen.t_detalle.getRowCount();
+                Integer copiado = 0;
+                if (filas_tabla > 0) {
+                    for (int x = 0; x < filas_tabla; x++) {
+                        Integer id_pro_tabla;
+                        id_pro_tabla = Integer.parseInt(traslado.t_detalle.getValueAt(x, 0).toString());
+                        if (id_pro_tabla==prod) {
+                            copiado++;
+                        }
+                    }
+                    if (copiado == 0) {
+                        frm_reg_traslado_almacen.detalle.addRow(fila);
+                        frm_reg_traslado_almacen.t_detalle.setModel(frm_reg_traslado_almacen.detalle);
+                        frm_reg_traslado_almacen.btn_reg.setEnabled(true);
+                        funcion = "material_almacen";
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
+                    }
+                } else {
+                    frm_reg_traslado_almacen.detalle.addRow(fila);
+                    frm_reg_traslado_almacen.t_detalle.setModel(frm_reg_traslado_almacen.detalle);
+                    frm_reg_traslado_almacen.btn_reg.setEnabled(true);
+                    funcion = "material_almacen";
+                    this.dispose();
+                }
             }
         }
     }//GEN-LAST:event_t_productosKeyPressed

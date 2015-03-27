@@ -6,6 +6,7 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Medida;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
+import Vistas.frm_ver_prod_alm_det;
 import Vistas.frm_ver_productos;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -23,6 +24,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     Cl_Clasificacion cla = new Cl_Clasificacion();
     Cl_Medida med = new Cl_Medida();
     public static String win = "reg";
+    public static String ventana = "producto";
+    public static int ida;
     public static int id;
 
     String filename;
@@ -31,7 +34,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
     public frm_reg_productos() {
         initComponents();
-        
+
         String query = "select desc_clas from clasificacion";
         ver_clasificacion(query);
         String und = "select desc_und from und_medida";
@@ -466,8 +469,13 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
         win = "reg";
-        frm_ver_productos productos = new frm_ver_productos();
-        ven.llamar_ventana(productos);
+        if (ventana.equals("producto")) {
+            frm_ver_productos productos = new frm_ver_productos();
+            ven.llamar_ventana(productos);
+        } else {
+            frm_ver_prod_alm_det pro_det = new frm_ver_prod_alm_det();
+            ven.llamar_ventana(pro_det);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void llenar() {
@@ -487,40 +495,52 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     }
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
-        try {
-            if (win.equals("reg")) {
-                Statement st = con.conexion();
-                String query = "insert into productos Values (null, '" + pro.getDes_pro() + "', "
-                        + "'" + pro.getMar_pro() + "', '" + pro.getMod_pro() + "', '" + pro.getSer_pro() + "', "
-                        + "'" + pro.getGra_pro() + "', '" + pro.getCos_pro() + "', '" + pro.getPre_pro() + "',"
-                        + "'" + cla.getId() + "', '" + med.getId_med() + "', '" + "0" + "', "
-                        + "'" + pro.getCan_min_pro() + "', '" + pro.getEst() + "','" + pro.getCom_pro() + "')";
-                con.actualiza(st, query);
-                con.cerrar(st);
-                JOptionPane.showMessageDialog(null, "Se ingreso los datos correctamente");
-                this.dispose();
-                frm_ver_productos productos = new frm_ver_productos();
-                ven.llamar_ventana(productos);
-            } else {
+        if (ventana.equals("producto")) {
+            try {
+                if (win.equals("reg")) {
+                    Statement st = con.conexion();
+                    String query = "insert into productos Values (null, '" + pro.getDes_pro() + "', "
+                            + "'" + pro.getMar_pro() + "', '" + pro.getMod_pro() + "', '" + pro.getSer_pro() + "', "
+                            + "'" + pro.getGra_pro() + "', '" + pro.getCos_pro() + "', '" + pro.getPre_pro() + "',"
+                            + "'" + cla.getId() + "', '" + med.getId_med() + "', '" + "0" + "', "
+                            + "'" + pro.getCan_min_pro() + "', '" + pro.getEst() + "','" + pro.getCom_pro() + "')";
+                    con.actualiza(st, query);
+                    con.cerrar(st);
+                    JOptionPane.showMessageDialog(null, "Se ingreso los datos correctamente");
+                    this.dispose();
+                    frm_ver_productos productos = new frm_ver_productos();
+                    ven.llamar_ventana(productos);
+                } else {
 
-                Statement st = con.conexion();
-                String update = "update productos set desc_pro='" + pro.getDes_pro() + "', marca='" + pro.getMar_pro()
-                        + "', modelo='" + pro.getMod_pro() + "', serie='" + pro.getSer_pro() + "', "
-                        + "grado='" + pro.getGra_pro() + "', costo_compra='" + pro.getCos_pro() + "', precio_venta='" + pro.getPre_pro() + "', "
-                        + " id_clas='" + cla.getId() + "', idUnd_medida='" + med.getId_med() + "', "
-                        + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "' where idProductos = '" + pro.getId_pro() + "'";
-                con.actualiza(st, update);
-                con.cerrar(st);
-                win = "reg";
-                JOptionPane.showMessageDialog(null, "Se modifico los datos correctamente");
-                this.dispose();
-                frm_ver_productos productos = new frm_ver_productos();
-                ven.llamar_ventana(productos);
+                    Statement st = con.conexion();
+                    String update = "update productos set desc_pro='" + pro.getDes_pro() + "', marca='" + pro.getMar_pro()
+                            + "', modelo='" + pro.getMod_pro() + "', serie='" + pro.getSer_pro() + "', "
+                            + "grado='" + pro.getGra_pro() + "', costo_compra='" + pro.getCos_pro() + "', precio_venta='" + pro.getPre_pro() + "', "
+                            + " id_clas='" + cla.getId() + "', idUnd_medida='" + med.getId_med() + "', "
+                            + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "' where idProductos = '" + pro.getId_pro() + "'";
+                    con.actualiza(st, update);
+                    con.cerrar(st);
+                    win = "reg";
+                    JOptionPane.showMessageDialog(null, "Se modifico los datos correctamente");
+                    this.dispose();
+                    frm_ver_productos productos = new frm_ver_productos();
+                    ven.llamar_ventana(productos);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } else {
+            Statement st = con.conexion();
+            String update = "update producto_almacen set precio = '" + pro.getPre_pro() + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + ida + "'";
+            con.actualiza(st, update);
+            con.cerrar(st);
+            win = "reg";
+            JOptionPane.showMessageDialog(null, "Se modifico los datos correctamente");
+            this.dispose();
+            frm_ver_prod_alm_det pro_det = new frm_ver_prod_alm_det();
+            ven.llamar_ventana(pro_det);
         }
-        System.out.println(pro.getPre_pro());
+    System.out.println (pro.getPre_pro());
 
     }//GEN-LAST:event_btn_regActionPerformed
 
@@ -591,7 +611,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                 txt_gan.setText(formato.format(gan));
                 txt_com.setEditable(true);
                 txt_com.requestFocus();
-
+                
             }
         }
     }//GEN-LAST:event_txt_pvenKeyPressed
@@ -623,9 +643,9 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                 }
             } catch (SQLException ex) {
                 System.out.print(ex);
-
+                
             }
-
+            
         }
     }//GEN-LAST:event_txt_codKeyPressed
 
@@ -690,7 +710,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_undKeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        
         txt_des.setText("");
         txt_mar.setText("");
         txt_mar.setEditable(false);

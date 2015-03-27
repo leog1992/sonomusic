@@ -43,9 +43,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     public frm_reg_traslado_almacen() {
         initComponents();
         txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-        
+
         String almacen = "select nom_alm from almacen order by idAlmacen asc";
         ver_almacen(almacen);
+        cbx_alm_or.setSelectedItem(frm_menu.alm.getNom());
         detalle = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
@@ -546,7 +547,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         frm_ver_prod_alm prod_alm = new frm_ver_prod_alm();
         Integer ida = cbx_alm_or.getSelectedIndex() + 1;
         String alm = cbx_alm_or.getSelectedItem().toString();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, p.costo_compra, p.estado, c.desc_clas, "
+        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                 + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + ida + "' "
                 + "order by p.desc_pro asc";
@@ -798,10 +799,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     System.out.print(ex);
                 }
             }
-            
+
             try {
                 Statement st = con.conexion();
-                String upd_tra = "update traslado set estado = '1' where idTraslado = '"+idtras+"'";
+                String upd_tra = "update traslado set estado = '1' where idTraslado = '" + idtras + "'";
                 con.actualiza(st, upd_tra);
                 con.cerrar(st);
             } catch (Exception e) {
@@ -826,7 +827,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             try {
                 int idalm = cbx_alm_de.getSelectedIndex() + 1;
                 Statement st = con.conexion();
-                String ver_alm = "select ruc, raz_soc from Almacen where idAlmacen = '" + idalm + "'";
+                String ver_alm = "select ruc, raz_soc from almacen where idAlmacen = '" + idalm + "'";
                 ResultSet rs = con.consulta(st, ver_alm);
                 if (rs.next()) {
                     txt_ruc_alm.setText(rs.getString("ruc"));
