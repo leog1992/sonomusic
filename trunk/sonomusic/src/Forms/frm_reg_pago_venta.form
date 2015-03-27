@@ -155,7 +155,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Proveedor:"/>
+        <Property name="text" type="java.lang.String" value="Cliente:"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
     </Component>

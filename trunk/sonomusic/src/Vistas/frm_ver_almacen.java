@@ -11,6 +11,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Clases.table_render;
 import Forms.frm_reg_almacen;
+import Forms.frm_rpt_fechas;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sonomusic.frm_menu;
 
 /**
  *
@@ -288,11 +290,12 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
     private void t_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_almacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (ventana.equals("rpt")) {
-                alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("idalm", alm.getId());
-                ven.ver_reporte("rpt_productos_almacen_ganancia", parametros);
+            if (ventana.equals("rpt_venta_almacen")) {
+                frm_rpt_fechas fec= new frm_rpt_fechas();
+                fec.rpt="venta_almacen";
+                int id=(int) t_almacen.getValueAt(i, 0);
+                fec.alm.setId(id);
+                ven.llamar_ventana(fec);                
                 ventana = "";
                 this.dispose();
             }

@@ -104,7 +104,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Pago de Venta");
 
-        jLabel1.setText("Proveedor:");
+        jLabel1.setText("Cliente:");
         jLabel1.setFocusable(false);
 
         jLabel3.setText("Fecha:");

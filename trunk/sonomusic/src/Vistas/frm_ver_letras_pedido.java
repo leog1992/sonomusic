@@ -1,10 +1,8 @@
-
 package Vistas;
 
 import Clases.Cl_Conectar;
 import Clases.Cl_Letras_Pedido;
 import Clases.Cl_Varios;
-import Forms.frm_reg_pago;
 import Forms.frm_reg_pago_venta;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,48 +10,31 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
+
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Letras_Pedido letras = new Cl_Letras_Pedido();
-    DefaultTableModel modelo;
+    public static DefaultTableModel modelo;
     int i;
-    public frm_ver_letras_pedido() {
-        initComponents();
-        mostrar_letras();
-    }
-    
-    void mostrar_letras(){        
-        modelo = new DefaultTableModel(){
+    public static double pendiente;
+    public static double pagado;
+    public static double total;
 
-            @Override
-            public boolean isCellEditable(int i, int i1) {
-                return false;
-            }            
-        };
-        
-        modelo.addColumn("Fecha");
-        modelo.addColumn("Monto");
-        
+    public frm_ver_letras_pedido() {
+        initComponents();                        
+    }     
+    
+    void pendiente(){
         try{
-        Statement st = con.conexion();
-        String sql="select idLetras_Pedido, monto, fecha, idPedido from  letras_pedido";
-        ResultSet rs = con.consulta(st, sql);
-        Object dato[]= new Object[2];
-        while (rs.next()) {
-            dato[0] = rs.getObject("fecha"); 
-            dato[1] = rs.getObject("monto");
-            modelo.addRow(dato);
-        }
-        t_letras.setModel(modelo);
-        t_letras.getColumnModel().getColumn(0).setPreferredWidth(100);
-        t_letras.getColumnModel().getColumn(1).setPreferredWidth(120);
-        ven.centrar_celda(t_letras, 0);
-        ven.derecha_celda(t_letras, 1);
+        total=Double.parseDouble(lbl_total.getText());
+        pagado=Double.parseDouble(t_letras.getValueAt(i, 1).toString());
+        lbl_pagado.setText(pagado+"");
+        pendiente= total - pagado;
+        lbl_pendiente.setText(pendiente+"");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error: "+e);
-        }        
+        }
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -73,13 +54,30 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         lbl_pendiente = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        lbl_pagar = new javax.swing.JLabel();
+        lbl_pagado = new javax.swing.JLabel();
         btn_anular = new javax.swing.JButton();
         btn_registrar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Pago Pendiente");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -169,9 +167,9 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
 
         lbl_pendiente.setText("0000");
 
-        jLabel5.setText("Pagar:");
+        jLabel5.setText("Pagado:");
 
-        lbl_pagar.setText("000000");
+        lbl_pagado.setText("000000");
 
         btn_anular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bin_closed.png"))); // NOI18N
         btn_anular.setText("Anular Pago");
@@ -184,7 +182,6 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
 
         btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/disk.png"))); // NOI18N
         btn_registrar.setText("Registar");
-        btn_registrar.setEnabled(false);
         btn_registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_registrarActionPerformed(evt);
@@ -217,13 +214,14 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_pagado)
+                                .addGap(113, 113, 113)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lbl_pendiente)
-                                .addGap(135, 135, 135)
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbl_pagar))
+                                .addGap(19, 19, 19))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
                                 .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,7 +236,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -246,11 +244,11 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
                         .addComponent(lbl_pendiente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbl_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbl_pagado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_anular, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,7 +260,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_anularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anularActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn_anularActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -278,7 +276,12 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         frm_reg_pago_venta pagven = new frm_reg_pago_venta();
         ven.llamar_ventana(pagven);
+        this.dispose();
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        pendiente();
+    }//GEN-LAST:event_formInternalFrameActivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -296,10 +299,10 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
     public static javax.swing.JLabel lbl_dni;
     public static javax.swing.JLabel lbl_fecha;
     public static javax.swing.JLabel lbl_nombre;
-    private javax.swing.JLabel lbl_pagar;
-    private javax.swing.JLabel lbl_pendiente;
+    public static javax.swing.JLabel lbl_pagado;
+    public static javax.swing.JLabel lbl_pendiente;
     public static javax.swing.JLabel lbl_tipo_doc;
-    private javax.swing.JLabel lbl_total;
-    private javax.swing.JTable t_letras;
+    public static javax.swing.JLabel lbl_total;
+    public static javax.swing.JTable t_letras;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,6 +10,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Varios;
+import static Vistas.frm_ver_letras_pedido.modelo;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -545,6 +546,39 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         letras.lbl_nombre.setText(t_facturas.getValueAt(i, 5).toString());
         letras.lbl_tipo_doc.setText(t_facturas.getValueAt(i, 3).toString());
         letras.lbl_fecha.setText(t_facturas.getValueAt(i, 1).toString());
+        letras.lbl_total.setText(t_facturas.getValueAt(i, 6).toString());
+        String id=t_facturas.getValueAt(i, 0).toString();
+        //ver_letras_pedido 
+        
+        try {
+            letras.modelo = new DefaultTableModel(){
+
+                @Override
+                public boolean isCellEditable(int i, int i1) {
+                    return false;
+                }                
+            };
+            
+            letras.modelo.addColumn("Fecha");
+            letras.modelo.addColumn("Monto");                        
+            Statement st = con.conexion();
+            String sql = "select idLetras_Pedido, monto, fecha, idPedido from  letras_pedido where idPedido='" + id + "' ";
+            ResultSet rs = con.consulta(st, sql);
+            Object dato[] = new Object[2];
+            while (rs.next()) {
+                dato[0] = rs.getObject("fecha");
+                dato[1] = rs.getObject("monto");
+                letras.modelo.addRow(dato);
+            }
+            letras.t_letras.setModel(modelo);
+            letras.t_letras.getColumnModel().getColumn(0).setPreferredWidth(100);
+            letras.t_letras.getColumnModel().getColumn(1).setPreferredWidth(120);
+            ven.centrar_celda(letras.t_letras, 0);
+            ven.derecha_celda(letras.t_letras, 1);            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
+        }
+        //fin letras pedido
         ven.llamar_ventana(letras);
     }//GEN-LAST:event_btn_pagarActionPerformed
 
