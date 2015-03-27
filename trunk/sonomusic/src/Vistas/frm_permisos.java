@@ -211,6 +211,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         btn_cerrar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Establecer Permisos");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/permisos2.png"))); // NOI18N
 

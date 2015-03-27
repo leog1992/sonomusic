@@ -106,6 +106,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
         btn_eli = new javax.swing.JButton();
         btn_historial = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Clientes");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N

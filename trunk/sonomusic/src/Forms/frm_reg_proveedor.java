@@ -62,6 +62,7 @@ Cl_Varios ven = new Cl_Varios();
         txt_tel2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Registrar Proveedor");
 
         jLabel1.setText("RUC:");
@@ -473,7 +474,7 @@ Cl_Varios ven = new Cl_Varios();
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txt_contacto;
     public static javax.swing.JTextField txt_dir;
-    private javax.swing.JTextField txt_email;
+    public static javax.swing.JTextField txt_email;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_ruc;
     public static javax.swing.JTextField txt_tel;

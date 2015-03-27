@@ -76,6 +76,7 @@ String accion;
         txt_dir = new javax.swing.JTextField();
         btn_reg = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Datos de Empresa");
 
         jLabel1.setText("RUC:");

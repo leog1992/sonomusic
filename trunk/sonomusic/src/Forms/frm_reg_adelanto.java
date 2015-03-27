@@ -65,6 +65,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         txttelefono2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
+        setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);

@@ -99,6 +99,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         cbx_tipopago = new javax.swing.JComboBox();
 
+        setClosable(true);
         setTitle("Pago de Compras");
 
         jLabel1.setText("Proveedor:");

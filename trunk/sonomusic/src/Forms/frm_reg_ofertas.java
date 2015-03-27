@@ -147,6 +147,7 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         cbx_alm = new javax.swing.JComboBox();
 
+        setClosable(true);
         setTitle("Registrar Oferta");
         setToolTipText("");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {

@@ -126,6 +126,7 @@ int i;
         btn_cerrar = new javax.swing.JButton();
         btn_detalle = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Cotizaciones");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N

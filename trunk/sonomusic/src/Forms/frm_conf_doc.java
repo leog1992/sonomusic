@@ -85,6 +85,7 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Configurar Nro de Documentos");
 
         jLabel1.setText("Tipo y Nro. de Documento:");

@@ -70,6 +70,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         lbl_idc = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Registrar Almacen");
 
         jLabel1.setText("Nombre:");

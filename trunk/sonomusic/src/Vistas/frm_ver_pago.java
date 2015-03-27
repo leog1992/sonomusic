@@ -100,6 +100,8 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
         btn_eliminar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel1.setText("Buscar:");
 
         txt_bus.setEditable(false);

@@ -92,6 +92,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_env = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Crear Pedido");
 
         jLabel1.setText("Datos del Pedido");

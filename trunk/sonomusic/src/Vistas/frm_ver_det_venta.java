@@ -51,6 +51,7 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_pago = new javax.swing.JTextField();
         txt_tipv = new javax.swing.JTextField();
 
+        setClosable(true);
         setTitle("Ver Detalle de Compra");
 
         jLabel1.setText("Cliente");

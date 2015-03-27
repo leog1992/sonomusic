@@ -55,6 +55,7 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
         txt_con = new javax.swing.JPasswordField();
         txt_ver_con = new javax.swing.JPasswordField();
 
+        setClosable(true);
         setTitle("Crear Usuarios");
 
         jLabel1.setText("DNI:");

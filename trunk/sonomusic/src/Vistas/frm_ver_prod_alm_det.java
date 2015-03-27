@@ -163,6 +163,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
         cbx_clas = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Ver Productos en los Almacen");
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(

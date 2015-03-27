@@ -163,6 +163,7 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Deposito a Cuenta ");
 
         jLabel1.setText("Banco:");

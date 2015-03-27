@@ -106,6 +106,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         btn_act = new javax.swing.JButton();
         cbx_tipo = new javax.swing.JComboBox();
 
+        setClosable(true);
         setTitle("Ver Empleado");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N

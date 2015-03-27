@@ -8,6 +8,7 @@ package sonomusic;
 import Clases.Cl_Usuario;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -60,7 +61,7 @@ public class frm_login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login - SONO MUSIC IMPORT");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
         setResizable(false);
 
         txt_usu.addActionListener(new java.awt.event.ActionListener() {

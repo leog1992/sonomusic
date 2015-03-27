@@ -81,6 +81,7 @@ public class frm_ver_adelantos extends javax.swing.JInternalFrame {
         btn_eliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Adelantos");
 
         jLabel2.setText("Buscar:");

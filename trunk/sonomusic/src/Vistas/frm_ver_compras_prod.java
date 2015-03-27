@@ -146,6 +146,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         t_compras = new javax.swing.JTable();
         btn_pagar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Compras de Productos");
 
         jLabel1.setText("Buscar por:");

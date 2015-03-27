@@ -159,6 +159,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         cbx_cla = new javax.swing.JComboBox();
         btn_enviar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Productos");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
