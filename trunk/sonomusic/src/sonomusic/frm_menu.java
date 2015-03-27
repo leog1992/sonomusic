@@ -258,7 +258,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - SONOMUSIC");
-        setIconImage(Toolkit.getDefaultToolkit().getImage("logo_sonomusic.png")
+        setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png")
         );
 
         contenedor.setBackground(new java.awt.Color(204, 204, 204));
