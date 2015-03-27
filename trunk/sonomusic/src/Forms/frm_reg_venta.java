@@ -1021,16 +1021,24 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_id.requestFocus();
     }//GEN-LAST:event_formInternalFrameActivated
 
-    private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
 
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txt_nro_doc.getText().isEmpty()) {
-                cli.setNro_doc(txt_nro_doc.getText());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
+    private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
+        if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+                if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
+                    if (txt_nro_doc.getText().equals("00000000")) {
+                        txt_nro_doc.setText("");
+                        txt_nro_doc.requestFocus();
+                    }
+                }
+
+                if (!txt_nro_doc.getText().isEmpty()) {
+                    cli.setNro_doc(txt_nro_doc.getText());
+                    try {
+                        Statement st = con.conexion();
+                        String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
+                        ResultSet rs = con.consulta(st, ver_pro);
                         if (rs.next()) {
                             txt_nro_doc.setText(rs.getString("nro_doc"));
                             txt_nom.setText(rs.getString("nom_per"));
@@ -1057,19 +1065,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                 frm_reg_cliente.txt_nom.requestFocus();
                             }
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Longitud del Nro. Documento incompleta");
-                        txt_nro_doc.setText("");
-                        txt_nro_doc.requestFocus();
+                    } catch (SQLException ex) {
+                        System.out.print(ex);
                     }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Se cargaran numeros");
+                    txt_nro_doc.setText("00000000");
+                    txt_nro_doc.requestFocus();
                 }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Se cargaran numeros");
-                txt_nro_doc.setText("00000000");
-                txt_nro_doc.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_nro_docKeyPressed
@@ -1154,21 +1159,28 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
             btn_cam_can.doClick();
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            detalle.removeRow(i);
+            subtotal();
+            total();
+            txt_id.requestFocus();
+        }
     }//GEN-LAST:event_t_detalleKeyPressed
 
- 
+
     private void txt_fecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyTyped
-        
+
     }//GEN-LAST:event_txt_fecKeyTyped
 
     private void t_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMouseClicked
-        
-        if (t_detalle.getSelectedColumn()==3) {
+
+        if (t_detalle.getSelectedColumn() == 3) {
             t_detalle.setValueAt("", i, 3);
-        }else if (t_detalle.getSelectedColumn()==5) {
+        } else if (t_detalle.getSelectedColumn() == 5) {
             t_detalle.setValueAt("", i, 5);
         }
-       
+
     }//GEN-LAST:event_t_detalleMouseClicked
 
 

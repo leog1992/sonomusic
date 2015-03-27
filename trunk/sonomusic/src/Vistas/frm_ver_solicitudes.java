@@ -197,6 +197,11 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         btn_eli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
         btn_eli.setText("Eliminar");
         btn_eli.setEnabled(false);
+        btn_eli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,6 +330,25 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_t_requerimientoMousePressed
+
+    private void btn_eliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliActionPerformed
+        int idsol = Integer.parseInt(t_requerimiento.getValueAt(i, 0).toString());
+        // Eliminando detalle de solicitud.
+        try {
+            Statement st = con.conexion();
+            String eli_det = "delete * from detalle_solicitud where idsolicitud = '"+idsol+"'";
+            con.actualiza(st, eli_det);
+            con.cerrar(st);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+//        try {
+//            Statement st = con.conexion();
+//            String eli_sol = "delete * from solicitud_articulos where idsolicitud = "
+//        } catch (Exception e) {
+//        }
+    }//GEN-LAST:event_btn_eliActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
