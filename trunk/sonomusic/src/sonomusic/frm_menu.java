@@ -217,6 +217,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
         jSeparator16 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -503,7 +504,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -918,6 +919,11 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem33);
         jMenu2.add(jSeparator16);
+
+        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem14.setText("Reporte de Venta General");
+        jMenu2.add(jMenuItem14);
 
         jMenuBar1.add(jMenu2);
 
@@ -1540,14 +1546,13 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        frm_ver_almacen almacen = new frm_ver_almacen();
-        almacen.ventana = "rpt";
-        ven.llamar_ventana(almacen);
+        //venta general con ganancias
 
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
       frm_ver_almacen almacen = new frm_ver_almacen();
+      almacen.ventana="rpt_venta_almacen";
       ven.llamar_ventana(almacen);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
@@ -1647,6 +1652,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
