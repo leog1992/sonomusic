@@ -157,6 +157,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Cuentas");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/vcard.png"))); // NOI18N
 

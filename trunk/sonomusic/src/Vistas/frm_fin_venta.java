@@ -107,6 +107,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         txt_fec_pago = new javax.swing.JFormattedTextField();
         chk_incluir = new javax.swing.JCheckBox();
 
+        setClosable(true);
         setTitle("Finalizar Venta");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

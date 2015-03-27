@@ -46,6 +46,7 @@ public class frm_reg_nota extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_cer = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ingresar Notas:");
 
         jLabel1.setText("Asunto:");

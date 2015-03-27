@@ -181,6 +181,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         btn_pagar = new javax.swing.JButton();
         btn_det = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Registro de Ventas");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N

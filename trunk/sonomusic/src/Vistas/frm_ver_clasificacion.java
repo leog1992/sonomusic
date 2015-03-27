@@ -89,6 +89,7 @@ public class frm_ver_clasificacion extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_gra = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Clasificacion");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

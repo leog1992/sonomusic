@@ -141,6 +141,7 @@ Integer i;
         t_compras = new javax.swing.JTable();
         btn_pagar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Compras de Servicios");
 
         jLabel1.setText("Buscar por:");

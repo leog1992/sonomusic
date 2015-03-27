@@ -47,6 +47,7 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
         txt_tel1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Registrar Cliente");
 
         jLabel1.setText("Tipo de Documento");

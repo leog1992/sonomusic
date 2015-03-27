@@ -156,6 +156,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         txt_tot = new javax.swing.JTextField();
         txt_fecha = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Movimientos");
 
         t_movimientos.setModel(new javax.swing.table.DefaultTableModel(

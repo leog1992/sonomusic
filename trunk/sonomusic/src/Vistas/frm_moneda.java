@@ -76,6 +76,7 @@ public class frm_moneda extends javax.swing.JInternalFrame {
         btn_grabar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Registrar Moneda");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/coins.png"))); // NOI18N
 

@@ -209,6 +209,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         txt_fec_com = new javax.swing.JFormattedTextField();
         txt_fec_pag = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Registrar Compra");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N

@@ -124,6 +124,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         btn_anu = new javax.swing.JButton();
         btn_envio = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Detalle de Guias");
 
         jLabel1.setText("Buscar");

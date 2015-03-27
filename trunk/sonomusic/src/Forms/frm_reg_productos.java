@@ -110,6 +110,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Registrar Productos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

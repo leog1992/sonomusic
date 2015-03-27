@@ -119,6 +119,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         btn_pred = new javax.swing.JButton();
         btn_ver = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Almacen");
 
         btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N

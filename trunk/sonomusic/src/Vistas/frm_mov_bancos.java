@@ -109,6 +109,7 @@ public class frm_mov_bancos extends javax.swing.JInternalFrame {
         txt_fec_ini = new javax.swing.JFormattedTextField();
         txt_fec_fin = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Movimiento por Banco");
 
         jLabel1.setText("Seleccion de Bancos - Movimientos");

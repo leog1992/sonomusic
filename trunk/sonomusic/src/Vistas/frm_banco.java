@@ -74,6 +74,7 @@ public class frm_banco extends javax.swing.JInternalFrame {
         btn_salir = new javax.swing.JButton();
         btn_grabar = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Registro de Bancos");
 
         jLabel1.setText("Nombre de Banco:");

@@ -47,6 +47,7 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Listar Ventas por Producto y Cliente");
 
         jLabel1.setText("Cliente:");

@@ -143,6 +143,7 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
         txt_fec_com = new javax.swing.JFormattedTextField();
         txt_fec_pag = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Registrar Gasto Directo");
 
         jLabel1.setText("RUC:");

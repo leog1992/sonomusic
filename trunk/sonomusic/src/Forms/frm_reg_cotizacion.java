@@ -115,6 +115,7 @@ Integer i;
         txt_user = new javax.swing.JTextField();
         txt_fec = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Registrar Cotizacion");
 
         jLabel1.setText("Cliente:");

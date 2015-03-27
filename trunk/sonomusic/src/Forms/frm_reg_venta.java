@@ -225,6 +225,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_id = new javax.swing.JTextField();
         txt_desc = new javax.swing.JTextField();
 
+        setClosable(true);
         setTitle("Registro de Venta");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

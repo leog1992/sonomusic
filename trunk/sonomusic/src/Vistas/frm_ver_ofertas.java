@@ -93,6 +93,7 @@ public class frm_ver_ofertas extends javax.swing.JInternalFrame {
         btn_eliminar = new javax.swing.JButton();
         cbx_busca = new javax.swing.JComboBox();
 
+        setClosable(true);
         setTitle("Oferta");
         setToolTipText("");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {

@@ -107,6 +107,7 @@ DefaultTableModel mostrar ;
         btn_ver = new javax.swing.JButton();
         cbx_estado = new javax.swing.JComboBox();
 
+        setClosable(true);
         setTitle("Ver Notas / Notificaciones");
 
         jLabel1.setText("Buscar:");

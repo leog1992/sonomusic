@@ -90,6 +90,7 @@ Integer i;
         jScrollPane1 = new javax.swing.JScrollPane();
         t_medida = new javax.swing.JTable();
 
+        setClosable(true);
         setTitle("Ver Und. Medida");
 
         btn_gra.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N

@@ -94,6 +94,7 @@ public class frm_cargos extends javax.swing.JInternalFrame {
         txt_desc = new javax.swing.JTextField();
         btn_gra = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Ver Cargos");
 
         jLabel2.setText("Descripcion:");

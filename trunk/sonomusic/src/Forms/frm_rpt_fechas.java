@@ -52,6 +52,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
         txt_fec_ini = new javax.swing.JFormattedTextField();
         txt_fec_fin = new javax.swing.JFormattedTextField();
 
+        setClosable(true);
         setTitle("Imprimir Reportes");
 
         jLabel1.setText("Ingrese Fechas:");

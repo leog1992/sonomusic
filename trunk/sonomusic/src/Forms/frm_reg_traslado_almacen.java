@@ -137,6 +137,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         txt_placa = new javax.swing.JTextField();
 
+        setClosable(true);
         setTitle("Traslado entre Almacenes");
         setMaximumSize(new java.awt.Dimension(800, 600));
 

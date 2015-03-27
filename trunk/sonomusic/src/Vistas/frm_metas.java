@@ -131,6 +131,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Programacion de Metas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

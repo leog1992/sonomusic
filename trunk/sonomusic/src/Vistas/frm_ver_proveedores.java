@@ -110,6 +110,7 @@ int i;
         txt_bus = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
+        setClosable(true);
         setTitle("Ver Proveedor");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N

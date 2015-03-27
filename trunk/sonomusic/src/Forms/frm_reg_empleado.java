@@ -118,6 +118,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         txt_fec = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
 
+        setClosable(true);
         setTitle("Registrar Empleado");
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
