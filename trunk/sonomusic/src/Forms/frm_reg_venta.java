@@ -447,7 +447,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setText("Nro. Doc.:");
+        jLabel10.setText("D.N.I / R.U.C");
 
         jLabel12.setText("Nombre:");
 

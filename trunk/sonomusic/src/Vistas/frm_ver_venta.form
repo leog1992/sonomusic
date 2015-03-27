@@ -32,10 +32,10 @@
                       <Component id="txt_bus" min="-2" pref="166" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_estado" min="-2" pref="153" max="-2" attributes="0"/>
-                      <EmptySpace pref="570" max="32767" attributes="0"/>
+                      <EmptySpace pref="530" max="32767" attributes="0"/>
                       <Component id="btn_anu" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_pagar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_det" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -62,7 +62,7 @@
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cbx_estado" alignment="3" pref="31" max="32767" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="btn_pagar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btn_anu" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btn_det" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
@@ -236,17 +236,23 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_anuActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btn_pagar">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Recursos/pagar.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Pagar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pagarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_det">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Recursos/blog.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ver Detalle"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
