@@ -10,6 +10,7 @@ import Vistas.frm_ver_ofertas;
 import Clases.Cl_Varios;
 import Clases.Cl_cuenta;
 import Clases.table_render;
+import Forms.frm_cierre_caja;
 import Forms.frm_conf_doc;
 import Forms.frm_reg_deposito;
 import Forms.frm_reg_empresa;
@@ -258,7 +259,7 @@ public class frm_menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - SONOMUSIC");
 
-        contenedor.setBackground(new java.awt.Color(102, 102, 102));
+        contenedor.setBackground(new java.awt.Color(204, 204, 204));
         contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jToolBar1.setBorder(null);
@@ -500,7 +501,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1569,7 +1570,8 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
-        // TODO add your handling code here:
+        frm_cierre_caja cierre = new frm_cierre_caja();
+        ven.llamar_ventana(cierre);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
     /**
      * @param args the command line arguments

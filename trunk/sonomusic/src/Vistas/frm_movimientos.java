@@ -8,25 +8,14 @@ package Vistas;
 import Clases.Cl_Conectar;
 import Clases.Cl_Movimiento;
 import Clases.Cl_Varios;
-import java.awt.Desktop;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import sonomusic.frm_menu;
 
 /**
