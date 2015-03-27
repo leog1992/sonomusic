@@ -24,6 +24,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
     DecimalFormat formato = null;
+    double arq;
 
     /**
      * Creates new form frm_cierre_caja
@@ -281,6 +282,11 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/accept.png"))); // NOI18N
         btn_reg.setText("Registrar");
         btn_reg.setEnabled(false);
+        btn_reg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -322,11 +328,25 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
     private void txt_arqKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_arqKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             double dif = 0;
-            double arq = Double.parseDouble(txt_arq.getText());
+            arq = Double.parseDouble(txt_arq.getText());
             dif = arq - sal_act();
             txt_dif.setText(formato.format(dif));
+            btn_reg.setEnabled(true);
         }
     }//GEN-LAST:event_txt_arqKeyPressed
+
+    private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
+        try {
+            Statement st = con.conexion();
+            String upt_caja = "update caja set monto = '"+arq+"' where idalmacen = '"+frm_menu.alm.getId()+"'";
+            con.actualiza(st, upt_caja);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        this.dispose();
+        
+    }//GEN-LAST:event_btn_regActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

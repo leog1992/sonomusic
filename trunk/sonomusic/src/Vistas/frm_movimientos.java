@@ -161,7 +161,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             if (t_movimientos.getValueAt(x, 0).equals("CAJA")) {
                 suma_salc += Double.parseDouble(t_movimientos.getValueAt(x, 4).toString());
             } else {
-                suma_salb += Double.parseDouble(t_movimientos.getValueAt(x, 3).toString());
+                suma_salb += Double.parseDouble(t_movimientos.getValueAt(x, 4).toString());
             }
         }
         txt_sal.setText(formato.format(suma_salc));
