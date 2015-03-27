@@ -47,7 +47,11 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; //To change body of generated methods, choose Tools | Templates.
+                if (column == 5) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         };
 
@@ -463,7 +467,7 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String ultimo_id = "select idOferta from oferta where fecha_ofer ='" + ofe.getFec_ini() + "' and "
-                    + "fecha_venc ='" + ofe.getFec_fin()+ "' and idAlmacen = '" + frm_menu.alm.getId() + "' order by idOferta "
+                    + "fecha_venc ='" + ofe.getFec_fin() + "' and idAlmacen = '" + frm_menu.alm.getId() + "' order by idOferta "
                     + "desc LIMIT 1";
             ResultSet rs = con.consulta(st, ultimo_id);
             if (rs.next()) {
