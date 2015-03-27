@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
@@ -28,45 +29,91 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     Cl_Varios ven = new Cl_Varios();
     Cl_Movimiento mov = new Cl_Movimiento();
     DefaultTableModel mostrar;
-    Double suma_ing;
-    Double suma_sal;
+    double suma_ingc;
+    double suma_salc;
+    double suma_ingb;
+    double suma_salb;
     public static String ventana = "movimientos";
     String fecha;
-    public static DecimalFormat formato = new DecimalFormat("####0.00");
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
 
     /**
      * Creates new form frm_movimientos
      */
     public frm_movimientos() {
         initComponents();
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
+
+        mostrar = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        mostrar.addColumn("Ori / Dest");
+        mostrar.addColumn("Descripcion");
+        mostrar.addColumn("Fecha");
+        mostrar.addColumn("Ingreso");
+        mostrar.addColumn("Salida");
 
         fecha = ven.getFechaActual();
+        Object[] caja = new Object[5];
+        caja[0] = "CAJA";
+        caja[1] = "SALDO ANTERIOR DE CAJA";
+        caja[2] = ven.getFechaActual();
+        caja[3] = formato.format(sal_ant());
+        caja[4] = "0.00";
+        mostrar.addRow(caja);
+
         String query = "select * from movimiento where fec_mov = '" + fecha + "' and"
                 + " idAlmacen = '" + frm_menu.alm.getId() + "' order by idMovimiento asc";
         ver_movimientos(query);
+
         sumar_ing_caja();
         sumar_sal_caja();
-        Double total;
-        total = suma_ing - suma_sal;
-        txt_tot.setText(formato.format(total));
+        Double totalc;
+        Double totalb;
+        totalc = suma_ingc - suma_salc;
+        totalb = suma_ingb - suma_salb;
+        txt_tot.setText(formato.format(totalc));
+        txt_totb.setText(formato.format(totalb));
+
+        t_movimientos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        t_movimientos.getColumnModel().getColumn(1).setPreferredWidth(500);
+        t_movimientos.getColumnModel().getColumn(2).setPreferredWidth(80);
+        t_movimientos.getColumnModel().getColumn(3).setPreferredWidth(70);
+        t_movimientos.getColumnModel().getColumn(4).setPreferredWidth(70);
+        ven.centrar_celda(t_movimientos, 2);
+        ven.derecha_celda(t_movimientos, 3);
+        ven.derecha_celda(t_movimientos, 4);
+        mostrar.fireTableDataChanged();
+        t_movimientos.updateUI();
+
+    }
+
+    private double sal_ant() {
+        double sal = 0;
+        try {
+            Statement st = con.conexion();
+            String ver_sal = "select monto from caja where idAlmacen = '" + frm_menu.alm.getId() + "'";
+            ResultSet rs = con.consulta(st, ver_sal);
+            if (rs.next()) {
+                sal = rs.getDouble("monto");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return sal;
     }
 
     private void ver_movimientos(String query) {
         try {
-            mostrar = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int fila, int columna) {
-                    return false;
-                }
-            };
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
-
-            mostrar.addColumn("Ori / Dest");
-            mostrar.addColumn("Descripcion");
-            mostrar.addColumn("Fecha");
-            mostrar.addColumn("Ingreso");
-            mostrar.addColumn("Salida");
 
             //Creando las filas para el JTable
             while (rs.next()) {
@@ -85,12 +132,6 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             con.cerrar(st);
             con.cerrar(rs);
             t_movimientos.setModel(mostrar);
-            t_movimientos.getColumnModel().getColumn(0).setPreferredWidth(80);
-            t_movimientos.getColumnModel().getColumn(1).setPreferredWidth(500);
-            t_movimientos.getColumnModel().getColumn(2).setPreferredWidth(80);
-            t_movimientos.getColumnModel().getColumn(3).setPreferredWidth(70);
-            t_movimientos.getColumnModel().getColumn(4).setPreferredWidth(70);
-            mostrar.fireTableDataChanged();
         } catch (SQLException e) {
             System.out.print(e);
         }
@@ -99,24 +140,32 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
 
     private void sumar_ing_caja() {
         int tot_filas_caja = t_movimientos.getRowCount();
-        suma_ing = 0.00;
+        suma_ingc = 0.00;
+        suma_ingb = 0.00;
         for (int x = 0; x < tot_filas_caja; x++) {
             if (t_movimientos.getValueAt(x, 0).equals("CAJA")) {
-                suma_ing += Double.parseDouble(t_movimientos.getValueAt(x, 3).toString());
+                suma_ingc += Double.parseDouble(t_movimientos.getValueAt(x, 3).toString());
+            } else {
+                suma_ingb += Double.parseDouble(t_movimientos.getValueAt(x, 3).toString());
             }
         }
-        txt_ing.setText(formato.format(suma_ing));
+        txt_ing.setText(formato.format(suma_ingc));
+        txt_ingb.setText(formato.format(suma_ingb));
     }
 
     private void sumar_sal_caja() {
         int tot_filas_caja = t_movimientos.getRowCount();
-        suma_sal = 0.00;
+        suma_salc = 0.00;
+        suma_salb = 0.00;
         for (int x = 0; x < tot_filas_caja; x++) {
             if (t_movimientos.getValueAt(x, 0).equals("CAJA")) {
-                suma_sal += Double.parseDouble(t_movimientos.getValueAt(x, 4).toString());
+                suma_salc += Double.parseDouble(t_movimientos.getValueAt(x, 4).toString());
+            } else {
+                suma_salb += Double.parseDouble(t_movimientos.getValueAt(x, 3).toString());
             }
         }
-        txt_sal.setText(formato.format(suma_sal));
+        txt_sal.setText(formato.format(suma_salc));
+        txt_salb.setText(formato.format(suma_salb));
     }
 
     /**
@@ -155,7 +204,14 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_tot = new javax.swing.JTextField();
         txt_fecha = new javax.swing.JFormattedTextField();
+        txt_salb = new javax.swing.JTextField();
+        txt_ingb = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txt_totb = new javax.swing.JTextField();
 
+        setClosable(true);
         setTitle("Movimientos");
 
         t_movimientos.setModel(new javax.swing.table.DefaultTableModel(
@@ -310,6 +366,21 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_salb.setEditable(false);
+        txt_salb.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txt_ingb.setEditable(false);
+        txt_ingb.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        jLabel9.setText("Total BANCO");
+
+        jLabel10.setText("Total Salidas BANCO");
+
+        jLabel11.setText("Total Ingresos BANCO");
+
+        txt_totb.setEditable(false);
+        txt_totb.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -360,17 +431,35 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btn_reg))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_ing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(txt_ing, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_ingb, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_salb, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_totb, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_tot, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -411,6 +500,14 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                     .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_ingb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_salb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_totb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -535,9 +632,12 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         ver_movimientos(query);
         sumar_ing_caja();
         sumar_sal_caja();
-        Double total;
-        total = suma_ing - suma_sal;
-        txt_tot.setText(formato.format(total));
+        Double totalc;
+        Double totalb;
+        totalc = suma_ingc - suma_salc;
+        totalb = suma_ingb - suma_salb;
+        txt_tot.setText(formato.format(totalc));
+        txt_totb.setText(formato.format(totalb));
 
         limpiar();
     }//GEN-LAST:event_btn_regActionPerformed
@@ -583,6 +683,8 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_rep_caja;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -590,6 +692,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JRadioButton rbt_ing;
     public static javax.swing.JRadioButton rbt_ini;
@@ -598,10 +701,13 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txt_dni;
     private javax.swing.JFormattedTextField txt_fecha;
     private javax.swing.JTextField txt_ing;
+    private javax.swing.JTextField txt_ingb;
     private javax.swing.JTextField txt_monto;
     public static javax.swing.JTextField txt_mot;
     public static javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_sal;
+    private javax.swing.JTextField txt_salb;
     private javax.swing.JTextField txt_tot;
+    private javax.swing.JTextField txt_totb;
     // End of variables declaration//GEN-END:variables
 }

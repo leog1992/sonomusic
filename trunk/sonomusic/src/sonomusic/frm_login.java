@@ -60,6 +60,7 @@ public class frm_login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login - SONO MUSIC IMPORT");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
         txt_usu.addActionListener(new java.awt.event.ActionListener() {

@@ -6,6 +6,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
+    <Property name="closable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Movimientos"/>
   </Properties>
   <SyntheticProperties>
@@ -26,7 +27,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -85,17 +86,45 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txt_ing" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txt_sal" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Component id="txt_ing" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="txt_ingb" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="txt_sal" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txt_salb" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txt_tot" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txt_totb" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="txt_tot" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -145,6 +174,15 @@
                   <Component id="txt_sal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_tot" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel11" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_ingb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_salb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_totb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -454,6 +492,39 @@
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fechaKeyPressed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_salb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_ingb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total BANCO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Salidas BANCO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Ingresos BANCO"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_totb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
