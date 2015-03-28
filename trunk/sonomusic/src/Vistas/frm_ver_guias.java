@@ -8,25 +8,15 @@ package Vistas;
 import Clases.Cl_Albaran;
 import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
+import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_traslado_almacen;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import sonomusic.frm_menu;
 
 /**
@@ -81,11 +71,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                     fila[6] = rs.getString("ser_doc") + " - " + rs.getString("nro_doc");
                 }
                 fila[7] = rs.getString("nick");
-                if (rs.getString("estado").equals("0")) {
-                    fila[8] = "PENDIENTE";
-                } else {
-                    fila[8] = "APROBADO";
+                switch (rs.getString("estado")) {
+                    case "0":
+                        fila[8] = "PENDIENTE";
+                        break;
+                    case "1":
+                        fila[8] = "APROBADO";
+                        break;
+                    case "2":
+                        fila[8] = "ANULADO";
+                        break;
                 }
+
                 modelo.addRow(fila);
             }
             t_guias.setModel(modelo);
@@ -291,6 +288,12 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         } else {
             btn_envio.setEnabled(false);
         }
+        
+        if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
+            btn_anu.setEnabled(false);
+        } else {
+            btn_anu.setEnabled(true);
+        }
     }//GEN-LAST:event_t_guiasMousePressed
 
     private void btn_guiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guiaActionPerformed
@@ -300,23 +303,91 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         ven.ver_reporte("rpt_ver_guia", parametros);
     }//GEN-LAST:event_btn_guiaActionPerformed
 
-    private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
-        //anular guia si es pendiente
-        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
-        //seleccionar detalle envio
+    private int ver_id_alm(String nom_alm) {
+        int ida = 0;
         try {
             Statement st = con.conexion();
-            String ver_det_env = "select * ";
-            ResultSet rs = con.consulta(st, ver_det_env);
-            while (rs.next()) {
-                
+            String ver_alm = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                ida = rs.getInt("idAlmacen");
             }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {
+            System.out.println(e);
         }
-        
-        //anular guia si es aceptado
+        return ida;
+    }
+
+    private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
+        //anular guia si es pendiente
+        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+
+        Cl_Productos pro = new Cl_Productos();
+
+        String nom_alm_or = t_guias.getValueAt(i, 3).toString();
+        //ver id almacen origen:
+        int id_ao = ver_id_alm(nom_alm_or);
+
+        //seleccionar detalle envio
+        try {
+            Statement st = con.conexion();
+            String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
+            ResultSet rs = con.consulta(st, ver_det_env);
+            while (rs.next()) {
+                pro.setCan(rs.getDouble("cant"));
+                pro.setId_pro(rs.getInt("idProductos"));
+                // Seleccionar cantidad actual producto en almacen destino
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                    ResultSet rs1 = con.consulta(st1, ver_pro);
+                    if (rs1.next()) {
+                        pro.setCan_act_pro(rs1.getDouble("cant"));
+                    }
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                double can_new = pro.getCan_act_pro() - pro.getCan();
+
+                try {
+                    Statement st1 = con.conexion();
+                    String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                    con.actualiza(st1, cam_can);
+                    con.cerrar(st1);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        // cambiar cantidades de almacen origen
+
+        try {
+            Statement st = con.conexion();
+            String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
+            con.actualiza(st, del_det);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        try {
+            Statement st = con.conexion();
+            String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
+            con.actualiza(st, del_tra);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void llenar_tguias(int idtra) {

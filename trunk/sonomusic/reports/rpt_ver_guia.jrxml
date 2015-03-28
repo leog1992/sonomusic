@@ -37,7 +37,8 @@ FROM
      INNER JOIN `traslado` traslado ON usuario.`nick` = traslado.`nick`
      INNER JOIN `productos_traslado` productos_traslado ON traslado.`idTraslado` = productos_traslado.`idTraslado`
      INNER JOIN `productos` productos ON productos_traslado.`idProductos` = productos.`idProductos`
-     INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`]]>
+     INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
+where traslado.`idTraslado` = $P{idtraslado}]]>
 	</queryString>
 	<field name="origen" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

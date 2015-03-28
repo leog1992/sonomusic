@@ -343,11 +343,23 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
             System.out.println(ex);
         }
         
-//        try {
-//            Statement st = con.conexion();
-//            String eli_sol = "delete * from solicitud_articulos where idsolicitud = "
-//        } catch (Exception e) {
-//        }
+        try {
+            Statement st = con.conexion();
+            String eli_sol = "delete * from solicitud_articulos where idsolicitud = '"+idsol+"'";
+            con.actualiza(st, eli_sol);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        String query = "select sol.fec_sol, date_add(sol.fec_sol, INTERVAL sol.plazo DAY) as fec_apro, sol.idsolicitud, "
+                + "sol.estado, sol.id_alm_ori, sol.nick, emp.nom_per, sol.id_alm_des, sol.plazo, sol.fec_env from "
+                + "solicitud_articulos as sol inner join usuario as usu on sol.nick=usu.nick inner join empleados as emp on "
+                + "usu.dni=emp.dni where id_alm_ori = '" + frm_menu.alm.getId() + "' or id_alm_des = "
+                + "'" + frm_menu.alm.getId() + "' order by fec_apro desc";
+        ver_requerimientos(query);
+        
+        
     }//GEN-LAST:event_btn_eliActionPerformed
 
 
