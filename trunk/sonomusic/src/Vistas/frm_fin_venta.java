@@ -9,6 +9,7 @@ import Clases.Cl_Albaran;
 import Clases.Cl_Almacen;
 import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
+import Clases.Cl_Hilo_Imprime;
 import Clases.Cl_Pedido;
 import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
@@ -56,7 +57,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     DecimalFormat formato = null;
     Double entrega;
     double comision;
-    
+
     public frm_fin_venta() {
         initComponents();
         simbolo.setDecimalSeparator('.');
@@ -64,7 +65,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         String query = "select * from tipo_pago";
         ver_tipo(query);
         txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
-    
+
     }
 
     private void ver_tipo(String query) {
@@ -332,12 +333,12 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     private void txt_entregaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_entregaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             entrega = Double.parseDouble(txt_entrega.getText());
-            Double vuelto = entrega - total;            
+            Double vuelto = entrega - total;
             System.out.println(vuelto);
             //accion = tipo de venta
             if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("SEPARACION")) {
                 accion = "separacion";
-                vuelto = total-entrega;
+                vuelto = total - entrega;
                 jlabelvuelto.setText("Restante:");
                 txt_vuelto.setText(formato.format(vuelto));
                 btn_reg.setEnabled(true);
@@ -402,6 +403,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 + "\nCliente: " + cli.getNro_doc() + "\nTotal: " + ped.getTotal());
         System.out.println("================FIN DE INSERTADOS EN LA TABLA PEDIDO(VENTA)================");
     }
+
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         long time_start, time_end;
@@ -549,7 +551,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '"+frm_menu.cue.getId_cuen()+"')";
+                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -557,34 +559,21 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
                 }
             }
+            //enviar por theard
+
             if (modo.equals("VENTA")) {
-                if (txt_doc.getText().equals("NOTA DE VENTA")) {
-                    Map<String, Object> parametros = new HashMap<>();
-                    parametros.put("idped", ped.getId_ped());
-                    String filename = "rpt_ticket_notaventa";
-                    ven.imp_reporte(filename, parametros);
-                }
-
-                if (txt_doc.getText().equals("BOLETA")) {
-                    Map<String, Object> parametros = new HashMap<>();
-                    parametros.put("idped", ped.getId_ped());
-                    String filename = "rpt_ticket_boleta";
-                    ven.imp_reporte(filename, parametros);
-                }
-
-                if (txt_doc.getText().equals("FACTURA")) {
-                    Map<String, Object> parametros = new HashMap<>();
-                    parametros.put("idped", ped.getId_ped());
-                    String filename = "rpt_ticket_factura";
-                    ven.imp_reporte(filename, parametros);
-                }
-
+                Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+                imprime.set_tipv(txt_doc.getText());
+                imprime.set_idped(ped.getId_ped());
+                System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+                imprime.start();
             }
+            
             //SEPARACION
             //insertar separacion
         } else {
             ped.setEst_ped("2");
-            
+
             try {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
@@ -594,9 +583,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
-                System.out.println("Error en pedido: "+ex);
+                System.out.println("Error en pedido: " + ex);
             }
-            
+
             //buscar ultimo pedido
             try {
                 Statement st = con.conexion();
@@ -610,9 +599,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 con.cerrar(rs);
                 con.cerrar(st);
             } catch (SQLException ex) {
-                System.out.print("Error lectura de pedido: "+ex);
+                System.out.print("Error lectura de pedido: " + ex);
             }
-            
+
             //insertar en detalle pedido
             int filas = frm_reg_venta.t_detalle.getRowCount();
             for (int j = 0; j <= (filas - 1); j++) {
@@ -625,23 +614,23 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     con.actualiza(st, ins_det_ped);
                     con.cerrar(st);
                 } catch (Exception ex) {
-                    System.err.print("Error detalle pedido: "+ex);
+                    System.err.print("Error detalle pedido: " + ex);
                 }
             }
-            
+
             //insertar datos en letras_pedido
-            try {                
+            try {
                 Statement st = con.conexion();
-                String sql="insert into letras_pedido values(null, '"+Double.parseDouble(txt_entrega.getText())+"', '"+frm_reg_venta.ped.getFec_ped()+"', '"+ped.getId_ped()+"' )";
+                String sql = "insert into letras_pedido values(null, '" + Double.parseDouble(txt_entrega.getText()) + "', '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
                 con.actualiza(st, sql);
-                con.cerrar(st);                
+                con.cerrar(st);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error en letras_pedido: "+e);
+                JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
             }
-            
+
             //imprimir resultados ingresados
             mostrarinsert();
-            
+
             //insertar datos en movimiento
             try {
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
@@ -661,7 +650,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
             }
 
-            // TICKE DE SEPARACION
+            // TICKET DE SEPARACION
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("idped", ped.getId_ped());
             parametros.put("Adelanto", total);
@@ -675,9 +664,6 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         venta.btn_clo.doClick();
         venta = new frm_reg_venta();
         ven.llamar_ventana(venta);
-        time_end = System.currentTimeMillis();
-        System.out.println("iniciando " + time_start);
-        System.out.println("terminando " + time_end);
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_add_notaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_notaActionPerformed
@@ -758,16 +744,16 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void chk_incluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_incluirActionPerformed
-        if (chk_incluir.isSelected()) {   
-            total+=comision;
-            lbl_tot.setText("S/. "+formato.format(total));
-            System.out.println("el total "+total);
-            System.out.println("La comision "+comision);
-        }else{
-            total-=comision;
-            lbl_tot.setText("S/. "+formato.format(total));
-            System.out.println("El total "+total);
-            System.out.println("La comision "+comision);
+        if (chk_incluir.isSelected()) {
+            total += comision;
+            lbl_tot.setText("S/. " + formato.format(total));
+            System.out.println("el total " + total);
+            System.out.println("La comision " + comision);
+        } else {
+            total -= comision;
+            lbl_tot.setText("S/. " + formato.format(total));
+            System.out.println("El total " + total);
+            System.out.println("La comision " + comision);
         }
     }//GEN-LAST:event_chk_incluirActionPerformed
 
