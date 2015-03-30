@@ -34,7 +34,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="txt_ruc" min="-2" pref="97" max="-2" attributes="0"/>
+                              <Component id="txt_dni" min="-2" pref="97" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txt_raz" max="32767" attributes="0"/>
                           </Group>
@@ -44,12 +44,6 @@
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txt_tido" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_ser" min="-2" pref="47" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_nro" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -91,12 +85,6 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cbx_tipopago" min="-2" pref="158" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -108,7 +96,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_ruc" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_dni" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_raz" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -116,17 +104,9 @@
                   <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_tido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_ser" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_nro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_fec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="cbx_tipopago" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txt_deu" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -147,7 +127,7 @@
                   <Component id="btn_add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_clo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -165,7 +145,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_ruc">
+    <Component class="javax.swing.JTextField" name="txt_dni">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="0"/>
@@ -280,32 +260,6 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Documento:"/>
-        <Property name="focusable" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_ser">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="focusable" type="boolean" value="false"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_nro">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="focusable" type="boolean" value="false"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JButton" name="btn_add">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -344,22 +298,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Forma de Pago"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="cbx_tipopago">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cbx_tipopagoKeyPressed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

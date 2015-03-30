@@ -38,12 +38,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     Cl_Productos pro = new Cl_Productos();
     Cl_Movimiento mov = new Cl_Movimiento();
     Cl_Cliente cli = new Cl_Cliente();
+    public static String id;
 
     DefaultTableModel mostrar;
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
     DecimalFormat formato = new DecimalFormat("####.00", simbolo);
     Integer i;
     String fecha_hoy;
+
+    
 
     /**
      * Creates new form frm_ver_cobranzas
@@ -63,6 +66,23 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         cbx_estado.setSelectedIndex(0);
         txt_bus.requestFocus();
     }
+    //
+    
+    double pagados() {
+        double pag = 0;
+        try {
+            Statement st = con.conexion();
+            String sql = "select sum(monto) as calculo from letras_pedido where idPedido='" + id + "'";
+            ResultSet rs = con.consulta(st, sql);
+            if (rs.next()) {
+                pag = rs.getDouble("calculo");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error " + e);
+        }
+        return pag;
+    }
+    
 
     private void ver_pedidos(String query) {
         try {
@@ -528,14 +548,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         i = t_facturas.getSelectedRow();
         String est = t_facturas.getValueAt(i, 10).toString();
         if (est.equals("ANULADO")) {
-            btn_anu.setEnabled(false);           
+            btn_anu.setEnabled(false);
         } else {
             btn_anu.setEnabled(true);
             btn_det.setEnabled(true);
         }
         if (est.equals("SEPARADO")) {
             btn_pagar.setEnabled(true);
-        }else{
+        } else {
             btn_pagar.setEnabled(false);
         }
     }//GEN-LAST:event_t_facturasMousePressed
@@ -547,20 +567,19 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         letras.lbl_tipo_doc.setText(t_facturas.getValueAt(i, 3).toString());
         letras.lbl_fecha.setText(t_facturas.getValueAt(i, 1).toString());
         letras.lbl_total.setText(t_facturas.getValueAt(i, 6).toString());
-        String id=t_facturas.getValueAt(i, 0).toString();
-        //ver_letras_pedido 
-        
+        id = t_facturas.getValueAt(i, 0).toString();
+
+        //ver_letras_pedido         
         try {
-            letras.modelo = new DefaultTableModel(){
+            letras.modelo = new DefaultTableModel() {
 
                 @Override
                 public boolean isCellEditable(int i, int i1) {
                     return false;
-                }                
+                }
             };
-            
             letras.modelo.addColumn("Fecha");
-            letras.modelo.addColumn("Monto");                        
+            letras.modelo.addColumn("Monto");
             Statement st = con.conexion();
             String sql = "select idLetras_Pedido, monto, fecha, idPedido from  letras_pedido where idPedido='" + id + "' ";
             ResultSet rs = con.consulta(st, sql);
@@ -574,11 +593,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             letras.t_letras.getColumnModel().getColumn(0).setPreferredWidth(100);
             letras.t_letras.getColumnModel().getColumn(1).setPreferredWidth(120);
             ven.centrar_celda(letras.t_letras, 0);
-            ven.derecha_celda(letras.t_letras, 1);            
+            ven.derecha_celda(letras.t_letras, 1);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
-        //fin letras pedido
+        //cargar pagado
+        letras.lbl_pagado.setText(pagados()+"");
+        letras.resta();
+        letras.id = this.id;
         ven.llamar_ventana(letras);
     }//GEN-LAST:event_btn_pagarActionPerformed
 
@@ -602,8 +625,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             modelo.addColumn("Precio");
             Statement st = con.conexion();
             String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, dp.precio, sum(dp.precio*dp.cantidad) as sump, u.desc_und, dp.cantidad from detalle_pedido as dp inner join productos as p on "
-                    + "p.idProductos=dp.idProductos inner join und_medida as u on p.idUnd_medida=u.idUnd_medida where dp.idPedido = '"+ped.getId_ped()+"' group by p.idProductos";
-            ResultSet rs =con.consulta(st, query);
+                    + "p.idProductos=dp.idProductos inner join und_medida as u on p.idUnd_medida=u.idUnd_medida where dp.idPedido = '" + ped.getId_ped() + "' group by p.idProductos";
+            ResultSet rs = con.consulta(st, query);
             Object fila[] = new Object[6];
             double total = 0;
             while (rs.next()) {
@@ -635,7 +658,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-        ven.llamar_ventana(detalle);        
+        ven.llamar_ventana(detalle);
     }//GEN-LAST:event_btn_detActionPerformed
 
 
