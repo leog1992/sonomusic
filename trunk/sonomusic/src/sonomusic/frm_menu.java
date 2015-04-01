@@ -207,6 +207,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         m_clientes = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -216,8 +217,9 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem28 = new javax.swing.JMenuItem();
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
-        jSeparator16 = new javax.swing.JPopupMenu.Separator();
         jMenuItem14 = new javax.swing.JMenuItem();
+        jSeparator16 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem41 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -242,6 +244,8 @@ public class frm_menu extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem39 = new javax.swing.JMenuItem();
+        jMenuItem40 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
@@ -504,7 +508,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -836,6 +840,11 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem11);
 
+        jMenuItem38.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jMenuItem38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem38.setText("Rpt.Pagos");
+        jMenu1.add(jMenuItem38);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Ventas");
@@ -888,7 +897,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem28.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem28.setText("Reporte de Venta por vendedor");
+        jMenuItem28.setText("Rpt. Venta Total");
         jMenuItem28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -899,7 +908,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem32.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem32.setText(" Reporte de Venta");
+        jMenuItem32.setText("Rpt. Venta x Almacen");
         jMenuItem32.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -910,7 +919,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem33.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem33.setText("Reporte de Venta por Almacen");
+        jMenuItem33.setText("Rpt. Venta x Vendedor");
         jMenuItem33.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -918,12 +927,27 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem33);
-        jMenu2.add(jSeparator16);
 
         jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem14.setText("Reporte de Venta General");
+        jMenuItem14.setText("Rpt. Ventas y Comision");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem14);
+        jMenu2.add(jSeparator16);
+
+        jMenuItem41.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jMenuItem41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem41.setText("Rpt. Producto x Cliente");
+        jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem41ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem41);
 
         jMenuBar1.add(jMenu2);
 
@@ -1112,10 +1136,30 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem34.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem32ActionPerformed(evt);
+                jMenuItem34ActionPerformed(evt);
             }
         });
         jMenu4.add(jMenuItem34);
+
+        jMenuItem39.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jMenuItem39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem39.setText("Rpt. Articulos en General");
+        jMenuItem39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem39ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem39);
+
+        jMenuItem40.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jMenuItem40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem40.setText("Rpt. Ganacia en Almacen");
+        jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem40ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem40);
 
         jMenuBar1.add(jMenu4);
 
@@ -1145,6 +1189,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu5.add(jMenuItem19);
 
         jMenuItem35.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/connect.png"))); // NOI18N
         jMenuItem35.setText("Cierre de Caja");
         jMenuItem35.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
@@ -1155,6 +1200,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu5.add(jMenuItem35);
 
         jMenuItem36.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem36.setText("Mov. Caja en Tienda");
         jMenuItem36.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
@@ -1165,6 +1211,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu5.add(jMenuItem36);
 
         jMenuItem37.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem37.setText("Mov. Bancos");
         jMenuItem37.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
@@ -1516,6 +1563,7 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // IMPRIME ROTULO X ALMACEN
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("idalmacen", alm.getId());
         ven.ver_reporte("rotulo_pro_alm", parametros);
@@ -1523,8 +1571,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        frm_ver_usuarios usu = new  frm_ver_usuarios();
-        ven.llamar_ventana(usu);
+        frm_rpt_fechas rpt_fec = new frm_rpt_fechas();
+        rpt_fec.rpt = "venta_total";
+        ven.llamar_ventana(rpt_fec);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -1546,14 +1595,18 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        //venta general con ganancias
+        // IMPRIME TOTAL DE ARTICULOS EN ALMACEN
+        // Selecciona almacen
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana = "rpt_venta_alm";
+        ven.llamar_ventana(almacen);
 
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
-      frm_ver_almacen almacen = new frm_ver_almacen();
-      almacen.ventana="rpt_venta_almacen";
-      ven.llamar_ventana(almacen);
+        frm_ver_usuarios usuario = new frm_ver_usuarios();
+        usuario.rpt = "venta_vendedor";
+        ven.llamar_ventana(usuario);
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
@@ -1580,6 +1633,35 @@ public class frm_menu extends javax.swing.JFrame {
         frm_cierre_caja cierre = new frm_cierre_caja();
         ven.llamar_ventana(cierre);
     }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void jMenuItem39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem39ActionPerformed
+        // REPORTE PRODUCTOS GENERAL
+        ven.ver_reporte("rpt_prod", null);
+    }//GEN-LAST:event_jMenuItem39ActionPerformed
+
+    private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana = "rpt_ganancia_almacen";
+        ven.llamar_ventana(almacen);
+    }//GEN-LAST:event_jMenuItem40ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana = "rpt_prod_alm";
+        ven.llamar_ventana(almacen);
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        frm_ver_usuarios usuario = new frm_ver_usuarios();
+        usuario.rpt = "ganancia_vendedor";
+        ven.llamar_ventana(usuario);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem41ActionPerformed
+        frm_ver_cliente cliente = new frm_ver_cliente();
+        cliente.rpt = "rpt_cliente";
+        ven.llamar_ventana(cliente);
+    }//GEN-LAST:event_jMenuItem41ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1678,7 +1760,11 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
+    private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem40;
+    private javax.swing.JMenuItem jMenuItem41;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

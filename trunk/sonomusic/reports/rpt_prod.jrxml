@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_prod_alm" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="20ae4fdb-a2eb-4740-8528-8448afefcec1">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`desc_pro` AS desc_pro,
+     productos.`marca` AS marca,
+     productos.`modelo` AS modelo,
+     productos.`serie` AS serie,
+     und_medida.`desc_und` AS und_medida,
+     productos.`estado` AS estado,
+     clasificacion.`desc_clas` AS clasificacion,
+     productos.`cant_actual` AS cant_actual,
+     productos.`idProductos` AS idProductos
+FROM
+     `productos` productos INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
+     INNER JOIN `clasificacion` clasificacion ON productos.`id_clas` = clasificacion.`id_clas`
+ORDER BY
+     productos.`desc_pro` ASC,
+     productos.`modelo` ASC]]>
+	</queryString>
+	<field name="desc_pro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="und_medida" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clasificacion" class="java.lang.String"/>
+	<field name="cant_actual" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idProductos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="nro" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="29" uuid="93c8c273-7b94-445d-9841-31c9a7111051"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado de Productos]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="495" y="31" width="60" height="20" uuid="c7e4531c-f31e-4aec-b614-8d208d04b4e1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="439" y="31" width="56" height="20" uuid="3f1f8e50-f887-4bfd-b908-88bf75f63528"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Imp.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="15" uuid="991ec156-83d6-427b-9769-b5aeed4d875d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="0" width="25" height="15" uuid="44238bbe-a240-410a-9bd9-ad5d38658e02"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="0" width="200" height="15" uuid="dc1f6933-60f5-412e-ab75-2186c8d74bec"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="0" width="84" height="15" uuid="c8e83ec4-522a-4046-ba25-8576ea3dfec7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="0" width="67" height="15" uuid="01f696d3-53cd-4dd5-bbd7-2ba77fc4af62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Und. Med.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="0" width="55" height="15" uuid="cae0d04b-7dd3-4cf8-90ab-98dc183207fe"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="0" width="91" height="15" uuid="f9fc7f2b-5597-4419-ac33-20b788545cdb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clasificacion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="0" width="25" height="15" uuid="9849a9ff-b034-419e-be66-2055c4b58338"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{idProductos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="0" width="200" height="15" uuid="ae73cc93-b13f-44cc-918e-f72228f068c8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{desc_pro} + " - " + $F{modelo} + " - " + $F{serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="253" y="0" width="84" height="15" uuid="be0cf155-5d9d-4ac4-afee-95cfb90cca1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="67" height="15" uuid="c0af119e-b77d-4871-bbab-0f56e3389356"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{und_medida}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="495" y="0" width="55" height="15" uuid="8ea38932-63bd-480e-a72e-59b2b569b75b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cant_actual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="0" width="91" height="15" uuid="6ee642c2-177e-41df-9742-37c2373eb9b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clasificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="0" width="25" height="15" uuid="0e746eae-a954-4eb9-b4db-422a67c27a93"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{nro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

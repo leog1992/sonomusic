@@ -126,7 +126,8 @@ public class Cl_Hilo_Notificacion extends Thread {
     }
 
     private void notificar_meta() {
-        DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
+        DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+        simbolo.setDecimalSeparator('.');
         DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
         Cl_Cargo car = new Cl_Cargo();
         car.setId(car.mi_cargo(frm_menu.usu.getNick()));

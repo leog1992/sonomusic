@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_pagos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c79300e-621b-4ed4-81df-b94d0e883ed5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     pago.`fecha` AS fecha,
+     pago.`comisiones` AS comisiones,
+     pago.`otrosingresos` AS otrosingresos,
+     pago.`adelantos` AS adelantos,
+     pago.`otrosdescuentos` AS otrosdescuentos,
+     pago.`dni` AS dni,
+     empleados.`nom_per` AS nom_per,
+     cargo.`tipo_cargo` AS cargo,
+     empleados.`tel_per` AS tel_per,
+     empleados.`tel2_per` AS etel2_per,
+     empleados.`sueldo` AS sueldo,
+     pago.`salario` AS salario
+FROM
+     `empleados` empleados INNER JOIN `pago` pago ON empleados.`dni` = pago.`dni`
+     INNER JOIN `cargo` cargo ON empleados.`idCargo` = cargo.`idCargo`]]>
+	</queryString>
+	<field name="fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comisiones" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="otrosingresos" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adelantos" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="otrosdescuentos" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dni" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom_per" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="tel_per" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="etel2_per" class="java.lang.String"/>
+	<field name="sueldo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salario" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="6fad04c5-00e1-4008-a6c0-01a2b2670905"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte por Pago Colaborador]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="178" height="20" uuid="3459bfd8-f72b-4298-95ab-9a618ad58261"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="0" width="100" height="20" uuid="c942071c-1d8b-4f16-98de-05c6976093b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="0" width="48" height="20" uuid="f5b1b78f-5f3b-4333-9dc8-937c320b4a83"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[sueldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="0" width="53" height="20" uuid="5846f769-3c6f-4e40-af16-176c088a854d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Comision]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="46" height="20" uuid="7cbe2c58-4ea0-4f1d-93db-2c48f5e56ffe"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Ing.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="0" width="51" height="20" uuid="53ba9459-46db-4bcc-96ae-1451c041f617"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Adelantos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="51" height="20" uuid="b8afdbe7-fb7a-4927-a73e-0edd6ac67071"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Desc.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="178" height="20" uuid="612db710-edc6-4813-825f-dabb76f28781"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nom_per}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="0" width="100" height="20" uuid="5970a5af-bad1-46a4-960a-5f3bdbf4e137"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="48" height="20" uuid="525b0678-e8fc-4389-8e42-d63da8fc0a55"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sueldo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="0" width="53" height="20" uuid="56c6a3e9-946d-4788-beec-d337065f53d7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{comisiones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="0" width="46" height="20" uuid="a583cef7-6762-4517-bbbe-82aff297a850"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{otrosingresos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="0" width="51" height="20" uuid="47292541-a17c-4ab2-8adc-70c323e6db46"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{adelantos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="51" height="20" uuid="63e06078-9444-4bd8-83b6-46049d2d4abd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{otrosdescuentos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

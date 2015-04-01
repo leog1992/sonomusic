@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sonomusic.frm_menu;
 
 /**
  *
@@ -290,13 +289,29 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
     private void t_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_almacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (ventana.equals("rpt_venta_almacen")) {
-                frm_rpt_fechas fec= new frm_rpt_fechas();
-                fec.rpt="venta_almacen";
-                int id=(int) t_almacen.getValueAt(i, 0);
+            if (ventana.equals("rpt_venta_alm")) {
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.rpt = "venta_almacen";
+                int id = (int) t_almacen.getValueAt(i, 0);
                 fec.alm.setId(id);
-                ven.llamar_ventana(fec);                
+                ven.llamar_ventana(fec);
                 ventana = "";
+                this.dispose();
+            }
+            // REPORTE DE PRODUCTO EN ALMACEN
+            if (ventana.equals("rpt_prod_alm")) {
+                int id = (int) t_almacen.getValueAt(i, 0);
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idalm", id);
+                ven.ver_reporte("rpt_prod_alm", parametros);
+                this.dispose();
+            }
+            // GANANCIA EN ALMACEN
+            if (ventana.equals("rpt_ganancia_almacen")){
+                int id = (int) t_almacen.getValueAt(i, 0);
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idalm", id);
+                ven.ver_reporte("rpt_utilidad_almacen", parametros);
                 this.dispose();
             }
         }

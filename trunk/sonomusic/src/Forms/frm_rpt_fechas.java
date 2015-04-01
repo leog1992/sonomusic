@@ -6,10 +6,11 @@
 package Forms;
 
 import Clases.Cl_Almacen;
+import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
+import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
-import Vistas.frm_ver_usuarios;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,8 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
     Cl_Varios ven = new Cl_Varios();
     public Cl_Productos pro = new Cl_Productos();
     public Cl_Almacen alm = new Cl_Almacen();
+    public Cl_Usuario usu = new Cl_Usuario();
+    public Cl_Cliente cli = new Cl_Cliente();
     public static String rpt = "";
 
     /**
@@ -176,14 +179,20 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("idmat", pro.getId_pro());
                 ven.ver_reporte("rpt_kardex", parametros);
             }
-            
+            // REPORTE PRODUCTOS X ALMACEN
+            if (rpt.equals("rpt_prod_alm")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idalm", alm.getId());
+                ven.ver_reporte("rpt_prod_alm", parametros);
+            }
+            // REPORTE DE COMPRAS EN GENERAL
             if (rpt.equals("compras")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_pago", fec_fin);
                 parametros.put("fecha_doc", fec_ini);
                 ven.ver_reporte("rpt_compras", parametros);
             }
-
+            // REPORTE DE COMPRAS POR PRODUCTO
             if (rpt.equals("compra_producto")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("idproducto", pro.getId_pro());
@@ -191,23 +200,14 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fecha_doc", fec_ini);
                 ven.ver_reporte("rpt_compras_producto", parametros);
             }
-            //
-            if (rpt.equals("venta_vendedor")) {
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("usuario", frm_menu.lbl_user.getText());
-                parametros.put("fecha_inicio", fec_ini);
-                parametros.put("fecha_fin", fec_fin);
-                ven.ver_reporte("rpt_ventas_vendedor", parametros);
-                System.out.println(frm_menu.lbl_user.getText()+" - "+fec_ini+" - "+fec_fin);
-            }
-            //
-            if (rpt.equals("ventas")) {
+            // REPORTE DE VENTAS EN GENERAL
+            if (rpt.equals("venta_total")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_inicio", fec_ini);
                 parametros.put("fecha_fin", fec_fin);
                 ven.ver_reporte("rpt_ventas", parametros);
             }
-            //
+            // REPORTE DE VENTAS X ALMACEN
             if (rpt.equals("venta_almacen")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_inicio", fec_ini);
@@ -215,20 +215,34 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("almacen",alm.getId() );
                 ven.ver_reporte("rpt_ventas_almacen", parametros);
             }
-
+            // REPORTE E VENTAS X VENDEDOR
+            if (rpt.equals("venta_vendedor")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fecha_inicio", fec_ini);
+                parametros.put("fecha_fin", fec_fin);
+                parametros.put("usuario",usu.getNick());
+                ven.ver_reporte("rpt_ventas_vendedor", parametros);
+            }
+            // REPORTE DE GANANCIAS POR VENDEDOR
+            if (rpt.equals("ganancia_vendedor")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("fec_ini", fec_ini);
+                parametros.put("fec_fin", fec_fin);
+                parametros.put("nick",usu.getNick());
+                ven.ver_reporte("rpt_ventas_productos_vendedor", parametros);
+            }
+            // REPORTE DE VENTAS POR CLIENTE
+            if (rpt.equals("rpt_cliente")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("cliente",cli.getNro_doc());
+                ven.ver_reporte("rpt_ventas_cliente", parametros);
+            }
             if (rpt.equals("cajas_tienda")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fec_mov", fec_ini);
                 parametros.put("idalm", frm_menu.alm.getId());
                 parametros.put("fec_fin", fec_fin);
                 ven.ver_reporte("rpt_caja_movimiento_cajas", parametros);
-            }
-            if (rpt.equals("vendedor")) {
-                Map<String,Object> parametros = new HashMap<>();
-                parametros.put("usuario", frm_ver_usuarios.id);
-                parametros.put("fecha_inicio", fec_ini);
-                parametros.put("fecha_fin", fec_fin);
-                ven.ver_reporte("rpt_ventas_vendedor", parametros);
             }
             this.dispose();
         }

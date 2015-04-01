@@ -11,6 +11,7 @@ import Clases.Cl_Varios;
 import Forms.frm_reg_cliente;
 import Forms.frm_reg_cotizacion;
 import Forms.frm_reg_venta;
+import Forms.frm_rpt_fechas;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +30,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
     Cl_Cliente cli = new Cl_Cliente();
     public static String ventana = "cliente";
     public static String win = "reg";
+    public static String rpt;
     Integer i;
     DefaultTableModel mostrar;
 
@@ -381,6 +383,18 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
                     System.out.print(ex);
                 }
             }
+            //ENVIAR ID PARA REPORTE
+            if (rpt.equals("rpt_cliente")) {
+                cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.rpt = "rpt_cliente";
+                fec.cli.setNro_doc(cli.getNom_cli());
+                ven.llamar_ventana(fec);           
+                rpt = "";
+                this.dispose();
+            }
+            ventana = "cliente";
+            
         }
     }//GEN-LAST:event_t_clientesKeyPressed
 

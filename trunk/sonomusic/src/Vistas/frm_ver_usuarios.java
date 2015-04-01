@@ -28,6 +28,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     public static DefaultTableModel mostrar;
     int i;
     public static String id;
+    public static String rpt;
 
     /**
      * Creates new form frm_ver_usuarios
@@ -233,17 +234,24 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1KeyPressed
 
     private void t_usuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_usuariosKeyPressed
-
-        try {
-            if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (rpt.equals("venta_vendedor")) {
                 id = t_usuarios.getValueAt(i, 0).toString();
                 frm_rpt_fechas fec = new frm_rpt_fechas();
-                fec.rpt = "vendedor";
+                fec.usu.setNick(id);
+                fec.rpt = "venta_vendedor";
                 ven.llamar_ventana(fec);
                 this.dispose();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            
+            if (rpt.equals("ganancia_vendedor")) {
+                id = t_usuarios.getValueAt(i, 0).toString();
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.usu.setNick(id);
+                fec.rpt = "ganancia_vendedor";
+                ven.llamar_ventana(fec);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_t_usuariosKeyPressed
 
@@ -251,15 +259,15 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         i = t_usuarios.getSelectedRow();
         btn_permisos.setEnabled(true);
         btn_cambiar_pass.setEnabled(true);
-        String estado=t_usuarios.getValueAt(i, 3).toString();
+        String estado = t_usuarios.getValueAt(i, 3).toString();
         if (estado.equals("-")) {
             btn_habilitar.setEnabled(true);
             btn_inhabilitar.setEnabled(false);
-        }else{
+        } else {
             btn_inhabilitar.setEnabled(true);
             btn_habilitar.setEnabled(false);
         }
-        
+
     }//GEN-LAST:event_t_usuariosMousePressed
 
     private void btn_permisosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_permisosActionPerformed
@@ -389,7 +397,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_inhabilitarActionPerformed
 
     private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
-        
+
     }//GEN-LAST:event_jScrollPane1MousePressed
 
 
