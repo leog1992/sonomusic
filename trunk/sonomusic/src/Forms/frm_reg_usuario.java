@@ -57,6 +57,7 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setForeground(new java.awt.Color(255, 0, 0));
         setTitle("Crear Usuarios");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -130,11 +131,11 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,7 +252,7 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
         llenar();
         try {
             Statement st = con.conexion();
-            String ins_usu = "insert into usuario Values ('"+usu.getNick()+"', '"+usu.getContra()+"', '"+usu.getEst()+"', '"+emp.getDni()+"')";
+            String ins_usu = "insert into usuario Values ('"+usu.getNick()+"', '"+usu.getContra()+"', '"+usu.getEst()+"', '"+emp.getDni()+"', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')";
             con.actualiza(st, ins_usu);
             con.cerrar(st);
         } catch (Exception ex) {

@@ -5,11 +5,11 @@
  */
 package sonomusic;
 
+import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 import java.io.IOException;
 import java.net.ServerSocket;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.jvnet.substance.SubstanceLookAndFeel;
+import javax.swing.UIManager;
 
 /**
  *
