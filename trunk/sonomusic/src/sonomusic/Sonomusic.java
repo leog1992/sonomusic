@@ -7,9 +7,9 @@ package sonomusic;
 
 import java.net.ServerSocket;
 import java.io.IOException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-
+import org.jvnet.substance.SubstanceLookAndFeel;
 /**
  *
  * @author Dereck
@@ -22,11 +22,11 @@ public class Sonomusic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFell");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Sonomusic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo)
+        
+        SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceLimeGreenTheme"); 
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.GreenMagicSkin"); 
+
 
         frm_login loader = new frm_login();
         try {
