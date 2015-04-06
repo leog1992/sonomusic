@@ -93,6 +93,7 @@ public class frm_ver_ofertas extends javax.swing.JInternalFrame {
         btn_eliminar = new javax.swing.JButton();
         cbx_busca = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Oferta");
         setToolTipText("");
@@ -114,7 +115,10 @@ public class frm_ver_ofertas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Buscar");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_oferta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

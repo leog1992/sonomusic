@@ -165,8 +165,11 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         btn_mod = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Productos en los Almacen");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -199,6 +202,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -221,6 +225,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Ver por Tienda");
 
         btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N

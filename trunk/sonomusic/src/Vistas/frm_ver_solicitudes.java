@@ -142,6 +142,7 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         btn_imp = new javax.swing.JButton();
         btn_eli = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Listar Pedidos");
 
@@ -152,6 +153,8 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
                 btn_cerActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_requerimiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

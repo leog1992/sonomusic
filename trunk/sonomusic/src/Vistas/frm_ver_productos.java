@@ -159,6 +159,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         cbx_cla = new javax.swing.JComboBox();
         btn_enviar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Productos");
 
@@ -170,6 +171,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");
 
         txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -178,6 +180,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jScrollPane1MouseClicked(evt);
