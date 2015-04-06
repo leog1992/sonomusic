@@ -93,10 +93,12 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         btn_permisos = new javax.swing.JButton();
         btn_cambiar_pass = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setResizable(true);
         setTitle("Ver Usuarios");
 
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jScrollPane1MousePressed(evt);

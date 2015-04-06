@@ -266,16 +266,21 @@ public class frm_menu extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png")
         );
 
-        contenedor.setBackground(new java.awt.Color(176, 203, 157));
+        contenedor.setBackground(new java.awt.Color(254, 254, 254));
         contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
 
+        jPanel2.setBackground(new java.awt.Color(212, 2, 2));
+
+        lbl_user.setForeground(new java.awt.Color(254, 254, 254));
         lbl_user.setText("Usuario");
 
+        lbl_alm.setForeground(new java.awt.Color(254, 254, 254));
         lbl_alm.setText("Almacen");
 
+        lbl_ciudad.setForeground(new java.awt.Color(254, 254, 254));
         lbl_ciudad.setText("Ciudad:");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/computer.png"))); // NOI18N
@@ -292,12 +297,15 @@ public class frm_menu extends javax.swing.JFrame {
 
         jSeparator11.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        lbl_pc.setForeground(new java.awt.Color(254, 254, 254));
         lbl_pc.setText("jLabel1");
 
         jSeparator12.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        txt_ruc.setForeground(new java.awt.Color(254, 254, 254));
         txt_ruc.setText("RUC");
 
+        txt_raz.setForeground(new java.awt.Color(254, 254, 254));
         txt_raz.setText("RAZON SOCIAL");
 
         jSeparator13.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -703,7 +711,7 @@ public class frm_menu extends javax.swing.JFrame {
             .addComponent(jp_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jp_metas.setBackground(new java.awt.Color(0, 0, 102));
+        jp_metas.setBackground(new java.awt.Color(212, 2, 2));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -771,15 +779,18 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jp_metas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         contenedor.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         contenedor.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         contenedor.setLayer(jp_metas, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        jMenuBar1.setBackground(new java.awt.Color(212, 2, 2));
+        jMenuBar1.setForeground(new java.awt.Color(254, 254, 254));
         jMenuBar1.setBorderPainted(false);
 
+        jMenu1.setForeground(new java.awt.Color(254, 254, 254));
         jMenu1.setText("RR.HH.");
         jMenu1.setToolTipText("");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -847,6 +858,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setForeground(new java.awt.Color(254, 254, 254));
         jMenu2.setText("Ventas");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -951,6 +963,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setForeground(new java.awt.Color(254, 254, 254));
         jMenu3.setText("Compras");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -1024,6 +1037,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setForeground(new java.awt.Color(254, 254, 254));
         jMenu4.setText("Almacen");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -1163,6 +1177,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setForeground(new java.awt.Color(254, 254, 254));
         jMenu5.setText("Contabilidad");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -1223,6 +1238,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setForeground(new java.awt.Color(254, 254, 254));
         jMenu6.setText("Datos Generales");
         jMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

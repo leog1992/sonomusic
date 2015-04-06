@@ -110,6 +110,7 @@ int i;
         txt_bus = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Proveedor");
 
@@ -129,6 +130,8 @@ int i;
                 btn_modActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_proveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,6 +170,7 @@ int i;
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
