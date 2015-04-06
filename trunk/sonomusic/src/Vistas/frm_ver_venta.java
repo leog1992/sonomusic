@@ -202,7 +202,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         btn_pagar = new javax.swing.JButton();
         btn_det = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registro de Ventas");
 
@@ -224,7 +224,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_facturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
