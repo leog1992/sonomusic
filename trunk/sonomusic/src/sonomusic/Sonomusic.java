@@ -25,7 +25,7 @@ public class Sonomusic {
         JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo)
         
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceLimeGreenTheme"); 
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.GreenMagicSkin"); 
+        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.ModerateSkin"); 
 
 
         frm_login loader = new frm_login();
