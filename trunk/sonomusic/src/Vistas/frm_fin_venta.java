@@ -108,6 +108,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         txt_fec_pago = new javax.swing.JFormattedTextField();
         chk_incluir = new javax.swing.JCheckBox();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Finalizar Venta");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -129,12 +130,14 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Total");
 
         lbl_tot.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         lbl_tot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_tot.setText("S/. 1,888.00");
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Pago:");
 
         cbx_tipopago.setEnabled(false);
@@ -149,6 +152,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Entrega:");
 
         txt_entrega.setEditable(false);
@@ -162,6 +166,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jlabelvuelto.setForeground(new java.awt.Color(212, 2, 2));
         jlabelvuelto.setText("Vuelto:");
 
         txt_vuelto.setEditable(false);
@@ -199,6 +204,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Documento:");
 
         txt_doc.setEditable(false);
@@ -214,6 +220,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Fecha Pago");
 
         txt_fec_pago.setEditable(false);

@@ -131,6 +131,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Programacion de Metas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -151,12 +152,16 @@ public class frm_metas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Monto:");
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Fecha de Inicio:");
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha de Fin:");
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Tipo de Cargo:");
 
         txt_monto.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +220,8 @@ public class frm_metas extends javax.swing.JInternalFrame {
                 cbx_cargoActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_metas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -163,9 +163,12 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Deposito a Cuenta ");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Banco:");
 
         cbx_banc.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -174,6 +177,8 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Moneda:");
 
         cbx_mon.setEnabled(false);
@@ -183,10 +188,14 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Cuenta:");
 
         txt_cuenta.setEditable(false);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Tipo Cuenta:");
 
         cbx_tipc.setEnabled(false);
@@ -196,6 +205,8 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Fecha:");
 
         txt_fec.setEditable(false);
@@ -211,6 +222,8 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Cod. Deposito:");
 
         txt_dep.setEditable(false);
@@ -220,6 +233,8 @@ public class frm_reg_deposito extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Monto:");
 
         txt_mon.setEditable(false);

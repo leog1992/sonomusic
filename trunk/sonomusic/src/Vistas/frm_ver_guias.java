@@ -121,10 +121,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         btn_anu = new javax.swing.JButton();
         btn_envio = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Detalle de Guias");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/magnifier.png"))); // NOI18N
         jLabel1.setText("Buscar");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_guias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,6 +157,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         jButton2.setText("Cerrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +165,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         jButton3.setText("Registrar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

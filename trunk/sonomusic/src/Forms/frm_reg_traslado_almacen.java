@@ -138,17 +138,25 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         txt_placa = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Traslado entre Almacenes");
         setMaximumSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Opciones:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Almacen Origen");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Almacen Destino");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha");
 
         cbx_alm_or.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +182,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Detalle:");
 
         btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/delivery.png"))); // NOI18N
@@ -185,6 +194,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 btn_addActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -238,8 +249,12 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Serie:");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("Numero:");
 
         txt_ser.setEditable(false);
@@ -257,6 +272,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         txt_num.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_num.setText("0");
 
+        chk_emitir.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_emitir.setForeground(new java.awt.Color(212, 2, 2));
         chk_emitir.setText("Emitir Guia de Remision");
         chk_emitir.setFocusable(false);
         chk_emitir.addActionListener(new java.awt.event.ActionListener() {
@@ -278,13 +295,20 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Datos de la Unidad de Transporte:");
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Brevete");
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(212, 2, 2));
         jLabel11.setText("Nro. Constancia Insc.");
 
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("Nombres y Apellidos:");
 
         txt_brev.setEditable(false);
@@ -307,7 +331,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
         txt_ruc_alm.setEditable(false);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Datos del Transportista:");
 
         txt_ruc_tra.setEditable(false);
@@ -317,6 +342,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(212, 2, 2));
         jLabel13.setText("RUC:");
 
         txt_raz_tra.setEditable(false);
@@ -326,8 +353,12 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(212, 2, 2));
         jLabel14.setText("Raz. Social:");
 
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(212, 2, 2));
         jLabel15.setText("Marca:");
 
         txt_marca.setEditable(false);
@@ -337,6 +368,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(212, 2, 2));
         jLabel16.setText("Nro. Placa:");
 
         txt_placa.setEditable(false);

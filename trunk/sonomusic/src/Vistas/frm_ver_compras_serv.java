@@ -144,6 +144,7 @@ Integer i;
         setClosable(true);
         setTitle("Ver Compras de Servicios");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar por:");
 
         btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
@@ -175,6 +176,8 @@ Integer i;
         });
 
         cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "RUC", "Razon Social", "Nro Doc." }));
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

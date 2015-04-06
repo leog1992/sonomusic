@@ -76,12 +76,15 @@ public class frm_moneda extends javax.swing.JInternalFrame {
         btn_grabar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Moneda");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/coins.png"))); // NOI18N
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Nombre:");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Siglas:");
 
         txt_nombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -103,6 +106,7 @@ public class frm_moneda extends javax.swing.JInternalFrame {
             }
         });
 
+        t_moneda.setBackground(new java.awt.Color(254, 254, 254));
         t_moneda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

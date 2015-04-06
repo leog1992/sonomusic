@@ -55,17 +55,28 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
         txt_con = new javax.swing.JPasswordField();
         txt_ver_con = new javax.swing.JPasswordField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Crear Usuarios");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("DNI:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Nombres:");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Cargo");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Contraseña");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Repita Contraseña");
 
         txt_dni.addKeyListener(new java.awt.event.KeyAdapter() {

@@ -81,9 +81,11 @@ public class frm_ver_adelantos extends javax.swing.JInternalFrame {
         btn_eliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Adelantos");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Buscar:");
 
         txt_bus.setEditable(false);
@@ -111,6 +113,8 @@ public class frm_ver_adelantos extends javax.swing.JInternalFrame {
                 btn_regActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_adelantos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

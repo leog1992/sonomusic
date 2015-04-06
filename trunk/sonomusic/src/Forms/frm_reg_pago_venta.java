@@ -56,12 +56,17 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         btn_clo = new javax.swing.JButton();
         txt_fec = new javax.swing.JFormattedTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Pago de Venta");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Cliente:");
         jLabel1.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Fecha:");
         jLabel3.setFocusable(false);
 
@@ -72,9 +77,13 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         txt_raz.setEditable(false);
         txt_raz.setFocusable(false);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Deuda Total:");
         jLabel2.setFocusable(false);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Pagos Realizados:");
         jLabel4.setFocusable(false);
 
@@ -90,12 +99,18 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         txt_sal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_sal.setFocusable(false);
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Saldo Actual:");
         jLabel5.setFocusable(false);
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Pago a Realizar:");
         jLabel6.setFocusable(false);
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Restante");
         jLabel7.setFocusable(false);
 
@@ -114,6 +129,8 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         txt_rest.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_rest.setFocusable(false);
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Tipo Documento:");
         jLabel8.setFocusable(false);
 

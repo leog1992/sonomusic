@@ -211,14 +211,19 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         btn_cerrar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Establecer Permisos");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/permisos2.png"))); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuario", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuario", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 0, 0))); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("DNI:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Nombre:");
 
         lbl_dni.setText("jLabel3");
@@ -252,8 +257,10 @@ public class frm_permisos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Permisos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Permisos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 0, 0))); // NOI18N
 
+        chk_panel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_panel.setForeground(new java.awt.Color(212, 2, 2));
         chk_panel.setText("ver Panel");
         chk_panel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +268,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_reportes.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_reportes.setForeground(new java.awt.Color(212, 2, 2));
         chk_reportes.setText("Ver Reportes");
         chk_reportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,6 +277,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_ventas.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_ventas.setForeground(new java.awt.Color(212, 2, 2));
         chk_ventas.setText("Ver Ventas");
         chk_ventas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,6 +286,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_adelantos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_adelantos.setForeground(new java.awt.Color(212, 2, 2));
         chk_adelantos.setText("ver Adelantos");
         chk_adelantos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,6 +295,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_cotizacion_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_cotizacion_cliente.setForeground(new java.awt.Color(212, 2, 2));
         chk_cotizacion_cliente.setText("Ver Cotizacion Cliente");
         chk_cotizacion_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,6 +304,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_compra_servicios.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_compra_servicios.setForeground(new java.awt.Color(212, 2, 2));
         chk_compra_servicios.setText("Ver Compra Servicios");
         chk_compra_servicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,6 +313,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_documentos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_documentos.setForeground(new java.awt.Color(212, 2, 2));
         chk_documentos.setText("ver Configurar Documentos");
         chk_documentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,6 +322,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_caja_chica.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_caja_chica.setForeground(new java.awt.Color(212, 2, 2));
         chk_caja_chica.setText("Ver Caja Chica");
         chk_caja_chica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,6 +331,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_cierre_caja.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_cierre_caja.setForeground(new java.awt.Color(212, 2, 2));
         chk_cierre_caja.setText("Ver Cierre de Caja");
         chk_cierre_caja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -317,6 +340,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_notas.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_notas.setForeground(new java.awt.Color(212, 2, 2));
         chk_notas.setText("Ver Notas");
         chk_notas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +349,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_depositos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_depositos.setForeground(new java.awt.Color(212, 2, 2));
         chk_depositos.setText("Ver Depositos");
         chk_depositos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,6 +358,8 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             }
         });
 
+        chk_menu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        chk_menu.setForeground(new java.awt.Color(212, 2, 2));
         chk_menu.setText("Ver Menu Aministrativo");
         chk_menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

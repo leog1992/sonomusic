@@ -89,6 +89,7 @@ public class frm_ver_clasificacion extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_gra = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Clasificacion");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -109,10 +110,12 @@ public class frm_ver_clasificacion extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Id:");
 
         txt_id.setEditable(false);
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Descripcion:");
 
         txt_desc.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -120,6 +123,8 @@ public class frm_ver_clasificacion extends javax.swing.JInternalFrame {
                 txt_descKeyPressed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_clasificacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

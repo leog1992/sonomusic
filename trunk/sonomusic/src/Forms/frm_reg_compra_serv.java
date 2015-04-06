@@ -143,9 +143,13 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
         txt_fec_com = new javax.swing.JFormattedTextField();
         txt_fec_pag = new javax.swing.JFormattedTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Gasto Directo");
 
+        jLabel1.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("RUC:");
         jLabel1.setFocusable(false);
 
@@ -159,6 +163,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Razon Social:");
         jLabel2.setFocusable(false);
 
@@ -174,12 +181,21 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha de Compra:");
         jLabel4.setFocusable(false);
 
+        jLabel5.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Fecha de Pago:");
         jLabel5.setFocusable(false);
 
+        jLabel6.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Direccion:");
         jLabel6.setFocusable(false);
 
@@ -187,12 +203,18 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
         txt_dir.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_dir.setFocusable(false);
 
+        jLabel7.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Telefono:");
         jLabel7.setFocusable(false);
 
         txt_tel.setEditable(false);
         txt_tel.setFocusable(false);
 
+        jLabel10.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Glosa.");
         jLabel10.setFocusable(false);
 
@@ -204,12 +226,21 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel11.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(212, 2, 2));
         jLabel11.setText("Sub Total:");
         jLabel11.setFocusable(false);
 
+        jLabel12.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("IGV");
         jLabel12.setFocusable(false);
 
+        jLabel13.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(212, 2, 2));
         jLabel13.setText("Total:");
         jLabel13.setFocusable(false);
 
@@ -264,6 +295,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel14.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(212, 2, 2));
         jLabel14.setText("Tipo de Documento:");
         jLabel14.setFocusable(false);
 
@@ -274,6 +308,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel15.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(212, 2, 2));
         jLabel15.setText("Serie:");
         jLabel15.setFocusable(false);
 
@@ -288,6 +325,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel16.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(212, 2, 2));
         jLabel16.setText("Nro. Doc:");
         jLabel16.setFocusable(false);
 
@@ -310,8 +350,14 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel17.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(212, 2, 2));
         jLabel17.setText("Tipo de Pago:");
 
+        jLabel18.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel18.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(212, 2, 2));
         jLabel18.setText("Tienda:");
 
         cbx_alm.setEnabled(false);

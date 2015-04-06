@@ -120,6 +120,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         btn_pred = new javax.swing.JButton();
         btn_ver = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Almacen");
 
@@ -135,6 +136,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -144,6 +146,8 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 btn_cerActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_almacen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

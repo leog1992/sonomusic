@@ -107,9 +107,11 @@ DefaultTableModel mostrar ;
         btn_ver = new javax.swing.JButton();
         cbx_estado = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Notas / Notificaciones");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");
 
         txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -125,6 +127,8 @@ DefaultTableModel mostrar ;
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_notas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -92,22 +92,33 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_env = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Crear Pedido");
 
-        jLabel1.setText("Datos del Pedido");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setText("DATOS DEL PEDIDO");
         jLabel1.setToolTipText("");
         jLabel1.setFocusable(false);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Almacen Origen:");
         jLabel2.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Almacen Destino:");
         jLabel3.setFocusable(false);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha Solicitud:");
         jLabel4.setFocusable(false);
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Dias Plazo:");
         jLabel5.setFocusable(false);
 
@@ -150,9 +161,13 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Detalle de Articulos:");
         jLabel7.setFocusable(false);
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Id:");
         jLabel8.setFocusable(false);
 

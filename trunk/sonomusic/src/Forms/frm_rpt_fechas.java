@@ -55,15 +55,22 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
         txt_fec_ini = new javax.swing.JFormattedTextField();
         txt_fec_fin = new javax.swing.JFormattedTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Imprimir Reportes");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Ingrese Fechas:");
         jLabel1.setFocusable(false);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Fecha Inicio:");
         jLabel2.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Fecha Fin:");
         jLabel3.setFocusable(false);
 
