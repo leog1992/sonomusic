@@ -8,6 +8,7 @@ package sonomusic;
 import java.net.ServerSocket;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -22,7 +23,7 @@ public class Sonomusic {
      */
     public static void main(String[] args) {
         try {
-            javax.swing.UIManager.setLookAndFeel("org.jvnet.substance.theme.SubstanceAquaTheme");
+            UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFell");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Sonomusic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
