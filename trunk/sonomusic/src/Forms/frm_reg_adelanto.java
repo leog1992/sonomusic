@@ -65,7 +65,11 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         txttelefono2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setResizable(true);
+        setTitle("REGISTRO DE ADELANTO");
+        setToolTipText("");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -84,6 +88,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Empleado:");
 
         txt_empleado.setEditable(false);
@@ -109,6 +114,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Fecha:");
 
         txt_fec.setEditable(false);
@@ -124,6 +130,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Monto:");
 
         txt_monto.setEditable(false);
@@ -158,6 +165,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Cargo:");
 
         txtcargo.setEditable(false);
@@ -167,6 +175,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Telefono 1:");
 
         txttelefono1.setEditable(false);
@@ -183,6 +192,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Telefono 2:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

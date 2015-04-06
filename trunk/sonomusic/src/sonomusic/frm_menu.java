@@ -266,7 +266,7 @@ public class frm_menu extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png")
         );
 
-        contenedor.setBackground(new java.awt.Color(204, 204, 204));
+        contenedor.setBackground(new java.awt.Color(176, 203, 157));
         contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jToolBar1.setBorder(null);
