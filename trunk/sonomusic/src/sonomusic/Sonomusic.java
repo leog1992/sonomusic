@@ -5,11 +5,9 @@
  */
 package sonomusic;
 
-import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
-import java.io.IOException;
 import java.net.ServerSocket;
+import java.io.IOException;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -23,6 +21,12 @@ public class Sonomusic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        try {
+            javax.swing.UIManager.setLookAndFeel("org.jvnet.substance.theme.SubstanceAquaTheme");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Sonomusic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
         frm_login loader = new frm_login();
         try {
             SERVER_SOCKET = new ServerSocket(1334);

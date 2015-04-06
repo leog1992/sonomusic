@@ -73,8 +73,10 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Registrar Almacen");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Direccion:");
 
         txt_nom.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -93,6 +95,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Id.");
 
         txt_id.setEditable(false);
@@ -120,6 +123,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Ciudad:");
 
         txt_ciudad.setEditable(false);
@@ -132,8 +136,10 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Datos Empresa:");
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("RUC:");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setText("Razon Social:");
 
         txt_ruc.setEditable(false);
@@ -162,8 +168,10 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Cuenta Predeterminada para Ventas");
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("Banco:");
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setText("Cuenta:");
 
         txt_banco.setEditable(false);
@@ -177,6 +185,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        lbl_idc.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lbl_idc.setText("IdCuenta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -160,6 +160,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_fec.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Saldo Anterior:");
         jLabel3.setFocusable(false);
 
