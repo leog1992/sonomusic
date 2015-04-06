@@ -113,6 +113,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Productos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -133,22 +134,40 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Descripcion");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Marca:");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Modelo:");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Grado:");
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Cantidad Minima:");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Costo de Compra:");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Precio de Venta:");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Clasificacion:");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("Unidad de Medida:");
 
         txt_des.setForeground(new java.awt.Color(0, 0, 153));
@@ -268,6 +287,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Serie:");
 
         txt_ser.setEditable(false);
@@ -278,6 +299,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("Ganancia:");
 
         txt_gan.setEditable(false);
@@ -288,6 +311,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(212, 2, 2));
         jLabel13.setText("Codigo:");
 
         txt_cod.setEditable(false);
@@ -317,6 +342,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(212, 2, 2));
         jLabel14.setText("Comision:");
 
         jLabel11.setText("%");

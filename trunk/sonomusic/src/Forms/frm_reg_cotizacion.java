@@ -115,9 +115,12 @@ Integer i;
         txt_user = new javax.swing.JTextField();
         txt_fec = new javax.swing.JFormattedTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Cotizacion");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Cliente:");
 
         txt_doc.setEditable(false);
@@ -132,12 +135,18 @@ Integer i;
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Fecha:");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Telefono:");
 
         txt_tel.setEditable(false);
         txt_tel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,8 +199,12 @@ Integer i;
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Total");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("IGV");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -211,6 +224,8 @@ Integer i;
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Sub Total");
 
         btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
@@ -227,6 +242,8 @@ Integer i;
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Usuario");
 
         txt_user.setEditable(false);

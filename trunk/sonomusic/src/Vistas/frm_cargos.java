@@ -94,9 +94,11 @@ public class frm_cargos extends javax.swing.JInternalFrame {
         txt_desc = new javax.swing.JTextField();
         btn_gra = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Cargos");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Descripcion:");
         jLabel2.setFocusable(false);
 
@@ -117,6 +119,7 @@ public class frm_cargos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Id:");
         jLabel1.setFocusable(false);
 
@@ -143,6 +146,7 @@ public class frm_cargos extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
         jScrollPane1.setFocusable(false);
 
         t_cargo.setModel(new javax.swing.table.DefaultTableModel(

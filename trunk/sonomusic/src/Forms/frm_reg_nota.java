@@ -46,9 +46,12 @@ public class frm_reg_nota extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_cer = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ingresar Notas:");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Asunto:");
 
         txt_nota.setColumns(20);

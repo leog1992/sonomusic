@@ -109,17 +109,23 @@ public class frm_mov_bancos extends javax.swing.JInternalFrame {
         txt_fec_ini = new javax.swing.JFormattedTextField();
         txt_fec_fin = new javax.swing.JFormattedTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Movimiento por Banco");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Seleccion de Bancos - Movimientos");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Banco:");
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Cuenta:");
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha Inicio:");
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Fecha Fin:");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N

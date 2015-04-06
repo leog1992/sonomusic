@@ -90,6 +90,7 @@ Integer i;
         jScrollPane1 = new javax.swing.JScrollPane();
         t_medida = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Und. Medida");
 
@@ -124,10 +125,12 @@ Integer i;
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Id:");
 
         txt_id.setEditable(false);
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Descripcion:");
 
         btn_mod.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -140,6 +143,8 @@ Integer i;
                 btn_modActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_medida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

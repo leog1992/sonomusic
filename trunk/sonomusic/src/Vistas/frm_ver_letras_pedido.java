@@ -54,6 +54,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
         lbl_pagado = new javax.swing.JTextField();
         lbl_total = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Pago Pendiente");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -74,12 +75,15 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 0, 0))); // NOI18N
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Cliente:");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Tipo Doc:");
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha de Venta:");
 
         lbl_nombre.setEditable(false);
@@ -147,6 +151,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        t_letras.setBackground(new java.awt.Color(254, 254, 254));
         t_letras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -166,10 +171,13 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_letras);
 
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Total:");
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Pendiente:");
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Pagado:");
 
         btn_anular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bin_closed.png"))); // NOI18N

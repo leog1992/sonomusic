@@ -62,15 +62,24 @@ Cl_Varios ven = new Cl_Varios();
         txt_tel2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Proveedor");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("RUC:");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Razon Social:");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Direccion:");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Telefono:");
 
         txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -146,6 +155,8 @@ Cl_Varios ven = new Cl_Varios();
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Web:");
 
         txt_email.setEditable(false);
@@ -163,8 +174,12 @@ Cl_Varios ven = new Cl_Varios();
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("e-mail:");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Contacto");
 
         txt_contacto.setEditable(false);
@@ -174,6 +189,8 @@ Cl_Varios ven = new Cl_Varios();
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Tel. Contacto:");
 
         txt_tel1.setEditable(false);
@@ -190,6 +207,8 @@ Cl_Varios ven = new Cl_Varios();
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("Tel.2 Contacto:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,7 +220,7 @@ Cl_Varios ven = new Cl_Varios();
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_lim)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                         .addComponent(btn_reg)
                         .addGap(18, 18, 18)
                         .addComponent(btn_cer))

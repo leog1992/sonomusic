@@ -74,9 +74,11 @@ public class frm_banco extends javax.swing.JInternalFrame {
         btn_salir = new javax.swing.JButton();
         btn_grabar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registro de Bancos");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Nombre de Banco:");
 
         txt_nom_banco.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -88,6 +90,7 @@ public class frm_banco extends javax.swing.JInternalFrame {
             }
         });
 
+        t_ban.setBackground(new java.awt.Color(254, 254, 254));
         t_ban.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},

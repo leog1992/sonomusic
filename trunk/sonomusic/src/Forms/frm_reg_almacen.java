@@ -70,13 +70,17 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         lbl_idc = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setForeground(new java.awt.Color(200, 2, 2));
         setTitle("Registrar Almacen");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(200, 2, 2));
         jLabel1.setText("Nombre:");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(200, 2, 2));
         jLabel2.setText("Direccion:");
 
         txt_nom.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -96,6 +100,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(200, 2, 2));
         jLabel3.setText("Id.");
 
         txt_id.setEditable(false);
@@ -124,6 +129,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(200, 2, 2));
         jLabel4.setText("Ciudad:");
 
         txt_ciudad.setEditable(false);
@@ -133,13 +139,16 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setText("Datos Empresa:");
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel5.setText("DATOS DE EMPRESA");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(200, 2, 2));
         jLabel6.setText("RUC:");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(200, 2, 2));
         jLabel7.setText("Razon Social:");
 
         txt_ruc.setEditable(false);
@@ -162,16 +171,20 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setText("Datos de Almacen");
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setText("DATOS DE ALMACEN");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel9.setText("Cuenta Predeterminada para Ventas");
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel9.setText("CUENTA PREDETERMINADA DE CUENTA");
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(200, 2, 2));
         jLabel10.setText("Banco:");
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(200, 2, 2));
         jLabel11.setText("Cuenta:");
 
         txt_banco.setEditable(false);
@@ -186,6 +199,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         });
 
         lbl_idc.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lbl_idc.setForeground(new java.awt.Color(200, 2, 2));
         lbl_idc.setText("IdCuenta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

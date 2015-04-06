@@ -225,6 +225,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_id = new javax.swing.JTextField();
         txt_desc = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registro de Venta");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -245,6 +246,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
         jScrollPane1.setFocusable(false);
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
@@ -283,6 +285,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             t_detalle.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Sub Total:");
         jLabel2.setFocusable(false);
 
@@ -291,6 +295,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_subt.setFocusable(false);
         txt_subt.setPreferredSize(new java.awt.Dimension(50, 20));
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Descuento:");
         jLabel6.setFocusable(false);
 
@@ -304,6 +310,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("IGV");
         jLabel7.setFocusable(false);
 
@@ -312,10 +320,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_igv.setFocusable(false);
         txt_igv.setPreferredSize(new java.awt.Dimension(50, 20));
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Total:");
         jLabel8.setFocusable(false);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 0, 0));
         jLabel9.setText("Detalle de Venta:");
         jLabel9.setFocusable(false);
 
@@ -398,9 +409,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Tipo de Doc:");
         jLabel5.setFocusable(false);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha de Venta:");
         jLabel4.setFocusable(false);
 
@@ -424,6 +439,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Tipo Venta:");
 
         cbx_tip_venta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "VENTA", "SEPARACION" }));
@@ -448,8 +465,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("D.N.I / R.U.C");
 
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("Nombre:");
 
         txt_nom.setEditable(false);
@@ -516,6 +537,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(212, 2, 2));
         jLabel11.setText("iD:");
         jLabel11.setFocusable(false);
 

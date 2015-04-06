@@ -157,14 +157,18 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
         btn_reg = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Cuentas");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/vcard.png"))); // NOI18N
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Banco:");
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Tipo Cuenta:");
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Moneda:");
 
         cbx_banco.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -194,6 +198,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Nro. Cuenta:");
 
         txt_nro_cuenta.setEditable(false);
@@ -203,6 +208,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Monto:");
 
         txt_monto.setEditable(false);
@@ -220,6 +226,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
             }
         });
 
+        t_cuentas.setBackground(new java.awt.Color(254, 254, 254));
         t_cuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},

@@ -76,9 +76,12 @@ String accion;
         txt_dir = new javax.swing.JTextField();
         btn_reg = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Datos de Empresa");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("RUC:");
 
         txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -90,8 +93,12 @@ String accion;
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Razon Social:");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Direccion:");
 
         txt_raz.setEditable(false);

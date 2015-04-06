@@ -133,6 +133,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Movimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
         jPanel1.setFocusable(false);
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("Fecha:");
         jLabel4.setFocusable(false);
 
@@ -144,6 +145,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         txt_egr.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_egr.setFocusable(false);
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("Total Ingresos:");
         jLabel1.setFocusable(false);
 
@@ -164,6 +166,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         jLabel3.setText("Saldo Anterior:");
         jLabel3.setFocusable(false);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Total Egresos:");
         jLabel2.setFocusable(false);
 
@@ -215,6 +218,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldos de Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
         jPanel2.setFocusable(false);
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("Saldo Actual:");
         jLabel5.setFocusable(false);
 
@@ -222,6 +226,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         txt_act.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_act.setFocusable(false);
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("Arqueo de Caja:");
         jLabel6.setFocusable(false);
 
@@ -232,6 +237,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setText("Diferencia:");
         jLabel7.setFocusable(false);
 

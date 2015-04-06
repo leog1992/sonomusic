@@ -51,9 +51,11 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_pago = new javax.swing.JTextField();
         txt_tipv = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Detalle de Compra");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Cliente");
 
         txt_nro.setEditable(false);
@@ -61,11 +63,13 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
 
         txt_nom.setEditable(false);
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Tipo Doc:");
 
         txt_tipd.setEditable(false);
         txt_tipd.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Fecha Compra:");
 
         txt_fec.setEditable(false);
@@ -76,7 +80,10 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         }
         txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Detalle:");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_detalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,10 +98,13 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(t_detalle);
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Sub Total:");
 
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("IGV");
 
+        jLabel7.setForeground(new java.awt.Color(212, 2, 2));
         jLabel7.setText("Total:");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -114,12 +124,15 @@ public class frm_ver_det_venta extends javax.swing.JInternalFrame {
         txt_tot.setEditable(false);
         txt_tot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("IdPed:");
 
         lbl_id.setText("id");
 
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("Forma de Pago:");
 
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Tipo de Venta:");
 
         txt_pago.setEditable(false);

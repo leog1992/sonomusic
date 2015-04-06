@@ -126,9 +126,11 @@ int i;
         btn_cerrar = new javax.swing.JButton();
         btn_detalle = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Cotizaciones");
 
+        jLabel1.setForeground(new java.awt.Color(212, 1, 1));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
@@ -162,6 +164,8 @@ int i;
                 btn_eliActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_cotizacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

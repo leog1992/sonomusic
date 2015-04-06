@@ -106,9 +106,11 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         btn_act = new javax.swing.JButton();
         cbx_tipo = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Empleado");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar");
 
@@ -125,6 +127,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 btn_regActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_empleado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

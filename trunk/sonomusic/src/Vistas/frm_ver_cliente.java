@@ -108,9 +108,11 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
         btn_eli = new javax.swing.JButton();
         btn_historial = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Clientes");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar:");
 
@@ -140,6 +142,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        t_clientes.setBackground(new java.awt.Color(254, 254, 254));
         t_clientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"46993209", "LUIS ENRIQUE OYANGUREN GIRON", "947396729", "Normal"},

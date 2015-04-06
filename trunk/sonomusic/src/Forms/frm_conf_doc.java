@@ -90,6 +90,7 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
         setForeground(new java.awt.Color(255, 0, 0));
         setTitle("Configurar Nro de Documentos");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("TIPO Y NRO. DE DOCUMENTO:");
 
@@ -106,15 +107,19 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(229, 59, 59));
         jLabel7.setText("Nota de Venta:");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(229, 59, 59));
         jLabel8.setText("Boleta:");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(229, 59, 59));
         jLabel9.setText("Factura:");
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(229, 59, 59));
         jLabel10.setText("Guia de Remision:");
 
@@ -134,8 +139,10 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
 
         txt_nro_guia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("Serie");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("Nro");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

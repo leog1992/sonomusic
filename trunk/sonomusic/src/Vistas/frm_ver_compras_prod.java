@@ -146,9 +146,11 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         t_compras = new javax.swing.JTable();
         btn_pagar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Ver Compras de Productos");
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar por:");
 
         txt_bus.setEditable(false);
@@ -202,6 +204,8 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                 cbx_busActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

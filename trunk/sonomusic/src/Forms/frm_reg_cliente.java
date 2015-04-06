@@ -47,9 +47,12 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
         txt_tel1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Cliente");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(229, 2, 2));
         jLabel1.setText("Tipo de Documento");
 
         cbx_cli.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "RUC" }));
@@ -59,6 +62,8 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(229, 2, 2));
         jLabel2.setText("Nro de Doc:");
 
         txt_ndoc.setEditable(false);
@@ -71,6 +76,8 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(229, 2, 2));
         jLabel3.setText("Nombre Completo:");
 
         txt_nom.setEditable(false);
@@ -83,8 +90,12 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(229, 2, 2));
         jLabel4.setText("Direccion:");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(229, 2, 2));
         jLabel5.setText("Telefono:");
 
         txt_dir.setEditable(false);
@@ -147,6 +158,8 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(229, 2, 2));
         jLabel7.setText("Telefono 2 :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

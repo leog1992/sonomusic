@@ -211,8 +211,11 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         txt_totb = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Movimientos");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_movimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -235,12 +238,14 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             t_movimientos.getColumnModel().getColumn(5).setPreferredWidth(40);
         }
 
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Seleccionar Empleado");
 
         txt_dni.setEditable(false);
 
         txt_nom.setEditable(false);
 
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Seleccionar Operacion:");
 
         buttonGroup1.add(rbt_ini);
@@ -270,6 +275,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Monto:");
 
         txt_monto.setEditable(false);
@@ -311,6 +317,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha");
 
         btn_rep_caja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
@@ -329,8 +336,10 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Total Ingresos CAJA");
 
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Total Salidas CAJA");
 
         jLabel7.setText("Motivo:");
@@ -348,6 +357,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         txt_sal.setEditable(false);
         txt_sal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
         jLabel8.setText("Total CAJA");
 
         txt_tot.setEditable(false);
@@ -372,10 +382,13 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         txt_ingb.setEditable(false);
         txt_ingb.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
         jLabel9.setText("Total BANCO");
 
+        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
         jLabel10.setText("Total Salidas BANCO");
 
+        jLabel11.setForeground(new java.awt.Color(212, 2, 2));
         jLabel11.setText("Total Ingresos BANCO");
 
         txt_totb.setEditable(false);

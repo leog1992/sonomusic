@@ -151,6 +151,7 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         cbx_alm = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Registrar Oferta");
         setToolTipText("");
@@ -172,8 +173,12 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
         jLabel2.setText("Descripción de Oferta:");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Fec. Ini.");
 
         btn_bus_pro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
@@ -189,7 +194,11 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Producto:");
+
+        jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
         t_oferta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -224,6 +233,8 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fec. Fin");
 
         txt_des_ofer.addActionListener(new java.awt.event.ActionListener() {
@@ -317,6 +328,8 @@ public class frm_reg_ofertas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Tienda:");
 
         cbx_alm.setEnabled(false);
