@@ -55,17 +55,24 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
         txt_con = new javax.swing.JPasswordField();
         txt_ver_con = new javax.swing.JPasswordField();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
+        setForeground(new java.awt.Color(255, 0, 0));
         setTitle("Crear Usuarios");
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("DNI:");
 
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Nombres:");
 
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Cargo");
 
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Contraseña");
 
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Repita Contraseña");
 
         txt_dni.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -119,11 +126,11 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,7 +247,7 @@ public class frm_reg_usuario extends javax.swing.JInternalFrame {
         llenar();
         try {
             Statement st = con.conexion();
-            String ins_usu = "insert into usuario Values ('"+usu.getNick()+"', '"+usu.getContra()+"', '"+usu.getEst()+"', '"+emp.getDni()+"')";
+            String ins_usu = "insert into usuario Values ('"+usu.getNick()+"', '"+usu.getContra()+"', '"+usu.getEst()+"', '"+emp.getDni()+"', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')";
             con.actualiza(st, ins_usu);
             con.cerrar(st);
         } catch (Exception ex) {

@@ -64,6 +64,8 @@ public class frm_login extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         txt_usu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_usuActionPerformed(evt);

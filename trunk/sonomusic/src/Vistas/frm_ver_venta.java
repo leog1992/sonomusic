@@ -202,9 +202,11 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         btn_pagar = new javax.swing.JButton();
         btn_det = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setTitle("Registro de Ventas");
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
         jLabel1.setText("Buscar");
 
@@ -214,12 +216,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        cbx_estado.setForeground(new java.awt.Color(255, 0, 0));
         cbx_estado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fecha", "Cliente" }));
         cbx_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_estadoActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         t_facturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -256,11 +261,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Total:");
 
         txt_tot.setEditable(false);
         txt_tot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        btn_anu.setForeground(new java.awt.Color(255, 0, 0));
         btn_anu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/delete.png"))); // NOI18N
         btn_anu.setText("Anular");
         btn_anu.setEnabled(false);
