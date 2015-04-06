@@ -32,7 +32,7 @@ public class Cl_Conectar {
     // Ruta del servidor.
     //208.43.223.210
     //lunasystemsperu.com
-    String server = "jdbc:mysql://192.168.1.39/" + bd;//10.42.0.1
+    String server = "jdbc:mysql://190.236.85.23:3306/" + bd;//10.42.0.1
 
     // String server = "jdbc:mysql://"+leer(
     private String leer() {
