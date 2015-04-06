@@ -85,10 +85,13 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setForeground(new java.awt.Color(255, 0, 0));
         setTitle("Configurar Nro de Documentos");
 
-        jLabel1.setText("Tipo y Nro. de Documento:");
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setText("TIPO Y NRO. DE DOCUMENTO:");
 
         btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         btn_reg.setText("Registrar");
@@ -103,12 +106,16 @@ public class frm_conf_doc extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setForeground(new java.awt.Color(229, 59, 59));
         jLabel7.setText("Nota de Venta:");
 
+        jLabel8.setForeground(new java.awt.Color(229, 59, 59));
         jLabel8.setText("Boleta:");
 
+        jLabel9.setForeground(new java.awt.Color(229, 59, 59));
         jLabel9.setText("Factura:");
 
+        jLabel10.setForeground(new java.awt.Color(229, 59, 59));
         jLabel10.setText("Guia de Remision:");
 
         txt_ser_nota.setHorizontalAlignment(javax.swing.JTextField.RIGHT);

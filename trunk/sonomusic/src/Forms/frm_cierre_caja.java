@@ -125,10 +125,12 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Cierre de Caja");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle de Movimiento"));
+        jPanel1.setBackground(new java.awt.Color(254, 254, 254));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Movimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
         jPanel1.setFocusable(false);
 
         jLabel4.setText("Fecha:");
@@ -208,7 +210,8 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Saldos de Caja"));
+        jPanel2.setBackground(new java.awt.Color(254, 254, 254));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldos de Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
         jPanel2.setFocusable(false);
 
         jLabel5.setText("Saldo Actual:");
