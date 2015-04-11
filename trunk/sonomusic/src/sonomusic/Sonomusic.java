@@ -7,11 +7,8 @@ package sonomusic;
 
 import java.net.ServerSocket;
 import java.io.IOException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import net.sf.jasperreports.engine.JRTextField;
 import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.watermark.SubstanceImageWatermark;
 
 /**
  *

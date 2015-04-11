@@ -13,6 +13,7 @@ import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
 import Clases.table_render;
 import Vistas.frm_ver_prod_alm;
+import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -243,6 +244,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -543,10 +549,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel11.setText("iD:");
         jLabel11.setFocusable(false);
 
-        txt_id.setEditable(false);
         txt_id.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_idKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_idKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_idKeyTyped(evt);
@@ -554,7 +562,19 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         });
 
         txt_desc.setEditable(false);
-        txt_desc.setFocusable(false);
+        txt_desc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_descFocusGained(evt);
+            }
+        });
+        txt_desc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_descKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_descKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -834,7 +854,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F2) {
             btn_add_pro.doClick();
         }
-
+        
+        txt_desc.setText(txt_id.getText()); 
+        if (Character.isLetter(evt.getKeyChar())) {
+            txt_desc.setEditable(true);
+            
+            txt_id.setText("");
+            txt_desc.requestFocus();
+        }
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             String idpro = txt_id.getText();
             Integer idalm = frm_menu.alm.getId();
@@ -987,20 +1014,20 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     System.out.println(ex);
                 }
             }
+            txt_desc.setText("");
         }
         if (evt.getKeyCode() == KeyEvent.VK_F3) {
             cbx_tip_venta.setEnabled(true);
             cbx_tip_venta.requestFocus();
         }
 
-
     }//GEN-LAST:event_txt_idKeyPressed
 
     private void txt_idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idKeyTyped
-        char car = evt.getKeyChar();
-        if ((car < '0' || car > '9')) {
-            evt.consume();
-        }
+        /*        char car = evt.getKeyChar();
+         if ((car < '0' || car > '9')) {
+         evt.consume();
+         }*/
     }//GEN-LAST:event_txt_idKeyTyped
 
     private void t_detalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_detalleFocusLost
@@ -1218,6 +1245,58 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_t_detalleMouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    }//GEN-LAST:event_formKeyPressed
+
+    private void txt_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idKeyReleased
+    
+    }//GEN-LAST:event_txt_idKeyReleased
+
+    private void txt_descKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyReleased
+        try {
+            TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
+            autocopletar.setMode(0);            
+            String busca = txt_desc.getText();
+            Statement st = con.conexion();
+            String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
+                    + " from producto_almacen as pa inner join productos as p"
+                    + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "'"
+                    + " and (p.desc_pro like '%" + busca + "%' or p.marca like '%" + busca + "%' or p.modelo like '%" + busca + "%')";
+            ResultSet rs = con.consulta(st, sql);
+            while (rs.next()) {
+
+                autocopletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " - " + rs.getString("p.marca") + " - " + rs.getString("p.modelo"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }//GEN-LAST:event_txt_descKeyReleased
+
+    private void txt_descKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyPressed
+        String cap = txt_desc.getText();
+        boolean estado = false;
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            for (int j = 0; j < cap.length(); j++) {
+                if (cap.charAt(j) == '-') {
+                    estado = true;
+                }
+            }
+            if (estado) {
+                String[] cod = cap.split("-");
+                String temp = cod[0];
+                txt_id.setText("");
+                txt_id.setText(temp.trim());
+                txt_desc.setText("");
+                txt_id.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_descKeyPressed
+
+    private void txt_descFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_descFocusGained
+        txt_id.setText("");
+    }//GEN-LAST:event_txt_descFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
