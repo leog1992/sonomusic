@@ -480,42 +480,104 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_detActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-        frm_reg_pago_compra pagar = new frm_reg_pago_compra();
-        pagar.txt_ruc.setText(t_compras.getValueAt(i, 6).toString());
-        pagar.txt_raz.setText(t_compras.getValueAt(i, 7).toString());
-        pagar.txt_tido.setText(t_compras.getValueAt(i, 3).toString());
-        pagar.txt_ser.setText(t_compras.getValueAt(i, 4).toString());
-        pagar.txt_nro.setText(t_compras.getValueAt(i, 5).toString());
-        pagar.txt_deu.setText(t_compras.getValueAt(i, 8).toString());
-
-        Double actual = 0.0;
-        Double pagado = 0.0;
-        actual = Double.parseDouble(t_compras.getValueAt(i, 8).toString());
+//  VER CUOTAS
+        frm_ver_cuota_compra cuota = new frm_ver_cuota_compra();
+        pro.setRuc(t_compras.getValueAt(i, 6).toString());
+        // CARGAR DATOS DE LA FACTURA
+        cuota.txt_ruc.setText(t_compras.getValueAt(i, 6).toString());
+        cuota.txt_raz.setText(t_compras.getValueAt(i, 7).toString());
+        cuota.txt_tipd.setText(t_compras.getValueAt(i, 3).toString());
+        cuota.txt_sndoc.setText(t_compras.getValueAt(i, 4).toString() + " - " + t_compras.getValueAt(i, 5).toString());
+        cuota.txt_fec.setText(ven.fechaformateada(t_compras.getValueAt(i, 1).toString()));
+        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 8).toString()));
         try {
             Statement st = con.conexion();
-            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
-            ResultSet rs = con.consulta(st, ver_pagos);
+            String ver_cont = "select contacto, tel_contacto, tel2_contacto from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+            ResultSet rs = con.consulta(st, ver_cont);
             if (rs.next()) {
-                pagado = rs.getDouble("pagos");
-                pagar.pagado = rs.getDouble("pagos");
-                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
-            } else {
-                pagar.txt_pag.setText("0.00");
+                cuota.txt_cont.setText(rs.getString("contacto"));
+                cuota.txt_tel.setText(rs.getString("tel_contacto") + " - " + rs.getString("tel2_contacto"));
             }
-        } catch (SQLException es) {
-            System.out.print(es);
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        Double restante = 0.0;
-        restante = actual - pagado;
-        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-        pagar.txt_sal.setText(formato.format(restante));
-        pagar.restante = restante;
-        pagar.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-        pagar.funcion = "productos";
-        pagar.glosa = "PAGO DE COMPRA - " + t_compras.getValueAt(i, 3).toString() + " / " + t_compras.getValueAt(i, 4).toString() + 
-                " - " + t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString();
-        ven.llamar_ventana(pagar);
+        cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        
+        //  CARGAR CUOTAS GENERADAS EN COMPRA
+        try {
+            
+            cuota.mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            cuota.mostrar.addColumn("Nro Cuota");
+            cuota.mostrar.addColumn("Fecha Pago");
+            cuota.mostrar.addColumn("Fec. Venc.");
+            cuota.mostrar.addColumn("Monto");
+            cuota.mostrar.addColumn("Estado");
+            Statement st = con.conexion();
+            String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
+            ResultSet rs = con.consulta(st, ver_cuotas);
+            int nro = 1;
+            while (rs.next()) {
+                Object fila[] = new Object[5];
+                fila[0] = nro;
+                nro++;
+                fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
+                fila[3] = rs.getDouble("monto");
+                fila[4] = rs.getString("estado");
+            }
+            cuota.t_cuotas.setModel(cuota.mostrar);
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        cuota.txt_tot.setText(formato.format(com.getTotal()));
+        ven.llamar_ventana(cuota);
         this.dispose();
+
+//        frm_reg_pago_compra pagar = new frm_reg_pago_compra();
+//        pagar.txt_ruc.setText(t_compras.getValueAt(i, 6).toString());
+//        pagar.txt_raz.setText(t_compras.getValueAt(i, 7).toString());
+//        pagar.txt_tido.setText(t_compras.getValueAt(i, 3).toString());
+//        pagar.txt_ser.setText(t_compras.getValueAt(i, 4).toString());
+//        pagar.txt_nro.setText(t_compras.getValueAt(i, 5).toString());
+//        pagar.txt_deu.setText(t_compras.getValueAt(i, 8).toString());
+//
+//        Double actual = 0.0;
+//        Double pagado = 0.0;
+//        actual = Double.parseDouble(t_compras.getValueAt(i, 8).toString());
+//        try {
+//            Statement st = con.conexion();
+//            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
+//            ResultSet rs = con.consulta(st, ver_pagos);
+//            if (rs.next()) {
+//                pagado = rs.getDouble("pagos");
+//                pagar.pagado = rs.getDouble("pagos");
+//                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
+//            } else {
+//                pagar.txt_pag.setText("0.00");
+//            }
+//        } catch (SQLException es) {
+//            System.out.print(es);
+//        }
+//        Double restante = 0.0;
+//        restante = actual - pagado;
+//        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+//        pagar.txt_sal.setText(formato.format(restante));
+//        pagar.restante = restante;
+//        pagar.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+//        pagar.funcion = "productos";
+//        pagar.glosa = "PAGO DE COMPRA - " + t_compras.getValueAt(i, 3).toString() + " / " + t_compras.getValueAt(i, 4).toString() + 
+//                " - " + t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString();
+//        ven.llamar_ventana(pagar);
+//        this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
