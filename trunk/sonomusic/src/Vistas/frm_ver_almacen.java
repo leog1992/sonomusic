@@ -328,6 +328,16 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ventana="";
                 this.dispose();
             }
+            //COMPRA
+            if (ventana.equals("compra_empresa")) {
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.rpt="compra_empresa";
+                String id=t_almacen.getValueAt(i, 3).toString();
+                fec.alm.setRuc(id);
+                ven.llamar_ventana(fec);
+                ventana="";
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_t_almacenKeyPressed
 

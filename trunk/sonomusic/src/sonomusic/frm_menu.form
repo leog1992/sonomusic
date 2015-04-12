@@ -372,7 +372,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/clipboard_text.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Rpt. Compras por Fecha"/>
+                <Property name="text" type="java.lang.String" value="Rpt. Compras por Empresa"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
