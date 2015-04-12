@@ -150,7 +150,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
         Statement st = con.conexion();
-        String ins_cuota = "insert into pago_compras Values (null, '"+com.getId()+"', '7000-01-01', '"+fec_venc+"', )";
+        String ins_cuota = "insert into pago_compras Values (null, '"+com.getId()+"', '7000-01-01', '"+fec_venc+"', '"+monto+"', '0')";
         con.actualiza(st, ins_cuota);
         con.cerrar(st);
         this.dispose();
