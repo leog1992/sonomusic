@@ -330,6 +330,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
 
     private void btn_addcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcActionPerformed
         frm_reg_cuota reg = new frm_reg_cuota();
+        reg.com.setId(com.getId());
         ven.llamar_ventana(reg);
     }//GEN-LAST:event_btn_addcActionPerformed
 

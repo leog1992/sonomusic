@@ -503,6 +503,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
         
         //  CARGAR CUOTAS GENERADAS EN COMPRA
@@ -522,17 +523,24 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
             ResultSet rs = con.consulta(st, ver_cuotas);
-            int nro = 1;
             while (rs.next()) {
                 Object fila[] = new Object[5];
-                fila[0] = nro;
-                nro++;
+                fila[0] = rs.getString("idpago");
                 fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
                 fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
                 fila[3] = rs.getDouble("monto");
-                fila[4] = rs.getString("estado");
+                if (rs.getString("estado").equals("0")) {
+                    fila[4] = "Pendiente";
+                } else {
+                    fila[4] = "Pagado";
+                }
+                cuota.mostrar.addRow(fila);
             }
             cuota.t_cuotas.setModel(cuota.mostrar);
+            ven.centrar_celda(t_compras, 1);
+            ven.centrar_celda(t_compras, 2);
+            ven.derecha_celda(t_compras, 3);
+            ven.centrar_celda(t_compras, 4);
             con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {

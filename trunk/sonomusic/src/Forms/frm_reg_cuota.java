@@ -8,8 +8,12 @@ package Forms;
 import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
+import Vistas.frm_ver_cuota_compra;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,7 +28,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
     public String fec_pag;
     public String fec_venc;
     public String est;
-    
+
     /**
      * Creates new form frm_reg_cuota
      */
@@ -135,24 +139,50 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
 
     private void txt_montoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_montoKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            if (txt_monto.getText().length()>1) {
+            if (txt_monto.getText().length() > 1) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_montoKeyPressed
 
-    private void llenar(){
+    private void llenar() {
         fec_venc = ven.fechabase(txt_fec.getText());
         monto = Double.parseDouble(txt_monto.getText());
     }
-    
+
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
-        Statement st = con.conexion();
-        String ins_cuota = "insert into pago_compras Values (null, '"+com.getId()+"', '7000-01-01', '"+fec_venc+"', '"+monto+"', '0')";
-        con.actualiza(st, ins_cuota);
-        con.cerrar(st);
+        try {
+            Statement st = con.conexion();
+            String ins_cuota = "insert into pago_compras Values (null, '" + com.getId() + "', '7000-01-01', '" + fec_venc + "', '" + monto + "', '0')";
+            con.actualiza(st, ins_cuota);
+            con.cerrar(st);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        frm_ver_cuota_compra cuota = null;
+        try {
+            Statement st = con.conexion();
+            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
+            ResultSet rs = con.consulta(st, ver_cuotas);
+            int nro = 1;
+            while (rs.next()) {
+                Object fila[] = new Object[5];
+                fila[0] = nro;
+                nro++;
+                fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
+                fila[3] = rs.getDouble("monto");
+                fila[4] = rs.getString("estado");
+                cuota.mostrar.addRow(fila);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
 
