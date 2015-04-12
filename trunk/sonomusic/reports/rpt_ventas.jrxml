@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f65db704-b029-4c1d-a7d9-80c31b038d5a">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="16"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha_inicio" class="java.lang.String">
-		<defaultValueExpression><![CDATA[$F{pedido_fec_ped}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha_fin" class="java.lang.String">
-		<defaultValueExpression><![CDATA[$F{pedido_fec_pago}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ruc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -33,12 +36,17 @@
      almacen.`nom_alm` AS almacen_nom_alm,
      cliente.`nro_doc` AS cliente_nro_doc,
      cliente.`tipo_doc` AS cliente_tipo_doc,
-     cliente.`nom_per` AS cliente_nom_per
+     cliente.`nom_per` AS cliente_nom_per,
+     almacen.`ruc` AS almacen_ruc,
+     almacen.`raz_soc` AS almacen_raz_soc
 FROM
      `tipo_pago` tipo_pago INNER JOIN `pedido` pedido ON tipo_pago.`idTipo_pago` = pedido.`idTipo_pago`
      INNER JOIN `tipo_doc` tipo_doc ON pedido.`idtipo_doc` = tipo_doc.`idtipo_doc`
      INNER JOIN `almacen` almacen ON pedido.`idAlmacen` = almacen.`idAlmacen`
-     INNER JOIN `cliente` cliente ON pedido.`cli_doc` = cliente.`nro_doc` where  pedido.`est_ped`=1 and  pedido.`fec_ped` between $P{fecha_inicio} and  $P{fecha_fin}]]>
+     INNER JOIN `cliente` cliente ON pedido.`cli_doc` = cliente.`nro_doc`
+WHERE
+     almacen.`ruc` = $P{ruc}
+     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin}]]>
 	</queryString>
 	<field name="pedido_idPedido" class="java.lang.Integer"/>
 	<field name="pedido_fec_ped" class="java.sql.Date"/>
@@ -63,6 +71,8 @@ FROM
 	<field name="cliente_nro_doc" class="java.lang.String"/>
 	<field name="cliente_tipo_doc" class="java.lang.String"/>
 	<field name="cliente_nom_per" class="java.lang.String"/>
+	<field name="almacen_ruc" class="java.lang.String"/>
+	<field name="almacen_raz_soc" class="java.lang.String"/>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{pedido_total}]]></variableExpression>
 	</variable>
@@ -136,6 +146,25 @@ FROM
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="417" y="108" width="25" height="12" uuid="b6872adc-15e6-4dd0-aac7-312eff4e8eca"/>
+				<text><![CDATA[Ruc:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="442" y="108" width="100" height="12" uuid="221ac988-5e25-449c-bd56-397a5cf44a0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacen_ruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="542" y="108" width="60" height="12" uuid="27f591ad-c910-469f-85cd-e6f78f6a4809"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="602" y="108" width="199" height="12" uuid="b7aa4e2b-234a-4b1f-a412-727aca5c2078"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacen_raz_soc}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

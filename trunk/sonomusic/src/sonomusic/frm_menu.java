@@ -75,7 +75,7 @@ public class frm_menu extends javax.swing.JFrame {
         txt_raz.setText(alm.getRaz_soc());
         // carga todas las notificacion primera vez
         noti = new Cl_Hilo_Notificacion();
-        noti.start();
+        //noti.start();
     }
 
     private String leer_almacen() {
@@ -1526,9 +1526,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        frm_rpt_fechas rpt_fec = new frm_rpt_fechas();
-        rpt_fec.rpt = "venta_total";
-        ven.llamar_ventana(rpt_fec);
+        frm_ver_almacen rpt_alm = new frm_ver_almacen(); 
+        rpt_alm.ventana="venta_total";
+        ven.llamar_ventana(rpt_alm);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed

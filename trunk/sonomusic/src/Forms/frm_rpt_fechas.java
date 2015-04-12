@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Forms;
 
 import Clases.Cl_Almacen;
@@ -212,6 +207,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_inicio", fec_ini);
                 parametros.put("fecha_fin", fec_fin);
+                parametros.put("ruc", alm.getRuc());
                 ven.ver_reporte("rpt_ventas", parametros);
             }
             // REPORTE DE VENTAS X ALMACEN

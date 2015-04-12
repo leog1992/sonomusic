@@ -105,5 +105,9 @@ public class Cl_Almacen {
         }
         return idalm;
     }
+
+    public void setRuc(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
