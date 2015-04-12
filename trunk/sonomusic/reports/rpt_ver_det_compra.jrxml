@@ -90,7 +90,7 @@ FROM
 	<field name="tipo_doc_A_idtipo_doc" class="java.lang.Integer"/>
 	<field name="und_medida_idUnd_medida" class="java.lang.Long"/>
 	<variable name="sub_total" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[( ($F{tipo_doc_A_desc_tipd}.equals("BOLETA")) ? $F{detalle_compra_cant_compra}*$F{detalle_compra_precio_compra}/1.18 :$F{detalle_compra_cant_compra}*$F{detalle_compra_precio_compra} )]]></variableExpression>
+		<variableExpression><![CDATA[$F{detalle_compra_cant_compra}*$F{detalle_compra_precio_compra}/1.18]]></variableExpression>
 	</variable>
 	<variable name="igv" class="java.lang.Double">
 		<variableExpression><![CDATA[( ($F{tipo_doc_A_desc_tipd}.equals("BOLETA")) ? ($V{sub_total})*0.18 : ($V{sub_total})*0.18 )]]></variableExpression>

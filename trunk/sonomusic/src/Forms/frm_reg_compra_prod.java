@@ -211,6 +211,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Registrar Compra");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1117,7 +1119,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         int totalRow = t_detalle.getRowCount();
         double suma_sub = 0.00;
         for (int i = 0; i < totalRow; i++) {
-            suma_sub += Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 5))) * Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 3)));
+            suma_sub += Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 5))) * Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 3))) / 1.18;
 
         }
         return suma_sub;

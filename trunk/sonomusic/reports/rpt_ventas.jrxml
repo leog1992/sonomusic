@@ -248,21 +248,21 @@ FROM
 		<band height="20" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="21" y="0" width="44" height="12" uuid="bf2c9868-8e95-45f0-a831-ae44039a569c"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pedido_fec_ped}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="68" y="0" width="45" height="12" uuid="34eaa961-7cf2-4c20-b182-8e30d869a8ec"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pedido_fec_pago}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="116" y="0" width="43" height="12" uuid="c1b730a2-6f33-4695-b829-507d29b0a92e"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_pago_desc}]]></textFieldExpression>
@@ -297,7 +297,7 @@ FROM
 			</textField>
 			<textField>
 				<reportElement x="365" y="0" width="153" height="12" uuid="9d334f96-36ea-4b0a-97b9-18df47ae5410"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_nom_per}]]></textFieldExpression>
@@ -364,7 +364,7 @@ FROM
 			</staticText>
 			<textField pattern="#,##0.00">
 				<reportElement x="720" y="0" width="81" height="12" uuid="1c617796-b7ba-4a47-a776-240f4a681875"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>

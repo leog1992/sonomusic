@@ -150,7 +150,6 @@ public class frm_menu extends javax.swing.JFrame {
     private void initComponents() {
 
         contenedor = new javax.swing.JDesktopPane();
-        jToolBar1 = new javax.swing.JToolBar();
         jPanel2 = new javax.swing.JPanel();
         lbl_user = new javax.swing.JLabel();
         lbl_alm = new javax.swing.JLabel();
@@ -193,12 +192,6 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_nro = new javax.swing.JLabel();
-        jp_metas = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        lbl_actual = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        lbl_total = new javax.swing.JLabel();
-        lbl_msg = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -263,14 +256,12 @@ public class frm_menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - SONOMUSIC");
+        setBackground(new java.awt.Color(212, 2, 2));
         setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png")
         );
 
         contenedor.setBackground(new java.awt.Color(254, 254, 254));
         contenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-
-        jToolBar1.setBorder(null);
-        jToolBar1.setFloatable(false);
 
         jPanel2.setBackground(new java.awt.Color(212, 2, 2));
 
@@ -331,7 +322,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(txt_raz)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 554, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
@@ -375,7 +366,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        jToolBar1.add(jPanel2);
+        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
 
         jp_ventas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jp_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -516,7 +507,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -683,7 +674,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(jp_caja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jp_salir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -711,85 +702,28 @@ public class frm_menu extends javax.swing.JFrame {
             .addComponent(jp_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jp_metas.setBackground(new java.awt.Color(212, 2, 2));
-
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("Meta:");
-
-        lbl_actual.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_actual.setText("lbl_actual");
-
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("de");
-
-        lbl_total.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_total.setText("lbl_total");
-
-        lbl_msg.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_msg.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_msg.setText("lbl_msg");
-
-        javax.swing.GroupLayout jp_metasLayout = new javax.swing.GroupLayout(jp_metas);
-        jp_metas.setLayout(jp_metasLayout);
-        jp_metasLayout.setHorizontalGroup(
-            jp_metasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp_metasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel23)
-                .addGap(18, 18, 18)
-                .addComponent(lbl_actual)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_total)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_metasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_msg)
-                .addContainerGap())
-        );
-        jp_metasLayout.setVerticalGroup(
-            jp_metasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp_metasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jp_metasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(lbl_actual)
-                    .addComponent(jLabel25)
-                    .addComponent(lbl_total))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_msg)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
         contenedor.setLayout(contenedorLayout);
         contenedorLayout.setHorizontalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jp_metas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         contenedorLayout.setVerticalGroup(
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_metas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        contenedor.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        contenedor.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         contenedor.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        contenedor.setLayer(jp_metas, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setBackground(new java.awt.Color(212, 2, 2));
         jMenuBar1.setForeground(new java.awt.Color(254, 254, 254));
         jMenuBar1.setBorderPainted(false);
 
+        jMenu1.setBackground(new java.awt.Color(212, 2, 2));
         jMenu1.setForeground(new java.awt.Color(254, 254, 254));
         jMenu1.setText("RR.HH.");
         jMenu1.setToolTipText("");
@@ -858,6 +792,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setBackground(new java.awt.Color(212, 2, 2));
         jMenu2.setForeground(new java.awt.Color(254, 254, 254));
         jMenu2.setText("Ventas");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -963,6 +898,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setBackground(new java.awt.Color(212, 2, 2));
         jMenu3.setForeground(new java.awt.Color(254, 254, 254));
         jMenu3.setText("Compras");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1037,6 +973,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setBackground(new java.awt.Color(212, 2, 2));
         jMenu4.setForeground(new java.awt.Color(254, 254, 254));
         jMenu4.setText("Almacen");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1177,6 +1114,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setBackground(new java.awt.Color(212, 2, 2));
         jMenu5.setForeground(new java.awt.Color(254, 254, 254));
         jMenu5.setText("Contabilidad");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1238,6 +1176,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setBackground(new java.awt.Color(212, 2, 2));
         jMenu6.setForeground(new java.awt.Color(254, 254, 254));
         jMenu6.setText("Datos Generales");
         jMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1709,7 +1648,7 @@ public class frm_menu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frm_menu().setVisible(true);
+                 new frm_menu().setVisible(true);
             }
         });
     }
@@ -1731,8 +1670,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1804,22 +1741,17 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel jp_caja;
     private javax.swing.JPanel jp_envio;
-    private javax.swing.JPanel jp_metas;
     private javax.swing.JPanel jp_pedido;
     private javax.swing.JPanel jp_prod_alm;
     private javax.swing.JPanel jp_productos;
     private javax.swing.JPanel jp_salir;
     private javax.swing.JPanel jp_ventas;
-    private javax.swing.JLabel lbl_actual;
     public static javax.swing.JLabel lbl_alm;
     private javax.swing.JLabel lbl_ciudad;
-    private javax.swing.JLabel lbl_msg;
     public static javax.swing.JLabel lbl_nro;
     private javax.swing.JLabel lbl_pc;
-    private javax.swing.JLabel lbl_total;
     public static javax.swing.JLabel lbl_user;
     private javax.swing.JMenuItem m_clientes;
     private javax.swing.JMenuItem m_notas;

@@ -226,7 +226,7 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="132" y="0" width="62" height="14" uuid="c1b730a2-6f33-4695-b829-507d29b0a92e"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_pago_desc}]]></textFieldExpression>
@@ -240,7 +240,7 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="197" y="0" width="73" height="14" uuid="a6cb6112-a505-41c0-9612-29be7a39338e"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_doc_desc_tipd}]]></textFieldExpression>
@@ -268,7 +268,7 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="413" y="0" width="136" height="14" uuid="9d334f96-36ea-4b0a-97b9-18df47ae5410"/>
-				<textElement textAlignment="Center">
+				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{productos_desc_pro}]]></textFieldExpression>

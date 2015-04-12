@@ -16,6 +16,8 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -389,11 +391,9 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
             //ENVIAR ID PARA REPORTE
             if (rpt.equals("rpt_cliente")) {
                 cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
-                frm_rpt_fechas fec = new frm_rpt_fechas();
-                fec.rpt = "rpt_cliente";
-                fec.cli.setNro_doc(cli.getNom_cli());
-                ven.llamar_ventana(fec);           
-                rpt = "";
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("cliente",cli.getNro_doc());
+                ven.ver_reporte("rpt_ventas_cliente", parametros);
                 this.dispose();
             }
             ventana = "cliente";

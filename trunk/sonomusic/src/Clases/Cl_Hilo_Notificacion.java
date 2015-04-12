@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import javax.swing.Timer;
 import nicon.notify.core.Notification;
 import sonomusic.frm_menu;
@@ -138,5 +137,13 @@ public class Cl_Hilo_Notificacion extends Thread {
             Notification.show("Meta Encontrada", "Ya has alcanzado " + formato.format(mi_meta) + " de " + formato.format(monto) + " ---- FELICITACIONES!!");
         }
     }
-
+    
+    private void notificar_pago_compra() {
+        try {
+            Statement st = con.conexion();
+            String ver_pagos = "";
+            
+        } catch (Exception e) {
+        }
+    }
 }

@@ -1025,15 +1025,21 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     txt_nro_doc.setText("00000000");
                     txt_fec.setEditable(true);
                     txt_fec.requestFocus();
+                    txt_fec.setBackground(Color.red);
+                    txt_fec.setForeground(Color.white);
                 } else {
                     txt_nro_doc.setEditable(true);
                     txt_nro_doc.requestFocus();
+                    txt_nro_doc.setBackground(Color.red);
+                    txt_nro_doc.setForeground(Color.white);
                 }
             } else if (cbx_tipd.getSelectedItem().equals("GUIA DE REMISION")) {
                 JOptionPane.showMessageDialog(null, "Error");
             } else {
                 txt_nro_doc.setEditable(true);
                 txt_nro_doc.requestFocus();
+                txt_nro_doc.setBackground(Color.red);
+                txt_nro_doc.setForeground(Color.white);
             }
         }
 
@@ -1068,6 +1074,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                             txt_nom.setText(rs.getString("nom_per"));
                             txt_fec.setEditable(true);
                             txt_fec.requestFocus();
+                            txt_nro_doc.setBackground(Color.white);
+                            txt_nro_doc.setForeground(Color.black);
+                            txt_fec.setBackground(Color.red);
+                            txt_fec.setForeground(Color.white);
                         } else {
                             txt_nro_doc.requestFocus();
                             JOptionPane.showMessageDialog(null, "Cliente no registrado");
@@ -1121,6 +1131,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (txt_fec.getText().trim().length() == 10) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
+                txt_fec.setBackground(Color.white);
+                txt_fec.setForeground(Color.black);
                 btn_reg.doClick();
             } else {
                 txt_fec.requestFocus();

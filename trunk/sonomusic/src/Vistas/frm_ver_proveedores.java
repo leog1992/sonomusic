@@ -303,6 +303,41 @@ int i;
     }//GEN-LAST:event_t_proveedorMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
+        try {
+            frm_reg_proveedor prove = new frm_reg_proveedor();
+            pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+            Statement st = con.conexion();
+            String ver_prov = "select * from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+            ResultSet rs = con.consulta(st, ver_prov);
+            if (rs.next()){
+                prove.txt_ruc.setText(pro.getRuc());
+                prove.txt_raz.setText(rs.getString("raz_soc_pro"));
+                prove.txt_contacto.setText(rs.getString("contacto"));
+                prove.txt_dir.setText(rs.getString("dir_pro"));
+                prove.txt_email.setText(rs.getString("email_contacto"));
+                prove.txt_tel.setText(rs.getString("tel_pro"));
+                prove.txt_tel1.setText(rs.getString("tel_contacto"));
+                prove.txt_tel2.setText(rs.getString("tel2_contacto"));
+                prove.txt_web.setText(rs.getString("web"));
+                prove.txt_ruc.setEditable(false);
+                prove.txt_raz.setEditable(true);
+                prove.txt_contacto.setEditable(true);
+                prove.txt_dir.setEditable(true);
+                prove.txt_email.setEditable(true);
+                prove.txt_web.setEditable(true);
+                prove.txt_tel.setEditable(true);
+                prove.txt_tel1.setEditable(true);
+                prove.txt_tel2.setEditable(true);
+                prove.btn_reg.setEnabled(true);
+                prove.accion = "mod";
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+            ven.llamar_ventana(prove);
+            this.dispose();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }    
     }//GEN-LAST:event_btn_modActionPerformed
 
 

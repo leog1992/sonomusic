@@ -20,15 +20,18 @@ import javax.swing.JOptionPane;
  * @author Lorenzo
  */
 public class frm_reg_proveedor extends javax.swing.JInternalFrame {
-Cl_Proveedor pro = new Cl_Proveedor();
-Cl_Conectar con = new Cl_Conectar();
-Cl_Varios ven = new Cl_Varios();
+
+    Cl_Proveedor pro = new Cl_Proveedor();
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
+    public static String accion = "reg";
+
     /**
      * Creates new form frm_reg_proveedor
      */
     public frm_reg_proveedor() {
         initComponents();
-        
+
     }
 
     /**
@@ -299,12 +302,12 @@ Cl_Varios ven = new Cl_Varios();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            if (txt_ruc.getText().length()==11) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_ruc.getText().length() == 11) {
                 pro.setRuc(txt_ruc.getText());
                 try {
                     Statement st = con.conexion();
-                    String ver_pro = "select raz_soc_pro from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+                    String ver_pro = "select raz_soc_pro from proveedor where ruc_pro = '" + pro.getRuc() + "'";
                     ResultSet rs = con.consulta(st, ver_pro);
                     if (rs.next()) {
                         JOptionPane.showMessageDialog(null, "El Nro. de RUC ya existe por favor ingrese otro");
@@ -324,34 +327,34 @@ Cl_Varios ven = new Cl_Varios();
     }//GEN-LAST:event_txt_rucKeyPressed
 
     private void txt_razKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_razKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_raz.getText().isEmpty()) {
-            txt_dir.setEditable(true);
-            txt_dir.requestFocus();
+                txt_dir.setEditable(true);
+                txt_dir.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_razKeyPressed
 
     private void txt_dirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dirKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_dir.getText().isEmpty()) {
-            txt_tel.setEditable(true);
-            txt_tel.requestFocus();
+                txt_tel.setEditable(true);
+                txt_tel.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_dirKeyPressed
 
     private void txt_telKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_tel.getText().isEmpty()) {
-            txt_web.setEditable(true);
-            txt_web.requestFocus();
+                txt_web.setEditable(true);
+                txt_web.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_telKeyPressed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btn_reg.doClick();
         }
     }//GEN-LAST:event_btn_regKeyPressed
@@ -367,16 +370,27 @@ Cl_Varios ven = new Cl_Varios();
         pro.setTel2(txt_tel2.getText());
         pro.setEmail(txt_email.getText());
     }
-    
+
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
-        Statement st = con.conexion();
-        String ins_pro = "insert into proveedor Values ('"+pro.getRuc()+"', '"+pro.getRaz()+"',"
-                + " '"+pro.getDir()+"', '"+pro.getTel()+"', '"+pro.getWeb()+"', '"+pro.getCon()+"', '"+pro.getTel1()+"', "
-                + "'"+pro.getTel2()+"', '"+pro.getEmail()+"', '"+pro.getEst()+"')";
-        con.actualiza(st, ins_pro);
-        con.cerrar(st);
-        JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente");
+        if (accion.equals("reg")) {
+            Statement st = con.conexion();
+            String ins_pro = "insert into proveedor Values ('" + pro.getRuc() + "', '" + pro.getRaz() + "',"
+                    + " '" + pro.getDir() + "', '" + pro.getTel() + "', '" + pro.getWeb() + "', '" + pro.getCon() + "', '" + pro.getTel1() + "', "
+                    + "'" + pro.getTel2() + "', '" + pro.getEmail() + "', '" + pro.getEst() + "')";
+            con.actualiza(st, ins_pro);
+            con.cerrar(st);
+            JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente");
+        } else {
+            Statement st = con.conexion();
+            String mod_prov = "update proveedor set raz_soc_pro = '"+pro.getRaz()+"', dir_pro = '"+pro.getDir()+"', tel_pro = '"+pro.getTel()+"', web = '"+pro.getWeb()+"'"
+                    + " contacto = '"+pro.getCon()+"', tel_contacto = '"+pro.getTel1()+"', tel2_contacto = '"+pro.getTel2()+"', email_contacto = '"+pro.getEmail()+"' "
+                    + " where ruc_pro = '"+pro.getRuc()+"'";
+            con.actualiza(st, mod_prov);
+            con.cerrar(st);
+            JOptionPane.showMessageDialog(null, "Se ha modificado correctamente");
+            this.dispose();
+        }
         btn_lim.doClick();
     }//GEN-LAST:event_btn_regActionPerformed
 
@@ -389,7 +403,7 @@ Cl_Varios ven = new Cl_Varios();
         txt_contacto.setText("");
         txt_tel1.setText("");
         txt_tel2.setText("");
-        txt_email.setText("");        
+        txt_email.setText("");
         txt_raz.setEditable(false);
         txt_dir.setEditable(false);
         txt_tel.setEditable(false);
@@ -405,26 +419,34 @@ Cl_Varios ven = new Cl_Varios();
         frm_ver_proveedores proveedor = new frm_ver_proveedores();
         ven.llamar_ventana(proveedor);
         this.dispose();
-        
+
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void txt_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyTyped
-       if(txt_ruc.getText().length()==11) evt.consume();
-       char car = evt.getKeyChar();
-        if((car<'0' || car>'9')) evt.consume();
+        if (txt_ruc.getText().length() == 11) {
+            evt.consume();
+        }
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_rucKeyTyped
 
     private void txt_telKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_telKeyTyped
-        if(txt_tel.getText().length()==9) evt.consume();
-       char car = evt.getKeyChar();
-        if((car<'0' || car>'9')) evt.consume();
+        if (txt_tel.getText().length() == 9) {
+            evt.consume();
+        }
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_telKeyTyped
 
     private void txt_webKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_webKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_web.getText().isEmpty()) {
-            txt_contacto.setEditable(true);
-            txt_contacto.requestFocus();
+                txt_contacto.setEditable(true);
+                txt_contacto.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_webKeyPressed
@@ -438,7 +460,7 @@ Cl_Varios ven = new Cl_Varios();
     }//GEN-LAST:event_txt_emailKeyTyped
 
     private void txt_emailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_emailKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_email.getText().isEmpty()) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
@@ -451,30 +473,30 @@ Cl_Varios ven = new Cl_Varios();
     }//GEN-LAST:event_txt_emailActionPerformed
 
     private void txt_contactoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contactoKeyPressed
-         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_contacto.getText().isEmpty()) {
-            txt_tel1.setEditable(true);
-            txt_tel1.requestFocus();
+                txt_tel1.setEditable(true);
+                txt_tel1.requestFocus();
             }
-        }   
+        }
     }//GEN-LAST:event_txt_contactoKeyPressed
 
     private void txt_tel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel1KeyPressed
-         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_tel1.getText().isEmpty()) {
-            txt_tel2.setEditable(true);
-            txt_tel2.requestFocus();
+                txt_tel2.setEditable(true);
+                txt_tel2.requestFocus();
             }
-        } 
+        }
     }//GEN-LAST:event_txt_tel1KeyPressed
 
     private void txt_tel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel2KeyPressed
-         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_tel2.getText().isEmpty()) {
-            txt_email.setEditable(true);
-            txt_email.requestFocus();
+                txt_email.setEditable(true);
+                txt_email.requestFocus();
             }
-        } 
+        }
     }//GEN-LAST:event_txt_tel2KeyPressed
 
 
@@ -491,14 +513,14 @@ Cl_Varios ven = new Cl_Varios();
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txt_contacto;
+    public static javax.swing.JTextField txt_contacto;
     public static javax.swing.JTextField txt_dir;
     public static javax.swing.JTextField txt_email;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_ruc;
     public static javax.swing.JTextField txt_tel;
-    private javax.swing.JTextField txt_tel1;
-    private javax.swing.JTextField txt_tel2;
+    public static javax.swing.JTextField txt_tel1;
+    public static javax.swing.JTextField txt_tel2;
     public static javax.swing.JTextField txt_web;
     // End of variables declaration//GEN-END:variables
 }

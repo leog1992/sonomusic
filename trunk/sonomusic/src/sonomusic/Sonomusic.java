@@ -9,8 +9,10 @@ import java.net.ServerSocket;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRTextField;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.watermark.SubstanceImageWatermark;
+
 /**
  *
  * @author Dereck
@@ -23,18 +25,13 @@ public class Sonomusic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //JFrame.setDefaultLookAndFeelDecorated(true); //que nos permite dejar a Substance la decoracion ( por asi decirlo)
-        
-        SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme"); 
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.MagmaSkin"); 
-        //SubstanceLookAndFeel.setCurrentWatermark("org.jvnet.substance.watermark.SubstanceMagneticFieldWatermark");
-        SubstanceLookAndFeel.setCurrentWatermark( new SubstanceImageWatermark("logo_sonomusic.png"));
-        SubstanceLookAndFeel.setImageWatermarkOpacity(new Float(0.3));
-
-
         frm_login loader = new frm_login();
         try {
             SERVER_SOCKET = new ServerSocket(1334);
+            //JFrame.setDefaultLookAndFeelDecorated(true);
+            SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.RavenGraphiteGlassSkin");
+            SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
+            //SubstanceLookAndFeel.setCurrentWatermark(new SubstanceImageWatermark("logo.png"));
             loader.setVisible(true);
         } catch (IOException x) {
             System.out.print(x);

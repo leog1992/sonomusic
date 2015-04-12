@@ -347,7 +347,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$F{pedido_idPedido}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rpt_ventas_almacen_detalle.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["reports/rpt_ventas_almacen_detalle.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

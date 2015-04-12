@@ -102,6 +102,7 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setTitle("Pagos a Personal");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar:");

@@ -364,8 +364,11 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                             + "Ingrese de nuevo por favor.");
                     txt_entrega.setText("");
                     txt_entrega.requestFocus();
+                    
                 }
             }
+            txt_entrega.setBackground(Color.white);
+            txt_entrega.setForeground(Color.black);
             btn_reg.requestFocus();
         }
 
@@ -575,7 +578,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
                 imprime.start();
             }
-            
+
             //SEPARACION
             //insertar separacion
         } else {
@@ -705,6 +708,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 txt_fec_pago.setEditable(true);
                 txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
                 txt_fec_pago.requestFocus();
+                txt_fec_pago.setBackground(Color.red);
+                txt_fec_pago.setForeground(Color.white);
             }
         }
     }//GEN-LAST:event_cbx_tipopagoKeyPressed
@@ -728,6 +733,10 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             if (txt_fec_pago.getText().length() == 10) {
                 txt_entrega.setEditable(true);
                 txt_entrega.requestFocus();
+                txt_fec_pago.setBackground(Color.white);
+                txt_fec_pago.setForeground(Color.black);
+                txt_entrega.setBackground(Color.red);
+                txt_entrega.setForeground(Color.white);
             }
         }
     }//GEN-LAST:event_txt_fec_pagoKeyPressed
