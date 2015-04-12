@@ -240,12 +240,22 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("cliente",cli.getNro_doc());
                 ven.ver_reporte("rpt_ventas_cliente", parametros);
             }
+            //
             if (rpt.equals("cajas_tienda")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fec_mov", fec_ini);
                 parametros.put("idalm", frm_menu.alm.getId());
                 parametros.put("fec_fin", fec_fin);
                 ven.ver_reporte("rpt_caja_movimiento_cajas", parametros);
+            }
+            //REPORTE COMPRA EMPRESA
+            if (rpt.equals("compra_empresa")) {
+                Map<String,Object> parametros = new HashMap<>();
+                parametros.put("fecha_doc", fec_ini);
+                parametros.put("fecha_pago", fec_fin);
+                parametros.put("ruc", frm_menu.alm.getRuc());
+                ven.ver_reporte("rpt_compras", parametros);
+                
             }
             this.dispose();
         }

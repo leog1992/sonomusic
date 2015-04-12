@@ -507,7 +507,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -940,7 +940,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem31.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem31.setText("Rpt. Compras por Fecha");
+        jMenuItem31.setText("Rpt. Compras por Empresa");
         jMenuItem31.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1538,9 +1538,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        frm_rpt_fechas rpt_fec = new frm_rpt_fechas();
-        rpt_fec.rpt = "compras";
-        ven.llamar_ventana(rpt_fec);
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana="compra_empresa";
+        ven.llamar_ventana(almacen);        
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
