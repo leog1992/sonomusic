@@ -8,12 +8,21 @@ import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_compra_serv;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -44,6 +53,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
                 + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'S' order by c.fecha_doc desc, c.idCompra desc";
         ver_compras(query);
+        t_compras.setDefaultRenderer(Object.class, new table_render());
 
     }
 
@@ -507,6 +517,30 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
+    public class table_render extends DefaultTableCellRenderer {
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
+            SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha_tabla = null;
+            Date fecha_actual = null;
+            try {
+                fecha_tabla = formateador.parse((String) table.getValueAt(row, 3));
+                fecha_actual = formateador.parse(ven.getFechaActual());
+            } catch (ParseException ex) {
+                Logger.getLogger(frm_ver_compras_prod.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if ((fecha_tabla.before(fecha_actual) || fecha_tabla.equals(fecha_actual)) && String.valueOf(table.getValueAt(row, 11)).equals("PENDIENTE")) {
+                setBackground(Color.YELLOW);
+                setForeground(Color.black);
+            } else {
+                setBackground(Color.white);
+                setForeground(Color.black);
+            }
+            
+            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
+            return this;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;

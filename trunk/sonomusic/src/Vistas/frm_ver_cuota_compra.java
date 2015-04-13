@@ -53,12 +53,8 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
 
     public double pendiente() {
         double pendiente = 0;
-        int filas = t_cuotas.getRowCount();
-        for (int j = 0; j < filas; j++) {
-            if (t_cuotas.getValueAt(j, 4).equals("Pendiente")) {
-                pendiente += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
-            }
-        }
+        double total = Double.parseDouble(txt_dtot.getText());
+        pendiente = total - tot_cuotas();
         return pendiente;
     }
 
