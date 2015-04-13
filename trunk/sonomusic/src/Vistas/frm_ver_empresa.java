@@ -33,7 +33,7 @@ public class frm_ver_empresa extends javax.swing.JInternalFrame {
         };
         try {
             Statement st =con.conexion();
-            String sql="select * from  almacen";
+            String sql="select distinct * from  almacen";
             modelo.addColumn("Id");
             modelo.addColumn("Ruc");
             modelo.addColumn("Razon Social");
