@@ -76,7 +76,7 @@ public class frm_menu extends javax.swing.JFrame {
         txt_raz.setText(alm.getRaz_soc());
         // carga todas las notificacion primera vez
         noti = new Cl_Hilo_Notificacion();
-        //noti.start();
+        noti.start();
     }
 
     private String leer_almacen() {

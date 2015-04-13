@@ -398,6 +398,9 @@
             <Property name="text" type="java.lang.String" value="Eliminar"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_elicActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_verd">
           <Properties>
@@ -405,7 +408,6 @@
               <Image iconType="3" name="/Recursos/clipboard_text.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Ver Detalle de Pago"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btn_cer">

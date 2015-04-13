@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,7 +42,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         formato = new DecimalFormat("####0.00", simbolo);
     }
 
-    public double tot_cuotas () {
+    public double tot_cuotas() {
         double total = 0;
         int filas = t_cuotas.getRowCount();
         for (int j = 0; j < filas; j++) {
@@ -49,11 +50,12 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         }
         return total;
     }
+
     public double pendiente() {
         double pendiente = 0;
         int filas = t_cuotas.getRowCount();
         for (int j = 0; j < filas; j++) {
-            if (t_cuotas.getValueAt(j, 4).equals("Pendiente")){
+            if (t_cuotas.getValueAt(j, 4).equals("Pendiente")) {
                 pendiente += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
             }
         }
@@ -64,7 +66,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         double pagado = 0;
         int filas = t_cuotas.getRowCount();
         for (int j = 0; j < filas; j++) {
-            if (t_cuotas.getValueAt(j, 4).equals("Pagado")){
+            if (t_cuotas.getValueAt(j, 4).equals("Pagado")) {
                 pagado += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
             }
         }
@@ -254,10 +256,14 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         btn_elic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
         btn_elic.setText("Eliminar");
         btn_elic.setEnabled(false);
+        btn_elic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_elicActionPerformed(evt);
+            }
+        });
 
         btn_verd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         btn_verd.setText("Ver Detalle de Pago");
-        btn_verd.setEnabled(false);
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         btn_cer.setText("Cerrar");
@@ -428,15 +434,15 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         pagar.txt_raz.setText(txt_raz.getText());
         pagar.txt_tido.setText(txt_tipd.getText());
         pagar.txt_ser.setText(txt_sndoc.getText());
-        pagar.txt_deu.setText(txt_tot.getText());
+        pagar.txt_deu.setText(txt_dtot.getText());
         pagar.idpago = t_cuotas.getValueAt(i, 0).toString();
 
         Double actual = 0.0;
         Double pagado = 0.0;
-        actual = Double.parseDouble(txt_tot.getText());
+        actual = Double.parseDouble(txt_dtot.getText());
         try {
             Statement st = con.conexion();
-            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + com.getId() + "'";
+            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + com.getId() + "' and estado = '1'";
             ResultSet rs = con.consulta(st, ver_pagos);
             if (rs.next()) {
                 pagado = rs.getDouble("pagos");
@@ -456,11 +462,79 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         pagar.com.setId(com.getId());
         if (origen.equals("paga_producto")) {
             pagar.funcion = "productos";
+        } else {
+            pagar.funcion = "servicios";
         }
         pagar.glosa = "PAGO DE COMPRA - " + txt_tipd.getText() + " / " + txt_sndoc.getText() + " - " + txt_ruc.getText();
         ven.llamar_ventana(pagar);
         this.dispose();
     }//GEN-LAST:event_btn_regpActionPerformed
+
+    private void btn_elicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elicActionPerformed
+        int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la compra?");
+        if (JOptionPane.OK_OPTION == confirmado) {
+            int id = Integer.parseInt(t_cuotas.getValueAt(i, 0).toString());
+            if (t_cuotas.getValueAt(i, 4).equals("Pendiente")) {
+                try {
+                    Statement st = con.conexion();
+                    String query = "delete from pago_compras where idpago = '" + id + "'";
+                    con.actualiza(st, query);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } 
+            
+            //CARGAR REGISTROS EN TABLA
+            try {
+            
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            mostrar.addColumn("Nro Cuota");
+            mostrar.addColumn("Fecha Pago");
+            mostrar.addColumn("Fec. Venc.");
+            mostrar.addColumn("Monto");
+            mostrar.addColumn("Estado");
+            Statement st = con.conexion();
+            String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
+            ResultSet rs = con.consulta(st, ver_cuotas);
+            while (rs.next()) {
+                Object fila[] = new Object[5];
+                fila[0] = rs.getString("idpago");
+                if (rs.getString("fec_pago").equals("7000-01-01")){
+                    fila[1] = "-";
+                } else {
+                    fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                }
+                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
+                fila[3] = formato.format(rs.getDouble("monto"));
+                if (rs.getString("estado").equals("0")) {
+                    fila[4] = "Pendiente";
+                } else {
+                    fila[4] = "Pagado";
+                }
+                mostrar.addRow(fila);
+            }
+            t_cuotas.setModel(mostrar);
+            ven.centrar_celda(t_cuotas, 1);
+            ven.centrar_celda(t_cuotas, 2);
+            ven.derecha_celda(t_cuotas, 3);
+            ven.centrar_celda(t_cuotas, 4);
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        txt_dtot.setText(formato.format(com.getTotal()));
+        txt_tot.setText(formato.format(tot_cuotas()));
+        txt_pen.setText(formato.format(pendiente()));
+        txt_pag.setText(formato.format(pagado()));
+        }
+    }//GEN-LAST:event_btn_elicActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

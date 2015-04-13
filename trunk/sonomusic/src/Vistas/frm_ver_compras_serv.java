@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Clases.Cl_Almacen;
@@ -9,7 +8,6 @@ import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_compra_serv;
-import Forms.frm_reg_pago_compra;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,105 +21,117 @@ import javax.swing.table.DefaultTableModel;
  * @author luis-d
  */
 public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
-Cl_Conectar con = new Cl_Conectar();
-Cl_Varios ven = new Cl_Varios();
-Cl_Compra com = new Cl_Compra();
-Cl_Proveedor pro = new Cl_Proveedor();
-Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
-Cl_Almacen alm = new Cl_Almacen();
-Cl_Productos mat = new Cl_Productos();
-DefaultTableModel mostrar;
-DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
-Integer i;
+
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
+    Cl_Compra com = new Cl_Compra();
+    Cl_Proveedor pro = new Cl_Proveedor();
+    Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
+    Cl_Almacen alm = new Cl_Almacen();
+    Cl_Productos mat = new Cl_Productos();
+    DefaultTableModel mostrar;
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
+    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
+    Integer i;
 
     /**
      * Creates new form frm_ver_compras
      */
     public frm_ver_compras_serv() {
         initComponents();
-        
+
         String query = "select c.idCompra, c.glosa, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
                 + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'S' order by c.fecha_doc desc, c.idCompra desc";
         ver_compras(query);
-        
+
     }
 
-    private void ver_compras (String query) {
-        try 
-        {
-        mostrar = new DefaultTableModel()
- {@Override
-     public boolean isCellEditable (int fila, int columna) {
-         return false;
-     }
- };
-        mostrar.addColumn("Id");
-        mostrar.addColumn("glosa");
-        mostrar.addColumn("Fec. Compra");
-        mostrar.addColumn("Fec. Pago");
-        mostrar.addColumn("Tipo Doc.");
-        mostrar.addColumn("Serie");
-        mostrar.addColumn("Nro.");
-        mostrar.addColumn("RUC");
-        mostrar.addColumn("Razon Social");
-        mostrar.addColumn("Total");
-        mostrar.addColumn("Almacen");
-        mostrar.addColumn("Estado");
+    private void ver_compras(String query) {
+        try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            mostrar.addColumn("Id");
+            mostrar.addColumn("glosa");
+            mostrar.addColumn("Fec. Compra");
+            mostrar.addColumn("Fec. Pago");
+            mostrar.addColumn("Tipo Doc.");
+            mostrar.addColumn("Serie");
+            mostrar.addColumn("Nro.");
+            mostrar.addColumn("RUC");
+            mostrar.addColumn("Razon Social");
+            mostrar.addColumn("Total");
+            mostrar.addColumn("Almacen");
+            mostrar.addColumn("Estado");
 
-        Statement st = con.conexion();
-        ResultSet rs = con.consulta(st, query);
-        while (rs.next()) {
-            Object fila [] = new Object[12];
-            fila [0] = rs.getString("idCompra");
-            fila [1] = rs.getString("glosa");
-            fila [2] = rs.getString("fecha_doc");
-            fila [3] = rs.getString("fecha_pago");
-            fila [4] = rs.getString("desc_tipd");
-            fila [5] = rs.getString("serie_doc");
-            fila [6] = rs.getString("nro_doc");
-            fila [7] = rs.getString("ruc_pro");
-            fila [8] = rs.getString("raz_soc_pro");
-            fila [9] = formato.format(rs.getDouble("total"));
-            fila [10] = rs.getString("nom_alm");
-            if (rs.getString("estado").equals("1")) {
-                fila [11] = "PAGADO";
-            } else {
-                fila [11] = "PENDIENTE";
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+            while (rs.next()) {
+                Object fila[] = new Object[12];
+                fila[0] = rs.getString("idCompra");
+                fila[1] = rs.getString("glosa");
+                fila[2] = rs.getString("fecha_doc");
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_fec = "select fec_venc from pago_compras where idCompra =  '" + rs.getString("idCompra") + "' and estado = '0' limit 1";
+                    ResultSet rs1 = con.consulta(st1, ver_fec);
+                    if (rs1.next()) {
+                        fila[3] = rs1.getString("fec_venc");
+                    } else {
+                        fila[3] = rs.getString("fecha_pago");
+                    }
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                fila[4] = rs.getString("desc_tipd");
+                fila[5] = rs.getString("serie_doc");
+                fila[6] = rs.getString("nro_doc");
+                fila[7] = rs.getString("ruc_pro");
+                fila[8] = rs.getString("raz_soc_pro");
+                fila[9] = formato.format(rs.getDouble("total"));
+                fila[10] = rs.getString("nom_alm");
+                if (rs.getString("estado").equals("1")) {
+                    fila[11] = "PAGADO";
+                } else {
+                    fila[11] = "PENDIENTE";
+                }
+                mostrar.addRow(fila);
             }
-            mostrar.addRow(fila);
-        }
-        con.cerrar(st);
-        con.cerrar(rs);
-        t_compras.setModel(mostrar);
-        t_compras.getColumnModel().getColumn(0).setPreferredWidth(30);
-        t_compras.getColumnModel().getColumn(1).setPreferredWidth(400);
-        t_compras.getColumnModel().getColumn(2).setPreferredWidth(75);
-        t_compras.getColumnModel().getColumn(3).setPreferredWidth(75);
-        t_compras.getColumnModel().getColumn(4).setPreferredWidth(80);
-        t_compras.getColumnModel().getColumn(5).setPreferredWidth(35);
-        t_compras.getColumnModel().getColumn(6).setPreferredWidth(70);
-        t_compras.getColumnModel().getColumn(7).setPreferredWidth(90);
-        t_compras.getColumnModel().getColumn(8).setPreferredWidth(250);
-        t_compras.getColumnModel().getColumn(9).setPreferredWidth(60);
-        t_compras.getColumnModel().getColumn(10).setPreferredWidth(90);
-        t_compras.getColumnModel().getColumn(11).setPreferredWidth(80);
-        ven.derecha_celda(t_compras, 0);
-        ven.centrar_celda(t_compras, 2);
-        ven.centrar_celda(t_compras, 3);
-        ven.centrar_celda(t_compras, 4);
-        ven.centrar_celda(t_compras, 5);
-        ven.centrar_celda(t_compras, 6);
-        ven.centrar_celda(t_compras, 7);
-        ven.derecha_celda(t_compras, 9);
-        
+            con.cerrar(st);
+            con.cerrar(rs);
+            t_compras.setModel(mostrar);
+            t_compras.getColumnModel().getColumn(0).setPreferredWidth(30);
+            t_compras.getColumnModel().getColumn(1).setPreferredWidth(400);
+            t_compras.getColumnModel().getColumn(2).setPreferredWidth(75);
+            t_compras.getColumnModel().getColumn(3).setPreferredWidth(75);
+            t_compras.getColumnModel().getColumn(4).setPreferredWidth(80);
+            t_compras.getColumnModel().getColumn(5).setPreferredWidth(35);
+            t_compras.getColumnModel().getColumn(6).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(7).setPreferredWidth(90);
+            t_compras.getColumnModel().getColumn(8).setPreferredWidth(250);
+            t_compras.getColumnModel().getColumn(9).setPreferredWidth(60);
+            t_compras.getColumnModel().getColumn(10).setPreferredWidth(90);
+            t_compras.getColumnModel().getColumn(11).setPreferredWidth(80);
+            ven.derecha_celda(t_compras, 0);
+            ven.centrar_celda(t_compras, 2);
+            ven.centrar_celda(t_compras, 3);
+            ven.centrar_celda(t_compras, 4);
+            ven.centrar_celda(t_compras, 5);
+            ven.centrar_celda(t_compras, 6);
+            ven.centrar_celda(t_compras, 7);
+            ven.derecha_celda(t_compras, 9);
 
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.print(ex);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,6 +152,7 @@ Integer i;
         btn_pagar = new javax.swing.JButton();
 
         setClosable(true);
+        setResizable(true);
         setTitle("Ver Compras de Servicios");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
@@ -417,11 +428,83 @@ Integer i;
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-//         pagar.funcion = "servicio";
-//        pagar.glosa = "PAGO DE SERVICIO - " + t_compras.getValueAt(i, 4).toString() + " / " + t_compras.getValueAt(i, 5).toString() + 
-//                " - " + t_compras.getValueAt(i, 6).toString() + " - " + t_compras.getValueAt(i, 7).toString();
-//        ven.llamar_ventana(pagar);
-//        this.dispose();
+//  VER CUOTAS
+        frm_ver_cuota_compra cuota = new frm_ver_cuota_compra();
+        pro.setRuc(t_compras.getValueAt(i, 7).toString());
+        // CARGAR DATOS DE LA FACTURA
+        cuota.txt_ruc.setText(t_compras.getValueAt(i, 7).toString());
+        cuota.txt_raz.setText(t_compras.getValueAt(i, 8).toString());
+        cuota.txt_tipd.setText(t_compras.getValueAt(i, 4).toString());
+        cuota.txt_sndoc.setText(t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString());
+        cuota.txt_fec.setText(ven.fechaformateada(t_compras.getValueAt(i, 2).toString()));
+        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 9).toString()));
+        try {
+            Statement st = con.conexion();
+            String ver_cont = "select contacto, tel_contacto, tel2_contacto from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+            ResultSet rs = con.consulta(st, ver_cont);
+            if (rs.next()) {
+                cuota.txt_cont.setText(rs.getString("contacto"));
+                cuota.txt_tel.setText(rs.getString("tel_contacto") + " - " + rs.getString("tel2_contacto"));
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+
+        //  CARGAR CUOTAS GENERADAS EN COMPRA
+        try {
+
+            cuota.mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            cuota.mostrar.addColumn("Nro Cuota");
+            cuota.mostrar.addColumn("Fecha Pago");
+            cuota.mostrar.addColumn("Fec. Venc.");
+            cuota.mostrar.addColumn("Monto");
+            cuota.mostrar.addColumn("Estado");
+            Statement st = con.conexion();
+            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
+            ResultSet rs = con.consulta(st, ver_cuotas);
+            while (rs.next()) {
+                Object fila[] = new Object[5];
+                fila[0] = rs.getString("idpago");
+                if (rs.getString("fec_pago").equals("7000-01-01")) {
+                    fila[1] = "-";
+                } else {
+                    fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                }
+                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
+                fila[3] = formato.format(rs.getDouble("monto"));
+                if (rs.getString("estado").equals("0")) {
+                    fila[4] = "Pendiente";
+                } else {
+                    fila[4] = "Pagado";
+                }
+                cuota.mostrar.addRow(fila);
+            }
+            cuota.t_cuotas.setModel(cuota.mostrar);
+            ven.centrar_celda(cuota.t_cuotas, 1);
+            ven.centrar_celda(cuota.t_cuotas, 2);
+            ven.derecha_celda(cuota.t_cuotas, 3);
+            ven.centrar_celda(cuota.t_cuotas, 4);
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        cuota.txt_dtot.setText(formato.format(com.getTotal()));
+        cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
+        cuota.txt_pen.setText(formato.format(cuota.pendiente()));
+        cuota.txt_pag.setText(formato.format(cuota.pagado()));
+        cuota.origen = "paga_servicio";
+        ven.llamar_ventana(cuota);
+        this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
 

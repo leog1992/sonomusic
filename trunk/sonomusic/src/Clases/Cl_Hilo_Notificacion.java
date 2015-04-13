@@ -18,6 +18,7 @@ import sonomusic.frm_menu;
 public class Cl_Hilo_Notificacion extends Thread {
 
     Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
     int contar;
 
     @Override
@@ -48,6 +49,7 @@ public class Cl_Hilo_Notificacion extends Thread {
         notificar_guia();
         notificar_oferta();
         notificar_meta();
+        notificar_pago_compra();
     }
 
     private void notificar_prod_fin() {
@@ -135,15 +137,23 @@ public class Cl_Hilo_Notificacion extends Thread {
         Double monto = meta.monto(car.getId());
         if (mi_meta < monto & monto > 0.0) {
             Notification.show("Meta Encontrada", "Ya has alcanzado " + formato.format(mi_meta) + " de " + formato.format(monto) + " ---- FELICITACIONES!!");
+            contar = contar + 1;
         }
     }
     
     private void notificar_pago_compra() {
         try {
             Statement st = con.conexion();
-            String ver_pagos = "";
-            
+            String ver_pagos = "select count(*) as contar from pago_compras where estado ='0' and fec_venc >= '"+ven.getFechaActual()+"'";
+            ResultSet rs = con.consulta(st, ver_pagos);
+            if (rs.next()) { 
+                Notification.show("Pagos Pendiente", "Existe " + rs.getString("contar") + " pagos pendientes por realizar hasta la fecha.");
+                contar = contar + 1;
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

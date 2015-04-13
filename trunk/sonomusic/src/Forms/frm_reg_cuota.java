@@ -95,6 +95,11 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
                 btn_regActionPerformed(evt);
             }
         });
+        btn_reg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_regKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,7 +188,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
             mostrar.addColumn("Monto");
             mostrar.addColumn("Estado");
             Statement st = con.conexion();
-            String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
+            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
             ResultSet rs = con.consulta(st, ver_cuotas);
             while (rs.next()) {
                 Object fila[] = new Object[5];
@@ -199,6 +204,10 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
                 mostrar.addRow(fila);
             }
             cuota.t_cuotas.setModel(mostrar);
+            cuota.t_cuotas.updateUI();
+//            cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
+//            cuota.txt_pen.setText(formato.format(cuota.pendiente()));
+//            cuota.txt_pag.setText(formato.format(cuota.pagado()));
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException e) {
@@ -206,6 +215,12 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
         }
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
+
+    private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            btn_reg.doClick();
+        }
+    }//GEN-LAST:event_btn_regKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

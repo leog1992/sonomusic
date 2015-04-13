@@ -377,6 +377,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
             }
         } else {
             try {
+                System.out.println("pago al banco");
                 Statement st = con.conexion();
                 String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
                         + "'" + frm_menu.cue.getId_cuen() + "')";

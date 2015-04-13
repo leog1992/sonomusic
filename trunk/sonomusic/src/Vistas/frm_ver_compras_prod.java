@@ -13,7 +13,6 @@ import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_compra_prod;
-import Forms.frm_reg_pago_compra;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +20,6 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -86,7 +84,20 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                 Object fila[] = new Object[11];
                 fila[0] = rs.getString("idCompra");
                 fila[1] = rs.getString("fecha_doc");
-                fila[2] = rs.getString("fecha_pago");
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_fec = "select fec_venc from pago_compras where idCompra =  '"+rs.getString("idCompra")+"' and estado = '0' limit 1";
+                    ResultSet rs1 = con.consulta(st1, ver_fec);
+                    if (rs1.next()) {
+                        fila[2] = rs1.getString("fec_venc");
+                    } else {
+                        fila[2] = rs.getString("fecha_pago");
+                    }
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
                 fila[3] = rs.getString("desc_tipd");
                 fila[4] = rs.getString("serie_doc");
                 fila[5] = rs.getString("nro_doc");
@@ -149,6 +160,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setResizable(true);
         setTitle("Ver Compras de Productos");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
