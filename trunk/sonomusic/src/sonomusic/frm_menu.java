@@ -31,6 +31,7 @@ import Vistas.frm_ver_compras_prod;
 import Vistas.frm_ver_compras_serv;
 import Vistas.frm_ver_cotizacion;
 import Vistas.frm_ver_empleado;
+import Vistas.frm_ver_empresa;
 import Vistas.frm_ver_guias;
 import Vistas.frm_ver_notas;
 import Vistas.frm_ver_pago;
@@ -1538,9 +1539,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        frm_ver_almacen almacen = new frm_ver_almacen();
-        almacen.ventana="compra_empresa";
-        ven.llamar_ventana(almacen);        
+        frm_ver_empresa empresa = new frm_ver_empresa();
+        empresa.ventana="compra_empresa";
+        ven.llamar_ventana(empresa);        
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
