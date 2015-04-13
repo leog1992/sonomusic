@@ -26,7 +26,7 @@ public class Sonomusic {
         try {
             SERVER_SOCKET = new ServerSocket(1334);
             //JFrame.setDefaultLookAndFeelDecorated(true);
-            SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.RavenGraphiteGlassSkin");
+            //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.RavenGraphiteGlassSkin");
             SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
             //SubstanceLookAndFeel.setCurrentWatermark(new SubstanceImageWatermark("logo.png"));
             loader.setVisible(true);
