@@ -25,74 +25,72 @@ import javax.swing.table.DefaultTableModel;
  * @author luis-d
  */
 public class frm_ver_proveedores extends javax.swing.JInternalFrame {
-Cl_Conectar con = new Cl_Conectar();
-Cl_Varios ven = new Cl_Varios();
-Cl_Proveedor pro = new Cl_Proveedor();
-DefaultTableModel mostrar;
-public static String funcion = "proveedor";
-int i;
+
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
+    Cl_Proveedor pro = new Cl_Proveedor();
+    DefaultTableModel mostrar;
+    public static String funcion = "proveedor";
+    int i;
+
     /**
      * Creates new form frm_ver_proveedores
      */
     public frm_ver_proveedores() {
         initComponents();
         txt_bus.requestFocus();
-        
+
         String query = "select * from proveedor order by raz_soc_pro asc";
         ver_proveedor(query);
     }
 
-    
-    private void ver_proveedor (String query){
-      try {
-        mostrar = new DefaultTableModel()
- {@Override
-     public boolean isCellEditable (int fila, int columna) {
-         return false;
-     }
- };
-        Statement st= con.conexion();
-        ResultSet rs = con.consulta(st, query);
-        
+    private void ver_proveedor(String query) {
+        try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+
         //La cantidad de columnas que tiene la consulta
-       
-        //Establecer como cabezeras el nombre de las colimnas
-        mostrar.addColumn("RUC");
-        mostrar.addColumn("Razon Social");
-        mostrar.addColumn("Telefono");
-        mostrar.addColumn("Contacto");
-        mostrar.addColumn("Estado");
-        
-        //Creando las filas para el JTable
-        while (rs.next()) {
-            Object[] fila = new Object[5];
-            fila[0]=rs.getObject("ruc_pro");
-            fila[1]=rs.getObject("raz_soc_pro");
-            fila[2]=rs.getObject("tel_pro");
-            fila[3]=rs.getObject("contacto");
-            if (rs.getString("estado").equals("1")) {
-                fila[4] = "ACTIVO";
-            } else {
-                fila[4] = "-";
+            //Establecer como cabezeras el nombre de las colimnas
+            mostrar.addColumn("RUC");
+            mostrar.addColumn("Razon Social");
+            mostrar.addColumn("Telefono");
+            mostrar.addColumn("Contacto");
+            mostrar.addColumn("Estado");
+
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[5];
+                fila[0] = rs.getObject("ruc_pro");
+                fila[1] = rs.getObject("raz_soc_pro");
+                fila[2] = rs.getObject("tel_pro");
+                fila[3] = rs.getObject("contacto");
+                if (rs.getString("estado").equals("1")) {
+                    fila[4] = "ACTIVO";
+                } else {
+                    fila[4] = "-";
+                }
+                mostrar.addRow(fila);
             }
-            mostrar.addRow(fila);
+            con.cerrar(st);
+            con.cerrar(rs);
+            t_proveedor.setModel(mostrar);
+            t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(80);
+            t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(300);
+            t_proveedor.getColumnModel().getColumn(2).setPreferredWidth(150);
+            t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(60);
+            mostrar.fireTableDataChanged();
+        } catch (SQLException e) {
+            System.out.print(e);
         }
-        con.cerrar(st);
-        con.cerrar(rs);
-        t_proveedor.setModel(mostrar);
-        t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(80);
-        t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(300);
-        t_proveedor.getColumnModel().getColumn(2).setPreferredWidth(150);
-        t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(60);
-        mostrar.fireTableDataChanged();
+
     }
-    catch (SQLException e) {
-        System.out.print(e);
-    }
-              
-    }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,6 +143,9 @@ int i;
             }
         ));
         t_proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_proveedorMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_proveedorMousePressed(evt);
             }
@@ -225,19 +226,19 @@ int i;
 
     private void t_proveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_proveedorKeyPressed
         int i = t_proveedor.getSelectedRow();
-        
-        if (evt.getKeyCode()==KeyEvent.VK_ESCAPE) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txt_bus.setText("");
             txt_bus.requestFocus();
         }
-        
-        if (evt.getKeyCode()==KeyEvent.VK_SPACE) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             if (funcion.equals("compra_prod")) {
                 frm_reg_compra_prod compra_pro = null;
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 try {
                     Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
                     ResultSet rs = con.consulta(st, ver_pro);
                     if (rs.next()) {
                         compra_pro.txt_ruc.setText(pro.getRuc());
@@ -252,13 +253,13 @@ int i;
                     System.out.print(ex);
                 }
             }
-            
-                if (funcion.equals("compra_serv")) {
+
+            if (funcion.equals("compra_serv")) {
                 frm_reg_compra_serv compra_serv = null;
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 try {
                     Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
                     ResultSet rs = con.consulta(st, ver_pro);
                     if (rs.next()) {
                         compra_serv.txt_ruc.setText(pro.getRuc());
@@ -273,26 +274,26 @@ int i;
                 } catch (SQLException ex) {
                     System.out.print(ex);
                 }
-                
-            } 
-                if (funcion.equals("compras_prov")) {
-                   pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                   Map<String, Object> parametros = new HashMap<>();
-                   parametros.put("proveedor", pro.getRuc());
-                   ven.ver_reporte("rpt_compras_proveedor", parametros);
-                   this.dispose();
-                }
-                funcion = "proveedor";
+
+            }
+            if (funcion.equals("compras_prov")) {
+                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("proveedor", pro.getRuc());
+                ven.ver_reporte("rpt_compras_proveedor", parametros);
+                this.dispose();
+            }
+            funcion = "proveedor";
         }
-        
+
     }//GEN-LAST:event_t_proveedorKeyPressed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-        String bus = txt_bus.getText();
-        String query = "select * from proveedor where ruc_pro like '%"+bus+"%' or "
-                + "raz_soc_pro like '%"+bus+"%' order by raz_soc_pro asc";
-        ver_proveedor(query);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String bus = txt_bus.getText();
+            String query = "select * from proveedor where ruc_pro like '%" + bus + "%' or "
+                    + "raz_soc_pro like '%" + bus + "%' order by raz_soc_pro asc";
+            ver_proveedor(query);
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -307,9 +308,9 @@ int i;
             frm_reg_proveedor prove = new frm_reg_proveedor();
             pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
             Statement st = con.conexion();
-            String ver_prov = "select * from proveedor where ruc_pro = '"+pro.getRuc()+"'";
+            String ver_prov = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
             ResultSet rs = con.consulta(st, ver_prov);
-            if (rs.next()){
+            if (rs.next()) {
                 prove.txt_ruc.setText(pro.getRuc());
                 prove.txt_raz.setText(rs.getString("raz_soc_pro"));
                 prove.txt_contacto.setText(rs.getString("contacto"));
@@ -337,8 +338,69 @@ int i;
             this.dispose();
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
-        }    
+        }
     }//GEN-LAST:event_btn_modActionPerformed
+
+    private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked
+        int i = t_proveedor.getSelectedRow();
+
+        if (evt.getClickCount() == 2) {
+            txt_bus.setText("");
+            txt_bus.requestFocus();
+
+            if (funcion.equals("compra_prod")) {
+                frm_reg_compra_prod compra_pro = null;
+                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                try {
+                    Statement st = con.conexion();
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+                    ResultSet rs = con.consulta(st, ver_pro);
+                    if (rs.next()) {
+                        compra_pro.txt_ruc.setText(pro.getRuc());
+                        compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
+                        compra_pro.txt_dir.setText(rs.getString("dir_pro"));
+                        compra_pro.txt_tel.setText(rs.getString("tel_pro"));
+                        compra_pro.cbx_alm.setEnabled(true);
+                        compra_pro.cbx_alm.requestFocus();
+                        this.dispose();
+                    }
+                } catch (SQLException ex) {
+                    System.out.print(ex);
+                }
+            }
+
+            if (funcion.equals("compra_serv")) {
+                frm_reg_compra_serv compra_serv = null;
+                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                try {
+                    Statement st = con.conexion();
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+                    ResultSet rs = con.consulta(st, ver_pro);
+                    if (rs.next()) {
+                        compra_serv.txt_ruc.setText(pro.getRuc());
+                        compra_serv.txt_raz.setText(rs.getString("raz_soc_pro"));
+                        compra_serv.txt_dir.setText(rs.getString("dir_pro"));
+                        compra_serv.txt_tel.setText(rs.getString("tel_pro"));
+                        compra_serv.cbx_tipa.setSelectedIndex(0);
+                        compra_serv.cbx_tipa.setEnabled(true);
+                        compra_serv.cbx_tipa.requestFocus();
+                        this.dispose();
+                    }
+                } catch (SQLException ex) {
+                    System.out.print(ex);
+                }
+
+            }
+            if (funcion.equals("compras_prov")) {
+                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("proveedor", pro.getRuc());
+                ven.ver_reporte("rpt_compras_proveedor", parametros);
+                this.dispose();
+            }
+            funcion = "proveedor";
+        }
+    }//GEN-LAST:event_t_proveedorMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

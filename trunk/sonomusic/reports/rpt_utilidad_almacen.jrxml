@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.6500000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="idalm" class="java.lang.String">
+	<parameter name="ruc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -28,7 +28,7 @@ FROM
      INNER JOIN `productos` productos ON producto_almacen.`idProductos` = productos.`idProductos`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
 WHERE
-     almacen.`idAlmacen` = $P{idalm}
+     almacen.`ruc` = $P{ruc}
 ORDER BY
      productos.`desc_pro` ASC,
      productos.`modelo` ASC]]>
@@ -92,7 +92,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="20" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Utilidades por Almacen]]></text>
+				<text><![CDATA[Utilidades por Empresa]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="455" y="53" width="100" height="20" uuid="5d601eb2-e045-45f6-8ea0-a529513b1c34"/>
@@ -175,7 +175,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[$F{nom_alm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="326" y="128" width="229" height="20" uuid="c98c6610-a9f1-4f60-ad5d-ef5e24a84aa9"/>
+				<reportElement x="326" y="128" width="229" height="20" uuid="65b446bf-6991-4b25-8c82-cfeb410b79dc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>

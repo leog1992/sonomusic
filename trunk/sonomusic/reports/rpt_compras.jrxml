@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_compras" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f85c6f5-b95e-46d0-9db1-9f7091a4dc30">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="778"/>
+	<property name="ireport.x" value="771"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha_doc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha_pago" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ruc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -29,12 +32,16 @@
      tipo_doc.`desc_tipd` AS tipo_doc_desc_tipd,
      tipo_pago.`desc` AS tipo_pago_desc,
      almacen.`idAlmacen` AS almacen_idAlmacen,
-     almacen.`nom_alm` AS almacen_nom_alm
+     almacen.`nom_alm` AS almacen_nom_alm,
+     almacen.`ruc` AS almacen_ruc,
+     almacen.`raz_soc` AS almacen_raz_soc
 FROM
      `proveedor` proveedor INNER JOIN `compra` compra ON proveedor.`ruc_pro` = compra.`ruc_pro`
      INNER JOIN `tipo_doc` tipo_doc ON compra.`idtipo_doc` = tipo_doc.`idtipo_doc`
      INNER JOIN `tipo_pago` tipo_pago ON compra.`idTipo_pago` = tipo_pago.`idTipo_pago`
-     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen` where compra.`fecha_doc` between $P{fecha_doc} and $P{fecha_pago}]]>
+     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen`
+WHERE
+     almacen.`ruc`=$P{ruc} and compra.`fecha_doc` BETWEEN $P{fecha_doc} and $P{fecha_pago}]]>
 	</queryString>
 	<field name="compra_idCompra" class="java.lang.Integer"/>
 	<field name="compra_ruc_pro" class="java.lang.String"/>
@@ -55,6 +62,8 @@ FROM
 	<field name="tipo_pago_desc" class="java.lang.String"/>
 	<field name="almacen_idAlmacen" class="java.lang.Integer"/>
 	<field name="almacen_nom_alm" class="java.lang.String"/>
+	<field name="almacen_ruc" class="java.lang.String"/>
+	<field name="almacen_raz_soc" class="java.lang.String"/>
 	<variable name="subtotal" class="java.lang.Double">
 		<variableExpression><![CDATA[($F{compra_total} / 1.18)]]></variableExpression>
 	</variable>
@@ -128,6 +137,26 @@ FROM
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fecha_pago}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="764" y="102" width="25" height="12" uuid="72cfe2a7-0f7c-45ff-abed-5296985e3cd2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Ruc:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="789" y="102" width="100" height="12" uuid="0378117b-e121-4241-97e9-18194776e6a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacen_ruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="889" y="102" width="50" height="12" uuid="6b69037a-f197-453c-be8e-fd400d402784"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="939" y="102" width="211" height="12" uuid="b92d85fa-edf4-4f34-a48f-8aab8c7cecd2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacen_raz_soc}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

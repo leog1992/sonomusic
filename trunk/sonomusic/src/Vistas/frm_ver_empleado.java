@@ -143,6 +143,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         ));
         t_empleado.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         t_empleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_empleadoMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_empleadoMousePressed(evt);
             }
@@ -387,7 +390,11 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_tipoActionPerformed
 
     private void t_empleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_empleadoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+       
+    }//GEN-LAST:event_t_empleadoKeyPressed
+
+    private void t_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMouseClicked
+        if (evt.getClickCount()==2) {
             if (ventana.equals("movimiento")) {
                 frm_movimientos movi = null;
                 emp.setDni((int) t_empleado.getValueAt(i, 0));
@@ -493,7 +500,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }//GEN-LAST:event_t_empleadoKeyPressed
+    }//GEN-LAST:event_t_empleadoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -122,6 +122,9 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
             }
         ));
         t_usuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_usuariosMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_usuariosMousePressed(evt);
             }
@@ -236,25 +239,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1KeyPressed
 
     private void t_usuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_usuariosKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (rpt.equals("venta_vendedor")) {
-                id = t_usuarios.getValueAt(i, 0).toString();
-                frm_rpt_fechas fec = new frm_rpt_fechas();
-                fec.usu.setNick(id);
-                fec.rpt = "venta_vendedor";
-                ven.llamar_ventana(fec);
-                this.dispose();
-            }
-            
-            if (rpt.equals("ganancia_vendedor")) {
-                id = t_usuarios.getValueAt(i, 0).toString();
-                frm_rpt_fechas fec = new frm_rpt_fechas();
-                fec.usu.setNick(id);
-                fec.rpt = "ganancia_vendedor";
-                ven.llamar_ventana(fec);
-                this.dispose();
-            }
-        }
+       
     }//GEN-LAST:event_t_usuariosKeyPressed
 
     private void t_usuariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuariosMousePressed
@@ -401,6 +386,28 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
 
     }//GEN-LAST:event_jScrollPane1MousePressed
+
+    private void t_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuariosMouseClicked
+        if (evt.getClickCount()==2) {
+            if (rpt.equals("venta_vendedor")) {
+                id = t_usuarios.getValueAt(i, 0).toString();
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.usu.setNick(id);
+                fec.rpt = "venta_vendedor";
+                ven.llamar_ventana(fec);
+                this.dispose();
+            }
+            
+            if (rpt.equals("ganancia_vendedor")) {
+                id = t_usuarios.getValueAt(i, 0).toString();
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.usu.setNick(id);
+                fec.rpt = "ganancia_vendedor";
+                ven.llamar_ventana(fec);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_t_usuariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

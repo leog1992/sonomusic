@@ -80,6 +80,9 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         t_productos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         t_productos.setRowHeight(20);
         t_productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_productosMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_productosMousePressed(evt);
             }
@@ -192,12 +195,62 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        
+    }//GEN-LAST:event_t_productosKeyPressed
+
+    private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
+        funcion = "material_almacen";
+        this.dispose();
+    }//GEN-LAST:event_btn_cerActionPerformed
+
+    private void btn_karActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_karActionPerformed
+        frm_rpt_fechas rpt = new frm_rpt_fechas();
+        rpt.rpt = "kardex";
+        rpt.pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
+        rpt.alm.setId(Integer.parseInt(txt_ida.getText()));
+        ven.llamar_ventana(rpt);
+    }//GEN-LAST:event_btn_karActionPerformed
+
+    private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
+        i = t_productos.getSelectedRow();
+        btn_kar.setEnabled(true);
+    }//GEN-LAST:event_t_productosMousePressed
+
+    private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
+        if (cbx_bus.getSelectedIndex() == 0) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+        }
+        //falta demas oopciones del combo
+    }//GEN-LAST:event_cbx_busKeyPressed
+
+    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
+        String texto = txt_bus.getText();
+        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
+        pro.mostrar_productos(query);
+
+    }//GEN-LAST:event_txt_busKeyTyped
+
+    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txt_bus.getText().trim().isEmpty()) {
+                t_productos.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_busKeyPressed
+
+    private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
+        if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-        }
 
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             i = t_productos.getSelectedRow();
             if (funcion.equals("solicitar")) {
                 Object fila[] = new Object[5];
@@ -289,14 +342,14 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 fila[4] = t_productos.getValueAt(i, 4);                                         // UND MED
 
                 frm_reg_traslado_almacen traslado = null;
-                int prod=(int) t_productos.getValueAt(i, 0);
+                int prod = (int) t_productos.getValueAt(i, 0);
                 Integer filas_tabla = frm_reg_traslado_almacen.t_detalle.getRowCount();
                 Integer copiado = 0;
                 if (filas_tabla > 0) {
                     for (int x = 0; x < filas_tabla; x++) {
                         Integer id_pro_tabla;
                         id_pro_tabla = Integer.parseInt(traslado.t_detalle.getValueAt(x, 0).toString());
-                        if (id_pro_tabla==prod) {
+                        if (id_pro_tabla == prod) {
                             copiado++;
                         }
                     }
@@ -318,55 +371,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }//GEN-LAST:event_t_productosKeyPressed
-
-    private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
-        funcion = "material_almacen";
-        this.dispose();
-    }//GEN-LAST:event_btn_cerActionPerformed
-
-    private void btn_karActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_karActionPerformed
-        frm_rpt_fechas rpt = new frm_rpt_fechas();
-        rpt.rpt = "kardex";
-        rpt.pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
-        rpt.alm.setId(Integer.parseInt(txt_ida.getText()));
-        ven.llamar_ventana(rpt);
-    }//GEN-LAST:event_btn_karActionPerformed
-
-    private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
-        i = t_productos.getSelectedRow();
-        btn_kar.setEnabled(true);
-    }//GEN-LAST:event_t_productosMousePressed
-
-    private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
-        if (cbx_bus.getSelectedIndex() == 0) {
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
-            pro.mostrar_productos(query);
-        } 
-        //falta demas oopciones del combo
-    }//GEN-LAST:event_cbx_busKeyPressed
-
-    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-        String texto = txt_bus.getText();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
-        pro.mostrar_productos(query);          
-        
-    }//GEN-LAST:event_txt_busKeyTyped
-
-    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            if (!txt_bus.getText().trim().isEmpty()) {
-                t_productos.requestFocus();
-            }
-        }
-    }//GEN-LAST:event_txt_busKeyPressed
+    }//GEN-LAST:event_t_productosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -845,7 +845,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem28.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem28.setText("Rpt. Venta Total");
+        jMenuItem28.setText("Rpt. Venta Total x Empresa");
         jMenuItem28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1527,9 +1527,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        frm_ver_almacen rpt_alm = new frm_ver_almacen(); 
-        rpt_alm.ventana="venta_total";
-        ven.llamar_ventana(rpt_alm);
+        frm_ver_empresa empresa = new frm_ver_empresa(); 
+        empresa.ventana="venta_total";
+        ven.llamar_ventana(empresa);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed

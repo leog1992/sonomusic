@@ -41,7 +41,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
      */
     public frm_ver_cliente() {
         initComponents();
-        
+
         String query = "select nro_doc, nom_per, tel_per,tel2_per, est_per from cliente order by nom_per asc";
         ver_cliente(query);
     }
@@ -157,6 +157,9 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
             }
         ));
         t_clientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_clientesMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_clientesMousePressed(evt);
             }
@@ -349,56 +352,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_eliActionPerformed
 
     private void t_clientesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_clientesKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (ventana.equals("cotizacion")) {
-                frm_reg_cotizacion coti = null;
-                cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        coti.txt_doc.setText(cli.getNro_doc() + "");
-                        coti.txt_nom.setText(rs.getString("nom_per"));
-                        coti.txt_tel.setText(rs.getString("tel_per") + " - " + rs.getString("tel2_per"));
-                        coti.btn_add.setEnabled(true);
-                        coti.btn_add.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
-            //clientes
-            if (ventana.equals("reg_venta")) {
-                frm_reg_venta venta = null;
-                cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select nro_doc, nom_per from cliente where nro_doc = '" + cli.getNro_doc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        //venta.txt_nrod.setText(cli.getNro_doc() + "");
-                        //venta.txt_nomc.setText(rs.getString("nom_per"));                        
-                        frm_reg_venta.cbx_tipd.setEnabled(true);
-                        frm_reg_venta.cbx_tipd.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
-            //ENVIAR ID PARA REPORTE
-            if (rpt.equals("rpt_cliente")) {
-                cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("cliente",cli.getNro_doc());
-                ven.ver_reporte("rpt_ventas_cliente", parametros);
-                this.dispose();
-            }
-            ventana = "cliente";
-            
-        }
+        
     }//GEN-LAST:event_t_clientesKeyPressed
 
     private void btn_historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_historialActionPerformed
@@ -420,7 +374,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
             String ver_historia = "select p.fec_ped, td.desc_tipd, p.serie_doc, p.nro_doc, dp.idProductos, pr.desc_pro, "
                     + "pr.modelo, pr.serie, pr.marca, dp.precio, dp.cantidad from pedido as p inner join detalle_pedido as "
                     + "dp on p.idPedido=dp.idPedido inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join productos"
-                    + " as pr on dp.idProductos = pr.idProductos where p.nro_doc = '"+cli.getNro_doc()+"' order by p.fec_ped desc, dp.idProductos asc";
+                    + " as pr on dp.idProductos = pr.idProductos where p.nro_doc = '" + cli.getNro_doc() + "' order by p.fec_ped desc, dp.idProductos asc";
             ResultSet rs = con.consulta(st, ver_historia);
             while (rs.next()) {
                 Object[] fila = new Object[8];
@@ -459,6 +413,56 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
         }
     }//GEN-LAST:event_btn_historialActionPerformed
+
+    private void t_clientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_clientesMouseClicked
+        if (ventana.equals("cotizacion")) {
+            frm_reg_cotizacion coti = null;
+            cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
+            try {
+                Statement st = con.conexion();
+                String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
+                ResultSet rs = con.consulta(st, ver_pro);
+                if (rs.next()) {
+                    coti.txt_doc.setText(cli.getNro_doc() + "");
+                    coti.txt_nom.setText(rs.getString("nom_per"));
+                    coti.txt_tel.setText(rs.getString("tel_per") + " - " + rs.getString("tel2_per"));
+                    coti.btn_add.setEnabled(true);
+                    coti.btn_add.requestFocus();
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+        }
+        //clientes
+        if (ventana.equals("reg_venta")) {
+            frm_reg_venta venta = null;
+            cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
+            try {
+                Statement st = con.conexion();
+                String ver_pro = "select nro_doc, nom_per from cliente where nro_doc = '" + cli.getNro_doc() + "'";
+                ResultSet rs = con.consulta(st, ver_pro);
+                if (rs.next()) {
+                        //venta.txt_nrod.setText(cli.getNro_doc() + "");
+                    //venta.txt_nomc.setText(rs.getString("nom_per"));                        
+                    frm_reg_venta.cbx_tipd.setEnabled(true);
+                    frm_reg_venta.cbx_tipd.requestFocus();
+                    this.dispose();
+                }
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+        }
+        //ENVIAR ID PARA REPORTE
+        if (rpt.equals("rpt_cliente")) {
+            cli.setNro_doc(t_clientes.getValueAt(i, 0).toString());
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("cliente", cli.getNro_doc());
+            ven.ver_reporte("rpt_ventas_cliente", parametros);
+            this.dispose();
+        }
+        ventana = "cliente";
+    }//GEN-LAST:event_t_clientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
