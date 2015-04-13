@@ -132,6 +132,16 @@ public class frm_ver_empresa extends javax.swing.JInternalFrame {
                 ventana="";
                 this.dispose();
             }
+             //GANACIA POR EMPRESA
+             if (ventana.equals("rpt_ganancia_almacen")) {
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.rpt="rpt_ganancia_almacen";
+                String id=t_empresa.getValueAt(i, 1).toString();
+                fec.alm.setRuc(id);
+                ven.llamar_ventana(fec);
+                ventana="";
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_t_empresaKeyPressed
 

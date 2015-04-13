@@ -257,6 +257,15 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_compras", parametros);
                 
             }
+            //REPORTE GANANCIA EMPRESA
+            if (rpt.equals("rpt_ganancia_almacen")) {
+                Map<String,Object> parametros = new HashMap<>();
+                parametros.put("fecha_doc", fec_ini);
+                parametros.put("fecha_pago", fec_fin);
+                parametros.put("ruc", frm_menu.alm.getRuc());
+                ven.ver_reporte("rpt_compras", parametros);
+                
+            }
             this.dispose();
         }
     }//GEN-LAST:event_txt_fec_finKeyPressed

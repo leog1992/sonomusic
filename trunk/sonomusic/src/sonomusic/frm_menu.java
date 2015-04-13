@@ -1105,7 +1105,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem40.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem40.setText("Rpt. Ganacia en Almacen");
+        jMenuItem40.setText("Rpt. Ganacia x Empresa");
         jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem40ActionPerformed(evt);
@@ -1596,9 +1596,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem39ActionPerformed
 
     private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
-        frm_ver_almacen almacen = new frm_ver_almacen();
-        almacen.ventana = "rpt_ganancia_almacen";
-        ven.llamar_ventana(almacen);
+        frm_ver_empresa empresa = new frm_ver_empresa();
+        empresa.ventana = "rpt_ganancia_almacen";
+        ven.llamar_ventana(empresa);
     }//GEN-LAST:event_jMenuItem40ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
