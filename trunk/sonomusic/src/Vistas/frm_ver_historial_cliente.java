@@ -82,6 +82,11 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_historial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                t_historialMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_historial);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -202,8 +207,12 @@ public class frm_ver_historial_cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
-        i=t_historial.getSelectedRow();
+        
     }//GEN-LAST:event_jScrollPane1MousePressed
+
+    private void t_historialMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_historialMousePressed
+        i=t_historial.getSelectedRow();
+    }//GEN-LAST:event_t_historialMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

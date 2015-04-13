@@ -162,6 +162,9 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         ));
         t_almacen.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_almacen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_almacenMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_almacenMousePressed(evt);
             }
@@ -292,7 +295,12 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_verActionPerformed
 
     private void t_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_almacenKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+
+    }//GEN-LAST:event_t_almacenKeyPressed
+
+    private void t_almacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_almacenMouseClicked
+        if (evt.getClickCount() == 2) {
+
             if (ventana.equals("rpt_venta_alm")) {
                 frm_rpt_fechas fec = new frm_rpt_fechas();
                 fec.rpt = "venta_almacen";
@@ -311,18 +319,16 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 this.dispose();
             }
             // GANANCIA EN ALMACEN
-            if (ventana.equals("rpt_ganancia_almacen")){
+            if (ventana.equals("rpt_ganancia_almacen")) {
                 int id = (int) t_almacen.getValueAt(i, 0);
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("idalm", id);
                 ven.ver_reporte("rpt_utilidad_almacen", parametros);
                 this.dispose();
             }
-           
-            //COMPRA
-            
         }
-    }//GEN-LAST:event_t_almacenKeyPressed
+
+    }//GEN-LAST:event_t_almacenMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

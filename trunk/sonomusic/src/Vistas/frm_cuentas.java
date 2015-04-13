@@ -240,6 +240,9 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
         ));
         t_cuentas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         t_cuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_cuentasMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_cuentasMousePressed(evt);
             }
@@ -524,7 +527,11 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_montoKeyTyped
 
     private void t_cuentasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_cuentasKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_SPACE) {
+        
+    }//GEN-LAST:event_t_cuentasKeyPressed
+
+    private void t_cuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_cuentasMouseClicked
+        if (evt.getClickCount()==2) {
             if (funcion.equals("almacen")){
                 String banco = t_cuentas.getValueAt(i, 3).toString();
                 String cuenta = t_cuentas.getValueAt(i, 2).toString();
@@ -535,7 +542,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
                 this.dispose();
             }
         }
-    }//GEN-LAST:event_t_cuentasKeyPressed
+    }//GEN-LAST:event_t_cuentasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
