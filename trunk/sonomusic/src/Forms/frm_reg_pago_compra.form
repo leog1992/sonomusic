@@ -42,17 +42,15 @@
                               <Component id="txt_raz" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="txt_fec" min="-2" pref="79" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txt_fec" min="-2" pref="85" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txt_tido" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_ser" min="-2" pref="47" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_nro" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="txt_ser" min="-2" pref="133" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -121,7 +119,6 @@
                   <Component id="txt_tido" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_ser" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_nro" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_fec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -344,16 +341,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_ser">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="focusable" type="boolean" value="false"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_nro">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="0"/>

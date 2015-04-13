@@ -6,8 +6,15 @@
 package Vistas;
 
 import Clases.Cl_Compra;
+import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import Forms.frm_reg_cuota;
+import Forms.frm_reg_pago_compra;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,23 +22,53 @@ import javax.swing.table.DefaultTableModel;
  * @author Dereck
  */
 public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
-    
+
     Cl_Varios ven = new Cl_Varios();
+    Cl_Conectar con = new Cl_Conectar();
     public Cl_Compra com = new Cl_Compra();
     public DefaultTableModel mostrar;
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
+    public static String origen;
+    int i;
+
     /**
      * Creates new form frm_ver_cuota_compra
      */
     public frm_ver_cuota_compra() {
         initComponents();
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
     }
-    
-    public double pendiente () {
-        return 0;
+
+    public double tot_cuotas () {
+        double total = 0;
+        int filas = t_cuotas.getRowCount();
+        for (int j = 0; j < filas; j++) {
+            total += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
+        }
+        return total;
     }
-    
-    public double pagado () {
-        return 0;
+    public double pendiente() {
+        double pendiente = 0;
+        int filas = t_cuotas.getRowCount();
+        for (int j = 0; j < filas; j++) {
+            if (t_cuotas.getValueAt(j, 4).equals("Pendiente")){
+                pendiente += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
+            }
+        }
+        return pendiente;
+    }
+
+    public double pagado() {
+        double pagado = 0;
+        int filas = t_cuotas.getRowCount();
+        for (int j = 0; j < filas; j++) {
+            if (t_cuotas.getValueAt(j, 4).equals("Pagado")){
+                pagado += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
+            }
+        }
+        return pagado;
     }
 
     /**
@@ -63,7 +100,9 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         btn_elic = new javax.swing.JButton();
         btn_verd = new javax.swing.JButton();
         btn_cer = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_regp = new javax.swing.JButton();
+        txt_dtot = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txt_tot = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -205,6 +244,11 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
                 "Nro. Cuota", "Fec. Pago", "Fec. Venc.", "Monto", "Estado"
             }
         ));
+        t_cuotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                t_cuotasMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_cuotas);
 
         btn_elic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
@@ -223,9 +267,21 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/coins.png"))); // NOI18N
-        jButton1.setText("Registrar Pago");
-        jButton1.setEnabled(false);
+        btn_regp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/coins.png"))); // NOI18N
+        btn_regp.setText("Registrar Pago");
+        btn_regp.setEnabled(false);
+        btn_regp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regpActionPerformed(evt);
+            }
+        });
+
+        txt_dtot.setEditable(false);
+        txt_dtot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Deuda Total");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -235,7 +291,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btn_regp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_addc))
                     .addComponent(jScrollPane1)
@@ -243,7 +299,11 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
                         .addComponent(btn_elic)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_verd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_dtot, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_cer)))
                 .addContainerGap())
         );
@@ -252,31 +312,38 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_addc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_regp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_elic, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_verd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_dtot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_elic, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_verd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         jLabel5.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel5.setText("Monto Total:");
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Total Cuotas:");
 
         txt_tot.setEditable(false);
         txt_tot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Monto Pagado:");
 
         txt_pag.setEditable(false);
         txt_pag.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel7.setText("Pendiente:");
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("Monto Pendiente:");
 
         txt_pen.setEditable(false);
         txt_pen.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -299,8 +366,8 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_pen, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -335,16 +402,73 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_addcActionPerformed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
+        if (origen.equals("paga_producto")) {
+            frm_ver_compras_prod producto = new frm_ver_compras_prod();
+            ven.llamar_ventana(producto);
+        }
         this.dispose();
     }//GEN-LAST:event_btn_cerActionPerformed
+
+    private void t_cuotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_cuotasMousePressed
+        i = t_cuotas.getSelectedRow();
+        String estado = t_cuotas.getValueAt(i, 4).toString();
+        if (estado.equals("Pendiente")) {
+            btn_regp.setEnabled(true);
+            btn_elic.setEnabled(true);
+            btn_verd.setEnabled(true);
+        } else {
+            btn_regp.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_t_cuotasMousePressed
+
+    private void btn_regpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regpActionPerformed
+        frm_reg_pago_compra pagar = new frm_reg_pago_compra();
+        pagar.txt_ruc.setText(txt_ruc.getText());
+        pagar.txt_raz.setText(txt_raz.getText());
+        pagar.txt_tido.setText(txt_tipd.getText());
+        pagar.txt_ser.setText(txt_sndoc.getText());
+        pagar.txt_deu.setText(txt_tot.getText());
+        pagar.idpago = t_cuotas.getValueAt(i, 0).toString();
+
+        Double actual = 0.0;
+        Double pagado = 0.0;
+        actual = Double.parseDouble(txt_tot.getText());
+        try {
+            Statement st = con.conexion();
+            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + com.getId() + "'";
+            ResultSet rs = con.consulta(st, ver_pagos);
+            if (rs.next()) {
+                pagado = rs.getDouble("pagos");
+                pagar.pagado = rs.getDouble("pagos");
+                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
+            } else {
+                pagar.txt_pag.setText("0.00");
+            }
+        } catch (SQLException es) {
+            System.out.print(es);
+        }
+        Double restante = 0.0;
+        restante = actual - pagado;
+        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+        pagar.txt_sal.setText(formato.format(restante));
+        pagar.restante = restante;
+        pagar.com.setId(com.getId());
+        if (origen.equals("paga_producto")) {
+            pagar.funcion = "productos";
+        }
+        pagar.glosa = "PAGO DE COMPRA - " + txt_tipd.getText() + " / " + txt_sndoc.getText() + " - " + txt_ruc.getText();
+        ven.llamar_ventana(pagar);
+        this.dispose();
+    }//GEN-LAST:event_btn_regpActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addc;
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_elic;
+    private javax.swing.JButton btn_regp;
     private javax.swing.JButton btn_verd;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -352,12 +476,14 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable t_cuotas;
     public static javax.swing.JTextField txt_cont;
+    public static javax.swing.JTextField txt_dtot;
     public static javax.swing.JFormattedTextField txt_fec;
     public static javax.swing.JTextField txt_pag;
     public static javax.swing.JTextField txt_pen;

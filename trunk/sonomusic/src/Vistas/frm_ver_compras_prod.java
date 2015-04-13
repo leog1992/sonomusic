@@ -41,8 +41,8 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Productos art = new Cl_Productos();
     DefaultTableModel mostrar;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
     Integer i;
     String valor;
 
@@ -51,7 +51,8 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
      */
     public frm_ver_compras_prod() {
         initComponents();
-
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
         String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
                 + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' order by c.fecha_doc desc, c.idCompra desc";
@@ -526,9 +527,13 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 Object fila[] = new Object[5];
                 fila[0] = rs.getString("idpago");
-                fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                if (rs.getString("fec_pago").equals("7000-01-01")){
+                    fila[1] = "-";
+                } else {
+                    fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                }
                 fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
-                fila[3] = rs.getDouble("monto");
+                fila[3] = formato.format(rs.getDouble("monto"));
                 if (rs.getString("estado").equals("0")) {
                     fila[4] = "Pendiente";
                 } else {
@@ -537,55 +542,23 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                 cuota.mostrar.addRow(fila);
             }
             cuota.t_cuotas.setModel(cuota.mostrar);
-            ven.centrar_celda(t_compras, 1);
-            ven.centrar_celda(t_compras, 2);
-            ven.derecha_celda(t_compras, 3);
-            ven.centrar_celda(t_compras, 4);
+            ven.centrar_celda(cuota.t_cuotas, 1);
+            ven.centrar_celda(cuota.t_cuotas, 2);
+            ven.derecha_celda(cuota.t_cuotas, 3);
+            ven.centrar_celda(cuota.t_cuotas, 4);
             con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {
             System.out.println(e);
         }
-        cuota.txt_tot.setText(formato.format(com.getTotal()));
+        cuota.txt_dtot.setText(formato.format(com.getTotal()));
+        cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
+        cuota.txt_pen.setText(formato.format(cuota.pendiente()));
+        cuota.txt_pag.setText(formato.format(cuota.pagado()));
+        cuota.origen = "paga_producto";
         ven.llamar_ventana(cuota);
         this.dispose();
 
-//        frm_reg_pago_compra pagar = new frm_reg_pago_compra();
-//        pagar.txt_ruc.setText(t_compras.getValueAt(i, 6).toString());
-//        pagar.txt_raz.setText(t_compras.getValueAt(i, 7).toString());
-//        pagar.txt_tido.setText(t_compras.getValueAt(i, 3).toString());
-//        pagar.txt_ser.setText(t_compras.getValueAt(i, 4).toString());
-//        pagar.txt_nro.setText(t_compras.getValueAt(i, 5).toString());
-//        pagar.txt_deu.setText(t_compras.getValueAt(i, 8).toString());
-//
-//        Double actual = 0.0;
-//        Double pagado = 0.0;
-//        actual = Double.parseDouble(t_compras.getValueAt(i, 8).toString());
-//        try {
-//            Statement st = con.conexion();
-//            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
-//            ResultSet rs = con.consulta(st, ver_pagos);
-//            if (rs.next()) {
-//                pagado = rs.getDouble("pagos");
-//                pagar.pagado = rs.getDouble("pagos");
-//                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
-//            } else {
-//                pagar.txt_pag.setText("0.00");
-//            }
-//        } catch (SQLException es) {
-//            System.out.print(es);
-//        }
-//        Double restante = 0.0;
-//        restante = actual - pagado;
-//        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-//        pagar.txt_sal.setText(formato.format(restante));
-//        pagar.restante = restante;
-//        pagar.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-//        pagar.funcion = "productos";
-//        pagar.glosa = "PAGO DE COMPRA - " + t_compras.getValueAt(i, 3).toString() + " / " + t_compras.getValueAt(i, 4).toString() + 
-//                " - " + t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString();
-//        ven.llamar_ventana(pagar);
-//        this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed

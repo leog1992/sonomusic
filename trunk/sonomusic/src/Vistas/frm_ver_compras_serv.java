@@ -417,42 +417,11 @@ Integer i;
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
- frm_reg_pago_compra pagar = new frm_reg_pago_compra();
-        pagar.txt_ruc.setText(t_compras.getValueAt(i, 7).toString());
-        pagar.txt_raz.setText(t_compras.getValueAt(i, 8).toString());
-        pagar.txt_tido.setText(t_compras.getValueAt(i, 4).toString());
-        pagar.txt_ser.setText(t_compras.getValueAt(i, 5).toString());
-        pagar.txt_nro.setText(t_compras.getValueAt(i, 6).toString());
-        pagar.txt_deu.setText(t_compras.getValueAt(i, 9).toString());
-
-        Double actual = 0.0;
-        Double pagado = 0.0;
-        actual = Double.parseDouble(t_compras.getValueAt(i, 9).toString());
-        try {
-            Statement st = con.conexion();
-            String ver_pagos = "select sum(monto) as pagos from pago_compras where idCompra = '" + t_compras.getValueAt(i, 0).toString() + "'";
-            ResultSet rs = con.consulta(st, ver_pagos);
-            if (rs.next()) {
-                pagado = rs.getDouble("pagos");
-                pagar.pagado = rs.getDouble("pagos");
-                pagar.txt_pag.setText(formato.format(rs.getDouble("pagos")));
-            } else {
-                pagar.txt_pag.setText("0.00");
-            }
-        } catch (SQLException es) {
-            System.out.print(es);
-        }
-        Double restante = 0.0;
-        restante = actual - pagado;
-        pagar.txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-        pagar.txt_sal.setText(formato.format(restante));
-        pagar.restante = restante;
-        pagar.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-        pagar.funcion = "servicio";
-        pagar.glosa = "PAGO DE SERVICIO - " + t_compras.getValueAt(i, 4).toString() + " / " + t_compras.getValueAt(i, 5).toString() + 
-                " - " + t_compras.getValueAt(i, 6).toString() + " - " + t_compras.getValueAt(i, 7).toString();
-        ven.llamar_ventana(pagar);
-        this.dispose();
+//         pagar.funcion = "servicio";
+//        pagar.glosa = "PAGO DE SERVICIO - " + t_compras.getValueAt(i, 4).toString() + " / " + t_compras.getValueAt(i, 5).toString() + 
+//                " - " + t_compras.getValueAt(i, 6).toString() + " - " + t_compras.getValueAt(i, 7).toString();
+//        ven.llamar_ventana(pagar);
+//        this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
 
 

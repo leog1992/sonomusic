@@ -28,6 +28,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     public static Cl_Compra com = new Cl_Compra();
+    public static String idpago;
     public static Double deuda = 0.00;
     public static Double pagado = 0.00;
     public static Double restante = 0.00;
@@ -35,14 +36,16 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     public static String glosa = "";
     Double queda = 0.00;
     Double real = 0.00;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
 
     /**
      * Creates new form frm_pagar_compra
      */
     public frm_reg_pago_compra() {
         initComponents();
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
         txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
         String query = "select * from tipo_pago";
         ver_tipo(query);
@@ -92,7 +95,6 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         txt_tido = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txt_ser = new javax.swing.JTextField();
-        txt_nro = new javax.swing.JTextField();
         btn_add = new javax.swing.JButton();
         btn_clo = new javax.swing.JButton();
         txt_fec = new javax.swing.JFormattedTextField();
@@ -190,10 +192,6 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         txt_ser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_ser.setFocusable(false);
 
-        txt_nro.setEditable(false);
-        txt_nro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_nro.setFocusable(false);
-
         btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/accept.png"))); // NOI18N
         btn_add.setText("Realizar");
         btn_add.setEnabled(false);
@@ -258,17 +256,15 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_raz))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_tido)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -319,7 +315,6 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
                     .addComponent(txt_tido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -353,7 +348,6 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         if (funcion.equals("productos")) {
             frm_ver_compras_prod compras = new frm_ver_compras_prod();
             ven.llamar_ventana(compras);
-
         }
         funcion = "pagar";
         this.dispose();
@@ -362,86 +356,42 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         String fecha = ven.fechabase(txt_fec.getText());
 
-        if (queda <= 0.00) {
+        try {
+            Statement st = con.conexion();
+            String upd_pago = "update pago_compras set fec_pago = '" + fecha + "', monto = '" + real + "', estado = '1' where idpago = '" + idpago + "'";
+            con.actualiza(st, upd_pago);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        if (cbx_tipopago.getSelectedIndex() == 0) {
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + restante + "', '" + com.getId() + "')";
-                con.actualiza(st, ins_pago);
+                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+                        + "'" + frm_menu.caja.getId() + "')";
+                con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
-            try {
-                Statement st = con.conexion();
-                String upd_com = "update Compra set estado = '1', idTipo_pago = '1' where idCompra = '" + com.getId() + "'";
-                con.actualiza(st, upd_com);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-
-            if (cbx_tipopago.getSelectedIndex() == 0) {
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
-                            + "'" + frm_menu.caja.getId() + "')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-            } else {
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + restante + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
-                            + "'"+frm_menu.cue.getId_cuen()+"')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-            }
-
         } else {
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into pago_compras Values (null, '" + fecha + "', '" + real + "', '" + com.getId() + "')";
-                con.actualiza(st, ins_pago);
+                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+                        + "'" + frm_menu.cue.getId_cuen() + "')";
+                con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
-            if (cbx_tipopago.getSelectedIndex() == 0) {
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
-                            + "'" + frm_menu.caja.getId() + "')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-            } else {
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
-                            + "'"+frm_menu.cue.getId_cuen()+"')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-            }
-
         }
 
         if (funcion.equals("productos")) {
-            frm_ver_compras_prod compra = new frm_ver_compras_prod();
-            ven.llamar_ventana(compra);
-            this.dispose();
+            frm_ver_compras_prod compras = new frm_ver_compras_prod();
+            ven.llamar_ventana(compras);
             funcion = "pagar";
+            this.dispose();
         } else {
             frm_ver_compras_serv compra = new frm_ver_compras_serv();
             ven.llamar_ventana(compra);
@@ -513,7 +463,6 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JTextField txt_deu;
     public static javax.swing.JFormattedTextField txt_fec;
-    public static javax.swing.JTextField txt_nro;
     public static javax.swing.JTextField txt_pag;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_real;

@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,12 +30,16 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
     public String fec_pag;
     public String fec_venc;
     public String est;
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
 
     /**
      * Creates new form frm_reg_cuota
      */
     public frm_reg_cuota() {
         initComponents();
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("####0.00", simbolo);
     }
 
     /**
@@ -163,21 +169,36 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
         }
 
         frm_ver_cuota_compra cuota = null;
+        DefaultTableModel mostrar = null;
         try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            mostrar.addColumn("Nro Cuota");
+            mostrar.addColumn("Fecha Pago");
+            mostrar.addColumn("Fec. Venc.");
+            mostrar.addColumn("Monto");
+            mostrar.addColumn("Estado");
             Statement st = con.conexion();
-            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
+            String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
             ResultSet rs = con.consulta(st, ver_cuotas);
-            int nro = 1;
             while (rs.next()) {
                 Object fila[] = new Object[5];
-                fila[0] = nro;
-                nro++;
+                fila[0] = rs.getString("idpago");
                 fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
                 fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
                 fila[3] = rs.getDouble("monto");
-                fila[4] = rs.getString("estado");
-                cuota.mostrar.addRow(fila);
+                if (rs.getString("estado").equals("0")) {
+                    fila[4] = "Pendiente";
+                } else {
+                    fila[4] = "Pagado";
+                }
+                mostrar.addRow(fila);
             }
+            cuota.t_cuotas.setModel(mostrar);
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException e) {
