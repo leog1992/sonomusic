@@ -54,8 +54,8 @@ public class frm_ver_ofertas extends javax.swing.JInternalFrame {
                 fila[0] = rs.getObject("idOferta");
                 fila[1] = rs.getObject("nom_alm");
                 fila[2] = rs.getObject("nom_ofer");
-                fila[3] = rs.getObject("fecha_ofer");
-                fila[4] = rs.getObject("fecha_venc");
+                fila[3] = ven.fechaformateada(rs.getString("fecha_ofer"));
+                fila[4] = ven.fechaformateada(rs.getString("fecha_venc"));
 
                 if (rs.getString("estado").equals("1")) {
                     fila[5] = "ACTIVO";

@@ -57,7 +57,7 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
             Object[] dato = new Object[10];
             while (rs.next()) {
                 dato[0] = rs.getObject("idpago");
-                dato[1] = rs.getObject("fecha");
+                dato[1] = ven.fechaformateada(rs.getString("fecha"));
                 dato[2] = rs.getObject("dni");
                 dato[3] = rs.getObject("nom_per");
                 dato[4] = rs.getObject("tipo_cargo");

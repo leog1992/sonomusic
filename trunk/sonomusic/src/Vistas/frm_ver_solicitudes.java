@@ -67,8 +67,8 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
             //Creando las filas para el JTable
             while (rs.next()) {
                 Object[] fila = new Object[9];
-                fila[0] = rs.getObject("fec_sol");
-                fila[1] = rs.getObject("fec_apro");
+                fila[0] = ven.fechaformateada(rs.getString("fec_sol"));
+                fila[1] = ven.fechaformateada(rs.getString("fec_apro"));
                 fila[2] = rs.getObject("idsolicitud");
                 if (rs.getString("estado").equals("0")) {
                     fila[3] = "PENDIENTE";

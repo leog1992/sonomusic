@@ -115,8 +115,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 String serie = rs.getString("serie_doc");
                 String nro = rs.getString("nro_doc");
 
-                fila[1] = rs.getObject("fec_ped");
-                fila[2] = rs.getObject("fec_pago");
+                fila[1] = ven.fechaformateada(rs.getString("fec_ped"));
+                fila[2] = ven.fechaformateada(rs.getString("fec_pago"));
                 if (tido.equals("1") & serie.equals("000") & nro.equals("0000000")) {
                     fila[3] = "VENTA SIN DOCUMENTO";
                 } else {

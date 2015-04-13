@@ -763,7 +763,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
                 + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
         ver_productos(query);
-        prod.btn_reg.setEnabled(false);
+        //prod.btn_reg.setEnabled(false);
         prod.btn_mod.setEnabled(false);
         prod.btn_eli.setEnabled(false);
         prod.btn_enviar.setEnabled(true);

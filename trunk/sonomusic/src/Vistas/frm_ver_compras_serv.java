@@ -84,15 +84,15 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                 Object fila[] = new Object[12];
                 fila[0] = rs.getString("idCompra");
                 fila[1] = rs.getString("glosa");
-                fila[2] = rs.getString("fecha_doc");
+                fila[2] = ven.fechaformateada(rs.getString("fecha_doc"));
                 try {
                     Statement st1 = con.conexion();
                     String ver_fec = "select fec_venc from pago_compras where idCompra =  '" + rs.getString("idCompra") + "' and estado = '0' limit 1";
                     ResultSet rs1 = con.consulta(st1, ver_fec);
                     if (rs1.next()) {
-                        fila[3] = rs1.getString("fec_venc");
+                        fila[3] = ven.fechaformateada(rs1.getString("fec_venc"));
                     } else {
-                        fila[3] = rs.getString("fecha_pago");
+                        fila[3] = ven.fechaformateada(rs.getString("fecha_pago"));
                     }
                     con.cerrar(rs1);
                     con.cerrar(st1);
@@ -520,12 +520,12 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
     public class table_render extends DefaultTableCellRenderer {
 
         public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-            SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha_tabla = null;
             Date fecha_actual = null;
             try {
                 fecha_tabla = formateador.parse((String) table.getValueAt(row, 3));
-                fecha_actual = formateador.parse(ven.getFechaActual());
+                fecha_actual = formateador.parse(ven.fechaformateada(ven.getFechaActual()));
             } catch (ParseException ex) {
                 Logger.getLogger(frm_ver_compras_prod.class.getName()).log(Level.SEVERE, null, ex);
             }

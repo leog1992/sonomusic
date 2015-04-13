@@ -6,6 +6,8 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Medida;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
+import Clases.Clase_CellEditor;
+import Clases.Clase_CellRender;
 import Vistas.frm_ver_prod_alm_det;
 import Vistas.frm_ver_productos;
 import java.awt.event.KeyEvent;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class frm_reg_productos extends javax.swing.JInternalFrame {
 
@@ -25,6 +28,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     Cl_Medida med = new Cl_Medida();
     public static String win = "reg";
     public static String ventana = "producto";
+    public static String subventana = "producto";
     public static int ida;
     public static int id;
 
@@ -505,6 +509,88 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void ver_productos(String query) {
+        try {
+            frm_ver_productos prod = null;
+            prod.mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    if (columna == 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                }
+            };
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+            //Establecer como cabezeras el nombre de las colimnas
+            prod.mostrar.addColumn("Id");
+            prod.mostrar.addColumn("Sel.");
+            prod.mostrar.addColumn("Descripcion");//descripcion modelo serie
+            prod.mostrar.addColumn("Marca");
+            prod.mostrar.addColumn("Precio");
+            prod.mostrar.addColumn("Clasificacion");
+            prod.mostrar.addColumn("Cant. Actual");
+            prod.mostrar.addColumn("Cant. minima");
+            prod.mostrar.addColumn("Und. Medida");
+            prod.mostrar.addColumn("Grado");
+            prod.mostrar.addColumn("Estado");
+
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[11];
+                fila[0] = rs.getObject("idProductos");
+                fila[1] = Boolean.FALSE;
+                fila[2] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
+                fila[3] = rs.getObject("marca");
+                fila[4] = rs.getObject("precio_venta");
+                fila[5] = rs.getObject("desc_clas");
+                fila[6] = rs.getObject("cant_actual");
+                fila[7] = rs.getObject("cant_min");
+                fila[8] = rs.getObject("desc_und");
+                fila[9] = rs.getObject("grado");
+                if (rs.getString("estado").equals("1")) {
+                    if (rs.getDouble("cant_actual") > rs.getDouble("cant_min")) {
+                        fila[10] = "NORMAL";
+                    }
+                    if (rs.getDouble("cant_actual") <= rs.getDouble("cant_min")) {
+                        fila[10] = "POR TERMINAR";
+                    }
+                    if (rs.getDouble("cant_actual") <= 0) {
+                        fila[10] = "NO DISPONIBLE";
+                    }
+                } else {
+                    fila[10] = "-";
+                }
+
+                prod.mostrar.addRow(fila);
+            }
+            con.cerrar(st);
+            con.cerrar(rs);
+            prod.t_productos.setModel(prod.mostrar);
+            prod.t_productos.getColumnModel().getColumn(0).setPreferredWidth(10);
+            prod.t_productos.getColumnModel().getColumn(1).setPreferredWidth(10);
+            prod.t_productos.getColumnModel().getColumn(2).setPreferredWidth(390);
+            prod.t_productos.getColumnModel().getColumn(3).setPreferredWidth(50);
+            prod.t_productos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            prod.t_productos.getColumnModel().getColumn(5).setPreferredWidth(30);
+            prod.t_productos.getColumnModel().getColumn(6).setPreferredWidth(30);
+            prod.t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
+            prod.t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
+            prod.t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
+            prod.t_productos.getColumnModel().getColumn(10).setPreferredWidth(40);
+            prod.t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
+            prod.t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
+            prod.mostrar.fireTableDataChanged();
+            prod.t_productos.updateUI();
+
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+    }
+
     private void llenar() {
         pro.setId_pro(id);
         pro.setDes_pro(txt_des.getText());
@@ -535,8 +621,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                     con.cerrar(st);
                     JOptionPane.showMessageDialog(null, "Se ingreso los datos correctamente");
                     this.dispose();
-                    frm_ver_productos productos = new frm_ver_productos();
-                    ven.llamar_ventana(productos);
                 } else {
 
                     Statement st = con.conexion();
@@ -550,12 +634,24 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                     win = "reg";
                     JOptionPane.showMessageDialog(null, "Se modifico los datos correctamente");
                     this.dispose();
-                    frm_ver_productos productos = new frm_ver_productos();
-                    ven.llamar_ventana(productos);
                 }
+
+                frm_ver_productos productos = new frm_ver_productos();
+                if (subventana.equals("prod_compra")) {
+                    productos.ventana = "compra_prod";
+                    String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
+                            + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
+                    ver_productos(query);
+                    productos.btn_enviar.setEnabled(true);
+                } else {
+                    productos.ventana = "productitos";
+                }
+                ven.llamar_ventana(productos);
+
             } catch (Exception e) {
                 System.out.println(e);
             }
+
         } else {
             Statement st = con.conexion();
             String update = "update producto_almacen set precio = '" + pro.getPre_pro() + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + ida + "'";
@@ -567,7 +663,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             frm_ver_prod_alm_det pro_det = new frm_ver_prod_alm_det();
             ven.llamar_ventana(pro_det);
         }
-    System.out.println (pro.getPre_pro());
+        subventana = "";
+        System.out.println(pro.getPre_pro());
 
     }//GEN-LAST:event_btn_regActionPerformed
 
@@ -638,7 +735,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                 txt_gan.setText(formato.format(gan));
                 txt_com.setEditable(true);
                 txt_com.requestFocus();
-                
+
             }
         }
     }//GEN-LAST:event_txt_pvenKeyPressed
@@ -670,9 +767,9 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                 }
             } catch (SQLException ex) {
                 System.out.print(ex);
-                
+
             }
-            
+
         }
     }//GEN-LAST:event_txt_codKeyPressed
 
@@ -737,7 +834,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_undKeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         txt_des.setText("");
         txt_mar.setText("");
         txt_mar.setEditable(false);
