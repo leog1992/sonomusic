@@ -263,7 +263,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fecha_doc", fec_ini);
                 parametros.put("fecha_pago", fec_fin);
                 parametros.put("ruc", frm_menu.alm.getRuc());
-                ven.ver_reporte("rpt_compras", parametros);
+                ven.ver_reporte("rpt_utilidad_almacen", parametros);
                 
             }
             this.dispose();
