@@ -318,16 +318,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_utilidad_almacen", parametros);
                 this.dispose();
             }
-            //VENTA TOTAL
-            if (ventana.equals("venta_total")) {                
-                frm_rpt_fechas fec =new frm_rpt_fechas();
-                fec.rpt="venta_total";
-                String id= t_almacen.getValueAt(i, 3).toString();
-                fec.alm.setRuc(id);
-                ven.llamar_ventana(fec);
-                ventana="";
-                this.dispose();
-            }
+           
             //COMPRA
             
         }
