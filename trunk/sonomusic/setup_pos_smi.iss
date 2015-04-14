@@ -22,7 +22,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\POS_smi
 DefaultGroupName=POS_SonoMusicImport
 AllowNoIcons=yes
-OutputDir=C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic
+OutputDir=output
 OutputBaseFilename=setup_pos_smi
 Compression=lzma
 SolidCompression=yes
@@ -35,19 +35,20 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\dist\sonomusic.jar"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\reports\*"; DestDir: "{app}\reports"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\dist\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\logo.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\logo_sonomusic.png"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Dereck\Documents\NetBeansProjects\sonomusic\trunk\sonomusic\server.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\sonomusic.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "reports\*"; DestDir: "{app}\reports"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "logo.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "logo.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "logo_sonomusic.png"; DestDir: "{app}"; Flags: ignoreversion
+Source: "server.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\Sono Music Import - POS"; Filename: "{app}\{#MyAppExeName}";  IconFilename: "{app}\logo.ico" ; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Run]

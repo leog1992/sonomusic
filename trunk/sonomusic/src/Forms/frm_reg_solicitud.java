@@ -13,6 +13,7 @@ import Clases.Cl_Varios;
 import Clases.table_render;
 import Vistas.frm_ver_prod_alm;
 import Vistas.frm_ver_solicitudes;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -239,6 +240,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
 
         btn_env.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         btn_env.setText("Enviar Ped.");
+        btn_env.setEnabled(false);
         btn_env.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_envActionPerformed(evt);
@@ -494,8 +496,49 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void t_solicitudKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_solicitudKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_E) {
-            btn_env.requestFocus();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            int i = t_solicitud.getSelectedRow();
+            int idp = Integer.parseInt(t_solicitud.getValueAt(i, 0).toString());
+            try {
+                Statement st = con.conexion();
+                String ver_pro = "select idProductos from producto_almacen where"
+                        + " idProductos = '" + idp + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
+                ResultSet rs = con.consulta(st, ver_pro);
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(null, "El Producto no existe en su almacen");
+                    t_solicitud.setValueAt("0", i, 5);
+                    btn_env.setEnabled(false);
+                } else {
+                    btn_env.setEnabled(true);
+                    btn_env.requestFocus();
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException | HeadlessException e) {
+                System.out.println(e);
+            }
+
+        }
+        
+        //RECORRER TABLA Y DETECTA PRODUCTOS
+        int nro_filas = t_solicitud.getRowCount();
+        for (int j = 0; j < nro_filas; j++) {
+            int idp = Integer.parseInt(t_solicitud.getValueAt(j, 0).toString());
+            try {
+                Statement st = con.conexion();
+                String ver_pro = "select idProductos from producto_almacen where"
+                        + " idProductos = '" + idp + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
+                ResultSet rs = con.consulta(st, ver_pro);
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(null, "El Producto no existe en su almacen");
+                    t_solicitud.setValueAt("0", j, 5);
+                    btn_env.setEnabled(false);
+                } 
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException | HeadlessException e) {
+                System.out.println(e);
+            }
         }
     }//GEN-LAST:event_t_solicitudKeyPressed
 

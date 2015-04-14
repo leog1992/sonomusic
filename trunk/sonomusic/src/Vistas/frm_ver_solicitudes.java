@@ -267,7 +267,7 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
                 soli.txt_id_des.setText(rs.getString("id_alm_des"));
                 soli.txt_fec.setText(ven.fechaformateada(rs.getString("fec_sol")));
                 soli.spn_dias.setValue(rs.getInt("plazo"));
-                soli.btn_env.setEnabled(true);
+                //soli.btn_env.setEnabled(true);
                 soli.btn_reg.setEnabled(false);
                 soli.btn_reg.setVisible(false);
             }
