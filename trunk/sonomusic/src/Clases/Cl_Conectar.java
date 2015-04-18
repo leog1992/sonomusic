@@ -19,20 +19,14 @@ import javax.swing.JOptionPane;
 public class Cl_Conectar {
 
     private static Connection conexion = null;
-    //conmetal_sm
-    //sonomusic
     private static String bd = "sonomusic"; // Nombre de BD.
-    //conmetal_root
-    //lspserver
     private static String user = "lspserver"; // Usuario de BD.
-    //root/*123
     private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
     String server = "jdbc:mysql://192.168.1.39/" + bd;
     //String server = "jdbc:mysql://"+leer()+":3306/" + bd;
 
-    // String server = "jdbc:mysql://"+leer(
     private String leer() {
         String server = null;
         try {
@@ -74,8 +68,8 @@ public class Cl_Conectar {
             conexion = DriverManager.getConnection(server, user, password);
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: Imposible realizar la conexion a BD." + server + "," + user + "," + password);
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            //JOptionPane.showMessageDialog(null, "Error: Imposible realizar la conexion a BD." + server + "," + user + "," + password);
+            JOptionPane.showMessageDialog(null, "Error al conectar " + e.getLocalizedMessage());
             System.out.print(e);
             e.printStackTrace();
             System.exit(0);

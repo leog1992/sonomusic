@@ -78,6 +78,7 @@ public class frm_menu extends javax.swing.JFrame {
         // carga todas las notificacion primera vez
         noti = new Cl_Hilo_Notificacion();
         noti.start();
+         JFrame.setDefaultLookAndFeelDecorated(true);
          SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
          SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
