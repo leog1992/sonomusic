@@ -7,111 +7,98 @@ package sonomusic;
 
 import Clases.Cl_Cargar_Splash;
 import Clases.Cl_Descargar_Instalador;
+import Clases.unZip;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import java.net.URLConnection;
 
 /**
  *
  * @author CONTABILIDAD 02
  */
 public class frm_loader extends javax.swing.JFrame {
-Cl_Descargar_Instalador bajar = new Cl_Descargar_Instalador();
-Integer ver_actual;
-Integer ver_nueva;
+
+    Cl_Descargar_Instalador bajar = new Cl_Descargar_Instalador();
+    Integer ver_actual;
+    Integer ver_nueva;
+    int act;
     /**
      * Creates new form frm_loader
      */
-     Cl_Cargar_Splash hilo;
-     
+    Cl_Cargar_Splash hilo;
+
     public frm_loader() {
         initComponents();
-        // COLOCAR ICONO A APLICACION
-        setIconImage (new ImageIcon(getClass().getResource("/Recursos/luna_systems.png")).getImage());
         iniciar();
         hilo = new Cl_Cargar_Splash(getProgreso());
         hilo.start();
         hilo = null;
     }
-    
+
     private void iniciar() {
         this.setResizable(false);
         setLocationRelativeTo(null);
     }
-    
-    private void leer_ver() {
-        // REVISAR SI EXISTE NUEVA VERSION
-//        try {
-//            URL new_ver = new URL("http://www.conmetalperu.com/version.txt");
-//            BufferedReader in = new BufferedReader(new InputStreamReader(
-//            new_ver.openStream()));
-//            ver_nueva = Integer.parseInt(in.readLine()); //you get the IP as a String
-//        } catch (UnknownHostException ex) {
-//            System.out.print(ex);
-//            JOptionPane.showMessageDialog(null, "No se puede conectar");
-//            System.exit(0);
-//        } catch (IOException ex) {
-//            Logger.getLogger(frm_login.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        ver_nueva = 1000;
-        System.out.print("Version Actual: " + ver_nueva + "\n");
-    }
-    
-    private boolean comparar_ver() {
-        boolean actual = true;
-        // COMPARAR VERSIONES
-        if (ver_actual() < ver_nueva) {
-            actual = true; 
-            System.out.print("se Actualizara \n");
-        } else {
-            actual = false;
-            System.out.print("No se Actualizara \n");
+
+    private int leer_version_nueva() {
+        int version_nueva = 0;
+        //REVISAR SI EXISTE NUEVA VERSION
+        try {
+            URL url = new URL("http://www.lunasystemsperu.com/uploads_sm/version.txt");
+            URLConnection uc = url.openConnection();
+            uc.connect();
+            //Creamos el objeto con el que vamos a leer
+            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                version_nueva = Integer.parseInt(inputLine);
+            }
+            in.close();
+            return version_nueva;
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
-        return actual;
+
+        //ver_nueva = 1000;
+        System.out.print("Version Nueva: " + ver_nueva + "\n");
+        return version_nueva;
     }
-    
-    
-    
-    private int ver_actual () {
-        Integer ver = 0;
-        try {  
-            File Ffichero=new File("version.txt");
-            
-            /*Si existe el fichero*/  
-            if(Ffichero.exists()){  
-                /*Abre un flujo de lectura a el fichero*/  
-                BufferedReader Flee= new BufferedReader(new FileReader(Ffichero));  
-                String Slinea;  
-                //System.out.println("**********Leyendo Fichero***********");  
-                /*Lee el fichero linea a linea hasta llegar a la ultima*/  
-                while((Slinea=Flee.readLine())!=null) {  
-                    /*Imprime la linea leida*/  
-                    ver = Integer.parseInt(Slinea);
-                   // System.out.println(Slinea);                
-                }  
-                //System.out.println("*********Fin Leer Fichero**********");  
-                /*Cierra el flujo*/  
-                Flee.close(); 
+
+    private int leer_version_actual() {
+        Integer version_actual = 0;
+        try {
+            File Ffichero = new File("version.txt");
+
+            /*Si existe el fichero*/
+            if (Ffichero.exists()) {
+                /*Abre un flujo de lectura a el fichero*/
+                BufferedReader Flee = new BufferedReader(new FileReader(Ffichero));
+                String Slinea;
+                System.out.println("**********Leyendo Fichero***********");
+                /*Lee el fichero linea a linea hasta llegar a la ultima*/
+                while ((Slinea = Flee.readLine()) != null) {
+                    /*Imprime la linea leida*/
+                    version_actual = Integer.parseInt(Slinea);
+                    // System.out.println(Slinea);                
+                }
+                System.out.println("*********Fin Leer Fichero**********");
+                /*Cierra el flujo*/
+                Flee.close();
                 //return txt_alm;
-            }else{  
-                System.out.println("Fichero No Existe");  
-            }  
-        } catch (IOException ex) {  
-            /*Captura un posible error y le imprime en pantalla*/   
-            System.out.println(ex.getMessage());  
-        } 
-        System.out.println("Version Nueva " + ver + "\n");  
-        ver_actual = ver;
-        return ver;
+            } else {
+                System.out.println("Fichero No Existe");
+            }
+        } catch (IOException ex) {
+            /*Captura un posible error y le imprime en pantalla*/
+            System.out.println(ex.getMessage());
+        }
+        System.out.println("Version actual  " + version_actual + "\n");
+        return version_actual;
     }
 
     /**
@@ -128,6 +115,7 @@ Integer ver_nueva;
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -140,58 +128,78 @@ Integer ver_nueva;
 
         msg.setForeground(new java.awt.Color(255, 255, 255));
         msg.setText("Cargando Aplicacion");
-        getContentPane().add(msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        getContentPane().add(msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 230, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/splash_erp.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/loader.jpg"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, -1, 210));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void progresoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progresoStateChanged
 
-        if (progreso.getValue()==0) {
-            ver_actual();
+        if (progreso.getValue() == 1) {
+            ver_actual = leer_version_actual();
+            System.out.println("ver_actual " + ver_actual);
             msg.setText("Cargando Datos Principales");
         }
-        
-        if (progreso.getValue()==20) {
-            leer_ver();
+
+        if (progreso.getValue() == 20) {
+            ver_nueva = leer_version_nueva();
+            System.out.println("ver_nueva " + ver_nueva);
             msg.setText("Buscando Actualizaciones");
         }
-        
-        if (progreso.getValue()==40) {
-            comparar_ver();
-            msg.setText("Cargando Modulos");
-        }
-        
-        if (progreso.getValue()==60) {
-            if (comparar_ver() == true) {
-                msg.setText("Descargando Actualizacion");
-                // DESCARGAR VERSION NUEVA E INSTALAR
-                bajar.down();
-                Runtime aplicacion = Runtime.getRuntime(); 
-                try{
-                    aplicacion.exec("upload/setup_erp.exe"); 
-                } catch(IOException e) { 
-                    System.out.print(e);
-                }
-                System.exit(0);
+
+        if (progreso.getValue() == 40) {
+            if (ver_actual < ver_nueva) {
+                act = 1;
+                msg.setText("Cargando Modulos ++++");
             } else {
-                msg.setText("Abriendo Aplicacion");
-                System.out.print("Abriendo Aplicacion \n");
+                act = 0;
+                msg.setText("Cargando Modulos ----");
             }
+
         }
-        
-        if (progreso.getValue()==100) {
-                frm_login login = new frm_login();
-                login.setVisible(true);
-                this.dispose();
+
+        if (progreso.getValue() == 60) {
+            if (act == 1) {
+                System.out.println("descargando actualizacion");
+                for (int i = ver_actual + 1; i <= ver_nueva; i++) {
+                    String version = i + "";
+                    bajar.down(version);
+                }
+
+                System.out.println("cargando actualizaciones");
+                for (int i = ver_actual + 1; i <= ver_nueva; i++) {
+                    System.out.println("version nueva " + i);
+
+                    String imput = "uploads/" + i + ".zip";
+                    String workingDir = System.getProperty("user.dir");
+                    System.out.println("Current working directory : " + workingDir);
+
+                    String output = workingDir;
+
+                    unZip unZip = new unZip();
+                    try {
+                        unZip.unZipIt(imput, output);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
+                    System.out.println("version instalada" + i + "\n");
+                }
+            }
+
         }
-        
-        
-        
+
+        if (progreso.getValue() == 100) {
+            frm_login login = new frm_login();
+            login.setVisible(true);
+            this.dispose();
+        }
+
+
     }//GEN-LAST:event_progresoStateChanged
 
     /**

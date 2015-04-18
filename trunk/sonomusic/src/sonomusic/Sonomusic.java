@@ -22,7 +22,7 @@ public class Sonomusic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        frm_login loader = new frm_login();
+        frm_loader loader = new frm_loader();
         try {
             SERVER_SOCKET = new ServerSocket(1334);
             //JFrame.setDefaultLookAndFeelDecorated(true);
