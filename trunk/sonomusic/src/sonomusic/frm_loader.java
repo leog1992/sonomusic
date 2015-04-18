@@ -188,6 +188,12 @@ public class frm_loader extends javax.swing.JFrame {
                     }
 
                     System.out.println("version instalada" + i + "\n");
+                    File fichero = new File("uploads/" + i + ".zip");
+                    if (fichero.delete()) {
+                        System.out.println("El fichero ha sido borrado satisfactoriamente");
+                    } else {
+                        System.out.println("El fichero no puede ser borrado");
+                    }
                 }
             }
 
