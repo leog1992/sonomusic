@@ -3,15 +3,12 @@ package Vistas;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import Forms.frm_rpt_fechas;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sonomusic.frm_menu;
 
 /**
  *

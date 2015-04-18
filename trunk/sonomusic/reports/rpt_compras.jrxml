@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_compras" language="groovy" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f85c6f5-b95e-46d0-9db1-9f7091a4dc30">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="771"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="1454"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="fecha_doc" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -358,22 +358,22 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[($F{compra_estado}.equals( "0" )?"CONTADO":"CREDITO")]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="1090" y="0" width="60" height="15" uuid="4ddd90f3-7114-47fb-8b09-6ce3867a28d0"/>
+			<textField pattern="###0.00">
+				<reportElement x="1110" y="0" width="40" height="15" uuid="4ddd90f3-7114-47fb-8b09-6ce3867a28d0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_total}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="970" y="0" width="60" height="15" uuid="763f7ffd-2fa0-4a60-917f-258e186b03dc"/>
+			<textField pattern="###0.00">
+				<reportElement x="995" y="0" width="35" height="15" uuid="763f7ffd-2fa0-4a60-917f-258e186b03dc"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{subtotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="1030" y="0" width="60" height="15" uuid="5dd7adff-3a11-4a73-9387-1303d9b794ce"/>
+			<textField pattern="###0.00">
+				<reportElement x="1052" y="0" width="38" height="15" uuid="5dd7adff-3a11-4a73-9387-1303d9b794ce"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -386,10 +386,25 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA["06"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="980" y="0" width="15" height="15" uuid="7b758d31-8822-40cb-a686-fa06ad1a1881"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[s/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1037" y="0" width="15" height="15" uuid="7a168f8a-22ad-4a42-b9e8-a1e3b5f5b075"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[s/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1095" y="0" width="15" height="15" uuid="4b11b509-2fc7-4278-9aa7-3c81bbd01e9d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[s/.]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="15" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="1037" y="0" width="45" height="15" uuid="cd8ef643-d178-441e-99e8-d7d0f4fb6215"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -397,13 +412,18 @@ WHERE
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="1082" y="0" width="68" height="15" uuid="9d7324e2-3795-487b-af9e-b4ed70277116"/>
+			<textField pattern="###0.00">
+				<reportElement x="1097" y="0" width="53" height="15" uuid="9d7324e2-3795-487b-af9e-b4ed70277116"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="1082" y="0" width="15" height="15" uuid="dc83cd15-94f5-42f9-8dcf-a27235a07c5a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[s/.]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 </jasperReport>
