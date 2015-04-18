@@ -355,7 +355,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         String fecha = ven.fechabase(txt_fec.getText());
-
+        
         try {
             Statement st = con.conexion();
             String upd_pago = "update pago_compras set fec_pago = '" + fecha + "', monto = '" + real + "', estado = '1' where idpago = '" + idpago + "'";
@@ -364,6 +364,13 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        if (queda <= 0) {
+            Statement st = con.conexion();
+            String upd_compra = "update compra set fecha_pago = '"+fecha+"', estado = '1' where idCompra = '"+com.getId()+"'";
+            con.actualiza(st, upd_compra);
+            con.cerrar(st);
+        } 
 
         if (cbx_tipopago.getSelectedIndex() == 0) {
             try {

@@ -108,40 +108,53 @@ public class Cl_Varios {
     }
 
     public void imprimir_java(String filename) throws IOException {
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(filename);
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
-        if (inputStream == null) {
-            return;
-        }
-
-        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        Doc document = new SimpleDoc(inputStream, docFormat, null);
-
-        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-
-        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
-
-        if (defaultPrintService != null) {
-            DocPrintJob printJob = defaultPrintService.createPrintJob();
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        java.io.File fichero = new java.io.File(filename);
+        if (desktop.isSupported(Desktop.Action.PRINT)) {
             try {
-                printJob.print(document, attributeSet);
-
+                desktop.print(fichero);
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.print("El sistema no permite imprimir usando la clase Desktop");
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
             }
         } else {
-            System.err.println("No existen impresoras instaladas");
-            JOptionPane.showMessageDialog(null, "No Existen impresoras instaladas");
+            System.out.print("El sistema no permite imprimir usando la clase Desktop");
         }
 
-        inputStream.close();
+//        FileInputStream inputStream = null;
+//        try {
+//            inputStream = new FileInputStream(filename);
+//        } catch (FileNotFoundException e) {
+//            System.out.println(e);
+//            e.printStackTrace();
+//        }
+//        if (inputStream == null) {
+//            return;
+//        }
+//
+//        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+//        Doc document = new SimpleDoc(inputStream, docFormat, null);
+//
+//        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+//
+//        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+//
+//        if (defaultPrintService != null) {
+//            DocPrintJob printJob = defaultPrintService.createPrintJob();
+//            try {
+//                printJob.print(document, attributeSet);
+//
+//            } catch (Exception e) {
+//                System.out.println(e);
+//                e.printStackTrace();
+//                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+//            }
+//        } else {
+//            System.err.println("No existen impresoras instaladas");
+//            JOptionPane.showMessageDialog(null, "No Existen impresoras instaladas");
+//        }
+//
+//        inputStream.close();
     }
 
     public void ver_reporte(String filename, Map<String, Object> parametros) {

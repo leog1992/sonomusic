@@ -214,6 +214,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         jSeparator16 = new javax.swing.JPopupMenu.Separator();
         jMenuItem41 = new javax.swing.JMenuItem();
+        jMenuItem42 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -367,8 +368,6 @@ public class frm_menu extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
-
         jp_ventas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jp_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -508,7 +507,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -897,6 +896,16 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem41);
 
+        jMenuItem42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jMenuItem42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem42.setText("Rpt. Ganancias por Almacen");
+        jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem42ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem42);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setBackground(new java.awt.Color(212, 2, 2));
@@ -1105,7 +1114,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem40.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem40.setText("Rpt. Ganacia x Empresa");
+        jMenuItem40.setText("Rpt. Valorizado Art. x Empresa");
         jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem40ActionPerformed(evt);
@@ -1618,6 +1627,12 @@ public class frm_menu extends javax.swing.JFrame {
         cliente.rpt = "rpt_cliente";
         ven.llamar_ventana(cliente);
     }//GEN-LAST:event_jMenuItem41ActionPerformed
+
+    private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        almacen.ventana = "rpt_gana_venta";
+        ven.llamar_ventana(almacen);
+    }//GEN-LAST:event_jMenuItem42ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1719,6 +1734,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem41;
+    private javax.swing.JMenuItem jMenuItem42;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

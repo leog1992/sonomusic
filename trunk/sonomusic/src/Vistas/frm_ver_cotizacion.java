@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Clases.Cl_Conectar;
@@ -36,77 +35,79 @@ import net.sf.jasperreports.engine.JasperReport;
  * @author pc
  */
 public class frm_ver_cotizacion extends javax.swing.JInternalFrame {
-Cl_Conectar con = new Cl_Conectar();
-Cl_Varios ven = new Cl_Varios();
-Cl_Cotizacion cot = new Cl_Cotizacion();
-DefaultTableModel mostrar ;
-DecimalFormat formato = new DecimalFormat("####.00");
-String valor;
-int i;
+
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
+    Cl_Cotizacion cot = new Cl_Cotizacion();
+    DefaultTableModel mostrar;
+    DecimalFormat formato = new DecimalFormat("####.00");
+    String valor;
+    int i;
+
     /**
      * Creates new form frm_ver_cotizacion
      */
     public frm_ver_cotizacion() {
         initComponents();
-        
-        String query  = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
+
+        String query = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
                 + "as suma from cotizacion as c inner join detalle_cotizacion as d on c.idCotizacion=d.idCotizacion"
                 + " inner join cliente as cl on c.nro_doc=cl.nro_doc group by c.idCotizacion";
         ver_cotizacion(query);
     }
 
-    private void ver_cotizacion (String query) {
-     try {
-        mostrar = new DefaultTableModel()
- {@Override
-     public boolean isCellEditable (int fila, int columna) {
-         return false;
-     }
- };
-        Statement st= con.conexion();
-        ResultSet rs = con.consulta(st, query);
-        ResultSetMetaData rsMd = rs.getMetaData();
-        //La cantidad de columnas que tiene la consulta
-        int cantidadColumnas = rsMd.getColumnCount();
-        //Establecer como cabezeras el nombre de las colimnas
-        mostrar.addColumn("Nro. Cot.");
-        mostrar.addColumn("Nro Doc.");
-        mostrar.addColumn("Cliente");
-        mostrar.addColumn("Fecha Cot.");
-        mostrar.addColumn("Monto");
-        
-        //Creando las filas para el JTable
-        while (rs.next()) {
-            Object[] fila = new Object[cantidadColumnas];
-            fila[0]=rs.getObject("idCotizacion");
-            fila[1]=rs.getObject("nro_doc");
-            fila[2]=rs.getObject("nom_per");
-            fila[3]=rs.getObject("fec_cot");
-            String nro_doc = rs.getString("nro_doc");
-            Double suma = 0.00;
-            if (nro_doc.length()>8) {
-                suma=rs.getDouble("suma") * 1.18;
-            } else {
-                suma=rs.getDouble("suma");
+    private void ver_cotizacion(String query) {
+        try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+            ResultSetMetaData rsMd = rs.getMetaData();
+            //La cantidad de columnas que tiene la consulta
+            int cantidadColumnas = rsMd.getColumnCount();
+            //Establecer como cabezeras el nombre de las colimnas
+            mostrar.addColumn("Nro. Cot.");
+            mostrar.addColumn("Nro Doc.");
+            mostrar.addColumn("Cliente");
+            mostrar.addColumn("Fecha Cot.");
+            mostrar.addColumn("Monto");
+
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[cantidadColumnas];
+                fila[0] = rs.getObject("idCotizacion");
+                fila[1] = rs.getObject("nro_doc");
+                fila[2] = rs.getObject("nom_per");
+                fila[3] = ven.fechaformateada(rs.getString("fec_cot"));
+                String nro_doc = rs.getString("nro_doc");
+                Double suma = 0.00;
+                if (nro_doc.length() > 8) {
+                    suma = rs.getDouble("suma") * 1.18;
+                } else {
+                    suma = rs.getDouble("suma");
+                }
+                fila[4] = formato.format(suma);
+                mostrar.addRow(fila);
             }
-            fila[4] = formato.format(suma);
-            mostrar.addRow(fila);
+            con.cerrar(st);
+            con.cerrar(rs);
+            t_cotizacion.setModel(mostrar);
+            t_cotizacion.getColumnModel().getColumn(0).setPreferredWidth(50);
+            t_cotizacion.getColumnModel().getColumn(1).setPreferredWidth(50);
+            t_cotizacion.getColumnModel().getColumn(2).setPreferredWidth(200);
+            t_cotizacion.getColumnModel().getColumn(3).setPreferredWidth(50);
+            t_cotizacion.getColumnModel().getColumn(4).setPreferredWidth(20);
+            mostrar.fireTableDataChanged();
+        } catch (SQLException e) {
+            System.out.print(e);
         }
-        con.cerrar(st);
-        con.cerrar(rs);
-        t_cotizacion.setModel(mostrar);
-        t_cotizacion.getColumnModel().getColumn(0).setPreferredWidth(50);
-        t_cotizacion.getColumnModel().getColumn(1).setPreferredWidth(50);
-        t_cotizacion.getColumnModel().getColumn(2).setPreferredWidth(200);
-        t_cotizacion.getColumnModel().getColumn(3).setPreferredWidth(50);
-        t_cotizacion.getColumnModel().getColumn(4).setPreferredWidth(20);        
-        mostrar.fireTableDataChanged();
+
     }
-    catch (SQLException e) {
-        System.out.print(e);
-    }
-          
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -272,57 +273,57 @@ int i;
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_detalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detalleActionPerformed
-         Connection st = con.conx();
+        Connection st = con.conx();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("cot", cot.getId());
-        
+
         try {
             JasperReport jasperReport;
             JasperPrint jasperPrint;
             jasperReport = JasperCompileManager.compileReport("Reports//rpt_cotizacion.jrxml");
             jasperPrint = JasperFillManager.fillReport(
-            jasperReport, parametros, st);
+                    jasperReport, parametros, st);
             JasperExportManager.exportReportToPdfFile(
-            jasperPrint, "Reports/rpt_cotizacion_"+cot.getId()+".pdf");
+                    jasperPrint, "Reports/rpt_cotizacion_" + cot.getId() + ".pdf");
 
-                try {
-                    File file = new File("Reports/rpt_cotizacion_"+cot.getId()+".pdf");
-                    Desktop.getDesktop().open(file);
-                } catch(IOException e) {
-                    System.out.print(e);
-                    JOptionPane.showMessageDialog(null, e);
-                }
-                
+            try {
+                File file = new File("Reports/rpt_cotizacion_" + cot.getId() + ".pdf");
+                Desktop.getDesktop().open(file);
+            } catch (IOException e) {
+                System.out.print(e);
+                JOptionPane.showMessageDialog(null, e);
+            }
+
         } catch (JRException ex) {
             System.out.print(ex);
             JOptionPane.showMessageDialog(null, ex);
-            
+
         }
 
     }//GEN-LAST:event_btn_detalleActionPerformed
 
     private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
-if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-    String buscar  = txt_buscar.getText();
-    String query  = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
-                + "as suma from cotizacion as c inner join Detalle_Cotizacion as d on c.idCotizacion=d.idCotizacion"
-                + " inner join cliente as cl on c.nro_doc=cl.nro_doc where "+valor+"  like '%"+buscar+"%' group by c.idCotizacion";
-    ver_cotizacion(query);
-}   
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String buscar = txt_buscar.getText();
+            String query = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
+                    + "as suma from cotizacion as c inner join Detalle_Cotizacion as d on c.idCotizacion=d.idCotizacion"
+                    + " inner join cliente as cl on c.nro_doc=cl.nro_doc where " + valor + "  like '%" + buscar + "%' group by c.idCotizacion";
+            ver_cotizacion(query);
+        }
     }//GEN-LAST:event_txt_buscarKeyPressed
 
     private void cbx_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tipoActionPerformed
-if (cbx_tipo.isDisplayable()) {
-    if (cbx_tipo.getSelectedIndex()==0) {
-        valor = "c.nro_doc";
-        txt_buscar.setEditable(true);
-        txt_buscar.requestFocus();
-    } else {
-        valor = "cl.nom_per";
-        txt_buscar.setEditable(true);
-        txt_buscar.requestFocus();
-    }
-}
+        if (cbx_tipo.isDisplayable()) {
+            if (cbx_tipo.getSelectedIndex() == 0) {
+                valor = "c.nro_doc";
+                txt_buscar.setEditable(true);
+                txt_buscar.requestFocus();
+            } else {
+                valor = "cl.nom_per";
+                txt_buscar.setEditable(true);
+                txt_buscar.requestFocus();
+            }
+        }
     }//GEN-LAST:event_cbx_tipoActionPerformed
 
     private void btn_eliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliActionPerformed
@@ -332,16 +333,16 @@ if (cbx_tipo.isDisplayable()) {
             cot.setId((int) t_cotizacion.getValueAt(i, 0));
             try {
                 Statement st = con.conexion();
-                String query = "delete  from detalle_cotizacion where idCotizacion ='" + cot.getId()+ "'";
+                String query = "delete  from detalle_cotizacion where idCotizacion ='" + cot.getId() + "'";
                 con.actualiza(st, query);
                 con.cerrar(st);
-                String query1  = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
-                + "as suma from cotizacion as c inner join detalle_cotizacion as d on c.idCotizacion=d.idCotizacion"
-                + " inner join cliente as cl on c.nro_doc=cl.nro_doc group by c.idCotizacion";
+                String query1 = "select c.idCotizacion, c.nro_doc, cl.nom_per, c.fec_cot, sum(d.cant * d.precio_cot) "
+                        + "as suma from cotizacion as c inner join detalle_cotizacion as d on c.idCotizacion=d.idCotizacion"
+                        + " inner join cliente as cl on c.nro_doc=cl.nro_doc group by c.idCotizacion";
                 ver_cotizacion(query1);
-                btn_eli.setEnabled(false);                
+                btn_eli.setEnabled(false);
             } catch (Exception ex) {
-                System.out.print(ex+" "+ex.getLocalizedMessage()+" "+ex.getCause());
+                System.out.print(ex + " " + ex.getLocalizedMessage() + " " + ex.getCause());
             }
         }
     }//GEN-LAST:event_btn_eliActionPerformed

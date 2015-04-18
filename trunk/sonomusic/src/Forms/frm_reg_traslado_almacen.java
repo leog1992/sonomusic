@@ -761,6 +761,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     ResultSet rs = con.consulta(st, ver_pro_alm);
                     if (rs.next()) {
                         cant_act = rs.getDouble("cant");
+                    } else {
+                        cant_act = 0.0;
                     }
                     con.cerrar(rs);
                     con.cerrar(st);
@@ -772,7 +774,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
                 try {
                     Statement st = con.conexion();
-                    String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                    String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where "
+                            + "idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
                     con.actualiza(st, act_pro_alm);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -797,28 +800,54 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
                 pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 5).toString()));
                 System.out.println(pro.getCan() + " - id " + pro.getId_pro());
+                
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_pre = "select precio_venta from Productos where idProductos  = '"+pro.getId_pro()+"'";
+                    ResultSet rs1 = con.consulta(st1, ver_pre);
+                    if (rs1.next()) {
+                        pro.setCos_pro(rs1.getDouble("precio_venta"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                
                 //registrar ingreso al segundo almacen (actualizar cantidades)
                 try {
                     Statement st = con.conexion();
-                    String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
+                    String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
                     ResultSet rs = con.consulta(st, ver_pro_alm);
                     if (rs.next()) {
+                        System.out.println(alm_or + " Cambiando cantidad en almacen");
                         cant_act = rs.getDouble("cant");
+                        nueva_cant = cant_act + pro.getCan();
+
+                        try {
+                            Statement st1 = con.conexion();
+                            String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                            con.actualiza(st1, act_pro_alm);
+                            con.cerrar(st1);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
+                    } else {
+                        System.out.println(alm_or + " ingresando producto a almacen");
+                        cant_act = 0.0;
+                        nueva_cant = cant_act + pro.getCan();
+                        
+                        try {
+                            Statement st1 = con.conexion();
+                            String ins_pro_alm = "insert into producto_almacen Values ('"+pro.getId_pro()+"', '"+alm_or+"', '"+nueva_cant+"', '"+pro.getCos_pro()+"')";
+                            con.actualiza(st1, ins_pro_alm);
+                            con.cerrar(st1);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
                     }
                     con.cerrar(rs);
                     con.cerrar(st);
                 } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-
-                nueva_cant = cant_act + pro.getCan();
-
-                try {
-                    Statement st = con.conexion();
-                    String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
-                    con.actualiza(st, act_pro_alm);
-                    con.cerrar(st);
-                } catch (Exception ex) {
                     System.out.print(ex);
                 }
 

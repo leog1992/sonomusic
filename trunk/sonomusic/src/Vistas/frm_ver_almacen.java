@@ -318,12 +318,23 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_prod_alm", parametros);
                 this.dispose();
             }
-            // GANANCIA EN ALMACEN
+            // VALORIZADO DE ARTICULOS EN ALMACEN
             if (ventana.equals("rpt_ganancia_almacen")) {
                 int id = (int) t_almacen.getValueAt(i, 0);
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("idalm", id);
                 ven.ver_reporte("rpt_utilidad_almacen", parametros);
+                this.dispose();
+            }
+            
+            // GANANCIA DE VENTAS POR ALMACEN
+            if (ventana.equals("rpt_gana_venta")) {
+                frm_rpt_fechas fec = new frm_rpt_fechas();
+                fec.rpt = "ganancia_venta";
+                int id = (int) t_almacen.getValueAt(i, 0);
+                fec.alm.setId(id);
+                ven.llamar_ventana(fec);
+                ventana = "";
                 this.dispose();
             }
         }

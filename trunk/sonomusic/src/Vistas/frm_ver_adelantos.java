@@ -47,7 +47,7 @@ public class frm_ver_adelantos extends javax.swing.JInternalFrame {
             Object[] dato = new Object[6];
             while (rs.next()) {
                 dato[0] = rs.getObject("idadelanto");
-                dato[1] = rs.getObject("fecha");
+                dato[1] = ven.fechaformateada(rs.getString("fecha"));
                 dato[2] = rs.getObject("dni");
                 dato[3] = rs.getObject("nombre");
                 dato[4] = rs.getObject("tel");

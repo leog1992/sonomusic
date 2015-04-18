@@ -62,7 +62,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         Object[] caja = new Object[5];
         caja[0] = "CAJA";
         caja[1] = "SALDO ANTERIOR DE CAJA";
-        caja[2] = ven.getFechaActual();
+        caja[2] = ven.fechaformateada(ven.getFechaActual());
         caja[3] = formato.format(sal_ant());
         caja[4] = "0.00";
         mostrar.addRow(caja);
@@ -124,7 +124,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                     fila[0] = "BANCO";
                 }
                 fila[1] = rs.getObject("glosa");
-                fila[2] = rs.getObject("fec_mov");
+                fila[2] = ven.fechaformateada(rs.getString("fec_mov"));
                 fila[3] = rs.getObject("entrada");
                 fila[4] = rs.getObject("salida");
                 mostrar.addRow(fila);

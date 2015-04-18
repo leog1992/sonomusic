@@ -60,7 +60,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 Object[] fila = new Object[9];
                 fila[0] = rs.getString("motivo");
-                fila[1] = rs.getString("fecha");
+                fila[1] = ven.fechaformateada(rs.getString("fecha"));
                 fila[2] = rs.getString("idTraslado");
                 fila[3] = rs.getString("origen");
                 fila[4] = rs.getString("raz_soc_dest");

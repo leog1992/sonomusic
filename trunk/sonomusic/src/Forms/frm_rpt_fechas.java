@@ -202,6 +202,15 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fecha_doc", fec_ini);
                 ven.ver_reporte("rpt_compras_producto", parametros);
             }
+            // REPORTE DE GANANCIAS POR VENTAS POR ALMACEN
+            if (rpt.equals("ganancia_venta")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idalm", alm.getId());
+                parametros.put("fec_fin", fec_fin);
+                parametros.put("fec_ini", fec_ini);
+                ven.ver_reporte("rpt_ganacia_ventas", parametros);
+            }
+            
             // REPORTE DE VENTAS EN GENERAL
             if (rpt.equals("venta_total")) {
                 Map<String, Object> parametros = new HashMap<>();

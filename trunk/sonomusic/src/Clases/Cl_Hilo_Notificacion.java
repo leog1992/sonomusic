@@ -50,6 +50,7 @@ public class Cl_Hilo_Notificacion extends Thread {
         notificar_oferta();
         notificar_meta();
         notificar_pago_compra();
+        camb_est_com();
     }
 
     private void notificar_prod_fin() {
@@ -152,6 +153,38 @@ public class Cl_Hilo_Notificacion extends Thread {
             }
             con.cerrar(rs);
             con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    private void camb_est_com () {
+        //sumar monto de cuotas
+        try {
+            Statement st = con.conexion();
+            String sum = "select sum(monto) as suma, idCompra from pago_compras where estado = '1' group by idCompra";
+            ResultSet rs = con.consulta(st, sum);
+            while (rs.next()) {
+                //seleccionar monto de compra
+                double monto = 0;
+                double monto_cuota = 0;
+                try {
+                    Statement st1 = con.conexion();
+                    String idCom = "select total from compra where idCompra = '"+rs.getString("idCompra")+"'";        
+                    ResultSet rs1 = con.consulta(st1, idCom);
+                    if (rs1.next()) {
+                        monto = rs1.getDouble("total");
+                    }
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                monto_cuota = rs.getDouble("suma");
+                if (monto_cuota >= monto) {
+                    System.out.println("Compra pagada, modificar estado y fecha" +rs.getString("idCompra") + "\n");
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

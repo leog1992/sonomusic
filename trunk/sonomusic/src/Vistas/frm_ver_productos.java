@@ -10,6 +10,8 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Medida;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
+import Clases.Clase_CellEditor;
+import Clases.Clase_CellRender;
 import Clases.table_render;
 import Forms.frm_reg_compra_prod;
 import Forms.frm_reg_cotizacion;
@@ -71,6 +73,87 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             System.out.print(e);
         }
 
+    }
+
+    private void ver_productos_marca(String query) {
+        try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    if (columna == 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                }
+            };
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+            //Establecer como cabezeras el nombre de las colimnas
+            mostrar.addColumn("Id");
+            mostrar.addColumn("Sel.");
+            mostrar.addColumn("Descripcion");//descripcion modelo serie
+            mostrar.addColumn("Marca");
+            mostrar.addColumn("Precio");
+            mostrar.addColumn("Clasificacion");
+            mostrar.addColumn("Cant. Actual");
+            mostrar.addColumn("Cant. minima");
+            mostrar.addColumn("Und. Medida");
+            mostrar.addColumn("Grado");
+            mostrar.addColumn("Estado");
+
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[11];
+                fila[0] = rs.getObject("idProductos");
+                fila[1] = Boolean.FALSE;
+                fila[2] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
+                fila[3] = rs.getObject("marca");
+                fila[4] = rs.getObject("precio_venta");
+                fila[5] = rs.getObject("desc_clas");
+                fila[6] = rs.getObject("cant_actual");
+                fila[7] = rs.getObject("cant_min");
+                fila[8] = rs.getObject("desc_und");
+                fila[9] = rs.getObject("grado");
+                if (rs.getString("estado").equals("1")) {
+                    if (rs.getDouble("cant_actual") > rs.getDouble("cant_min")) {
+                        fila[10] = "NORMAL";
+                    }
+                    if (rs.getDouble("cant_actual") <= rs.getDouble("cant_min")) {
+                        fila[10] = "POR TERMINAR";
+                    }
+                    if (rs.getDouble("cant_actual") <= 0) {
+                        fila[10] = "NO DISPONIBLE";
+                    }
+                } else {
+                    fila[10] = "-";
+                }
+
+                mostrar.addRow(fila);
+            }
+            con.cerrar(st);
+            con.cerrar(rs);
+            t_productos.setModel(mostrar);
+            t_productos.getColumnModel().getColumn(0).setPreferredWidth(10);
+            t_productos.getColumnModel().getColumn(1).setPreferredWidth(10);
+            t_productos.getColumnModel().getColumn(2).setPreferredWidth(390);
+            t_productos.getColumnModel().getColumn(3).setPreferredWidth(50);
+            t_productos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            t_productos.getColumnModel().getColumn(5).setPreferredWidth(30);
+            t_productos.getColumnModel().getColumn(6).setPreferredWidth(30);
+            t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
+            t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
+            t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
+            t_productos.getColumnModel().getColumn(10).setPreferredWidth(40);
+            t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
+            t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
+            mostrar.fireTableDataChanged();
+            t_productos.updateUI();
+
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
     }
 
     private void ver_productos(String query) {
@@ -279,9 +362,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(234, 234, 234)
                         .addComponent(btn_reg)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_mod))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -303,7 +386,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,6 +402,8 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 //if (frm_menu.usu.getPpr_reg().equals("1")) {
         frm_reg_productos productos = new frm_reg_productos();
         productos.win = "reg";
+        productos.subventana = "prod_compra";
+        
         ven.llamar_ventana(productos);
         this.dispose();
 //} else {
@@ -338,7 +423,11 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
                 + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
                 + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%'  order by p.desc_pro asc";
-        ver_productos(query);
+        if (ventana.equals("compra_prod")) {
+            ver_productos_marca(query);
+        } else {
+            ver_productos(query);
+        }
 //        }
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {

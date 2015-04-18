@@ -29,9 +29,6 @@ public class Cl_Conectar {
     private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
-    // Ruta del servidor.
-    //208.43.223.210
-    //lunasystemsperu.com
     String server = "jdbc:mysql://192.168.1.39/" + bd;
     //String server = "jdbc:mysql://"+leer()+":3306/" + bd;
 
