@@ -54,6 +54,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jvnet.substance.SubstanceLookAndFeel;
 
 public class frm_menu extends javax.swing.JFrame {
 
@@ -77,6 +78,8 @@ public class frm_menu extends javax.swing.JFrame {
         // carga todas las notificacion primera vez
         noti = new Cl_Hilo_Notificacion();
         noti.start();
+         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
+         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
 
     private String leer_almacen() {
