@@ -47,12 +47,12 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     public frm_ver_productos() {
         initComponents();
-        if (!ventana.equals("compra_prod")) {
+//        if (!ventana.equals("compra_prod")) {
             String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
                     + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
             ver_productos(query);
-            t_productos.setDefaultRenderer(Object.class, new table_render());
-        }
+//            t_productos.setDefaultRenderer(Object.class, new table_render());
+//        }
         String clas = "select * from clasificacion order by id_clas asc";
         ver_clasificacion(clas);
     }
@@ -261,6 +261,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_busKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_busKeyTyped(evt);
+            }
         });
 
         jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
@@ -362,9 +365,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(234, 234, 234)
-                        .addComponent(btn_reg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_reg)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_mod))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -386,7 +389,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -418,21 +421,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        String bus = txt_bus.getText();
-        String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
-                + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
-                + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%'  order by p.desc_pro asc";
-        if (ventana.equals("compra_prod")) {
-            ver_productos_marca(query);
-        } else {
-            ver_productos(query);
-        }
-//        }
 
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            t_productos.requestFocus();
-        }
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -936,6 +925,24 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     private void t_productosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_t_productosKeyReleased
+
+    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        String bus = txt_bus.getText();
+        String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
+                + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
+                + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%' order by p.desc_pro asc";
+        if (ventana.equals("compra_prod")) {
+            ver_productos_marca(query);
+        } else {
+            ver_productos(query);
+        }
+//        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            t_productos.requestFocus();
+        }
+    }//GEN-LAST:event_txt_busKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -297,6 +297,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
         txt_ser.setEditable(false);
         txt_ser.setForeground(new java.awt.Color(0, 0, 153));
+        txt_ser.setText("-");
         txt_ser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_serKeyPressed(evt);
@@ -581,10 +582,10 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             prod.t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(10).setPreferredWidth(40);
-            prod.t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
-            prod.t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
-            prod.mostrar.fireTableDataChanged();
-            prod.t_productos.updateUI();
+//            prod.t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
+//            prod.t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
+//            prod.mostrar.fireTableDataChanged();
+//            prod.t_productos.updateUI();
 
         } catch (SQLException e) {
             System.out.print(e);
@@ -643,9 +644,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
                     ver_productos(query);
                     productos.btn_enviar.setEnabled(true);
-                } else {
-                    productos.ventana = "productitos";
-                }
+                } 
                 ven.llamar_ventana(productos);
 
             } catch (Exception e) {
@@ -707,6 +706,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     private void txt_cantmKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantmKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_cantm.getText().isEmpty()) {
+                cbx_und.setSelectedItem("UNIDADES");
                 cbx_und.setEnabled(true);
                 cbx_und.requestFocus();
             }
@@ -796,8 +796,10 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
     private void txt_comKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_comKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_cla.setEnabled(true);
-            cbx_cla.requestFocus();
+            if (!txt_com.getText().isEmpty()) {
+                cbx_cla.setEnabled(true);
+                cbx_cla.requestFocus();
+            }
         }
     }//GEN-LAST:event_txt_comKeyPressed
 
