@@ -80,19 +80,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             mostrar = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
-                    if (columna == 1) {
-                        return true;
-                    } else {
                         return false;
-                    }
-
                 }
             };
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
             mostrar.addColumn("Id");
-            mostrar.addColumn("Sel.");
             mostrar.addColumn("Descripcion");//descripcion modelo serie
             mostrar.addColumn("Marca");
             mostrar.addColumn("Precio");
@@ -107,27 +101,26 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 Object[] fila = new Object[11];
                 fila[0] = rs.getObject("idProductos");
-                fila[1] = Boolean.FALSE;
-                fila[2] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
-                fila[3] = rs.getObject("marca");
-                fila[4] = rs.getObject("precio_venta");
-                fila[5] = rs.getObject("desc_clas");
-                fila[6] = rs.getObject("cant_actual");
-                fila[7] = rs.getObject("cant_min");
-                fila[8] = rs.getObject("desc_und");
-                fila[9] = rs.getObject("grado");
+                fila[1] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
+                fila[2] = rs.getObject("marca");
+                fila[3] = rs.getObject("precio_venta");
+                fila[4] = rs.getObject("desc_clas");
+                fila[5] = rs.getObject("cant_actual");
+                fila[6] = rs.getObject("cant_min");
+                fila[7] = rs.getObject("desc_und");
+                fila[8] = rs.getObject("grado");
                 if (rs.getString("estado").equals("1")) {
                     if (rs.getDouble("cant_actual") > rs.getDouble("cant_min")) {
-                        fila[10] = "NORMAL";
+                        fila[9] = "NORMAL";
                     }
                     if (rs.getDouble("cant_actual") <= rs.getDouble("cant_min")) {
-                        fila[10] = "POR TERMINAR";
+                        fila[9] = "POR TERMINAR";
                     }
                     if (rs.getDouble("cant_actual") <= 0) {
-                        fila[10] = "NO DISPONIBLE";
+                        fila[9] = "NO DISPONIBLE";
                     }
                 } else {
-                    fila[10] = "-";
+                    fila[9] = "-";
                 }
 
                 mostrar.addRow(fila);
@@ -136,21 +129,16 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             con.cerrar(rs);
             t_productos.setModel(mostrar);
             t_productos.getColumnModel().getColumn(0).setPreferredWidth(10);
-            t_productos.getColumnModel().getColumn(1).setPreferredWidth(10);
-            t_productos.getColumnModel().getColumn(2).setPreferredWidth(390);
-            t_productos.getColumnModel().getColumn(3).setPreferredWidth(50);
-            t_productos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            t_productos.getColumnModel().getColumn(1).setPreferredWidth(390);
+            t_productos.getColumnModel().getColumn(2).setPreferredWidth(50);
+            t_productos.getColumnModel().getColumn(3).setPreferredWidth(20);
+            t_productos.getColumnModel().getColumn(4).setPreferredWidth(30);
             t_productos.getColumnModel().getColumn(5).setPreferredWidth(30);
-            t_productos.getColumnModel().getColumn(6).setPreferredWidth(30);
+            t_productos.getColumnModel().getColumn(6).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
-            t_productos.getColumnModel().getColumn(10).setPreferredWidth(40);
-            t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
-            t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
-            mostrar.fireTableDataChanged();
-            t_productos.updateUI();
-
+            t_productos.setDefaultRenderer(Object.class, new table_render());
         } catch (SQLException e) {
             System.out.print(e);
         }
@@ -220,6 +208,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
+            t_productos.setDefaultRenderer(Object.class, new table_render());
             mostrar.fireTableDataChanged();
 
         } catch (SQLException e) {
@@ -817,10 +806,10 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 int contar_repetidos = 0;
                 Object[] fila_compra = new Object[6];
                 fila_compra[0] = t_productos.getValueAt(a, 0);         //idproducto
-                fila_compra[1] = t_productos.getValueAt(a, 2);         //descripcion
-                fila_compra[2] = t_productos.getValueAt(a, 3);         //marca
+                fila_compra[1] = t_productos.getValueAt(a, 1);         //descripcion
+                fila_compra[2] = t_productos.getValueAt(a, 2);         //marca
                 fila_compra[3] = "1";                                  //cantidad
-                fila_compra[4] = t_productos.getValueAt(a, 8);         //und. med
+                fila_compra[4] = t_productos.getValueAt(a, 7);         //und. med
 
                 try {
                     Statement st1 = con.conexion();
@@ -861,8 +850,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_igv.setText(formato.format(prod.igv()));
                     prod.txt_tot.setText(formato.format(prod.total()));
                     prod.btn_reg.setEnabled(true);
-                    frm_reg_compra_prod.txt_idp.setText(t_productos.getValueAt(a, 0).toString());
-                    frm_reg_compra_prod.txt_desp.setText(t_productos.getValueAt(a, 1).toString());
                     frm_reg_compra_prod.txt_idp.requestFocus();
                     this.dispose();
                 }

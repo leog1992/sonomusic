@@ -528,7 +528,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
             prod.mostrar.addColumn("Id");
-            prod.mostrar.addColumn("Sel.");
             prod.mostrar.addColumn("Descripcion");//descripcion modelo serie
             prod.mostrar.addColumn("Marca");
             prod.mostrar.addColumn("Precio");
@@ -541,29 +540,28 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
             //Creando las filas para el JTable
             while (rs.next()) {
-                Object[] fila = new Object[11];
+                Object[] fila = new Object[10];
                 fila[0] = rs.getObject("idProductos");
-                fila[1] = Boolean.FALSE;
-                fila[2] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
-                fila[3] = rs.getObject("marca");
-                fila[4] = rs.getObject("precio_venta");
-                fila[5] = rs.getObject("desc_clas");
-                fila[6] = rs.getObject("cant_actual");
-                fila[7] = rs.getObject("cant_min");
-                fila[8] = rs.getObject("desc_und");
-                fila[9] = rs.getObject("grado");
+                fila[1] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
+                fila[2] = rs.getObject("marca");
+                fila[3] = rs.getObject("precio_venta");
+                fila[4] = rs.getObject("desc_clas");
+                fila[5] = rs.getObject("cant_actual");
+                fila[6] = rs.getObject("cant_min");
+                fila[7] = rs.getObject("desc_und");
+                fila[8] = rs.getObject("grado");
                 if (rs.getString("estado").equals("1")) {
                     if (rs.getDouble("cant_actual") > rs.getDouble("cant_min")) {
-                        fila[10] = "NORMAL";
+                        fila[9] = "NORMAL";
                     }
                     if (rs.getDouble("cant_actual") <= rs.getDouble("cant_min")) {
-                        fila[10] = "POR TERMINAR";
+                        fila[9] = "POR TERMINAR";
                     }
                     if (rs.getDouble("cant_actual") <= 0) {
-                        fila[10] = "NO DISPONIBLE";
+                        fila[9] = "NO DISPONIBLE";
                     }
                 } else {
-                    fila[10] = "-";
+                    fila[9] = "-";
                 }
 
                 prod.mostrar.addRow(fila);
@@ -572,16 +570,15 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             con.cerrar(rs);
             prod.t_productos.setModel(prod.mostrar);
             prod.t_productos.getColumnModel().getColumn(0).setPreferredWidth(10);
-            prod.t_productos.getColumnModel().getColumn(1).setPreferredWidth(10);
-            prod.t_productos.getColumnModel().getColumn(2).setPreferredWidth(390);
-            prod.t_productos.getColumnModel().getColumn(3).setPreferredWidth(50);
-            prod.t_productos.getColumnModel().getColumn(4).setPreferredWidth(20);
+            prod.t_productos.getColumnModel().getColumn(1).setPreferredWidth(390);
+            prod.t_productos.getColumnModel().getColumn(2).setPreferredWidth(50);
+            prod.t_productos.getColumnModel().getColumn(3).setPreferredWidth(20);
+            prod.t_productos.getColumnModel().getColumn(4).setPreferredWidth(30);
             prod.t_productos.getColumnModel().getColumn(5).setPreferredWidth(30);
-            prod.t_productos.getColumnModel().getColumn(6).setPreferredWidth(30);
+            prod.t_productos.getColumnModel().getColumn(6).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
-            prod.t_productos.getColumnModel().getColumn(10).setPreferredWidth(40);
 //            prod.t_productos.getColumnModel().getColumn(1).setCellEditor(new Clase_CellEditor());
 //            prod.t_productos.getColumnModel().getColumn(1).setCellRenderer(new Clase_CellRender());
 //            prod.mostrar.fireTableDataChanged();

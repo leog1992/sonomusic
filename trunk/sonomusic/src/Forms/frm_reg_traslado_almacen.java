@@ -604,7 +604,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     private void btn_ccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ccActionPerformed
         Double cantidad = Double.parseDouble(JOptionPane.showInputDialog("Ingrese Cantidad"));
-        t_detalle.setValueAt(cantidad, i, 2);
+        t_detalle.setValueAt(cantidad, i, 3);
     }//GEN-LAST:event_btn_ccActionPerformed
 
     private void llenar() {
