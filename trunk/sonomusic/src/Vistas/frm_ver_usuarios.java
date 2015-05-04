@@ -7,6 +7,7 @@ package Vistas;
 
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
+import Forms.frm_reg_cambio_contra;
 import Forms.frm_reg_usuario;
 import Forms.frm_rpt_fechas;
 import java.awt.Color;
@@ -182,6 +183,11 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         btn_cambiar_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/hammer_screwdriver.png"))); // NOI18N
         btn_cambiar_pass.setText("Cambiar Contraseña");
         btn_cambiar_pass.setEnabled(false);
+        btn_cambiar_pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cambiar_passActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -408,6 +414,15 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_t_usuariosMouseClicked
+
+    private void btn_cambiar_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cambiar_passActionPerformed
+        frm_reg_cambio_contra cambio = new frm_reg_cambio_contra();
+        cambio.txt_nick.setText(t_usuarios.getValueAt(i, 0).toString());
+        cambio.txt_nom.setText(t_usuarios.getValueAt(i, 1).toString());
+        cambio.txt_con_ant.setEditable(true);
+        cambio.txt_con_ant.requestFocus();
+        ven.llamar_ventana(cambio);
+    }//GEN-LAST:event_btn_cambiar_passActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
