@@ -232,60 +232,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             txt_bus.requestFocus();
         }
 
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (funcion.equals("compra_prod")) {
-                frm_reg_compra_prod compra_pro = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_pro.txt_ruc.setText(pro.getRuc());
-                        compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_pro.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_pro.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_pro.cbx_alm.setEnabled(true);
-                        compra_pro.cbx_alm.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
-
-            if (funcion.equals("compra_serv")) {
-                frm_reg_compra_serv compra_serv = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_serv.txt_ruc.setText(pro.getRuc());
-                        compra_serv.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_serv.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_serv.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_serv.cbx_tipa.setSelectedIndex(0);
-                        compra_serv.cbx_tipa.setEnabled(true);
-                        compra_serv.cbx_tipa.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-
-            }
-            if (funcion.equals("compras_prov")) {
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("proveedor", pro.getRuc());
-                ven.ver_reporte("rpt_compras_proveedor", parametros);
-                this.dispose();
-            }
-            funcion = "proveedor";
-        }
-
     }//GEN-LAST:event_t_proveedorKeyPressed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
@@ -359,9 +305,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                         compra_pro.txt_ruc.setText(pro.getRuc());
                         compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
                         compra_pro.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_pro.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_pro.cbx_alm.setEnabled(true);
-                        compra_pro.cbx_alm.requestFocus();
+                        compra_pro.btn_bus_emp.setEnabled(true);
                         this.dispose();
                     }
                 } catch (SQLException ex) {

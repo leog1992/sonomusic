@@ -39,7 +39,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         System.out.println(frm_menu.alm.getDireccion());
         String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
                 + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                + "'" + frm_menu.alm.getDireccion() + "'";
+                + "'" + frm_menu.alm.getDireccion() + "' order by fecha, idTraslado asc";
         ver_guia(query);
     }
 

@@ -13,6 +13,7 @@ import Clases.table_render;
 import Forms.frm_cierre_caja;
 import Forms.frm_conf_doc;
 import Forms.frm_reg_deposito;
+import Forms.frm_reg_empresa;
 import Forms.frm_reg_venta;
 import Forms.frm_rpt_fechas;
 import Vistas.frm_banco;
@@ -252,6 +253,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem36 = new javax.swing.JMenuItem();
         jMenuItem37 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem43 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem20 = new javax.swing.JMenuItem();
@@ -1196,6 +1198,16 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuItem43.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/almacen.png"))); // NOI18N
+        jMenuItem43.setText("Empresa");
+        jMenuItem43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem43ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem43);
+
         jMenuItem24.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/banco.png"))); // NOI18N
         jMenuItem24.setText("Bancos");
@@ -1637,6 +1649,11 @@ public class frm_menu extends javax.swing.JFrame {
         almacen.ventana = "rpt_gana_venta";
         ven.llamar_ventana(almacen);
     }//GEN-LAST:event_jMenuItem42ActionPerformed
+
+    private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem43ActionPerformed
+        frm_reg_empresa empresa = new frm_reg_empresa();
+        ven.llamar_ventana(empresa);
+    }//GEN-LAST:event_jMenuItem43ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1739,6 +1756,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem41;
     private javax.swing.JMenuItem jMenuItem42;
+    private javax.swing.JMenuItem jMenuItem43;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
