@@ -514,7 +514,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
 
         btn_bus_emp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
         btn_bus_emp.setEnabled(false);
-        btn_bus_emp.setFocusable(false);
         btn_bus_emp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_bus_empActionPerformed(evt);
@@ -707,8 +706,8 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                     pro.setRaz(rs.getString("raz_soc_pro"));
                     txt_raz.setText(rs.getString("raz_soc_pro"));
                     txt_dir.setText(rs.getString("dir_pro"));
-                    txt_ruc_dest.setText(rs.getString("tel_pro"));
                     btn_bus_emp.setEnabled(true);
+                    btn_bus_emp.requestFocus();
                 } else {
                     txt_ruc.setText("");
                     txt_ruc.requestFocus();
@@ -794,19 +793,13 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             prod.mostrar = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
-                    if (columna == 1) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-
+                    return false;
                 }
             };
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
             prod.mostrar.addColumn("Id");
-            prod.mostrar.addColumn("Sel.");
             prod.mostrar.addColumn("Descripcion");//descripcion modelo serie
             prod.mostrar.addColumn("Marca");
             prod.mostrar.addColumn("Precio");

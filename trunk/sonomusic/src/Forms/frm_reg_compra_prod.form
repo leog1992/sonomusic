@@ -728,7 +728,6 @@
           <Image iconType="3" name="/Recursos/find.png"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
-        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_bus_empActionPerformed"/>
