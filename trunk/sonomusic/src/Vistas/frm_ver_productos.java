@@ -48,9 +48,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     public frm_ver_productos() {
         initComponents();
 //        if (!ventana.equals("compra_prod")) {
-            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
-                    + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
-            ver_productos(query);
+        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
+                + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
+        ver_productos(query);
 //            t_productos.setDefaultRenderer(Object.class, new table_render());
 //        }
         String clas = "select * from clasificacion order by id_clas asc";
@@ -80,7 +80,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             mostrar = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
-                        return false;
+                    return false;
                 }
             };
             Statement st = con.conexion();
@@ -395,7 +395,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         frm_reg_productos productos = new frm_reg_productos();
         productos.win = "reg";
         productos.subventana = "prod_compra";
-        
+
         ven.llamar_ventana(productos);
         this.dispose();
 //} else {

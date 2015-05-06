@@ -32,7 +32,6 @@ import Vistas.frm_ver_compras_prod;
 import Vistas.frm_ver_compras_serv;
 import Vistas.frm_ver_cotizacion;
 import Vistas.frm_ver_empleado;
-import Vistas.frm_ver_empresa;
 import Vistas.frm_ver_guias;
 import Vistas.frm_ver_notas;
 import Vistas.frm_ver_pago;
@@ -1552,9 +1551,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        frm_ver_empresa empresa = new frm_ver_empresa(); 
-        empresa.ventana="venta_total";
-        ven.llamar_ventana(empresa);
+//        frm_ver_empresa empresa = new frm_ver_empresa(); 
+//        empresa.ventana="venta_total";
+//        ven.llamar_ventana(empresa);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -1564,9 +1563,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        frm_ver_empresa empresa = new frm_ver_empresa();
-        empresa.ventana="compra_empresa";
-        ven.llamar_ventana(empresa);        
+//        frm_ver_empresa empresa = new frm_ver_empresa();
+//        empresa.ventana="compra_empresa";
+//        ven.llamar_ventana(empresa);        
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
@@ -1621,9 +1620,9 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem39ActionPerformed
 
     private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
-        frm_ver_empresa empresa = new frm_ver_empresa();
-        empresa.ventana = "rpt_ganancia_almacen";
-        ven.llamar_ventana(empresa);
+//        frm_ver_empresa empresa = new frm_ver_empresa();
+//        empresa.ventana = "rpt_ganancia_almacen";
+//        ven.llamar_ventana(empresa);
     }//GEN-LAST:event_jMenuItem40ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed

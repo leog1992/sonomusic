@@ -24,7 +24,7 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     DefaultTableModel modelo = null;
     int i;
-    String accion;
+    public static String accion;
 
     /**
      * Creates new form frm_reg_empresa
@@ -127,6 +127,9 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
         t_empresa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 t_empresaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                t_empresaMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(t_empresa);
@@ -433,6 +436,10 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_eliActionPerformed
 
     private void t_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMouseClicked
+        
+    }//GEN-LAST:event_t_empresaMouseClicked
+
+    private void t_empresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMousePressed
         i = t_empresa.getSelectedRow();
         btn_eli.setEnabled(true);
         btn_mod.setEnabled(true);
@@ -443,18 +450,21 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
                 almacen.txt_ruc.setText(t_empresa.getValueAt(i, 0).toString());
                 almacen.txt_raz.setText(t_empresa.getValueAt(i, 1).toString());
                 almacen.btn_bus_cue.setEnabled(true);
+                accion = "empresa";
                 this.dispose();
             }
+            
             if (accion.equals("compra_prod")) {
                 frm_reg_compra_prod compra_prod = null;
                 compra_prod.txt_ruc_dest.setText(t_empresa.getValueAt(i, 0).toString());
                 compra_prod.cbx_alm.setEnabled(true);
                 compra_prod.cbx_alm.requestFocus();
+                accion = "empresa";
                 this.dispose();
             }
         }
-        accion = "";
-    }//GEN-LAST:event_t_empresaMouseClicked
+        
+    }//GEN-LAST:event_t_empresaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

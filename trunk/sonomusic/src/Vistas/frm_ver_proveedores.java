@@ -244,9 +244,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void t_proveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMousePressed
-        i = t_proveedor.getSelectedRow();
-        pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-        btn_mod.setEnabled(true);
+
     }//GEN-LAST:event_t_proveedorMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
@@ -288,7 +286,10 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked
-        int i = t_proveedor.getSelectedRow();
+        int i;
+        i = t_proveedor.getSelectedRow();
+        pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+        btn_mod.setEnabled(true);
 
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
@@ -296,7 +297,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
 
             if (funcion.equals("compra_prod")) {
                 frm_reg_compra_prod compra_pro = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 try {
                     Statement st = con.conexion();
                     String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
@@ -306,6 +306,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                         compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
                         compra_pro.txt_dir.setText(rs.getString("dir_pro"));
                         compra_pro.btn_bus_emp.setEnabled(true);
+                        compra_pro.btn_bus_emp.requestFocus();
                         this.dispose();
                     }
                 } catch (SQLException ex) {
