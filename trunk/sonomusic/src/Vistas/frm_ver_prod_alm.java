@@ -195,7 +195,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
-        
+
     }//GEN-LAST:event_t_productosKeyPressed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
@@ -223,7 +223,25 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
             pro.mostrar_productos(query);
-        }
+        } else if (cbx_bus.getSelectedIndex() == 1 ) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > p.cant_min order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+        } else if (cbx_bus.getSelectedIndex() == 2 ) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant < p.cant_min and pa.cant > 0 order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+        } else  {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant = 0 order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+    }
         //falta demas oopciones del combo
     }//GEN-LAST:event_cbx_busKeyPressed
 

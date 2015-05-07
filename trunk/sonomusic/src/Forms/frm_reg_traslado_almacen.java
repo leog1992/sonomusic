@@ -795,6 +795,23 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         }
         if (accion.equals("compruebat")) {
+            
+            try {
+                int idalma = cbx_alm_de.getSelectedIndex() + 1;
+                Statement st = con.conexion();
+                String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
+                ResultSet rs = con.consulta(st, ver_emp);
+                if (rs.next()) {
+                    ruc = rs.getString("ruc");
+                    raz = rs.getString("raz_soc");
+                    dir = rs.getString("dir_alm");
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+            
             Integer filas = t_detalle.getRowCount();
             for (int x = 0; x <= (filas - 1); x++) {
                 pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
@@ -854,7 +871,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getCos_pro() + "', '0.00', '0.00', "
-                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '3', '" + alm_or + "', '" + ruc + "', '" + raz + "', '11')";
+                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_de + "', '" + ruc + "', '" + raz + "', '11')";
                     con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {
