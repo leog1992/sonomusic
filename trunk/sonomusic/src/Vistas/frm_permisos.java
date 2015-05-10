@@ -2,10 +2,8 @@ package Vistas;
 
 import Clases.Cl_Conectar;
 import Clases.Cl_Usuario;
-import java.sql.ResultSet;
+import Clases.Cl_Varios;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
-import sonomusic.frm_menu;
 
 /**
  *
@@ -15,6 +13,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Usuario usu = new Cl_Usuario();
+    Cl_Varios ven = new Cl_Varios();
 
     public frm_permisos() {
         initComponents();
@@ -22,7 +21,129 @@ public class frm_permisos extends javax.swing.JInternalFrame {
 
     }
 
- 
+    private void llenar() {
+        usu.setNick(lbl_dni.getText());
+        
+        if (pe_tras.isSelected()) {
+            usu.setPer_anu_traslado("1");
+        } else {
+            usu.setPer_anu_traslado("0");
+        }
+
+        if (pr_ven.isSelected()) {
+            usu.setPer_reg_venta("1");
+        } else {
+            usu.setPer_reg_venta("0");
+        }
+
+        if (pv_caja.isSelected()) {
+            usu.setPer_ver_caja("1");
+        } else {
+            usu.setPer_ver_caja("0");
+        }
+
+        if (pv_rh.isSelected()) {
+            usu.setPer_ver_rrhh("1");
+        } else {
+            usu.setPer_ver_rrhh("0");
+        }
+
+        if (pr_ade.isSelected()) {
+            usu.setPer_reg_adelanto("1");
+        } else {
+            usu.setPer_reg_adelanto("0");
+        }
+
+        if (pv_rep.isSelected()) {
+            usu.setPer_ver_reportes("1");
+        } else {
+            usu.setPer_ver_reportes("0");
+        }
+
+        if (pr_ofe.isSelected()) {
+            usu.setPer_reg_oferta("1");
+        } else {
+            usu.setPer_reg_oferta("0");
+        }
+
+        if (pr_comp.isSelected()) {
+            usu.setPer_compra_productos("1");
+        } else {
+            usu.setPer_compra_productos("0");
+        }
+
+        if (pr_coms.isSelected()) {
+            usu.setPer_compra_servicios("1");
+        } else {
+            usu.setPer_compra_servicios("0");
+        }
+
+        if (pr_alm.isSelected()) {
+            usu.setPer_reg_almacen("1");
+        } else {
+            usu.setPer_reg_almacen("0");
+        }
+
+        if (pm_alm.isSelected()) {
+            usu.setPer_mod_almacen("1");
+        } else {
+            usu.setPer_mod_almacen("0");
+        }
+
+        if (pr_tras.isSelected()) {
+            usu.setPer_reg_traslado("1");
+        } else {
+            usu.setPer_reg_traslado("0");
+        }
+
+        if (pr_prod.isSelected()) {
+            usu.setPer_reg_producto("1");
+        } else {
+            usu.setPer_reg_producto("0");
+        }
+
+        if (pm_prod.isSelected()) {
+            usu.setPer_mod_producto("1");
+        } else {
+            usu.setPer_mod_producto("0");
+        }
+
+        if (pe_prod.isSelected()) {
+            usu.setPer_eli_producto("1");
+        } else {
+            usu.setPer_eli_producto("0");
+        }
+
+        if (pm_docs.isSelected()) {
+            usu.setPer_conf_documento("1");
+        } else {
+            usu.setPer_conf_documento("0");
+        }
+
+        if (pm_emp.isSelected()) {
+            usu.setPer_mod_empresa("1");
+        } else {
+            usu.setPer_mod_empresa("0");
+        }
+
+        if (pe_emp.isSelected()) {
+            usu.setPer_eli_empresa("1");
+        } else {
+            usu.setPer_eli_empresa("0");
+        }
+
+        if (pm_usu.isSelected()) {
+            usu.setPer_usuario("1");
+        } else {
+            usu.setPer_usuario("0");
+        }
+
+        if (pm_cue.isSelected()) {
+            usu.setPer_cuentas("1");
+        } else {
+            usu.setPer_cuentas("0");
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -359,7 +480,18 @@ public class frm_permisos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-       
+        llenar();
+        Statement st = con.conexion();
+        String ins_per = "update usuario set pr_ven = '"+usu.getPer_reg_venta()+"', pv_caj = '"+usu.getPer_ver_caja()+"', pv_rh = '"+usu.getPer_ver_rrhh()+"', pr_ade = '"+usu.getPer_reg_adelanto()+"',"
+                + "pv_rep = '"+usu.getPer_ver_reportes()+"', pr_ofe = '"+usu.getPer_reg_oferta()+"', pv_comp = '"+usu.getPer_compra_productos()+"', pv_coms = '"+usu.getPer_compra_servicios()+"', "
+                + "pr_alm = '"+usu.getPer_reg_almacen()+"', pm_alm = '"+usu.getPer_mod_almacen()+"', pr_tras = '"+usu.getPer_reg_traslado()+"', pr_prod = '"+usu.getPer_reg_producto()+"', "
+                + "pm_prod = '"+usu.getPer_mod_producto()+"', pe_prod = '"+usu.getPer_eli_producto()+"', pm_docs = '"+usu.getPer_conf_documento()+"', pm_emp = '"+usu.getPer_mod_empresa()+"', "
+                + "pe_emp = '"+usu.getPer_eli_empresa()+"', pm_usu = '"+usu.getPer_usuario()+"', pm_cue = '"+usu.getPer_cuentas()+"' where nick = '"+usu.getNick()+"'";
+        con.actualiza(st, ins_per);
+        con.cerrar(st);
+        frm_ver_usuarios usuarios = new frm_ver_usuarios();
+        ven.llamar_ventana(usuarios);
+        this.dispose();
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void pm_almActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pm_almActionPerformed

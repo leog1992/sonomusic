@@ -302,7 +302,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
         }
-
+        this.dispose();
         ven.llamar_ventana(permi);
     }//GEN-LAST:event_btn_permisosActionPerformed
 
