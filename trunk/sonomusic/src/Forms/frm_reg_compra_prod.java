@@ -697,24 +697,26 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            pro.setRuc(txt_ruc.getText());
-            try {
-                Statement st = con.conexion();
-                String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                ResultSet rs = con.consulta(st, ver_pro);
-                if (rs.next()) {
-                    pro.setRaz(rs.getString("raz_soc_pro"));
-                    txt_raz.setText(rs.getString("raz_soc_pro"));
-                    txt_dir.setText(rs.getString("dir_pro"));
-                    btn_bus_emp.setEnabled(true);
-                    btn_bus_emp.requestFocus();
-                } else {
-                    txt_ruc.setText("");
-                    txt_ruc.requestFocus();
-                    JOptionPane.showMessageDialog(null, "El Proveedor no existe \nPor favor ingrese otro nro de RUC");
+            if (txt_ruc.getText().length() == 11) {
+                pro.setRuc(txt_ruc.getText());
+                try {
+                    Statement st = con.conexion();
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+                    ResultSet rs = con.consulta(st, ver_pro);
+                    if (rs.next()) {
+                        pro.setRaz(rs.getString("raz_soc_pro"));
+                        txt_raz.setText(rs.getString("raz_soc_pro"));
+                        txt_dir.setText(rs.getString("dir_pro"));
+                        btn_bus_emp.setEnabled(true);
+                        btn_bus_emp.requestFocus();
+                    } else {
+                        txt_ruc.setText("");
+                        txt_ruc.requestFocus();
+                        JOptionPane.showMessageDialog(null, "El Proveedor no existe \nPor favor ingrese otro nro de RUC");
+                    }
+                } catch (SQLException ex) {
+                    System.out.print(ex);
                 }
-            } catch (SQLException ex) {
-                System.out.print(ex);
             }
         }
     }//GEN-LAST:event_txt_rucKeyPressed
@@ -783,7 +785,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         //prod.btn_reg.setEnabled(false);
         prod.btn_mod.setEnabled(false);
         prod.btn_eli.setEnabled(false);
-        prod.btn_enviar.setEnabled(true);
+      //  prod.btn_enviar.setEnabled(true);
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_btn_busmActionPerformed
 
@@ -935,7 +937,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String ins_com = "insert into compra Values (null, '" + pro.getRuc() + "',null, '" + tido.getId() + "', '" + com.getSerie() + "', '" + com.getNro() + "', '" + com.getFec_com() + "', "
-                    + "'" + com.getEst() + "', '" + com.getFec_pag() + "', '" + com.getEst() + "', '" + frm_menu.lbl_user.getText() + "','" + alm.getId() + "', '" + com.getTotal() + "', 'P', '"+emp.getRuc()+"')";
+                    + "'" + com.getEst() + "', '" + com.getFec_pag() + "', '" + com.getEst() + "', '" + frm_menu.lbl_user.getText() + "','" + alm.getId() + "', '" + com.getTotal() + "', 'P', '" + emp.getRuc() + "')";
             con.actualiza(st, ins_com);
             con.cerrar(st);
         } catch (Exception ex) {

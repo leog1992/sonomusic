@@ -14,23 +14,31 @@ public class Cl_Usuario {
     private String nick;
     private String contra;
     private String est = "1";
-    private String per_panel;
-    private String per_menu;
-    private String per_report;
-    private String per_venta;
-    private String per_adelanto;
-    private String per_coti_cliente;
-    private String per_comp_servicio;
-    private String per_conf_documentos;
-    private String per_caja_chica;
-    private String per_cierre_caja;
-    private String per_notas;
-    private String per_depositos;
-    
+    private String per_reg_venta;
+    private String per_ver_caja;
+    private String per_ver_rrhh;
+    private String per_reg_adelanto;
+    private String per_ver_reportes;
+    private String per_reg_oferta;
+    private String per_mod_proveedor;
+    private String per_compra_productos;
+    private String per_compra_servicios;
+    private String per_reg_almacen;
+    private String per_mod_almacen;
+    private String per_reg_traslado;
+    private String per_anu_traslado; 
+    private String per_reg_producto;
+    private String per_mod_producto;
+    private String per_eli_producto;
+    private String per_conf_documento;
+    private String per_mod_empresa;
+    private String per_eli_empresa;
+    private String per_usuario;
+    private String per_cuentas;
 
     public Cl_Usuario() {
     }
-
+    
     public String getNick() {
         return nick;
     }
@@ -55,101 +63,174 @@ public class Cl_Usuario {
         this.est = est;
     }
 
-    public String getPer_panel() {
-        return per_panel;
+    public String getPer_reg_venta() {
+        return per_reg_venta;
     }
 
-    public void setPer_panel(String per_panel) {
-        this.per_panel = per_panel;
+    public void setPer_reg_venta(String per_reg_venta) {
+        this.per_reg_venta = per_reg_venta;
     }
 
-    public String getPer_menu() {
-        return per_menu;
+    public String getPer_ver_caja() {
+        return per_ver_caja;
     }
 
-    public void setPer_menu(String per_menu) {
-        this.per_menu = per_menu;
+    public void setPer_ver_caja(String per_ver_caja) {
+        this.per_ver_caja = per_ver_caja;
     }
 
-    public String getPer_report() {
-        return per_report;
+    public String getPer_ver_rrhh() {
+        return per_ver_rrhh;
     }
 
-    public void setPer_report(String per_report) {
-        this.per_report = per_report;
+    public void setPer_ver_rrhh(String per_ver_rrhh) {
+        this.per_ver_rrhh = per_ver_rrhh;
     }
 
-    public String getPer_venta() {
-        return per_venta;
+    public String getPer_reg_adelanto() {
+        return per_reg_adelanto;
     }
 
-    public void setPer_venta(String per_venta) {
-        this.per_venta = per_venta;
+    public void setPer_reg_adelanto(String per_reg_adelanto) {
+        this.per_reg_adelanto = per_reg_adelanto;
     }
 
-    public String getPer_adelanto() {
-        return per_adelanto;
+    public String getPer_ver_reportes() {
+        return per_ver_reportes;
     }
 
-    public void setPer_adelanto(String per_adelanto) {
-        this.per_adelanto = per_adelanto;
+    public void setPer_ver_reportes(String per_ver_reportes) {
+        this.per_ver_reportes = per_ver_reportes;
     }
 
-    public String getPer_coti_cliente() {
-        return per_coti_cliente;
+    public String getPer_reg_oferta() {
+        return per_reg_oferta;
     }
 
-    public void setPer_coti_cliente(String per_coti_cliente) {
-        this.per_coti_cliente = per_coti_cliente;
+    public void setPer_reg_oferta(String per_reg_oferta) {
+        this.per_reg_oferta = per_reg_oferta;
     }
 
-    public String getPer_comp_servicio() {
-        return per_comp_servicio;
+    public String getPer_mod_proveedor() {
+        return per_mod_proveedor;
     }
 
-    public void setPer_comp_servicio(String per_comp_servicio) {
-        this.per_comp_servicio = per_comp_servicio;
+    public void setPer_mod_proveedor(String per_mod_proveedor) {
+        this.per_mod_proveedor = per_mod_proveedor;
     }
 
-    public String getPer_conf_documentos() {
-        return per_conf_documentos;
+    public String getPer_compra_productos() {
+        return per_compra_productos;
     }
 
-    public void setPer_conf_documentos(String per_conf_documentos) {
-        this.per_conf_documentos = per_conf_documentos;
+    public void setPer_compra_productos(String per_compra_productos) {
+        this.per_compra_productos = per_compra_productos;
     }
 
-    public String getPer_caja_chica() {
-        return per_caja_chica;
+    public String getPer_compra_servicios() {
+        return per_compra_servicios;
     }
 
-    public void setPer_caja_chica(String per_caja_chica) {
-        this.per_caja_chica = per_caja_chica;
+    public void setPer_compra_servicios(String per_compra_servicios) {
+        this.per_compra_servicios = per_compra_servicios;
     }
 
-    public String getPer_cierre_caja() {
-        return per_cierre_caja;
+    public String getPer_reg_almacen() {
+        return per_reg_almacen;
     }
 
-    public void setPer_cierre_caja(String per_cierre_caja) {
-        this.per_cierre_caja = per_cierre_caja;
+    public void setPer_reg_almacen(String per_reg_almacen) {
+        this.per_reg_almacen = per_reg_almacen;
     }
 
-    public String getPer_notas() {
-        return per_notas;
+    public String getPer_mod_almacen() {
+        return per_mod_almacen;
     }
 
-    public void setPer_notas(String per_notas) {
-        this.per_notas = per_notas;
+    public void setPer_mod_almacen(String per_mod_almacen) {
+        this.per_mod_almacen = per_mod_almacen;
     }
 
-    public String getPer_depositos() {
-        return per_depositos;
+    public String getPer_reg_traslado() {
+        return per_reg_traslado;
     }
 
-    public void setPer_depositos(String per_depositos) {
-        this.per_depositos = per_depositos;
+    public void setPer_reg_traslado(String per_reg_traslado) {
+        this.per_reg_traslado = per_reg_traslado;
     }
 
+    public String getPer_anu_traslado() {
+        return per_anu_traslado;
+    }
+
+    public void setPer_anu_traslado(String per_anu_traslado) {
+        this.per_anu_traslado = per_anu_traslado;
+    }
+
+    public String getPer_reg_producto() {
+        return per_reg_producto;
+    }
+
+    public void setPer_reg_producto(String per_reg_producto) {
+        this.per_reg_producto = per_reg_producto;
+    }
+
+    public String getPer_mod_producto() {
+        return per_mod_producto;
+    }
+
+    public void setPer_mod_producto(String per_mod_producto) {
+        this.per_mod_producto = per_mod_producto;
+    }
+
+    public String getPer_eli_producto() {
+        return per_eli_producto;
+    }
+
+    public void setPer_eli_producto(String per_eli_producto) {
+        this.per_eli_producto = per_eli_producto;
+    }
+
+    public String getPer_conf_documento() {
+        return per_conf_documento;
+    }
+
+    public void setPer_conf_documento(String per_conf_documento) {
+        this.per_conf_documento = per_conf_documento;
+    }
+
+    public String getPer_mod_empresa() {
+        return per_mod_empresa;
+    }
+
+    public void setPer_mod_empresa(String per_mod_empresa) {
+        this.per_mod_empresa = per_mod_empresa;
+    }
+
+    public String getPer_eli_empresa() {
+        return per_eli_empresa;
+    }
+
+    public void setPer_eli_empresa(String per_eli_empresa) {
+        this.per_eli_empresa = per_eli_empresa;
+    }
+
+    public String getPer_usuario() {
+        return per_usuario;
+    }
+
+    public void setPer_usuario(String per_usuario) {
+        this.per_usuario = per_usuario;
+    }
+
+    public String getPer_cuentas() {
+        return per_cuentas;
+    }
+
+    public void setPer_cuentas(String per_cuentas) {
+        this.per_cuentas = per_cuentas;
+    }
+    
+    
     
 }

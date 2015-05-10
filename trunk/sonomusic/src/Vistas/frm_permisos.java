@@ -22,169 +22,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
 
     }
 
-    void cargar_permisos() {
-        try {
-            
-            String dni=frm_ver_usuarios.mostrar.getValueAt(0, 0).toString();
-            Statement st = con.conexion();
-            String sql = "select per_panel, per_menu, per_repor, per_ver_venta, per_adelanto, per_coti_cliente,"
-                    + " per_comp_servicio, per_conf_documentos, per_caja_chica, per_cierre_caja, per_notas,"
-                    + " per_depositos from usuario where nick='" + dni + "' ";
-            ResultSet rs = con.consulta(st, sql);
-            if (rs.next()) {
-                if (rs.getInt("per_panel") == 1) {
-                    chk_panel.setSelected(true);
-                } else {
-                    chk_panel.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_menu") == 1) {
-                    chk_menu.setSelected(true);
-                } else {
-                    chk_menu.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_repor") == 1) {
-                    chk_reportes.setSelected(true);
-                } else {
-                    chk_reportes.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_ver_venta") == 1) {
-                    chk_ventas.setSelected(true);
-                } else {
-                    chk_ventas.setSelected(false);
-                }
-                if (rs.getInt("per_adelanto") == 1) {
-                    chk_adelantos.setSelected(true);
-                } else {
-                    chk_adelantos.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_coti_cliente") == 1) {
-                    chk_cotizacion_cliente.setSelected(true);
-                } else {
-                    chk_cotizacion_cliente.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_comp_servicio") == 1) {
-                    chk_compra_servicios.setSelected(true);
-                } else {
-                    chk_compra_servicios.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_conf_documentos") == 1) {
-                    chk_documentos.setSelected(true);
-                } else {
-                    chk_documentos.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_caja_chica") == 1) {
-                    chk_caja_chica.setSelected(true);
-                } else {
-                    chk_caja_chica.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_cierre_caja") == 1) {
-                    chk_cierre_caja.setSelected(true);
-                } else {
-                    chk_cierre_caja.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_notas") == 1) {
-                    chk_notas.setSelected(true);
-                } else {
-                    chk_notas.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_depositos") == 1) {
-                    chk_depositos.setSelected(true);
-                } else {
-                    chk_depositos.setSelected(false);
-                }
-                //                                
-            }
-            con.cerrar(st);
-            con.cerrar(rs);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-        }
-
-    }
-
-    void llenar() {
-        if (chk_panel.isSelected()) {
-            usu.setPer_panel("1");
-        } else {
-            usu.setPer_panel("0");
-        }
-        //
-        if (chk_menu.isSelected()) {
-            usu.setPer_menu("1");
-        } else {
-            usu.setPer_menu("0");
-        }
-        //
-        if (chk_reportes.isSelected()) {
-            usu.setPer_report("1");
-        } else {
-            usu.setPer_report("0");
-        }
-        //
-        if (chk_ventas.isSelected()) {
-            usu.setPer_venta("1");
-        } else {
-            usu.setPer_venta("0");
-        }
-        //
-        if (chk_adelantos.isSelected()) {
-            usu.setPer_adelanto("1");
-        } else {
-            usu.setPer_adelanto("0");
-        }
-        //
-        if (chk_cotizacion_cliente.isSelected()) {
-            usu.setPer_coti_cliente("1");
-        } else {
-            usu.setPer_coti_cliente("0");
-        }
-        //
-        if (chk_compra_servicios.isSelected()) {
-            usu.setPer_comp_servicio("1");
-        } else {
-            usu.setPer_comp_servicio("0");
-        }
-        //
-        if (chk_documentos.isSelected()) {
-            usu.setPer_conf_documentos("1");
-        } else {
-            usu.setPer_conf_documentos("0");
-        }
-        if (chk_caja_chica.isSelected()) {
-            usu.setPer_caja_chica("1");
-        } else {
-            usu.setPer_caja_chica("0");
-        }
-        //
-        if (chk_cierre_caja.isSelected()) {
-            usu.setPer_cierre_caja("1");
-        } else {
-            usu.setPer_cierre_caja("0");
-        }
-        //
-        if (chk_notas.isSelected()) {
-            usu.setPer_notas("1");
-        } else {
-            usu.setPer_notas("0");
-        }
-        //
-        if (chk_depositos.isSelected()) {
-            usu.setPer_depositos("1");
-        } else {
-            usu.setPer_depositos("0");
-        }
-
-    }
+ 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -196,18 +34,33 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         lbl_dni = new javax.swing.JLabel();
         lbl_nombre = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        chk_panel = new javax.swing.JCheckBox();
-        chk_reportes = new javax.swing.JCheckBox();
-        chk_ventas = new javax.swing.JCheckBox();
-        chk_adelantos = new javax.swing.JCheckBox();
-        chk_cotizacion_cliente = new javax.swing.JCheckBox();
-        chk_compra_servicios = new javax.swing.JCheckBox();
-        chk_documentos = new javax.swing.JCheckBox();
-        chk_caja_chica = new javax.swing.JCheckBox();
-        chk_cierre_caja = new javax.swing.JCheckBox();
-        chk_notas = new javax.swing.JCheckBox();
-        chk_depositos = new javax.swing.JCheckBox();
-        chk_menu = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        pv_rh = new javax.swing.JCheckBox();
+        pr_ade = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
+        pv_rep = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        pr_ofe = new javax.swing.JCheckBox();
+        pr_ven = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        pr_comp = new javax.swing.JCheckBox();
+        pr_coms = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        pr_alm = new javax.swing.JCheckBox();
+        pm_alm = new javax.swing.JCheckBox();
+        pr_tras = new javax.swing.JCheckBox();
+        pe_tras = new javax.swing.JCheckBox();
+        pr_prod = new javax.swing.JCheckBox();
+        pm_prod = new javax.swing.JCheckBox();
+        pe_prod = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        pm_docs = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        pm_emp = new javax.swing.JCheckBox();
+        pe_emp = new javax.swing.JCheckBox();
+        pm_usu = new javax.swing.JCheckBox();
+        pm_cue = new javax.swing.JCheckBox();
+        pv_caja = new javax.swing.JCheckBox();
         btn_cerrar = new javax.swing.JButton();
         btn_guardar = new javax.swing.JButton();
 
@@ -242,7 +95,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(lbl_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -259,113 +112,91 @@ public class frm_permisos extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Permisos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 0, 0))); // NOI18N
 
-        chk_panel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_panel.setForeground(new java.awt.Color(212, 2, 2));
-        chk_panel.setText("ver Panel");
-        chk_panel.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel3.setText("Administracion:");
+
+        pv_rh.setForeground(new java.awt.Color(255, 0, 0));
+        pv_rh.setText("Recursos Humanos");
+
+        pr_ade.setForeground(new java.awt.Color(255, 0, 0));
+        pr_ade.setText("Reg. Adelantos");
+
+        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel4.setText("Reportes");
+
+        pv_rep.setForeground(new java.awt.Color(255, 0, 0));
+        pv_rep.setText("Ver Reportes");
+
+        jLabel5.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel5.setText("Ventas");
+
+        pr_ofe.setForeground(new java.awt.Color(255, 0, 0));
+        pr_ofe.setText("Reg. Ofertas");
+
+        pr_ven.setForeground(new java.awt.Color(255, 0, 0));
+        pr_ven.setText("Reg. Ventas");
+
+        jLabel6.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel6.setText("Compras");
+
+        pr_comp.setForeground(new java.awt.Color(255, 0, 0));
+        pr_comp.setText("Reg. Compra Productos");
+
+        pr_coms.setForeground(new java.awt.Color(255, 0, 0));
+        pr_coms.setText("Reg. Compra Servicios");
+
+        jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel7.setText("Almacen");
+
+        pr_alm.setForeground(new java.awt.Color(255, 0, 0));
+        pr_alm.setText("Reg. Almacen");
+
+        pm_alm.setForeground(new java.awt.Color(255, 0, 0));
+        pm_alm.setText("Mod. Almacen");
+        pm_alm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_panelActionPerformed(evt);
+                pm_almActionPerformed(evt);
             }
         });
 
-        chk_reportes.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_reportes.setForeground(new java.awt.Color(212, 2, 2));
-        chk_reportes.setText("Ver Reportes");
-        chk_reportes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_reportesActionPerformed(evt);
-            }
-        });
+        pr_tras.setForeground(new java.awt.Color(255, 0, 0));
+        pr_tras.setText("Reg. Traslado");
 
-        chk_ventas.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_ventas.setForeground(new java.awt.Color(212, 2, 2));
-        chk_ventas.setText("Ver Ventas");
-        chk_ventas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_ventasActionPerformed(evt);
-            }
-        });
+        pe_tras.setForeground(new java.awt.Color(255, 0, 0));
+        pe_tras.setText("Anu. Traslado");
 
-        chk_adelantos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_adelantos.setForeground(new java.awt.Color(212, 2, 2));
-        chk_adelantos.setText("ver Adelantos");
-        chk_adelantos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_adelantosActionPerformed(evt);
-            }
-        });
+        pr_prod.setForeground(new java.awt.Color(255, 0, 0));
+        pr_prod.setText("Reg. Producto");
 
-        chk_cotizacion_cliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_cotizacion_cliente.setForeground(new java.awt.Color(212, 2, 2));
-        chk_cotizacion_cliente.setText("Ver Cotizacion Cliente");
-        chk_cotizacion_cliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cotizacion_clienteActionPerformed(evt);
-            }
-        });
+        pm_prod.setForeground(new java.awt.Color(255, 0, 0));
+        pm_prod.setText("Mod. Producto");
 
-        chk_compra_servicios.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_compra_servicios.setForeground(new java.awt.Color(212, 2, 2));
-        chk_compra_servicios.setText("Ver Compra Servicios");
-        chk_compra_servicios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_compra_serviciosActionPerformed(evt);
-            }
-        });
+        pe_prod.setForeground(new java.awt.Color(255, 0, 0));
+        pe_prod.setText("Eli. Producto");
 
-        chk_documentos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_documentos.setForeground(new java.awt.Color(212, 2, 2));
-        chk_documentos.setText("ver Configurar Documentos");
-        chk_documentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_documentosActionPerformed(evt);
-            }
-        });
+        jLabel8.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel8.setText("Contabilidad");
 
-        chk_caja_chica.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_caja_chica.setForeground(new java.awt.Color(212, 2, 2));
-        chk_caja_chica.setText("Ver Caja Chica");
-        chk_caja_chica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_caja_chicaActionPerformed(evt);
-            }
-        });
+        pm_docs.setForeground(new java.awt.Color(255, 0, 0));
+        pm_docs.setText("Conf. Documentos");
 
-        chk_cierre_caja.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_cierre_caja.setForeground(new java.awt.Color(212, 2, 2));
-        chk_cierre_caja.setText("Ver Cierre de Caja");
-        chk_cierre_caja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_cierre_cajaActionPerformed(evt);
-            }
-        });
+        jLabel9.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel9.setText("Datos Generales");
 
-        chk_notas.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_notas.setForeground(new java.awt.Color(212, 2, 2));
-        chk_notas.setText("Ver Notas");
-        chk_notas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_notasActionPerformed(evt);
-            }
-        });
+        pm_emp.setForeground(new java.awt.Color(255, 0, 0));
+        pm_emp.setText("Mod. Empresa");
 
-        chk_depositos.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_depositos.setForeground(new java.awt.Color(212, 2, 2));
-        chk_depositos.setText("Ver Depositos");
-        chk_depositos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_depositosActionPerformed(evt);
-            }
-        });
+        pe_emp.setForeground(new java.awt.Color(255, 0, 0));
+        pe_emp.setText("Eli. Empresa");
 
-        chk_menu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        chk_menu.setForeground(new java.awt.Color(212, 2, 2));
-        chk_menu.setText("Ver Menu Aministrativo");
-        chk_menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chk_menuActionPerformed(evt);
-            }
-        });
+        pm_usu.setForeground(new java.awt.Color(255, 0, 0));
+        pm_usu.setText("Usuario");
+
+        pm_cue.setForeground(new java.awt.Color(255, 0, 0));
+        pm_cue.setText("Cuentas Bancarias");
+
+        pv_caja.setForeground(new java.awt.Color(255, 0, 0));
+        pv_caja.setText("Caja Chica");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -374,50 +205,105 @@ public class frm_permisos extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chk_panel)
-                    .addComponent(chk_reportes)
-                    .addComponent(chk_ventas)
-                    .addComponent(chk_adelantos)
-                    .addComponent(chk_cotizacion_cliente)
-                    .addComponent(chk_menu))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chk_depositos)
-                    .addComponent(chk_notas)
-                    .addComponent(chk_cierre_caja)
-                    .addComponent(chk_caja_chica)
-                    .addComponent(chk_documentos)
-                    .addComponent(chk_compra_servicios))
-                .addContainerGap(161, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pr_comp)
+                                    .addComponent(pr_ofe)
+                                    .addComponent(pv_rep)
+                                    .addComponent(pr_ade)
+                                    .addComponent(pv_rh)
+                                    .addComponent(pr_ven)
+                                    .addComponent(pr_coms)))
+                            .addComponent(jLabel6))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(pm_docs)
+                                            .addComponent(pm_alm)
+                                            .addComponent(pr_alm)
+                                            .addComponent(pr_tras)
+                                            .addComponent(pe_tras)
+                                            .addComponent(pr_prod)
+                                            .addComponent(pm_prod)
+                                            .addComponent(pe_prod)
+                                            .addComponent(pv_caja))))
+                                .addGap(44, 44, 44)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(pe_emp)
+                                            .addComponent(pm_emp)
+                                            .addComponent(pm_usu)
+                                            .addComponent(pm_cue))))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_compra_servicios)
-                    .addComponent(chk_panel))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_documentos)
-                    .addComponent(chk_menu))
+                    .addComponent(pv_rh)
+                    .addComponent(pr_alm)
+                    .addComponent(pm_emp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pr_ade)
+                    .addComponent(pm_alm)
+                    .addComponent(pe_emp))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_reportes)
-                    .addComponent(chk_caja_chica))
+                    .addComponent(jLabel4)
+                    .addComponent(pr_tras)
+                    .addComponent(pm_usu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_ventas)
-                    .addComponent(chk_cierre_caja))
+                    .addComponent(pv_rep)
+                    .addComponent(pe_tras)
+                    .addComponent(pm_cue))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_adelantos)
-                    .addComponent(chk_notas))
+                    .addComponent(jLabel5)
+                    .addComponent(pr_prod))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chk_cotizacion_cliente)
-                    .addComponent(chk_depositos))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pr_ofe)
+                    .addComponent(pm_prod))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pr_ven)
+                    .addComponent(pe_prod))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pr_comp)
+                    .addComponent(pm_docs))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pr_coms)
+                    .addComponent(pv_caja))
+                .addContainerGap())
         );
 
         btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -458,7 +344,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -473,91 +359,49 @@ public class frm_permisos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-        llenar();
-        try {
-            Statement st = con.conexion();
-            String sql = "update usuario set per_panel='" + usu.getPer_panel() + "',per_menu='" + usu.getPer_menu() + "',per_repor='" + usu.getPer_report() + "'"
-                    + ",per_ver_venta='" + usu.getPer_venta() + "',per_adelanto='" + usu.getPer_adelanto() + "',per_coti_cliente='" + usu.getPer_coti_cliente() + "'"
-                    + ",per_comp_servicio='" + usu.getPer_comp_servicio() + "',per_conf_documentos='" + usu.getPer_conf_documentos() + "',per_caja_chica='" + usu.getPer_caja_chica() + "'"
-                    + ",per_cierre_caja='" + usu.getPer_cierre_caja() + "',per_notas='" + usu.getPer_notas() + "',per_depositos='" + usu.getPer_depositos() + "' where nick='" + lbl_dni.getText() + "' ";
-            con.actualiza(st, sql);
-            con.cerrar(st);
-            JOptionPane.showMessageDialog(null, "Permisos Establecidos");
-            this.dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-        }
+       
     }//GEN-LAST:event_btn_guardarActionPerformed
 
-    private void chk_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_menuActionPerformed
-
-    }//GEN-LAST:event_chk_menuActionPerformed
-
-    private void chk_panelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_panelActionPerformed
-
-    }//GEN-LAST:event_chk_panelActionPerformed
-
-    private void chk_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_reportesActionPerformed
-
-    }//GEN-LAST:event_chk_reportesActionPerformed
-
-    private void chk_ventasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_ventasActionPerformed
-
-    }//GEN-LAST:event_chk_ventasActionPerformed
-
-    private void chk_adelantosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_adelantosActionPerformed
-
-    }//GEN-LAST:event_chk_adelantosActionPerformed
-
-    private void chk_cotizacion_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cotizacion_clienteActionPerformed
-
-    }//GEN-LAST:event_chk_cotizacion_clienteActionPerformed
-
-    private void chk_compra_serviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_compra_serviciosActionPerformed
-
-    }//GEN-LAST:event_chk_compra_serviciosActionPerformed
-
-    private void chk_documentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_documentosActionPerformed
-
-    }//GEN-LAST:event_chk_documentosActionPerformed
-
-    private void chk_caja_chicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_caja_chicaActionPerformed
-
-    }//GEN-LAST:event_chk_caja_chicaActionPerformed
-
-    private void chk_cierre_cajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_cierre_cajaActionPerformed
-
-    }//GEN-LAST:event_chk_cierre_cajaActionPerformed
-
-    private void chk_notasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_notasActionPerformed
-
-    }//GEN-LAST:event_chk_notasActionPerformed
-
-    private void chk_depositosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_depositosActionPerformed
-
-    }//GEN-LAST:event_chk_depositosActionPerformed
+    private void pm_almActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pm_almActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pm_almActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_guardar;
-    public static javax.swing.JCheckBox chk_adelantos;
-    public static javax.swing.JCheckBox chk_caja_chica;
-    public static javax.swing.JCheckBox chk_cierre_caja;
-    public static javax.swing.JCheckBox chk_compra_servicios;
-    public static javax.swing.JCheckBox chk_cotizacion_cliente;
-    public static javax.swing.JCheckBox chk_depositos;
-    public static javax.swing.JCheckBox chk_documentos;
-    public static javax.swing.JCheckBox chk_menu;
-    public static javax.swing.JCheckBox chk_notas;
-    public static javax.swing.JCheckBox chk_panel;
-    public static javax.swing.JCheckBox chk_reportes;
-    public static javax.swing.JCheckBox chk_ventas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JLabel lbl_dni;
     public static javax.swing.JLabel lbl_nombre;
+    public static javax.swing.JCheckBox pe_emp;
+    public static javax.swing.JCheckBox pe_prod;
+    public static javax.swing.JCheckBox pe_tras;
+    public static javax.swing.JCheckBox pm_alm;
+    public static javax.swing.JCheckBox pm_cue;
+    public static javax.swing.JCheckBox pm_docs;
+    public static javax.swing.JCheckBox pm_emp;
+    public static javax.swing.JCheckBox pm_prod;
+    public static javax.swing.JCheckBox pm_usu;
+    public static javax.swing.JCheckBox pr_ade;
+    public static javax.swing.JCheckBox pr_alm;
+    public static javax.swing.JCheckBox pr_comp;
+    public static javax.swing.JCheckBox pr_coms;
+    public static javax.swing.JCheckBox pr_ofe;
+    public static javax.swing.JCheckBox pr_prod;
+    public static javax.swing.JCheckBox pr_tras;
+    public static javax.swing.JCheckBox pr_ven;
+    public static javax.swing.JCheckBox pv_caja;
+    public static javax.swing.JCheckBox pv_rep;
+    public static javax.swing.JCheckBox pv_rh;
     // End of variables declaration//GEN-END:variables
 }

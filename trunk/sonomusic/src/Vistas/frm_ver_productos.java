@@ -27,6 +27,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -229,7 +230,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         btn_mod = new javax.swing.JButton();
         btn_eli = new javax.swing.JButton();
         cbx_cla = new javax.swing.JComboBox();
-        btn_enviar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -332,14 +332,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_enviar.setText("Enviar");
-        btn_enviar.setEnabled(false);
-        btn_enviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_enviarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -361,8 +353,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(btn_eli)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_enviar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
@@ -378,12 +368,11 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_eli, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_eli, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -391,17 +380,16 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-//if (frm_menu.usu.getPpr_reg().equals("1")) {
-        frm_reg_productos productos = new frm_reg_productos();
-        productos.win = "reg";
-        productos.subventana = "prod_compra";
+        if (usu.getPer_reg_producto().equals("1")) {
+            frm_reg_productos productos = new frm_reg_productos();
+            productos.win = "reg";
+            productos.subventana = "prod_compra";
 
-        ven.llamar_ventana(productos);
-        this.dispose();
-//} else {
-
-        // JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
-        //      }
+            ven.llamar_ventana(productos);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -418,55 +406,53 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
-//if (frm_menu.usu.getPpr_mod().equals("1")) {
-        frm_reg_productos prod = new frm_reg_productos();
+        if (usu.getPer_mod_producto().equals("1")) {
+            frm_reg_productos prod = new frm_reg_productos();
+            try {
+                int id = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
+                String query = "select * from productos where idProductos = '" + id + "'";
+                Statement st = con.conexion();
+                ResultSet rs = con.consulta(st, query);
+                if (rs.next()) {
+                    prod.txt_cod.setText(rs.getString("idProductos"));
+                    prod.txt_cod.setEditable(false);
+                    prod.txt_des.setText(rs.getString("desc_pro"));
+                    prod.txt_des.setEditable(true);
+                    prod.txt_des.requestFocus();
+                    prod.txt_mar.setText(rs.getString("marca"));
+                    prod.txt_mar.setEditable(true);
+                    prod.txt_mod.setText(rs.getString("modelo"));
+                    prod.txt_mod.setEditable(true);
+                    prod.txt_ser.setText(rs.getString("serie"));
+                    prod.txt_ser.setEditable(true);
+                    prod.cbo_gra.setSelectedItem(rs.getString("grado"));
+                    prod.cbo_gra.setEnabled(true);
+                    prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
+                    prod.cbx_und.setEnabled(true);
+                    prod.txt_pcom.setText(rs.getString("costo_compra"));
+                    prod.txt_pcom.setEditable(true);
+                    prod.txt_pven.setText(rs.getString("precio_venta"));
+                    prod.txt_pven.setEditable(true);
+                    prod.cbx_cla.setSelectedIndex(rs.getInt("id_clas") - 1);
+                    prod.cbx_cla.setEnabled(true);
+                    prod.txt_cantm.setText(rs.getString("cant_min"));
+                    prod.txt_cantm.setEditable(true);
+                    prod.txt_com.setText(rs.getString("comision"));
+                    prod.txt_com.setEditable(true);
+                    prod.btn_reg.setEnabled(true);
+                }
 
-        try {
-            int id = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
-            String query = "select * from productos where idProductos = '" + id + "'";
-            Statement st = con.conexion();
-            ResultSet rs = con.consulta(st, query);
-            if (rs.next()) {
-                prod.txt_cod.setText(rs.getString("idProductos"));
-                prod.txt_cod.setEditable(false);
-                prod.txt_des.setText(rs.getString("desc_pro"));
-                prod.txt_des.setEditable(true);
-                prod.txt_des.requestFocus();
-                prod.txt_mar.setText(rs.getString("marca"));
-                prod.txt_mar.setEditable(true);
-                prod.txt_mod.setText(rs.getString("modelo"));
-                prod.txt_mod.setEditable(true);
-                prod.txt_ser.setText(rs.getString("serie"));
-                prod.txt_ser.setEditable(true);
-                prod.cbo_gra.setSelectedItem(rs.getString("grado"));
-                prod.cbo_gra.setEnabled(true);
-                prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
-                prod.cbx_und.setEnabled(true);
-                prod.txt_pcom.setText(rs.getString("costo_compra"));
-                prod.txt_pcom.setEditable(true);
-                prod.txt_pven.setText(rs.getString("precio_venta"));
-                prod.txt_pven.setEditable(true);
-                prod.cbx_cla.setSelectedIndex(rs.getInt("id_clas") - 1);
-                prod.cbx_cla.setEnabled(true);
-                prod.txt_cantm.setText(rs.getString("cant_min"));
-                prod.txt_cantm.setEditable(true);
-                prod.txt_com.setText(rs.getString("comision"));
-                prod.txt_com.setEditable(true);
-                prod.btn_reg.setEnabled(true);
+                prod.win = "mod";
+                prod.id = id;
+                ven.llamar_ventana(prod);
+                this.dispose();
+
+            } catch (SQLException ex) {
+                System.out.print(ex);
             }
-
-            prod.win = "mod";
-            prod.id = id;
-            ven.llamar_ventana(prod);
-            this.dispose();
-
-        } catch (SQLException ex) {
-            System.out.print(ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
-//} else {
-//            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
-//        }
-
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
@@ -476,29 +462,29 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_productosMousePressed
 
     private void btn_eliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliActionPerformed
-//if (frm_menu.usu.getPpr_eli().equals("1")) {
-//    //eliminar
-        int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el producto?", "Seguridad", JOptionPane.WARNING_MESSAGE);
+        if (usu.getPer_eli_producto().equals("1")) {
+            //eliminar
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el producto?", "Seguridad", JOptionPane.WARNING_MESSAGE);
 
-        if (JOptionPane.OK_OPTION == confirmado) {
-            pro.setId_pro((int) t_productos.getValueAt(i, 0));
-            try {
-                Statement st = con.conexion();
-                String query = "delete idfrom productos where idProductos ='" + pro.getId_pro() + "'";
-                con.actualiza(st, query);
-                con.cerrar(st);
-                String query1 = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
-                        + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
-                ver_productos(query1);
-                btn_eli.setEnabled(false);
-                btn_mod.setEnabled(false);
-            } catch (Exception ex) {
-                System.out.print(ex + " " + ex.getLocalizedMessage() + " " + ex.getCause());
+            if (JOptionPane.OK_OPTION == confirmado) {
+                pro.setId_pro((int) t_productos.getValueAt(i, 0));
+                try {
+                    Statement st = con.conexion();
+                    String query = "delete idfrom productos where idProductos ='" + pro.getId_pro() + "'";
+                    con.actualiza(st, query);
+                    con.cerrar(st);
+                    String query1 = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
+                            + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
+                    ver_productos(query1);
+                    btn_eli.setEnabled(false);
+                    btn_mod.setEnabled(false);
+                } catch (Exception ex) {
+                    System.out.print(ex + " " + ex.getLocalizedMessage() + " " + ex.getCause());
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
-//} else {
-//            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
-//}    
     }//GEN-LAST:event_btn_eliActionPerformed
 
     private void cbx_claActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_claActionPerformed
@@ -677,75 +663,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_t_productosKeyPressed
-
-    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
-        if (ventana.equals("compra_prod")) {
-            frm_reg_compra_prod prod = null;
-            int tabla = prod.t_detalle.getRowCount();                   //obtener la cantidad de filas
-            int mitabla = t_productos.getRowCount();
-            System.out.println(mitabla + "\n");
-            String id_prod = "";
-            for (int a = 0; a < mitabla; a++) {
-                if (t_productos.getValueAt(a, 1).equals(true)) {
-                    System.out.println(t_productos.getValueAt(a, 1));
-                    String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
-
-                    int contar_repetidos = 0;
-                    Object[] fila_compra = new Object[6];
-                    fila_compra[0] = t_productos.getValueAt(a, 0);         //idproducto
-                    fila_compra[1] = t_productos.getValueAt(a, 2);         //descripcion
-                    fila_compra[2] = t_productos.getValueAt(a, 3);         //marca
-                    fila_compra[3] = "1";                                  //cantidad
-                    fila_compra[4] = t_productos.getValueAt(a, 8);         //und. med
-
-                    try {
-                        Statement st1 = con.conexion();
-                        String ver_cos = "select costo_compra from productos where idProductos = '" + id + "'";
-                        ResultSet rs1 = con.consulta(st1, ver_cos);
-                        if (rs1.next()) {
-                            fila_compra[5] = rs1.getObject("costo_compra"); // Costo Compra
-                        }
-                        con.cerrar(rs1);
-                        con.cerrar(st1);
-                    } catch (SQLException ex) {
-                        System.out.print(ex);
-                    }
-
-                    if (tabla > 0) {            //verifica si existen registros
-                        for (int j = 0; j < tabla; j++) {           //recorremos la tabla reg_compra
-                            id_prod = prod.t_detalle.getValueAt(j, 0).toString();// captura el id reg_compra
-
-                            if (id_prod.equals(id)) {
-                                contar_repetidos++;
-                            }
-                        }
-
-                        if (contar_repetidos == 0) {
-                            prod.detalle.addRow(fila_compra);
-                            prod.t_detalle.setModel(prod.detalle);
-                            prod.txt_sub.setText(formato.format(prod.subtotal()));
-                            prod.txt_igv.setText(formato.format(prod.igv()));
-                            prod.txt_tot.setText(formato.format(prod.total()));
-                            prod.btn_reg.setEnabled(true);
-                            ventana = "productos";
-                        }
-
-                    } else {
-                        prod.detalle.addRow(fila_compra);
-                        prod.t_detalle.setModel(prod.detalle);
-                        prod.txt_sub.setText(formato.format(prod.subtotal()));
-                        prod.txt_igv.setText(formato.format(prod.igv()));
-                        prod.txt_tot.setText(formato.format(prod.total()));
-                        prod.btn_reg.setEnabled(true);
-                        ventana = "productos";
-
-                    }
-                }
-            }
-            frm_reg_compra_prod.txt_idp.requestFocus();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
 
@@ -934,7 +851,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_eli;
-    public static javax.swing.JButton btn_enviar;
     public static javax.swing.JButton btn_mod;
     public static javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_cla;

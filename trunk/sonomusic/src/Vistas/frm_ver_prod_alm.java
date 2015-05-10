@@ -60,7 +60,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         txt_noma = new javax.swing.JTextField();
         btn_kar = new javax.swing.JButton();
         cbx_bus = new javax.swing.JComboBox();
-        btn_mod = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -138,10 +137,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N
-        btn_mod.setText("Modificar");
-        btn_mod.setEnabled(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,8 +159,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(txt_noma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_kar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_mod)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
@@ -182,12 +175,11 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     .addComponent(txt_noma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -223,44 +215,41 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
             pro.mostrar_productos(query);
-        } else if (cbx_bus.getSelectedIndex() == 1 ) {
+        } else if (cbx_bus.getSelectedIndex() == 1) {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > p.cant_min order by p.desc_pro asc";
             pro.mostrar_productos(query);
-        } else if (cbx_bus.getSelectedIndex() == 2 ) {
+        } else if (cbx_bus.getSelectedIndex() == 2) {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant < p.cant_min and pa.cant > 0 order by p.desc_pro asc";
             pro.mostrar_productos(query);
-        } else  {
+        } else {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant = 0 order by p.desc_pro asc";
             pro.mostrar_productos(query);
-    }
+        }
         //falta demas oopciones del combo
     }//GEN-LAST:event_cbx_busKeyPressed
 
     private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-        String texto = txt_bus.getText();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
-        pro.mostrar_productos(query);
 
     }//GEN-LAST:event_txt_busKeyTyped
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txt_bus.getText().trim().isEmpty()) {
-                t_productos.requestFocus();
-            }
+                String texto = txt_bus.getText();
+                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                        + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                        + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                        + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                        + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
+                pro.mostrar_productos(query);
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -395,7 +384,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_kar;
-    private javax.swing.JButton btn_mod;
     private javax.swing.JComboBox cbx_bus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

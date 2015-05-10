@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -127,6 +128,11 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N
         btn_mod.setText("Modificar");
         btn_mod.setEnabled(false);
+        btn_mod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modActionPerformed(evt);
+            }
+        });
 
         btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_add.png"))); // NOI18N
         btn_reg.setText("Registrar");
@@ -241,9 +247,13 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-        frm_reg_almacen almacen = new frm_reg_almacen();
-        ven.llamar_ventana(almacen);
-        this.dispose();
+        if (usu.getPer_reg_almacen().equals("1")) {
+            frm_reg_almacen almacen = new frm_reg_almacen();
+            ven.llamar_ventana(almacen);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
@@ -279,18 +289,18 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
 
     private void btn_verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verActionPerformed
-        frm_ver_prod_alm mat = new frm_ver_prod_alm();
-        mat.txt_ida.setText(t_almacen.getValueAt(i, 0).toString());
-        mat.txt_noma.setText(t_almacen.getValueAt(i, 1).toString());
-
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, p.costo_compra, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + t_almacen.getValueAt(i, 0).toString() + "' order by p.desc_pro asc";
-        pro.mostrar_productos(query);
-        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
-        ven.llamar_ventana(mat);
-        this.dispose();
+//        frm_ver_prod_alm mat = new frm_ver_prod_alm();
+//        mat.txt_ida.setText(t_almacen.getValueAt(i, 0).toString());
+//        mat.txt_noma.setText(t_almacen.getValueAt(i, 1).toString());
+//
+//        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, p.costo_compra, p.estado, c.desc_clas, "
+//                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+//                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+//                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + t_almacen.getValueAt(i, 0).toString() + "' order by p.desc_pro asc";
+//        pro.mostrar_productos(query);
+//        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+//        ven.llamar_ventana(mat);
+//        this.dispose();
 
     }//GEN-LAST:event_btn_verActionPerformed
 
@@ -326,7 +336,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_utilidad_almacen", parametros);
                 this.dispose();
             }
-            
+
             // GANANCIA DE VENTAS POR ALMACEN
             if (ventana.equals("rpt_gana_venta")) {
                 frm_rpt_fechas fec = new frm_rpt_fechas();
@@ -340,6 +350,14 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_t_almacenMouseClicked
+
+    private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
+        if (usu.getPer_mod_almacen().equals("1")) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
+    }//GEN-LAST:event_btn_modActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

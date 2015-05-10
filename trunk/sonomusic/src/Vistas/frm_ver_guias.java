@@ -16,8 +16,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -239,9 +241,13 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
-        ven.llamar_ventana(tras);
-        this.dispose();
+        if (usu.getPer_reg_traslado().equals("1")) {
+            frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
+            ven.llamar_ventana(tras);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -294,7 +300,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         } else {
             btn_envio.setEnabled(false);
         }
-        
+
         if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
             btn_anu.setEnabled(false);
         } else {
@@ -327,73 +333,78 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     }
 
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
-        //anular guia si es pendiente
-        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+        if (usu.getPer_anu_traslado().equals("1")) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el traslado?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                //anular guia si es pendiente
+                alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
 
-        Cl_Productos pro = new Cl_Productos();
+                Cl_Productos pro = new Cl_Productos();
 
-        String nom_alm_or = t_guias.getValueAt(i, 3).toString();
-        //ver id almacen origen:
-        int id_ao = ver_id_alm(nom_alm_or);
+                String nom_alm_or = t_guias.getValueAt(i, 3).toString();
+                //ver id almacen origen:
+                int id_ao = ver_id_alm(nom_alm_or);
 
-        //seleccionar detalle envio
-        try {
-            Statement st = con.conexion();
-            String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
-            ResultSet rs = con.consulta(st, ver_det_env);
-            while (rs.next()) {
-                pro.setCan(rs.getDouble("cant"));
-                pro.setId_pro(rs.getInt("idProductos"));
-                // Seleccionar cantidad actual producto en almacen destino
+                //seleccionar detalle envio
                 try {
-                    Statement st1 = con.conexion();
-                    String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                    ResultSet rs1 = con.consulta(st1, ver_pro);
-                    if (rs1.next()) {
-                        pro.setCan_act_pro(rs1.getDouble("cant"));
+                    Statement st = con.conexion();
+                    String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
+                    ResultSet rs = con.consulta(st, ver_det_env);
+                    while (rs.next()) {
+                        pro.setCan(rs.getDouble("cant"));
+                        pro.setId_pro(rs.getInt("idProductos"));
+                        // Seleccionar cantidad actual producto en almacen destino
+                        try {
+                            Statement st1 = con.conexion();
+                            String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                            ResultSet rs1 = con.consulta(st1, ver_pro);
+                            if (rs1.next()) {
+                                pro.setCan_act_pro(rs1.getDouble("cant"));
+                            }
+                            con.cerrar(rs1);
+                            con.cerrar(st1);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
+                        double can_new = pro.getCan_act_pro() - pro.getCan();
+
+                        try {
+                            Statement st1 = con.conexion();
+                            String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                            con.actualiza(st1, cam_can);
+                            con.cerrar(st1);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                     }
-                    con.cerrar(rs1);
-                    con.cerrar(st1);
-                } catch (Exception ex) {
-                    System.out.println(ex);
+                    con.cerrar(rs);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-                double can_new = pro.getCan_act_pro() - pro.getCan();
+                // cambiar cantidades de almacen origen
 
                 try {
-                    Statement st1 = con.conexion();
-                    String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                    con.actualiza(st1, cam_can);
-                    con.cerrar(st1);
+                    Statement st = con.conexion();
+                    String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
+                    con.actualiza(st, del_det);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+                try {
+                    Statement st = con.conexion();
+                    String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
+                    con.actualiza(st, del_tra);
+                    con.cerrar(st);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
-        // cambiar cantidades de almacen origen
-
-        try {
-            Statement st = con.conexion();
-            String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
-            con.actualiza(st, del_det);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        try {
-            Statement st = con.conexion();
-            String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
-            con.actualiza(st, del_tra);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void llenar_tguias(int idtra) {

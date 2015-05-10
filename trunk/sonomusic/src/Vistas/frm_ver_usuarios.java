@@ -245,7 +245,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1KeyPressed
 
     private void t_usuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_usuariosKeyPressed
-       
+
     }//GEN-LAST:event_t_usuariosKeyPressed
 
     private void t_usuariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuariosMousePressed
@@ -273,82 +273,29 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         permi.lbl_nombre.setText(nombre);
         try {
             Statement st = con.conexion();
-            String sql = "select per_panel, per_menu, per_repor, per_ver_venta, per_adelanto, per_coti_cliente,"
-                    + " per_comp_servicio, per_conf_documentos, per_caja_chica, per_cierre_caja, per_notas,"
-                    + " per_depositos from usuario where nick='" + dni + "' ";
+            String sql = "select * from usuario where nick = '" + dni + "' ";
             ResultSet rs = con.consulta(st, sql);
             if (rs.next()) {
-                if (rs.getInt("per_panel") == 1) {
-                    permi.chk_panel.setSelected(true);
-                } else {
-                    permi.chk_panel.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_menu") == 1) {
-                    permi.chk_menu.setSelected(true);
-                } else {
-                    permi.chk_menu.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_repor") == 1) {
-                    permi.chk_reportes.setSelected(true);
-                } else {
-                    permi.chk_reportes.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_ver_venta") == 1) {
-                    permi.chk_ventas.setSelected(true);
-                } else {
-                    permi.chk_ventas.setSelected(false);
-                }
-                if (rs.getInt("per_adelanto") == 1) {
-                    permi.chk_adelantos.setSelected(true);
-                } else {
-                    permi.chk_adelantos.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_coti_cliente") == 1) {
-                    permi.chk_cotizacion_cliente.setSelected(true);
-                } else {
-                    permi.chk_cotizacion_cliente.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_comp_servicio") == 1) {
-                    permi.chk_compra_servicios.setSelected(true);
-                } else {
-                    permi.chk_compra_servicios.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_conf_documentos") == 1) {
-                    permi.chk_documentos.setSelected(true);
-                } else {
-                    permi.chk_documentos.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_caja_chica") == 1) {
-                    permi.chk_caja_chica.setSelected(true);
-                } else {
-                    permi.chk_caja_chica.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_cierre_caja") == 1) {
-                    permi.chk_cierre_caja.setSelected(true);
-                } else {
-                    permi.chk_cierre_caja.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_notas") == 1) {
-                    permi.chk_notas.setSelected(true);
-                } else {
-                    permi.chk_notas.setSelected(false);
-                }
-                //
-                if (rs.getInt("per_depositos") == 1) {
-                    permi.chk_depositos.setSelected(true);
-                } else {
-                    permi.chk_depositos.setSelected(false);
-                }
-                //                                
+                permi.pv_rh.setSelected(rs.getBoolean("pv_rh"));
+                permi.pr_ade.setSelected(rs.getBoolean("pr_ade"));
+                permi.pv_rep.setSelected(rs.getBoolean("pv_rep"));
+                permi.pr_ofe.setSelected(rs.getBoolean("pr_ofe"));
+                permi.pr_ven.setSelected(rs.getBoolean("pr_ven"));
+                permi.pr_comp.setSelected(rs.getBoolean("pv_comp"));
+                permi.pr_coms.setSelected(rs.getBoolean("pv_coms"));
+                permi.pr_alm.setSelected(rs.getBoolean("pr_alm"));
+                permi.pm_alm.setSelected(rs.getBoolean("pm_alm"));
+                permi.pr_tras.setSelected(rs.getBoolean("pr_tras"));
+                permi.pe_tras.setSelected(rs.getBoolean("pe_tras"));
+                permi.pr_prod.setSelected(rs.getBoolean("pr_prod"));
+                permi.pm_prod.setSelected(rs.getBoolean("pm_prod"));
+                permi.pe_prod.setSelected(rs.getBoolean("pe_prod"));
+                permi.pm_docs.setSelected(rs.getBoolean("pm_docs"));
+                permi.pm_emp.setSelected(rs.getBoolean("pm_emp"));
+                permi.pe_emp.setSelected(rs.getBoolean("pe_emp"));
+                permi.pv_caja.setSelected(rs.getBoolean("pv_caj"));
+                permi.pm_usu.setSelected(rs.getBoolean("pm_usu"));
+                permi.pm_cue.setSelected(rs.getBoolean("pm_cue"));
             }
             con.cerrar(st);
             con.cerrar(rs);
@@ -394,7 +341,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jScrollPane1MousePressed
 
     private void t_usuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_usuariosMouseClicked
-        if (evt.getClickCount()==2) {
+        if (evt.getClickCount() == 2) {
             if (rpt.equals("venta_vendedor")) {
                 id = t_usuarios.getValueAt(i, 0).toString();
                 frm_rpt_fechas fec = new frm_rpt_fechas();
@@ -403,7 +350,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
                 ven.llamar_ventana(fec);
                 this.dispose();
             }
-            
+
             if (rpt.equals("ganancia_vendedor")) {
                 id = t_usuarios.getValueAt(i, 0).toString();
                 frm_rpt_fechas fec = new frm_rpt_fechas();

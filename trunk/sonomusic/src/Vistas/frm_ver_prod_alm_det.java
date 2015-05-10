@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -122,17 +123,17 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
 
     }
 
-    private void ver_almacen () {
+    private void ver_almacen() {
         try {
             ArrayList almacen = new ArrayList();
-            Statement st= con.conexion();
-            String query ="select nom_alm from almacen order by idAlmacen asc";
+            Statement st = con.conexion();
+            String query = "select nom_alm from almacen order by idAlmacen asc";
             ResultSet rs = con.consulta(st, query);
-            while (rs.next()){
+            while (rs.next()) {
                 almacen.add(rs.getString("nom_alm"));
             }
-            if (almacen.size()>0) {
-                for (int j = 0 ; j < almacen.size() ; j++) {
+            if (almacen.size() > 0) {
+                for (int j = 0; j < almacen.size(); j++) {
                     cbx_clas.addItem(almacen.get(j));
                 }
             } else {
@@ -145,8 +146,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Lista no disponible");
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -292,9 +292,9 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     + "on pa.idProductos=p.idProductos inner join clasificacion as c "
                     + "on p.id_clas=c.id_clas inner join und_medida as u "
                     + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
-                    + " on pa.idAlmacen=a.idAlmacen where p.desc_pro like '%"+texto+"%' or "
-                    + "p.modelo like '%"+texto+"%' or p.serie like '%"+texto+"%' or p.marca like '%"+texto+"%' "
-                    + "or pa.precio like '%"+texto+"%' order by p.desc_pro asc;";
+                    + " on pa.idAlmacen=a.idAlmacen where p.desc_pro like '%" + texto + "%' or "
+                    + "p.modelo like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%' "
+                    + "or pa.precio like '%" + texto + "%' order by p.desc_pro asc;";
             ver_productos(query);
             t_productos.setDefaultRenderer(Object.class, new table_render());
             t_productos.requestFocus();
@@ -326,14 +326,14 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     + " on pa.idAlmacen=a.idAlmacen order by p.desc_pro asc;";
             ver_productos(query);
             t_productos.setDefaultRenderer(Object.class, new table_render());
-        } else { 
+        } else {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
                     + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
                     + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
                     + "on pa.idProductos=p.idProductos inner join clasificacion as c "
                     + "on p.id_clas=c.id_clas inner join und_medida as u "
                     + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
-                    + " on pa.idAlmacen=a.idAlmacen where pa.idAlmacen = '"+cbx_clas.getSelectedIndex()+"' order by p.desc_pro asc;";
+                    + " on pa.idAlmacen=a.idAlmacen where pa.idAlmacen = '" + cbx_clas.getSelectedIndex() + "' order by p.desc_pro asc;";
             ver_productos(query);
             t_productos.setDefaultRenderer(Object.class, new table_render());
         }
@@ -341,68 +341,72 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_clasActionPerformed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
-        frm_reg_productos prod = new frm_reg_productos();
-        int ida = 0;
-        String nom_alm = t_productos.getValueAt(i, 8).toString();
-        
-        try {
-            Statement st = con.conexion();
-            String query = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "' ";
-            ResultSet rs = con.consulta(st, query);
-            if (rs.next()) {
-                ida = rs.getInt("idAlmacen");
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        
-        try {
-            int id = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
-            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.idUnd_medida, p.costo_compra, pa.precio, p.id_clas, "
-                    + "p.cant_min, p.comision from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos where pa.idProductos = '" + id + "'"
-                    + " and pa.idAlmacen =  '"+ida+"'";
-            Statement st = con.conexion();
-            ResultSet rs = con.consulta(st, query);
-            if (rs.next()) {
-                prod.txt_cod.setText(rs.getString("idProductos"));
-                prod.txt_cod.setEditable(false);
-                prod.txt_des.setText(rs.getString("desc_pro"));
-                prod.txt_des.setEditable(false);
-                prod.txt_mar.setText(rs.getString("marca"));
-                prod.txt_mar.setEditable(false);
-                prod.txt_mod.setText(rs.getString("modelo"));
-                prod.txt_mod.setEditable(false);
-                prod.txt_ser.setText(rs.getString("serie"));
-                prod.txt_ser.setEditable(false);
-                prod.cbo_gra.setSelectedItem(rs.getString("grado"));
-                prod.cbo_gra.setEnabled(false);
-                prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
-                prod.cbx_und.setEnabled(false);
-                prod.txt_pcom.setText(rs.getString("costo_compra"));
-                prod.txt_pcom.setEditable(false);
-                prod.txt_pven.requestFocus();
-                prod.txt_pven.setText(rs.getString("precio"));
-                prod.txt_pven.setEditable(true);
-                prod.cbx_cla.setSelectedIndex(rs.getInt("id_clas") - 1);
-                prod.cbx_cla.setEnabled(false);
-                prod.txt_cantm.setText(rs.getString("cant_min"));
-                prod.txt_cantm.setEditable(false);
-                prod.txt_com.setText(rs.getString("comision"));
-                prod.txt_com.setEditable(false);
-                prod.btn_reg.setEnabled(false);
+        if (usu.getPer_mod_producto().equals("1")) {
+            frm_reg_productos prod = new frm_reg_productos();
+            int ida = 0;
+            String nom_alm = t_productos.getValueAt(i, 8).toString();
+
+            try {
+                Statement st = con.conexion();
+                String query = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "' ";
+                ResultSet rs = con.consulta(st, query);
+                if (rs.next()) {
+                    ida = rs.getInt("idAlmacen");
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
             }
 
-            prod.win = "mod";
-            prod.ventana = "producto_almacen";
-            prod.id = id;
-            prod.ida=ida;
-            ven.llamar_ventana(prod);
-            this.dispose();
+            try {
+                int id = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
+                String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.idUnd_medida, p.costo_compra, pa.precio, p.id_clas, "
+                        + "p.cant_min, p.comision from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos where pa.idProductos = '" + id + "'"
+                        + " and pa.idAlmacen =  '" + ida + "'";
+                Statement st = con.conexion();
+                ResultSet rs = con.consulta(st, query);
+                if (rs.next()) {
+                    prod.txt_cod.setText(rs.getString("idProductos"));
+                    prod.txt_cod.setEditable(false);
+                    prod.txt_des.setText(rs.getString("desc_pro"));
+                    prod.txt_des.setEditable(false);
+                    prod.txt_mar.setText(rs.getString("marca"));
+                    prod.txt_mar.setEditable(false);
+                    prod.txt_mod.setText(rs.getString("modelo"));
+                    prod.txt_mod.setEditable(false);
+                    prod.txt_ser.setText(rs.getString("serie"));
+                    prod.txt_ser.setEditable(false);
+                    prod.cbo_gra.setSelectedItem(rs.getString("grado"));
+                    prod.cbo_gra.setEnabled(false);
+                    prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
+                    prod.cbx_und.setEnabled(false);
+                    prod.txt_pcom.setText(rs.getString("costo_compra"));
+                    prod.txt_pcom.setEditable(false);
+                    prod.txt_pven.requestFocus();
+                    prod.txt_pven.setText(rs.getString("precio"));
+                    prod.txt_pven.setEditable(true);
+                    prod.cbx_cla.setSelectedIndex(rs.getInt("id_clas") - 1);
+                    prod.cbx_cla.setEnabled(false);
+                    prod.txt_cantm.setText(rs.getString("cant_min"));
+                    prod.txt_cantm.setEditable(false);
+                    prod.txt_com.setText(rs.getString("comision"));
+                    prod.txt_com.setEditable(false);
+                    prod.btn_reg.setEnabled(false);
+                }
 
-        } catch (SQLException ex) {
-            System.out.print(ex);
+                prod.win = "mod";
+                prod.ventana = "producto_almacen";
+                prod.id = id;
+                prod.ida = ida;
+                ven.llamar_ventana(prod);
+                this.dispose();
+
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_btn_modActionPerformed
 

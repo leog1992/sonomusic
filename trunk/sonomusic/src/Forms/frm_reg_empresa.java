@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -39,7 +40,7 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
             modelo = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
-                        return false;
+                    return false;
                 }
             };
             modelo.addColumn("RUC");
@@ -380,18 +381,22 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_rucActionPerformed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
-        txt_ruc.setText(t_empresa.getValueAt(i, 0).toString());
-        txt_raz.setText(t_empresa.getValueAt(i, 1).toString());
-        txt_dir.setText(t_empresa.getValueAt(i, 2).toString());
-        txt_ruc.setEditable(true);
-        txt_raz.setEditable(true);
-        txt_dir.setEditable(true);
-        txt_ruc.requestFocus();
-        btn_grabar.setEnabled(true);
-        btn_mod.setEnabled(false);
-        btn_reg.setEnabled(false);
-        btn_eli.setEnabled(false);
-        btn_nuevo.setEnabled(false);
+        if (usu.getPer_eli_empresa().equals("1")) {
+            txt_ruc.setText(t_empresa.getValueAt(i, 0).toString());
+            txt_raz.setText(t_empresa.getValueAt(i, 1).toString());
+            txt_dir.setText(t_empresa.getValueAt(i, 2).toString());
+            txt_ruc.setEditable(true);
+            txt_raz.setEditable(true);
+            txt_dir.setEditable(true);
+            txt_ruc.requestFocus();
+            btn_grabar.setEnabled(true);
+            btn_mod.setEnabled(false);
+            btn_reg.setEnabled(false);
+            btn_eli.setEnabled(false);
+            btn_nuevo.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
+        }
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
@@ -415,35 +420,39 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_grabarActionPerformed
 
     private void btn_eliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliActionPerformed
-        int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la empresa?");
-        if (JOptionPane.OK_OPTION == confirmado) {
-            try {
-                emp.setRuc(t_empresa.getValueAt(i, 0).toString());
-                Statement st = con.conexion();
-                String del_emp = "delete from empresa where ruc = '" + emp.getRuc() + "'";
-                con.actualiza(st, del_emp);
-                con.cerrar(st);
-                cargar_empresa();
-                btn_grabar.setEnabled(false);
-                btn_mod.setEnabled(false);
-                btn_reg.setEnabled(false);
-                btn_nuevo.setEnabled(true);
-                btn_eli.setEnabled(false);
-            } catch (Exception e) {
-                System.out.println(e.getLocalizedMessage());
+        if (usu.getPer_eli_empresa().equals("1")) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la empresa?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                try {
+                    emp.setRuc(t_empresa.getValueAt(i, 0).toString());
+                    Statement st = con.conexion();
+                    String del_emp = "delete from empresa where ruc = '" + emp.getRuc() + "'";
+                    con.actualiza(st, del_emp);
+                    con.cerrar(st);
+                    cargar_empresa();
+                    btn_grabar.setEnabled(false);
+                    btn_mod.setEnabled(false);
+                    btn_reg.setEnabled(false);
+                    btn_nuevo.setEnabled(true);
+                    btn_eli.setEnabled(false);
+                } catch (Exception e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
     }//GEN-LAST:event_btn_eliActionPerformed
 
     private void t_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMouseClicked
-        
+
     }//GEN-LAST:event_t_empresaMouseClicked
 
     private void t_empresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMousePressed
         i = t_empresa.getSelectedRow();
         btn_eli.setEnabled(true);
         btn_mod.setEnabled(true);
-        
+
         if (evt.getClickCount() == 2) {
             if (accion.equals("almacen")) {
                 frm_reg_almacen almacen = null;
@@ -453,7 +462,7 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
                 accion = "empresa";
                 this.dispose();
             }
-            
+
             if (accion.equals("compra_prod")) {
                 frm_reg_compra_prod compra_prod = null;
                 compra_prod.txt_ruc_dest.setText(t_empresa.getValueAt(i, 0).toString());
@@ -463,7 +472,7 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
                 this.dispose();
             }
         }
-        
+
     }//GEN-LAST:event_t_empresaMousePressed
 
 
