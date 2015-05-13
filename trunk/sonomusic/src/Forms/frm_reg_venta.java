@@ -119,6 +119,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
             System.out.println(ex.getMessage());
         }
+        ver_vendedores("" + frm_menu.alm.getId());
     }
     //fin del constructor
 
@@ -131,6 +132,24 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 String fila;
                 fila = rs.getString("desc_tipd");
                 cbx_tipd.addItem(fila);
+            }
+            con.cerrar(st);
+            con.cerrar(rs);
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+    }
+
+    private void ver_vendedores(String id_alm) {
+        try {
+            String query = "select dni from empleados where idAlmacen = '" + id_alm + "'";
+            Statement st = con.conexion();
+            ResultSet rs = con.consulta(st, query);
+
+            while (rs.next()) {
+                String fila;
+                fila = rs.getString("dni");
+                cbx_vendedor.addItem(fila);
             }
             con.cerrar(st);
             con.cerrar(rs);
@@ -466,9 +485,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nro_docKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_nro_docKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_nro_docKeyTyped(evt);
             }
@@ -798,6 +814,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         frm_fin_venta.txt_doc.setText(cbx_tipd.getSelectedItem().toString());
         tipo_venta = cbx_tip_venta.getSelectedItem().toString();
         frm_fin_venta.modo = cbx_tip_venta.getSelectedItem().toString();
+        venta.cli.setNro_doc(txt_nro_doc.getText());
+        venta.cli.setNom_cli(txt_nom.getText());
         ven.llamar_ventana(venta);
 
     }//GEN-LAST:event_btn_regActionPerformed
@@ -862,11 +880,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F2) {
             btn_add_pro.doClick();
         }
-        
-        txt_desc.setText(txt_id.getText()); 
+
+        txt_desc.setText(txt_id.getText());
         if (Character.isLetter(evt.getKeyChar())) {
             txt_desc.setEditable(true);
-            
+
             txt_id.setText("");
             txt_desc.requestFocus();
         }
@@ -1058,6 +1076,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (cbx_tipd.getSelectedItem().equals("NOTA DE VENTA")) {
                 if (cbx_tip_venta.getSelectedItem().equals("VENTA")) {
                     txt_nro_doc.setText("00000000");
+                    txt_nom.setText("CLIENTES GENERALES");
                     txt_fec.setEditable(true);
                     txt_fec.requestFocus();
                     txt_fec.setBackground(Color.red);
@@ -1088,8 +1107,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
 
     private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
-        if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
-            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
 
                 if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
                     if (txt_nro_doc.getText().equals("00000000")) {
@@ -1097,7 +1117,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         txt_nro_doc.requestFocus();
                     }
                 }
-
+                long doc = Long.parseLong(txt_nro_doc.getText());
                 if (!txt_nro_doc.getText().isEmpty()) {
                     cli.setNro_doc(txt_nro_doc.getText());
                     try {
@@ -1144,12 +1164,21 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     txt_nro_doc.requestFocus();
                 }
 
+            } else {
+                if (txt_nro_doc.getText().equals("-")) {
+                    txt_nom.setEditable(true);
+                    txt_nom.requestFocus();
+                }
             }
         }
     }//GEN-LAST:event_txt_nro_docKeyPressed
 
     private void txt_nomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nomKeyPressed
-
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_fec.requestFocus();
+            txt_fec.setBackground(Color.red);
+            txt_fec.setForeground(Color.white);
+        }
     }//GEN-LAST:event_txt_nomKeyPressed
 
     private void cbx_tip_ventaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tip_ventaKeyPressed
@@ -1174,10 +1203,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_txt_fecKeyPressed
-
-    private void txt_nro_docKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nro_docKeyReleased
 
     private void txt_desActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_desActionPerformed
         // TODO add your handling code here:
@@ -1259,13 +1284,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void txt_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idKeyReleased
-    
+
     }//GEN-LAST:event_txt_idKeyReleased
 
     private void txt_descKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyReleased
         try {
             TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
-            autocopletar.setMode(0);            
+            autocopletar.setMode(0);
             String busca = txt_desc.getText();
             Statement st = con.conexion();
             String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"

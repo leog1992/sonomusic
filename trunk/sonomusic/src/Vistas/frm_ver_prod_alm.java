@@ -204,8 +204,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_karActionPerformed
 
     private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
-        i = t_productos.getSelectedRow();
-        btn_kar.setEnabled(true);
+//        i = t_productos.getSelectedRow();
+//        btn_kar.setEnabled(true);
     }//GEN-LAST:event_t_productosMousePressed
 
     private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
@@ -257,8 +257,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-
-            i = t_productos.getSelectedRow();
+       i = t_productos.getSelectedRow();
+        btn_kar.setEnabled(true);
             if (funcion.equals("solicitar")) {
                 Object fila[] = new Object[5];
                 fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
