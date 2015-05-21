@@ -115,6 +115,8 @@ public class frm_loader extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cargando App - Sono Music Import");
+        setAlwaysOnTop(true);
         setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
