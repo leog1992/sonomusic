@@ -46,7 +46,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                 + "on pa.idProductos=p.idProductos inner join clasificacion as c "
                 + "on p.id_clas=c.id_clas inner join und_medida as u "
                 + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
-                + " on pa.idAlmacen=a.idAlmacen order by p.desc_pro asc";
+                + " on pa.idAlmacen=a.idAlmacen order by p.desc_pro asc, p.modelo asc";
         ver_productos(query);
         t_productos.setDefaultRenderer(Object.class, new table_render());
         ver_almacen();
@@ -294,7 +294,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
                     + " on pa.idAlmacen=a.idAlmacen where p.desc_pro like '%" + texto + "%' or "
                     + "p.modelo like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%' "
-                    + "or pa.precio like '%" + texto + "%' order by p.desc_pro asc;";
+                    + "or pa.precio like '%" + texto + "%' order by p.desc_pro asc, p.modelo asc;";
             ver_productos(query);
             t_productos.setDefaultRenderer(Object.class, new table_render());
             t_productos.requestFocus();

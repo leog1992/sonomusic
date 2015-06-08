@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ticket" language="groovy" pageWidth="215" pageHeight="842" columnWidth="175" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="adec48b7-0389-421d-9cd4-f3b81bfb9db3">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="72"/>
+	<property name="ireport.y" value="469"/>
 	<parameter name="idped" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -154,7 +154,7 @@ WHERE
 					<pen lineWidth="0.5" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
-			<textField pattern="dd/MM/yyyy h.mm a">
+			<textField pattern="dd/MM/yyyy hh:mm a">
 				<reportElement x="107" y="-10" width="68" height="10" uuid="f8178fc5-37e2-499a-9251-0e33320ca5c0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
@@ -164,14 +164,14 @@ WHERE
 			<textField>
 				<reportElement x="0" y="38" width="175" height="10" uuid="76137b51-f236-4c5b-9030-b96f48599dbf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Direccion: " + $F{almacen_dir_alm}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="47" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement x="161" y="-84" width="71" height="10" uuid="cf6e5829-7f50-439b-95c8-da6c7bcad262"/>
 				<textElement verticalAlignment="Middle">
@@ -180,7 +180,7 @@ WHERE
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="36" width="175" height="1" uuid="1ceb54f4-cf3c-405b-856f-20eb46b4c767"/>
+				<reportElement x="0" y="41" width="175" height="1" uuid="1ceb54f4-cf3c-405b-856f-20eb46b4c767"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dashed"/>
 				</graphicElement>
@@ -192,21 +192,21 @@ WHERE
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="0" y="37" width="17" height="10" uuid="74a56d79-4b2d-4c23-8390-7b2c2fb59f22"/>
+				<reportElement x="0" y="42" width="17" height="10" uuid="74a56d79-4b2d-4c23-8390-7b2c2fb59f22"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Cant.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="17" y="37" width="121" height="10" uuid="adc96602-39e8-4894-a187-aca2779eecbf"/>
+				<reportElement x="17" y="42" width="121" height="10" uuid="adc96602-39e8-4894-a187-aca2779eecbf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="37" width="37" height="10" uuid="015dc3da-9f46-46e3-8137-3e5a65d2a122"/>
+				<reportElement x="138" y="42" width="37" height="10" uuid="015dc3da-9f46-46e3-8137-3e5a65d2a122"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -220,7 +220,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{tipo_doc_desc_tipd}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0000">
-				<reportElement x="86" y="0" width="20" height="10" uuid="af5fd235-4651-47fc-888f-b6c2e8fbd034"/>
+				<reportElement x="73" y="0" width="24" height="10" uuid="af5fd235-4651-47fc-888f-b6c2e8fbd034"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -234,7 +234,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{pedido_fec_ped}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0000000">
-				<reportElement x="106" y="0" width="25" height="10" uuid="7deb0cfd-c7fc-47e1-bdb0-aa05bd1224cc"/>
+				<reportElement x="99" y="0" width="32" height="10" uuid="7deb0cfd-c7fc-47e1-bdb0-aa05bd1224cc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -267,14 +267,14 @@ WHERE
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="37" y="13" width="75" height="10" uuid="89dd4ac0-0c66-4879-a827-4b18027735c8"/>
+				<reportElement x="37" y="13" width="62" height="10" uuid="89dd4ac0-0c66-4879-a827-4b18027735c8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_A_nro_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="23" width="75" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
+				<reportElement x="37" y="23" width="138" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -291,12 +291,12 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="0" width="37" height="10" uuid="a0cb3e84-91d2-4e9f-8eba-9fb0cbac48c7"/>
 				<textElement textAlignment="Right">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{detalle_pedido_precio} * $F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="17" y="0" width="121" height="10" uuid="96a2aa58-6ce9-46f2-affc-589866ad41de"/>
@@ -342,21 +342,21 @@ WHERE
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="18" width="37" height="10" uuid="93d78f56-0de8-4960-9931-496c3d6e36ee"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{subtotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="28" width="37" height="10" uuid="4a84ad60-400a-4aaf-a6d7-37ec7689da4f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="38" width="37" height="10" uuid="ca5255c5-9d71-4492-bc26-10c848b60f73"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
@@ -387,28 +387,28 @@ WHERE
 			<staticText>
 				<reportElement x="73" y="8" width="50" height="10" uuid="0fb840ca-a0e7-468d-a946-bfebf3897737"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Medio de Pago:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="123" y="8" width="52" height="10" uuid="24d7f02d-45bd-4bf7-8e4b-fa9a3f1019a9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_pago_desc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="52" width="30" height="10" uuid="606dcaa9-5f78-4fc9-9eea-183a134401d4"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+				<reportElement x="0" y="52" width="24" height="10" uuid="606dcaa9-5f78-4fc9-9eea-183a134401d4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
 				</textElement>
-				<text><![CDATA[Vendedor:]]></text>
+				<text><![CDATA[Vend.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="52" width="145" height="10" uuid="4949cc4e-ebfe-462d-887b-61699847bfaf"/>
+				<reportElement x="24" y="52" width="151" height="10" uuid="4949cc4e-ebfe-462d-887b-61699847bfaf"/>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empleados_nom_per}]]></textFieldExpression>
 			</textField>
@@ -417,9 +417,9 @@ WHERE
 	<pageFooter>
 		<band height="56" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="25" width="175" height="11" uuid="3afd6a29-851f-4f88-b4e8-b61a0165e356"/>
+				<reportElement x="0" y="27" width="175" height="11" uuid="3afd6a29-851f-4f88-b4e8-b61a0165e356"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GRACIAS POR SU COMPRA ]]></text>
 			</staticText>
@@ -430,9 +430,9 @@ WHERE
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="0" y="36" width="175" height="11" uuid="e820e5cc-afba-4bf1-98eb-aa134716da2b"/>
+				<reportElement x="0" y="38" width="175" height="11" uuid="e820e5cc-afba-4bf1-98eb-aa134716da2b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VUELVA PRONTO]]></text>
 			</staticText>
@@ -448,7 +448,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA["e-mail: " + "sonomusic@algo.com"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["e-mail: " + "sonomusicimportperu@hotmail.com"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ticket" language="groovy" pageWidth="215" pageHeight="842" columnWidth="175" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="adec48b7-0389-421d-9cd4-f3b81bfb9db3">
 	<property name="ireport.zoom" value="4.0"/>
-	<property name="ireport.x" value="160"/>
-	<property name="ireport.y" value="350"/>
+	<property name="ireport.x" value="328"/>
+	<property name="ireport.y" value="436"/>
 	<parameter name="idped" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -47,7 +47,8 @@
      cliente_A.`dir_per` AS cliente_A_dir_per,
      usuario.`nick` AS usuario_nick,
      empleados.`dni` AS empleados_dni,
-     empleados.`nom_per` AS empleados_nom_per
+     empleados.`nom_per` AS empleados_nom_per,
+     cliente.`tel_per` AS cliente_tel_per
 FROM
      `almacen` almacen INNER JOIN `pedido` pedido ON almacen.`idAlmacen` = pedido.`idAlmacen`
      INNER JOIN `cliente` cliente ON pedido.`cli_doc` = cliente.`nro_doc`
@@ -100,6 +101,7 @@ WHERE
 	<field name="usuario_nick" class="java.lang.String"/>
 	<field name="empleados_dni" class="java.lang.Integer"/>
 	<field name="empleados_nom_per" class="java.lang.String"/>
+	<field name="cliente_tel_per" class="java.lang.String"/>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{pedido_total}]]></variableExpression>
 	</variable>
@@ -162,7 +164,7 @@ WHERE
 			<textField>
 				<reportElement x="0" y="38" width="175" height="10" uuid="76137b51-f236-4c5b-9030-b96f48599dbf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Direccion: " + $F{almacen_dir_alm}]]></textFieldExpression>
 			</textField>
@@ -211,14 +213,14 @@ WHERE
 				<text><![CDATA[Importe]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="0" width="65" height="10" uuid="5a73f2c8-d01e-40d7-bef7-44f463f4c1d6"/>
+				<reportElement x="0" y="0" width="59" height="10" uuid="5a73f2c8-d01e-40d7-bef7-44f463f4c1d6"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_doc_desc_tipd}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0000">
-				<reportElement x="86" y="0" width="20" height="10" uuid="af5fd235-4651-47fc-888f-b6c2e8fbd034"/>
+				<reportElement x="64" y="0" width="25" height="10" uuid="af5fd235-4651-47fc-888f-b6c2e8fbd034"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -232,7 +234,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{pedido_fec_ped}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0000000">
-				<reportElement x="106" y="0" width="25" height="10" uuid="7deb0cfd-c7fc-47e1-bdb0-aa05bd1224cc"/>
+				<reportElement x="89" y="0" width="42" height="10" uuid="7deb0cfd-c7fc-47e1-bdb0-aa05bd1224cc"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -255,21 +257,21 @@ WHERE
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[R.U.C:]]></text>
+				<text><![CDATA[Nro. Doc.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="23" width="32" height="10" uuid="5f0280fe-7963-47e3-b65b-9fe6f7e563d6"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[Raz. Soc:]]></text>
+				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="33" width="32" height="10" uuid="fefc6f6d-ee52-41c0-ac52-1f00a2a858de"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<text><![CDATA[Direccion:]]></text>
+				<text><![CDATA[Telefono:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="37" y="13" width="75" height="10" uuid="89dd4ac0-0c66-4879-a827-4b18027735c8"/>
@@ -279,18 +281,18 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cliente_A_nro_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="23" width="75" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
+				<reportElement x="37" y="23" width="138" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_A_nom_per}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="33" width="75" height="10" uuid="cb61b00f-d757-4d0f-938b-b9746fe9b618"/>
+				<reportElement x="37" y="33" width="138" height="10" uuid="cb61b00f-d757-4d0f-938b-b9746fe9b618"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_A_dir_per}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cliente_tel_per}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -303,19 +305,19 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="0" width="37" height="10" uuid="a0cb3e84-91d2-4e9f-8eba-9fb0cbac48c7"/>
 				<textElement textAlignment="Right">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad} * $F{detalle_pedido_precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="17" y="0" width="121" height="10" uuid="96a2aa58-6ce9-46f2-affc-589866ad41de"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{productos_desc_pro}+" - "+$F{productos_modelo}+" - "+$F{productos_serie}+" - "+$F{productos_marca}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{productos_desc_pro}+" - "+$F{productos_marca}+" - "+$F{productos_modelo}+" - "+$F{productos_serie}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -354,7 +356,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="38" width="37" height="10" uuid="ca5255c5-9d71-4492-bc26-10c848b60f73"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
@@ -385,39 +387,39 @@ WHERE
 			<staticText>
 				<reportElement x="73" y="8" width="50" height="10" uuid="0fb840ca-a0e7-468d-a946-bfebf3897737"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Medio de Pago:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="123" y="8" width="52" height="10" uuid="24d7f02d-45bd-4bf7-8e4b-fa9a3f1019a9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_pago_desc}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="52" width="30" height="10" uuid="606dcaa9-5f78-4fc9-9eea-183a134401d4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Vendedor:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="30" y="52" width="145" height="10" uuid="4949cc4e-ebfe-462d-887b-61699847bfaf"/>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empleados_nom_per}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="18" width="37" height="10" uuid="a74cfaa2-44c2-4802-9f12-7129aff49e96"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Adelanto}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="28" width="37" height="10" uuid="36d377c8-c6c9-47c5-9551-954dc0ba1f8f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
@@ -431,7 +433,7 @@ WHERE
 			<staticText>
 				<reportElement x="0" y="25" width="175" height="11" uuid="3afd6a29-851f-4f88-b4e8-b61a0165e356"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GRACIAS POR SU COMPRA ]]></text>
 			</staticText>
@@ -444,7 +446,7 @@ WHERE
 			<staticText>
 				<reportElement x="0" y="36" width="175" height="11" uuid="e820e5cc-afba-4bf1-98eb-aa134716da2b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VUELVA PRONTO]]></text>
 			</staticText>
@@ -460,7 +462,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA["e-mail: " + "sonomusic@algo.com"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["e-mail: " + "sonomusicimportperu@hotmail.com"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

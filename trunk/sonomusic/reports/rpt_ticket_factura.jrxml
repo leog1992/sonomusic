@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ticket" language="groovy" pageWidth="215" pageHeight="842" columnWidth="175" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="adec48b7-0389-421d-9cd4-f3b81bfb9db3">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="72"/>
+	<property name="ireport.y" value="505"/>
 	<parameter name="idped" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -164,7 +164,7 @@ WHERE
 			<textField>
 				<reportElement x="0" y="38" width="175" height="10" uuid="76137b51-f236-4c5b-9030-b96f48599dbf"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6" isBold="false"/>
+					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Direccion: " + $F{almacen_dir_alm}]]></textFieldExpression>
 			</textField>
@@ -281,14 +281,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{cliente_A_nro_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="23" width="75" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
+				<reportElement x="37" y="23" width="138" height="10" uuid="f6a098f9-4b33-4f00-9dbb-3debf8451864"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente_A_nom_per}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="33" width="75" height="10" uuid="cb61b00f-d757-4d0f-938b-b9746fe9b618"/>
+				<reportElement x="37" y="33" width="138" height="10" uuid="cb61b00f-d757-4d0f-938b-b9746fe9b618"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -305,12 +305,12 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="0" width="37" height="10" uuid="a0cb3e84-91d2-4e9f-8eba-9fb0cbac48c7"/>
 				<textElement textAlignment="Right">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{detalle_pedido_cantidad} * $F{detalle_pedido_precio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="17" y="0" width="121" height="10" uuid="96a2aa58-6ce9-46f2-affc-589866ad41de"/>
@@ -356,21 +356,21 @@ WHERE
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="18" width="37" height="10" uuid="93d78f56-0de8-4960-9931-496c3d6e36ee"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{subtotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="28" width="37" height="10" uuid="4a84ad60-400a-4aaf-a6d7-37ec7689da4f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="138" y="38" width="37" height="10" uuid="ca5255c5-9d71-4492-bc26-10c848b60f73"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
@@ -401,39 +401,39 @@ WHERE
 			<staticText>
 				<reportElement x="73" y="8" width="50" height="10" uuid="0fb840ca-a0e7-468d-a946-bfebf3897737"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Medio de Pago:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="123" y="8" width="52" height="10" uuid="24d7f02d-45bd-4bf7-8e4b-fa9a3f1019a9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_pago_desc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="52" width="30" height="10" uuid="606dcaa9-5f78-4fc9-9eea-183a134401d4"/>
+				<reportElement x="0" y="52" width="24" height="10" uuid="606dcaa9-5f78-4fc9-9eea-183a134401d4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
-				<text><![CDATA[Vendedor:]]></text>
+				<text><![CDATA[Vend.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="52" width="145" height="10" uuid="4949cc4e-ebfe-462d-887b-61699847bfaf"/>
+				<reportElement x="24" y="52" width="151" height="10" uuid="4949cc4e-ebfe-462d-887b-61699847bfaf"/>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empleados_nom_per}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="56" splitType="Stretch">
+		<band height="51" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="25" width="175" height="11" uuid="3afd6a29-851f-4f88-b4e8-b61a0165e356"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GRACIAS POR SU COMPRA ]]></text>
 			</staticText>
@@ -446,7 +446,7 @@ WHERE
 			<staticText>
 				<reportElement x="0" y="36" width="175" height="11" uuid="e820e5cc-afba-4bf1-98eb-aa134716da2b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VUELVA PRONTO]]></text>
 			</staticText>
@@ -462,7 +462,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA["e-mail: " + "sonomusic@algo.com"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["e-mail: " + "sonomusicimportperu@hotmail.com"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

@@ -49,8 +49,10 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     public frm_ver_productos() {
         initComponents();
 //        if (!ventana.equals("compra_prod")) {
-        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
-                + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
+        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, "
+                + "c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado from productos as p inner join "
+                + "und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on "
+                + "p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc";
         ver_productos(query);
 //            t_productos.setDefaultRenderer(Object.class, new table_render());
 //        }
@@ -470,7 +472,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 pro.setId_pro((int) t_productos.getValueAt(i, 0));
                 try {
                     Statement st = con.conexion();
-                    String query = "delete idfrom productos where idProductos ='" + pro.getId_pro() + "'";
+                    String query = "delete from productos where idProductos ='" + pro.getId_pro() + "'";
                     con.actualiza(st, query);
                     con.cerrar(st);
                     String query1 = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
@@ -835,7 +837,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         String bus = txt_bus.getText();
         String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
                 + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.desc_pro like '%" + bus + "%' "
-                + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%' order by p.desc_pro asc";
+                + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%' order by p.desc_pro asc, p.modelo asc";
         if (ventana.equals("compra_prod")) {
             ver_productos_marca(query);
         } else {
