@@ -698,6 +698,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             frm_ver_prod_alm_det pro_det = new frm_ver_prod_alm_det();
             ven.llamar_ventana(pro_det);
         }
+        win = "reg";
         subventana = "";
         System.out.println(pro.getPre_pro());
 

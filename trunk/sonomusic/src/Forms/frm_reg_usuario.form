@@ -75,7 +75,7 @@
                   <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_car" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_con" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -85,7 +85,7 @@
                   <Component id="txt_ver_con" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_cer" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_reg" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>

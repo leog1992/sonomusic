@@ -46,8 +46,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     Integer i;
     String fecha_hoy;
 
-    
-
     /**
      * Creates new form frm_ver_cobranzas
      */
@@ -67,7 +65,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         txt_bus.requestFocus();
     }
     //
-    
+
     double pagados() {
         double pag = 0;
         try {
@@ -82,7 +80,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         }
         return pag;
     }
-    
 
     private void ver_pedidos(String query) {
         try {
@@ -364,11 +361,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             if (cbx_estado.getSelectedIndex() == 0) {
-                String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                        + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                        + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                        + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped like '%" + buscar + "%'";
-                ver_pedidos(ver_ped);
+                if (txt_bus.getText().length() == 10) {
+                    buscar = ven.fechabase(buscar);
+                    System.out.println(buscar);
+                    String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
+                            + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
+                            + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
+                            + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped = '" + buscar + "'";
+                    ver_pedidos(ver_ped);
+                }
             } else {
                 String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                         + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
@@ -606,7 +607,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
         //cargar pagado
-        letras.lbl_pagado.setText(pagados()+"");
+        letras.lbl_pagado.setText(pagados() + "");
         letras.resta();
         letras.id = this.id;
         ven.llamar_ventana(letras);

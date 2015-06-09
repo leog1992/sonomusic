@@ -47,7 +47,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     Cl_Tipo_Pago tipa = new Cl_Tipo_Pago();
     Cl_Productos pro;
-    Cl_Usuario usu = new Cl_Usuario();
+    public static Cl_Usuario usu = new Cl_Usuario();
     Cl_Proveedor prov = new Cl_Proveedor();
     public static Double total;
     public static String modo;
@@ -410,7 +410,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         System.out.println("================DATOS INSERTADOS EN LA TABLA PEDIDO(VENTA)================");
         System.out.println("Fecha Venta: " + frm_reg_venta.ped.getFec_ped() + "\nFecha Pago: " + ped.getFec_pag_ped() + "\nTipo Pago: " + tipa.getId()
                 + "\nDescuento: " + ped.getDes_ped() + "\nEstado: " + ped.getEst_ped() + "\nTipo Documento: " + tido.getId() + "\nSerie: " + tido.getSerie()
-                + "\nNro.Documento: " + tido.getNro() + "\nNick: " + frm_menu.usu.getNick() + "\nAlmacen: " + frm_menu.alm.getId() + "\nAlbaran: " + "null"
+                + "\nNro.Documento: " + tido.getNro() + "\nNick: " + usu.getNick() + "\nAlmacen: " + frm_menu.alm.getId() + "\nAlbaran: " + "null"
                 + "\nCliente: " + cli.getNro_doc() + "\nTotal: " + ped.getTotal());
         System.out.println("================FIN DE INSERTADOS EN LA TABLA PEDIDO(VENTA)================");
     }
@@ -428,7 +428,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                         + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + frm_menu.lbl_user.getText() + "', "
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
                         + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"','" + total + "')";
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
@@ -550,7 +550,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -562,7 +562,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -589,7 +589,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                         + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + frm_menu.lbl_user.getText() + "', "
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
                         + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"', '" + total + "')";
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
@@ -653,7 +653,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                        + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                        + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                 con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
