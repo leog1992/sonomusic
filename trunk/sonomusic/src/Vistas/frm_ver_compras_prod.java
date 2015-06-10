@@ -428,7 +428,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                     try {
                         Statement st1 = con.conexion();
                         String ins_kar = "insert into kardex Values (null, '" + com.getFec_com() + "', '" + art.getId_pro() + "', '0.00', '0.00', '" + art.getCan() + "', '" + art.getPre_pro() + "', "
-                                + "'" + com.getSerie() + "', '" + com.getNro() + "', '" + tido.getId() + "', '" + alm.getId() + "', '" + pro.getRuc() + "', '" + pro.getRaz() + "', '2')";
+                                + "'" + com.getSerie() + "', '" + com.getNro() + "', '" + tido.getId() + "', '" + alm.getId() + "', '" + pro.getRuc() + "', '" + pro.getRaz() + "', '6')";
                         con.actualiza(st1, ins_kar);
                         con.cerrar(st1);
                     } catch (Exception ex) {

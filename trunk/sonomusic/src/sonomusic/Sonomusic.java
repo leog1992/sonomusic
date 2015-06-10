@@ -8,7 +8,6 @@ package sonomusic;
 import java.net.ServerSocket;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
  *

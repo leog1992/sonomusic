@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_almacen_detalle" language="groovy" pageWidth="500" pageHeight="595" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1b433e90-1860-4311-8ce8-df565fb75a53">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="309"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_pedido" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -204,7 +204,7 @@ FROM
 				</textElement>
 				<textFieldExpression><![CDATA[$F{clasificacion_desc_clas}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0.00;-###0.00">
 				<reportElement x="402" y="0" width="35" height="15" uuid="b17fdbd8-ae1a-42f3-8470-026b47c5bc3d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>
@@ -218,7 +218,7 @@ FROM
 				</textElement>
 				<text><![CDATA[S/.]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###0.00;-###0.00">
 				<reportElement x="460" y="0" width="30" height="15" uuid="78721297-0f04-41bd-936f-fa73c776d9be"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="7"/>

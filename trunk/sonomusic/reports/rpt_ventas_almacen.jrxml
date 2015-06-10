@@ -68,7 +68,9 @@ FROM
 WHERE
      almacen.`idAlmacen` = $P{almacen}
      and pedido.`est_ped` = 1
-     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin} group by pedido.`idPedido`]]>
+     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin} group by pedido.`idPedido`
+
+order by  pedido.`fec_ped` asc,  pedido.`idPedido` asc]]>
 	</queryString>
 	<field name="pedido_idPedido" class="java.lang.Integer"/>
 	<field name="pedido_fec_ped" class="java.sql.Date"/>
