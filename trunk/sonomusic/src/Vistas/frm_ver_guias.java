@@ -41,12 +41,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         System.out.println(frm_menu.alm.getDireccion());
         String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
                 + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                + "'" + frm_menu.alm.getDireccion() + "' order by fecha, idTraslado asc";
+                + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
         ver_guia(query);
     }
 
     private void ver_guia(String query) {
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = null;
+        modelo = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
         modelo.addColumn("Motivo");
         modelo.addColumn("Fecha");
         modelo.addColumn("Id");
@@ -199,7 +205,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
@@ -228,7 +234,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_guia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,13 +301,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private void t_guiasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMousePressed
         i = t_guias.getSelectedRow();
         btn_guia.setEnabled(true);
-        if (t_guias.getValueAt(i, 8).equals("PENDIENTE")) {
-            btn_envio.setEnabled(true);
-        } else {
-            btn_envio.setEnabled(false);
-        }
 
-        if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
+        if (t_guias.getValueAt(i, 8).toString().equals("APROBADO")) {
+            btn_anu.setEnabled(false);
+        } else if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
             btn_anu.setEnabled(false);
         } else {
             btn_anu.setEnabled(true);
@@ -315,11 +318,11 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         ven.ver_reporte("rpt_ver_guia", parametros);
     }//GEN-LAST:event_btn_guiaActionPerformed
 
-    private int ver_id_alm(String nom_alm) {
+    private int ver_id_alm(String dir_alm) {
         int ida = 0;
         try {
             Statement st = con.conexion();
-            String ver_alm = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "'";
+            String ver_alm = "select idAlmacen from almacen where dir_alm like '" + dir_alm + "%'";
             ResultSet rs = con.consulta(st, ver_alm);
             if (rs.next()) {
                 ida = rs.getInt("idAlmacen");
@@ -332,76 +335,144 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         return ida;
     }
 
+    private String ruc_alm(String id_alm) {
+        String ruc = null;
+        try {
+            Statement st = con.conexion();
+            String ver_alm = "select ruc from almacen where idAlmacen = '" + id_alm + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                ruc = rs.getString("ruc");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ruc;
+    }
+
+    private String raz_soc(String id_alm) {
+        String raz = null;
+        try {
+            Statement st = con.conexion();
+            String ver_alm = "select raz_soc from almacen where idAlmacen = '" + id_alm + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                raz = rs.getString("raz_soc");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return raz;
+    }
+
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
         if (usu.getPer_anu_traslado().equals("1")) {
             int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el traslado?");
             if (JOptionPane.OK_OPTION == confirmado) {
                 //anular guia si es pendiente
                 alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+                String est_guia = t_guias.getValueAt(i, 8).toString();
 
-                Cl_Productos pro = new Cl_Productos();
+                if (est_guia.equals("PENDIENTE")) {
 
-                String nom_alm_or = t_guias.getValueAt(i, 3).toString();
-                //ver id almacen origen:
-                int id_ao = ver_id_alm(nom_alm_or);
-
-                //seleccionar detalle envio
-                try {
-                    Statement st = con.conexion();
-                    String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
-                    ResultSet rs = con.consulta(st, ver_det_env);
-                    while (rs.next()) {
-                        pro.setCan(rs.getDouble("cant"));
-                        pro.setId_pro(rs.getInt("idProductos"));
-                        // Seleccionar cantidad actual producto en almacen destino
-                        try {
-                            Statement st1 = con.conexion();
-                            String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                            ResultSet rs1 = con.consulta(st1, ver_pro);
-                            if (rs1.next()) {
-                                pro.setCan_act_pro(rs1.getDouble("cant"));
-                            }
-                            con.cerrar(rs1);
-                            con.cerrar(st1);
-                        } catch (Exception ex) {
-                            System.out.println(ex);
+                    try {
+                        Statement st = con.conexion();
+                        String ver_det_env = "select fecha, ser_doc, nro_doc from traslado where idTraslado = '" + alb.getId() + "'";
+                        ResultSet rs = con.consulta(st, ver_det_env);
+                        if (rs.next()) {
+                            alb.setFecha(rs.getString("fecha"));
+                            alb.setSer(rs.getInt("ser_doc"));
+                            alb.setNro(rs.getInt("nro_doc"));
                         }
-                        double can_new = pro.getCan_act_pro() - pro.getCan();
-
-                        try {
-                            Statement st1 = con.conexion();
-                            String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                            con.actualiza(st1, cam_can);
-                            con.cerrar(st1);
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex);
                     }
-                    con.cerrar(rs);
-                    con.cerrar(st);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                // cambiar cantidades de almacen origen
 
-                try {
-                    Statement st = con.conexion();
-                    String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
-                    con.actualiza(st, del_det);
-                    con.cerrar(st);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+                    Cl_Productos pro = new Cl_Productos();
 
-                try {
-                    Statement st = con.conexion();
-                    String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
-                    con.actualiza(st, del_tra);
-                    con.cerrar(st);
-                } catch (Exception e) {
-                    System.out.println(e);
+                    String nom_alm_or = t_guias.getValueAt(i, 3).toString();
+                    //ver id almacen origen:
+                    int id_ao = ver_id_alm(nom_alm_or);
+                    System.out.println("almacen origen " + id_ao + "\n");
+
+                    String ruc = ruc_alm("" + id_ao);
+                    String raz = raz_soc("" + id_ao);
+
+                    //seleccionar detalle envio
+                    try {
+                        Statement st = con.conexion();
+                        String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
+                        ResultSet rs = con.consulta(st, ver_det_env);
+                        while (rs.next()) {
+                            pro.setCan(rs.getDouble("cant"));
+                            pro.setId_pro(rs.getInt("idProductos"));
+                            // Seleccionar cantidad actual producto en almacen destino
+                            try {
+                                Statement st1 = con.conexion();
+                                String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                                ResultSet rs1 = con.consulta(st1, ver_pro);
+                                if (rs1.next()) {
+                                    pro.setCan_act_pro(rs1.getDouble("cant"));
+                                }
+                                con.cerrar(rs1);
+                                con.cerrar(st1);
+                            } catch (Exception ex) {
+                                System.out.println(ex);
+                            }
+                            double can_new = pro.getCan_act_pro() + pro.getCan();
+
+                            try {
+                                Statement st1 = con.conexion();
+                                String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                                con.actualiza(st1, cam_can);
+                                con.cerrar(st1);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+
+                            try {
+                                Statement st1 = con.conexion();
+                                String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0.00' , '0.00', '0.00', "
+                                        + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + id_ao + "', '" + ruc + "', '" + raz + "', '5')";
+                                con.actualiza(st1, ins_kardex);
+                                con.cerrar(st1);
+                            } catch (Exception ex) {
+                                System.out.print(ex);
+                            }
+                        }
+                        con.cerrar(rs);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    // cambiar cantidades de almacen origen
+
+//                try {
+//                    Statement st = con.conexion();
+//                    String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
+//                    con.actualiza(st, del_det);
+//                    con.cerrar(st);
+//                } catch (Exception e) {
+//                    System.out.println(e);
+//                }
+                    try {
+                        Statement st = con.conexion();
+                        String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
+                        con.actualiza(st, del_tra);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
             }
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                    + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
+            ver_guia(query);
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }

@@ -56,7 +56,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                     + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "'";
+                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' order by p.idPedido asc";
             ver_pedidos(ver_ped);
         } catch (Exception e) {
             System.out.println("error " + e);
@@ -359,25 +360,27 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         String buscar = txt_bus.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (cbx_estado.getSelectedIndex() == 0) {
-                if (txt_bus.getText().length() == 10) {
-                    buscar = ven.fechabase(buscar);
-                    System.out.println(buscar);
+            if (txt_bus.getText().length() > 1) {
+                if (cbx_estado.getSelectedIndex() == 0) {
+                    if (txt_bus.getText().length() == 10) {
+                        buscar = ven.fechabase(buscar);
+                        System.out.println(buscar);
+                        String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
+                                + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
+                                + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
+                                + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped = '" + buscar + "'";
+                        ver_pedidos(ver_ped);
+                    }
+                } else {
+                    System.out.println("almacen: " + sonomusic.frm_menu.alm.getId());
                     String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                             + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                             + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                            + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped = '" + buscar + "'";
+                            + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' "
+                            + "and (p.cli_doc like '%" + buscar + "%' or c.nom_per like '%" + buscar + "%') order by p.fec_ped desc, p.idPedido desc";
                     ver_pedidos(ver_ped);
                 }
-            } else {
-                String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                        + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                        + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                        + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.cli_doc like '%" + buscar + "%' or c.nom_per like '%" + buscar + "%'";
-                ver_pedidos(ver_ped);
             }
-
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
