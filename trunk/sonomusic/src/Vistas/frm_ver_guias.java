@@ -154,6 +154,9 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_guiasMousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                t_guiasMouseReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(t_guias);
 
@@ -250,6 +253,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         if (usu.getPer_reg_traslado().equals("1")) {
             frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
             ven.llamar_ventana(tras);
+            tras.accion = "traslado";
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
@@ -308,6 +312,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             btn_anu.setEnabled(false);
         } else {
             btn_anu.setEnabled(true);
+            btn_envio.setEnabled(true);
         }
     }//GEN-LAST:event_t_guiasMousePressed
 
@@ -477,6 +482,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_btn_anuActionPerformed
+
+    private void t_guiasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_guiasMouseReleased
 
     private void llenar_tguias(int idtra) {
         frm_reg_traslado_almacen traslado = null;

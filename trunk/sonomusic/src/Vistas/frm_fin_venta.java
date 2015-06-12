@@ -704,6 +704,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 comision = total * 0.05;
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
+                txt_fec_pago.setEditable(true);
                 txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
             } else {
                 txt_fec_pago.setEditable(true);

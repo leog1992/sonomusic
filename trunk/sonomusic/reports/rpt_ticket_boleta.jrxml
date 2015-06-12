@@ -105,7 +105,7 @@ WHERE
 	<variable name="subtotal" class="java.lang.Double">
 		<variableExpression><![CDATA[($F{pedido_total} / 1.18)]]></variableExpression>
 	</variable>
-	<variable name="total" class="java.lang.Double" calculation="Sum">
+	<variable name="total" class="java.lang.Double">
 		<variableExpression><![CDATA[$F{pedido_total}]]></variableExpression>
 	</variable>
 	<background>

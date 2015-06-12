@@ -810,10 +810,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         frm_ver_prod_alm prod_alm = new frm_ver_prod_alm();
         Integer ida = frm_menu.alm.getId();
         String alma = frm_menu.alm.getNom();
-        String prod = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "'";
-        pro.mostrar_productos(prod);
+//        String prod = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+//                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
+//                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "'";
+//        pro.mostrar_productos(prod);
         prod_alm.txt_ida.setText(ida.toString());
         prod_alm.txt_noma.setText(alma);
         frm_ver_prod_alm.t_productos.setDefaultRenderer(Object.class, new table_render());
@@ -904,7 +904,27 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
             txt_id.setText("");
             txt_desc.requestFocus();
+            
+            try {
+                TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
+                autocopletar.setMode(0);
+                String busca = txt_desc.getText();
+                Statement st = con.conexion();
+                String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
+                        + " from producto_almacen as pa inner join productos as p"
+                        + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "' "
+                        + "order by p.desc_pro asc, p.modelo asc";
+                //   + " and (p.desc_pro like '%" + busca + "%' or p.marca like '%" + busca + "%' or p.modelo like '%" + busca + "%')";
+                ResultSet rs = con.consulta(st, sql);
+                while (rs.next()) {
+
+                    autocopletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " - " + rs.getString("p.marca") + " - " + rs.getString("p.modelo"));
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error");
+            }
         }
+        
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             String idpro = txt_id.getText();
             Integer idalm = frm_menu.alm.getId();
@@ -1307,23 +1327,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_idKeyReleased
 
     private void txt_descKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyReleased
-            try {
-                TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
-                autocopletar.setMode(0);
-                String busca = txt_desc.getText();
-                Statement st = con.conexion();
-                String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
-                        + " from producto_almacen as pa inner join productos as p"
-                        + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "'"
-                        + " and (p.desc_pro like '%" + busca + "%' or p.marca like '%" + busca + "%' or p.modelo like '%" + busca + "%')";
-                ResultSet rs = con.consulta(st, sql);
-                while (rs.next()) {
-
-                    autocopletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " - " + rs.getString("p.marca") + " - " + rs.getString("p.modelo"));
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error");
-            }
+            
     }//GEN-LAST:event_txt_descKeyReleased
 
     private void txt_descKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyPressed
@@ -1345,6 +1349,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 txt_id.requestFocus();
             }
         }
+
+
     }//GEN-LAST:event_txt_descKeyPressed
 
     private void txt_descFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_descFocusGained
@@ -1354,7 +1360,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void cbx_vendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_vendedorActionPerformed
         try {
             String user = cbx_vendedor.getSelectedItem().toString();
-            String query = "select nom_per from empleados where dni = '"+user+"'";
+            String query = "select nom_per from empleados where dni = '" + user + "'";
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
@@ -1363,7 +1369,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
             con.cerrar(st);
             con.cerrar(rs);
-            
+
         } catch (SQLException e) {
             System.out.print(e);
         }

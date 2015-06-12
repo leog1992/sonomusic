@@ -231,7 +231,7 @@ order by movimiento.`fec_mov`]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{parcial}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement x="315" y="0" width="90" height="20" uuid="903c7c22-e8dc-47f6-ac06-6493da4cc395"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
