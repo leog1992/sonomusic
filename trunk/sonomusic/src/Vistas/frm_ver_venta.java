@@ -427,13 +427,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             //seleccionar detalle de pedido, cantidad de productos;
             try {
                 Statement st = con.conexion();
-                String ver_ped = "select idProductos, precio, cantidad, sum(precio * cantidad) as suma_pro from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
+                String ver_ped = "select idProductos, precio, cantidad from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
                 ResultSet rs = con.consulta(st, ver_ped);
                 while (rs.next()) {
                     pro.setId_pro(rs.getInt("idProductos"));
                     pro.setCan(rs.getDouble("cantidad"));
                     pro.setPre_pro(rs.getDouble("precio"));
-                    suma_pro = rs.getDouble("suma_pro");
+                    suma_pro = pro.getCan() * pro.getPre_pro();
                     Double pro_can = 0.00;
                     Double new_can = 0.00;
                     Double pro_can_alm = 0.00;
@@ -448,6 +448,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         con.cerrar(rs1);
                         con.cerrar(st1);
                         new_can = pro.getCan() + pro_can;
+                        System.out.println("Cantidad actual" + new_can + " del producto " + pro.getId_pro() + "\n");
                     } catch (SQLException ex1) {
                         System.out.print(ex1);
                     }
@@ -462,6 +463,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         con.cerrar(rs1);
                         con.cerrar(st1);
                         new_can_alm = pro.getCan() + pro_can_alm;
+                        System.out.println("Cantidad Nueva" + new_can_alm + " del producto " + pro.getId_pro() + "en el almacen " + alm.getId() + "\n");
                     } catch (SQLException ex1) {
                         System.out.print(ex1);
                     }
@@ -471,6 +473,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         String upt_pro_alm = "update producto_almacen set cant = '" + new_can_alm + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
                         con.actualiza(st1, upt_pro_alm);
                         con.cerrar(st1);
+                        System.out.println("actualizando cantidad del producto " + pro.getId_pro() + " en el almacen " + alm.getId() + "\n");
                     } catch (Exception ex1) {
                         System.out.print(ex1);
                     }
@@ -480,6 +483,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         String upt_pro = "update productos set cant_actual = '" + new_can + "' where idProductos = '" + pro.getId_pro() + "'";
                         con.actualiza(st1, upt_pro);
                         con.cerrar(st1);
+                        System.out.println("atualizando cantidad total del producto " + pro.getId_pro() + "\n");
                     } catch (Exception ex1) {
                         System.out.print(ex1);
                     }
@@ -490,11 +494,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                                 + "'" + Tido.getSerie() + "', '" + Tido.getNro() + "', '" + Tido.getId() + "', '" + alm.getId() + "', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '5')";
                         con.actualiza(st1, ins_kardex);
                         con.cerrar(st1);
+                        System.out.println("insertando producto en el kardex \n");
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
 
                 }
+                con.cerrar(rs);
+                con.cerrar(st);
 
             } catch (SQLException ex) {
                 System.out.print(ex);
@@ -532,15 +539,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
             }
 
-            try {
-                Statement st1 = con.conexion();
-                String del_ped = "delete from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
-                con.actualiza(st1, del_ped);
-                con.cerrar(st1);
-            } catch (Exception ex1) {
-                System.out.print(ex1);
-            }
-
+//            try {
+//                Statement st1 = con.conexion();
+//                String del_ped = "delete from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
+//                con.actualiza(st1, del_ped);
+//                con.cerrar(st1);
+//            } catch (Exception ex1) {
+//                System.out.print(ex1);
+//            }
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                     + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "

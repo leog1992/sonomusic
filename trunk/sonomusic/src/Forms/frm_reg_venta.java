@@ -142,7 +142,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void ver_vendedores(String id_alm) {
         try {
-            String query = "select dni from empleados where idAlmacen = '" + id_alm + "'";
+            //mostrar vendedores segun cargo x prioridad
+            String query = "select dni from empleados where idAlmacen = '" + id_alm + "' order by idCargo asc ";
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
