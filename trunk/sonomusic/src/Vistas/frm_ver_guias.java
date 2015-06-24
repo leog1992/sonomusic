@@ -8,6 +8,7 @@ package Vistas;
 import Clases.Cl_Albaran;
 import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
+import Clases.Cl_Empleado;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_traslado_almacen;
@@ -31,6 +32,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Albaran alb = new Cl_Albaran();
     Cl_Almacen alm = new Cl_Almacen();
+    Cl_Empleado emp = new Cl_Empleado();
+    String valor = "";
     int i;
 
     /**
@@ -48,11 +51,11 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private void ver_guia(String query) {
         DefaultTableModel modelo = null;
         modelo = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int fila, int columna) {
-                    return false;
-                }
-            };
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
         modelo.addColumn("Motivo");
         modelo.addColumn("Fecha");
         modelo.addColumn("Id");
@@ -70,15 +73,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 fila[0] = rs.getString("motivo");
                 fila[1] = ven.fechaformateada(rs.getString("fecha"));
                 fila[2] = rs.getString("idTraslado");
-                fila[3] = rs.getString("origen");
+                String origen = rs.getString("origen");
+                    fila[3] = alm.nom_alm(origen);
                 fila[4] = rs.getString("raz_soc_dest");
-                fila[5] = rs.getString("destino");
+                String destino = rs.getString("destino");
+                fila[5] = alm.nom_alm(destino);
                 if (rs.getInt("ser_doc") == 0 && rs.getInt("nro_doc") == 0) {
                     fila[6] = "------";
                 } else {
                     fila[6] = rs.getString("ser_doc") + " - " + rs.getString("nro_doc");
                 }
-                fila[7] = rs.getString("nick");
+                String nick = rs.getString("nick");
+                fila[7] = emp.nom_emp(nick);
                 switch (rs.getString("estado")) {
                     case "0":
                         fila[8] = "PENDIENTE";
@@ -97,10 +103,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             t_guias.getColumnModel().getColumn(0).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(1).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(2).setPreferredWidth(30);
-            t_guias.getColumnModel().getColumn(3).setPreferredWidth(200);
+            t_guias.getColumnModel().getColumn(3).setPreferredWidth(90);
             t_guias.getColumnModel().getColumn(4).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(5).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(6).setPreferredWidth(120);
+            t_guias.getColumnModel().getColumn(5).setPreferredWidth(90);
+            t_guias.getColumnModel().getColumn(6).setPreferredWidth(100);
             t_guias.getColumnModel().getColumn(7).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(8).setPreferredWidth(80);
             con.cerrar(rs);
@@ -128,13 +134,21 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         btn_anu = new javax.swing.JButton();
         btn_envio = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setResizable(true);
         setTitle("Detalle de Guias");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/magnifier.png"))); // NOI18N
         jLabel1.setText("Buscar");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
@@ -149,7 +163,6 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        t_guias.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_guias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_guiasMousePressed(evt);
@@ -200,6 +213,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fecha", "Almacen" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,6 +229,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_envio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,7 +252,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -308,11 +326,15 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
 
         if (t_guias.getValueAt(i, 8).toString().equals("APROBADO")) {
             btn_anu.setEnabled(false);
+            btn_envio.setEnabled(false);
         } else if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
             btn_anu.setEnabled(false);
+            btn_envio.setEnabled(false);
         } else {
             btn_anu.setEnabled(true);
+            if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 5))) {
             btn_envio.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_t_guiasMousePressed
 
@@ -487,6 +509,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_t_guiasMouseReleased
 
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        String texto = jTextField1.getText();
+        String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                + "estado from traslado where (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                + "'" + frm_menu.alm.getDireccion() + "') and '"+valor+"' like '"+texto+"' order by fecha desc, idTraslado desc";
+        ver_guia(query);
+    }//GEN-LAST:event_jTextField1KeyPressed
+
     private void llenar_tguias(int idtra) {
         frm_reg_traslado_almacen traslado = null;
         traslado.detalle.addColumn("Cant. Rec.");
@@ -526,6 +556,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_guia;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;

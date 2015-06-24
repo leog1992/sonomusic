@@ -229,8 +229,7 @@ public class Cl_Usuario {
 
     public void setPer_cuentas(String per_cuentas) {
         this.per_cuentas = per_cuentas;
-    }
-    
+    }    
     
     
 }

@@ -288,7 +288,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel7.setFocusable(false);
 
         txt_ruc_dest.setEditable(false);
-        txt_ruc_dest.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txt_ruc_dest.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_ruc_dest.setFocusable(false);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N

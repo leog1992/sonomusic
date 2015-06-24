@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import sonomusic.frm_menu;
 
 public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
 
@@ -276,6 +277,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         String fecha = ven.fechabase(txt_fec.getText());
         ped.setId_ped(frm_ver_letras_pedido.id);
+        Double monto;
         if (queda <= 0.00) {
             try {
                 Statement st = con.conexion();
@@ -285,7 +287,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
+            monto = restante;
             try {
                 Statement st = con.conexion();
                 String upd_com = "update pedido set est_ped = '1' where idPedido = '" + ped.getId_ped() + "'";
@@ -296,6 +298,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             }
 
         } else {
+            monto = real;
             try {
                 Statement st = con.conexion();
                 String ins_pago = "insert into letras_pedido Values (null, '" + real + "', '" + fecha + "', '" + ped.getId_ped() + "')";
@@ -306,6 +309,17 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             }
 
         }
+        
+        String glosa = "SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '" + monto + "' "
+                            + ", '0.00', '" + frm_menu.usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                    con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error en:" + ex.getLocalizedMessage());
+                }
         this.dispose();
 
     }//GEN-LAST:event_btn_addActionPerformed

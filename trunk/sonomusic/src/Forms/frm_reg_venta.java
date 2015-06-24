@@ -1149,12 +1149,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
 
-                if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
-                    if (txt_nro_doc.getText().equals("00000000")) {
-                        txt_nro_doc.setText("");
-                        txt_nro_doc.requestFocus();
-                    }
-                }
+                
                 long doc = Long.parseLong(txt_nro_doc.getText());
                 if (!txt_nro_doc.getText().isEmpty()) {
                     cli.setNro_doc(txt_nro_doc.getText());
@@ -1200,6 +1195,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Se cargaran numeros");
                     txt_nro_doc.setText("00000000");
                     txt_nro_doc.requestFocus();
+                }
+                
+                if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
+                    if (txt_nro_doc.getText().equals("00000000")) {
+                        txt_nro_doc.setText("");
+                        txt_nro_doc.requestFocus();
+                    }
                 }
 
             } else {
@@ -1249,11 +1251,19 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_desActionPerformed
 
     private void txt_nro_docKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyTyped
+        if (cbx_tipd.getSelectedItem().equals("NOTA DE VENTA")) {
+            if (txt_nro_doc.getText().length() == 8) {
+                evt.consume();
+            }
+        }
+        
         if (cbx_tipd.getSelectedItem().equals("BOLETA")) {
             if (txt_nro_doc.getText().length() == 8) {
                 evt.consume();
             }
-        } else if (cbx_tipd.getSelectedItem().equals("FACTURA")) {
+        } 
+        
+        if (cbx_tipd.getSelectedItem().equals("FACTURA")) {
             if (txt_nro_doc.getText().length() == 11) {
                 evt.consume();
             }
