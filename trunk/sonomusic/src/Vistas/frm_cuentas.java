@@ -539,6 +539,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
                 almacen.txt_banco.setText(banco);
                 almacen.txt_cuenta.setText(cuenta);
                 almacen.lbl_idc.setText(t_cuentas.getValueAt(i, 0).toString());
+                almacen.btn_reg.setEnabled(true);
                 this.dispose();
             }
         }

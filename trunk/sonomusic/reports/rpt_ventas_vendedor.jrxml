@@ -50,7 +50,9 @@ FROM
      INNER JOIN `empleados` empleados ON usuario.`dni` = empleados.`dni`
 WHERE
      pedido.`nick` = $P{usuario}
-     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin}]]>
+     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin}
+and pedido.`est_ped` != 3
+order by pedido.`fec_ped` asc, pedido.`idPedido` asc]]>
 	</queryString>
 	<field name="pedido_idPedido" class="java.lang.Integer"/>
 	<field name="pedido_fec_ped" class="java.sql.Date"/>

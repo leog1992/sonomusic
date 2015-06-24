@@ -25,6 +25,8 @@ public class Cl_Productos {
     private double can_min_pro;
     private String est = "1";
     private double com_pro;
+    
+    private int tot_reg;
 
     public Cl_Productos() {
     }
@@ -225,10 +227,19 @@ public class Cl_Productos {
             prod.t_productos.setDefaultRenderer(Object.class, new table_render());
             mostrar.fireTableDataChanged();
             prod.t_productos.updateUI();
+         
         } catch (SQLException e) {
             System.out.print(e);
         }
 
+    }
+
+    public int getTot_reg() {
+        return tot_reg;
+    }
+
+    public void setTot_reg(int tot_reg) {
+        this.tot_reg = tot_reg;
     }
 
 }

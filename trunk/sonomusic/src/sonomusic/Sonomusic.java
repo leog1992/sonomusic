@@ -8,7 +8,6 @@ package sonomusic;
 import java.net.ServerSocket;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
  *
@@ -22,13 +21,9 @@ public class Sonomusic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        frm_loader loader = new frm_loader();
+        frm_login loader = new frm_login();
         try {
             SERVER_SOCKET = new ServerSocket(1334);
-            //JFrame.setDefaultLookAndFeelDecorated(true);
-            //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
-            //SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
-            //SubstanceLookAndFeel.setCurrentWatermark(new SubstanceImageWatermark("logo.png"));
             loader.setVisible(true);
         } catch (IOException x) {
             System.out.print(x);

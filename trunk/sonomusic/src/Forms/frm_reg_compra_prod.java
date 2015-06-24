@@ -8,6 +8,7 @@ package Forms;
 import Clases.Cl_Almacen;
 import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
+import Clases.Cl_Empresa;
 import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
@@ -44,6 +45,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     Cl_Productos art = new Cl_Productos();
     Cl_Compra com = new Cl_Compra();
     Cl_Almacen alm = new Cl_Almacen();
+    Cl_Empresa emp = new Cl_Empresa();
     Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     public static DefaultTableModel detalle;
     DecimalFormat formato = new DecimalFormat("####0.00");
@@ -179,7 +181,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txt_dir = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txt_tel = new javax.swing.JTextField();
+        txt_ruc_dest = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -209,6 +211,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         txt_fec_com = new javax.swing.JFormattedTextField();
         txt_fec_pag = new javax.swing.JFormattedTextField();
+        btn_bus_emp = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -276,16 +279,17 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         jLabel6.setFocusable(false);
 
         txt_dir.setEditable(false);
-        txt_dir.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_dir.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txt_dir.setFocusable(false);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel7.setText("Telefono:");
+        jLabel7.setText("Emp. Dest.");
         jLabel7.setFocusable(false);
 
-        txt_tel.setEditable(false);
-        txt_tel.setFocusable(false);
+        txt_ruc_dest.setEditable(false);
+        txt_ruc_dest.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_ruc_dest.setFocusable(false);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -508,6 +512,14 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_bus_emp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
+        btn_bus_emp.setEnabled(false);
+        btn_bus_emp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_bus_empActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -539,14 +551,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txt_fec_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_dir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -566,7 +570,6 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btn_cer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel9)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -592,7 +595,20 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nro)))
+                        .addComponent(txt_nro))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_ruc_dest, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_bus_emp)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -611,8 +627,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_ruc_dest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_bus_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,7 +685,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -680,25 +697,26 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            pro.setRuc(txt_ruc.getText());
-            try {
-                Statement st = con.conexion();
-                String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                ResultSet rs = con.consulta(st, ver_pro);
-                if (rs.next()) {
-                    pro.setRaz(rs.getString("raz_soc_pro"));
-                    txt_raz.setText(rs.getString("raz_soc_pro"));
-                    txt_dir.setText(rs.getString("dir_pro"));
-                    txt_tel.setText(rs.getString("tel_pro"));
-                    cbx_alm.setEnabled(true);
-                    cbx_alm.requestFocus();
-                } else {
-                    txt_ruc.setText("");
-                    txt_ruc.requestFocus();
-                    JOptionPane.showMessageDialog(null, "El Proveedor no existe \nPor favor ingrese otro nro de RUC");
+            if (txt_ruc.getText().length() == 11) {
+                pro.setRuc(txt_ruc.getText());
+                try {
+                    Statement st = con.conexion();
+                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+                    ResultSet rs = con.consulta(st, ver_pro);
+                    if (rs.next()) {
+                        pro.setRaz(rs.getString("raz_soc_pro"));
+                        txt_raz.setText(rs.getString("raz_soc_pro"));
+                        txt_dir.setText(rs.getString("dir_pro"));
+                        btn_bus_emp.setEnabled(true);
+                        btn_bus_emp.requestFocus();
+                    } else {
+                        txt_ruc.setText("");
+                        txt_ruc.requestFocus();
+                        JOptionPane.showMessageDialog(null, "El Proveedor no existe \nPor favor ingrese otro nro de RUC");
+                    }
+                } catch (SQLException ex) {
+                    System.out.print(ex);
                 }
-            } catch (SQLException ex) {
-                System.out.print(ex);
             }
         }
     }//GEN-LAST:event_txt_rucKeyPressed
@@ -762,12 +780,12 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         frm_ver_productos prod = new frm_ver_productos();
         prod.ventana = "compra_prod";
         String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
-                + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
+                + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc";
         ver_productos(query);
         //prod.btn_reg.setEnabled(false);
         prod.btn_mod.setEnabled(false);
         prod.btn_eli.setEnabled(false);
-        prod.btn_enviar.setEnabled(true);
+      //  prod.btn_enviar.setEnabled(true);
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_btn_busmActionPerformed
 
@@ -777,19 +795,13 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             prod.mostrar = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
-                    if (columna == 1) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-
+                    return false;
                 }
             };
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
             prod.mostrar.addColumn("Id");
-            prod.mostrar.addColumn("Sel.");
             prod.mostrar.addColumn("Descripcion");//descripcion modelo serie
             prod.mostrar.addColumn("Marca");
             prod.mostrar.addColumn("Precio");
@@ -914,6 +926,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         pro.setRaz(txt_raz.getText());
         com.setEst("" + (cbx_tipa.getSelectedIndex() + 1));
         alm.setId(cbx_alm.getSelectedIndex() + 1);
+        emp.setRuc(txt_ruc_dest.getText());
         com.setTotal(total());
     }
 
@@ -924,7 +937,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String ins_com = "insert into compra Values (null, '" + pro.getRuc() + "',null, '" + tido.getId() + "', '" + com.getSerie() + "', '" + com.getNro() + "', '" + com.getFec_com() + "', "
-                    + "'" + com.getEst() + "', '" + com.getFec_pag() + "', '" + com.getEst() + "', '" + frm_menu.lbl_user.getText() + "','" + alm.getId() + "', '" + com.getTotal() + "', 'P')";
+                    + "'" + com.getEst() + "', '" + com.getFec_pag() + "', '" + com.getEst() + "', '" + frm_menu.lbl_user.getText() + "','" + alm.getId() + "', '" + com.getTotal() + "', 'P', '" + emp.getRuc() + "')";
             con.actualiza(st, ins_com);
             con.cerrar(st);
         } catch (Exception ex) {
@@ -1113,6 +1126,12 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_fec_pagKeyPressed
 
+    private void btn_bus_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bus_empActionPerformed
+        frm_reg_empresa empresa = new frm_reg_empresa();
+        empresa.accion = "compra_prod";
+        ven.llamar_ventana(empresa);
+    }//GEN-LAST:event_btn_bus_empActionPerformed
+
     public static Double subtotal() {
         int totalRow = t_detalle.getRowCount();
         double suma_sub = 0.00;
@@ -1137,6 +1156,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btn_bus_emp;
     private javax.swing.JButton btn_busm;
     private javax.swing.JButton btn_busp;
     private javax.swing.JButton btn_ca;
@@ -1175,9 +1195,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_nro;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_ruc;
+    public static javax.swing.JTextField txt_ruc_dest;
     private javax.swing.JTextField txt_ser;
     public static javax.swing.JTextField txt_sub;
-    public static javax.swing.JTextField txt_tel;
     public static javax.swing.JTextField txt_tot;
     // End of variables declaration//GEN-END:variables
 }

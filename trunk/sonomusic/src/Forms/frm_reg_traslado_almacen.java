@@ -540,7 +540,9 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
+        accion = "";
         this.dispose();
+        
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void chk_emitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_emitirActionPerformed
@@ -795,15 +797,32 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         }
         if (accion.equals("compruebat")) {
+
+            try {
+                int idalma = cbx_alm_de.getSelectedIndex() + 1;
+                Statement st = con.conexion();
+                String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
+                ResultSet rs = con.consulta(st, ver_emp);
+                if (rs.next()) {
+                    ruc = rs.getString("ruc");
+                    raz = rs.getString("raz_soc");
+                    dir = rs.getString("dir_alm");
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+
             Integer filas = t_detalle.getRowCount();
             for (int x = 0; x <= (filas - 1); x++) {
                 pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
                 pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 5).toString()));
                 System.out.println(pro.getCan() + " - id " + pro.getId_pro());
-                
+
                 try {
                     Statement st1 = con.conexion();
-                    String ver_pre = "select precio_venta from Productos where idProductos  = '"+pro.getId_pro()+"'";
+                    String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
                     ResultSet rs1 = con.consulta(st1, ver_pre);
                     if (rs1.next()) {
                         pro.setCos_pro(rs1.getDouble("precio_venta"));
@@ -811,11 +830,11 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-                
+
                 //registrar ingreso al segundo almacen (actualizar cantidades)
                 try {
                     Statement st = con.conexion();
-                    String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                    String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
                     ResultSet rs = con.consulta(st, ver_pro_alm);
                     if (rs.next()) {
                         System.out.println(alm_or + " Cambiando cantidad en almacen");
@@ -824,7 +843,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
                         try {
                             Statement st1 = con.conexion();
-                            String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                            String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
                             con.actualiza(st1, act_pro_alm);
                             con.cerrar(st1);
                         } catch (Exception ex) {
@@ -832,13 +851,13 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         }
 
                     } else {
-                        System.out.println(alm_or + " ingresando producto a almacen");
+                        System.out.println(alm_de + " ingresando producto a almacen");
                         cant_act = 0.0;
                         nueva_cant = cant_act + pro.getCan();
-                        
+
                         try {
                             Statement st1 = con.conexion();
-                            String ins_pro_alm = "insert into producto_almacen Values ('"+pro.getId_pro()+"', '"+alm_or+"', '"+nueva_cant+"', '"+pro.getCos_pro()+"')";
+                            String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_de + "', '" + nueva_cant + "', '" + pro.getCos_pro() + "')";
                             con.actualiza(st1, ins_pro_alm);
                             con.cerrar(st1);
                         } catch (Exception ex) {
@@ -854,7 +873,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getCos_pro() + "', '0.00', '0.00', "
-                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '3', '" + alm_or + "', '" + ruc + "', '" + raz + "', '11')";
+                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_de + "', '" + ruc + "', '" + raz + "', '11')";
                     con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -871,7 +890,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 System.out.println(e);
             }
         }
-
+        accion = "";
         this.dispose();
 
         //imprimir detalle de envio

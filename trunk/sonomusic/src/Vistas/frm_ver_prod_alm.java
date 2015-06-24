@@ -60,7 +60,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         txt_noma = new javax.swing.JTextField();
         btn_kar = new javax.swing.JButton();
         cbx_bus = new javax.swing.JComboBox();
-        btn_mod = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -138,9 +138,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N
-        btn_mod.setText("Modificar");
-        btn_mod.setEnabled(false);
+        jLabel3.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,6 +152,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,8 +164,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(txt_noma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_kar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_mod)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
@@ -180,14 +178,14 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_ida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_noma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -195,7 +193,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
-        
+
     }//GEN-LAST:event_t_productosKeyPressed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
@@ -212,8 +210,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_karActionPerformed
 
     private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
-        i = t_productos.getSelectedRow();
-        btn_kar.setEnabled(true);
+//        i = t_productos.getSelectedRow();
+//        btn_kar.setEnabled(true);
     }//GEN-LAST:event_t_productosMousePressed
 
     private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
@@ -223,26 +221,50 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
             pro.mostrar_productos(query);
+        } else if (cbx_bus.getSelectedIndex() == 1) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > p.cant_min order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+        } else if (cbx_bus.getSelectedIndex() == 2) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant < p.cant_min and pa.cant > 0 order by p.desc_pro asc";
+            pro.mostrar_productos(query);
+        } else {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant = 0 order by p.desc_pro asc";
+            pro.mostrar_productos(query);
         }
         //falta demas oopciones del combo
     }//GEN-LAST:event_cbx_busKeyPressed
 
     private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-        String texto = txt_bus.getText();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc";
-        pro.mostrar_productos(query);
 
     }//GEN-LAST:event_txt_busKeyTyped
 
+    private int tot_reg () {
+        int tot = 0;
+        for (int j = 0; j < t_productos.getRowCount(); j++) {
+            tot++;            
+        }
+        return tot;
+    }
+    
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txt_bus.getText().trim().isEmpty()) {
-                t_productos.requestFocus();
-            }
+                String texto = txt_bus.getText();
+                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                        + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                        + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                        + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                        + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
+                pro.mostrar_productos(query);
+                jLabel3.setText(""+tot_reg());
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -250,8 +272,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-
-            i = t_productos.getSelectedRow();
+       i = t_productos.getSelectedRow();
+        btn_kar.setEnabled(true);
             if (funcion.equals("solicitar")) {
                 Object fila[] = new Object[5];
                 fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
@@ -377,10 +399,10 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_kar;
-    private javax.swing.JButton btn_mod;
     private javax.swing.JComboBox cbx_bus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable t_productos;
     private javax.swing.JTextField txt_bus;

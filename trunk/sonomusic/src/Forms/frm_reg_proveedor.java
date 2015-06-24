@@ -391,6 +391,7 @@ public class frm_reg_proveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Se ha modificado correctamente");
             this.dispose();
         }
+        accion = "reg";
         btn_lim.doClick();
     }//GEN-LAST:event_btn_regActionPerformed
 
@@ -412,6 +413,7 @@ public class frm_reg_proveedor extends javax.swing.JInternalFrame {
         txt_tel1.setEditable(false);
         txt_tel2.setEditable(false);
         txt_email.setEditable(false);
+        btn_reg.setEnabled(false);
         txt_ruc.requestFocus();
     }//GEN-LAST:event_btn_limActionPerformed
 

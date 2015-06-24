@@ -8,6 +8,7 @@ package Vistas;
 import Clases.Cl_Albaran;
 import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
+import Clases.Cl_Empleado;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_traslado_almacen;
@@ -16,8 +17,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -29,6 +32,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Albaran alb = new Cl_Albaran();
     Cl_Almacen alm = new Cl_Almacen();
+    Cl_Empleado emp = new Cl_Empleado();
+    String valor = "";
     int i;
 
     /**
@@ -39,12 +44,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         System.out.println(frm_menu.alm.getDireccion());
         String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
                 + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                + "'" + frm_menu.alm.getDireccion() + "'";
+                + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
         ver_guia(query);
     }
 
     private void ver_guia(String query) {
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = null;
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
         modelo.addColumn("Motivo");
         modelo.addColumn("Fecha");
         modelo.addColumn("Id");
@@ -62,15 +73,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 fila[0] = rs.getString("motivo");
                 fila[1] = ven.fechaformateada(rs.getString("fecha"));
                 fila[2] = rs.getString("idTraslado");
-                fila[3] = rs.getString("origen");
+                String origen = rs.getString("origen");
+                    fila[3] = alm.nom_alm(origen);
                 fila[4] = rs.getString("raz_soc_dest");
-                fila[5] = rs.getString("destino");
+                String destino = rs.getString("destino");
+                fila[5] = alm.nom_alm(destino);
                 if (rs.getInt("ser_doc") == 0 && rs.getInt("nro_doc") == 0) {
                     fila[6] = "------";
                 } else {
                     fila[6] = rs.getString("ser_doc") + " - " + rs.getString("nro_doc");
                 }
-                fila[7] = rs.getString("nick");
+                String nick = rs.getString("nick");
+                fila[7] = emp.nom_emp(nick);
                 switch (rs.getString("estado")) {
                     case "0":
                         fila[8] = "PENDIENTE";
@@ -89,10 +103,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             t_guias.getColumnModel().getColumn(0).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(1).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(2).setPreferredWidth(30);
-            t_guias.getColumnModel().getColumn(3).setPreferredWidth(200);
+            t_guias.getColumnModel().getColumn(3).setPreferredWidth(90);
             t_guias.getColumnModel().getColumn(4).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(5).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(6).setPreferredWidth(120);
+            t_guias.getColumnModel().getColumn(5).setPreferredWidth(90);
+            t_guias.getColumnModel().getColumn(6).setPreferredWidth(100);
             t_guias.getColumnModel().getColumn(7).setPreferredWidth(80);
             t_guias.getColumnModel().getColumn(8).setPreferredWidth(80);
             con.cerrar(rs);
@@ -120,13 +134,21 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         btn_anu = new javax.swing.JButton();
         btn_envio = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
+        setResizable(true);
         setTitle("Detalle de Guias");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/magnifier.png"))); // NOI18N
         jLabel1.setText("Buscar");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
@@ -141,10 +163,12 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        t_guias.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_guias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_guiasMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                t_guiasMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(t_guias);
@@ -189,6 +213,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fecha", "Almacen" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,12 +223,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_envio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -224,9 +252,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_guia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,9 +268,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
-        ven.llamar_ventana(tras);
-        this.dispose();
+        if (usu.getPer_reg_traslado().equals("1")) {
+            frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
+            ven.llamar_ventana(tras);
+            tras.accion = "traslado";
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -289,16 +323,18 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private void t_guiasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMousePressed
         i = t_guias.getSelectedRow();
         btn_guia.setEnabled(true);
-        if (t_guias.getValueAt(i, 8).equals("PENDIENTE")) {
-            btn_envio.setEnabled(true);
-        } else {
-            btn_envio.setEnabled(false);
-        }
-        
-        if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
+
+        if (t_guias.getValueAt(i, 8).toString().equals("APROBADO")) {
             btn_anu.setEnabled(false);
+            btn_envio.setEnabled(false);
+        } else if (t_guias.getValueAt(i, 8).equals("ANULADO")) {
+            btn_anu.setEnabled(false);
+            btn_envio.setEnabled(false);
         } else {
             btn_anu.setEnabled(true);
+            if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 5))) {
+            btn_envio.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_t_guiasMousePressed
 
@@ -309,11 +345,11 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         ven.ver_reporte("rpt_ver_guia", parametros);
     }//GEN-LAST:event_btn_guiaActionPerformed
 
-    private int ver_id_alm(String nom_alm) {
+    private int ver_id_alm(String dir_alm) {
         int ida = 0;
         try {
             Statement st = con.conexion();
-            String ver_alm = "select idAlmacen from almacen where nom_alm = '" + nom_alm + "'";
+            String ver_alm = "select idAlmacen from almacen where dir_alm like '" + dir_alm + "%'";
             ResultSet rs = con.consulta(st, ver_alm);
             if (rs.next()) {
                 ida = rs.getInt("idAlmacen");
@@ -326,75 +362,160 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         return ida;
     }
 
-    private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
-        //anular guia si es pendiente
-        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
-
-        Cl_Productos pro = new Cl_Productos();
-
-        String nom_alm_or = t_guias.getValueAt(i, 3).toString();
-        //ver id almacen origen:
-        int id_ao = ver_id_alm(nom_alm_or);
-
-        //seleccionar detalle envio
+    private String ruc_alm(String id_alm) {
+        String ruc = null;
         try {
             Statement st = con.conexion();
-            String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
-            ResultSet rs = con.consulta(st, ver_det_env);
-            while (rs.next()) {
-                pro.setCan(rs.getDouble("cant"));
-                pro.setId_pro(rs.getInt("idProductos"));
-                // Seleccionar cantidad actual producto en almacen destino
-                try {
-                    Statement st1 = con.conexion();
-                    String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                    ResultSet rs1 = con.consulta(st1, ver_pro);
-                    if (rs1.next()) {
-                        pro.setCan_act_pro(rs1.getDouble("cant"));
-                    }
-                    con.cerrar(rs1);
-                    con.cerrar(st1);
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-                double can_new = pro.getCan_act_pro() - pro.getCan();
-
-                try {
-                    Statement st1 = con.conexion();
-                    String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
-                    con.actualiza(st1, cam_can);
-                    con.cerrar(st1);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+            String ver_alm = "select ruc from almacen where idAlmacen = '" + id_alm + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                ruc = rs.getString("ruc");
             }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {
             System.out.println(e);
         }
-        // cambiar cantidades de almacen origen
+        return ruc;
+    }
 
+    private String raz_soc(String id_alm) {
+        String raz = null;
         try {
             Statement st = con.conexion();
-            String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
-            con.actualiza(st, del_det);
+            String ver_alm = "select raz_soc from almacen where idAlmacen = '" + id_alm + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                raz = rs.getString("raz_soc");
+            }
+            con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {
             System.out.println(e);
         }
+        return raz;
+    }
 
-        try {
-            Statement st = con.conexion();
-            String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
-            con.actualiza(st, del_tra);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
+    private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
+        if (usu.getPer_anu_traslado().equals("1")) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el traslado?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                //anular guia si es pendiente
+                alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+                String est_guia = t_guias.getValueAt(i, 8).toString();
+
+                if (est_guia.equals("PENDIENTE")) {
+
+                    try {
+                        Statement st = con.conexion();
+                        String ver_det_env = "select fecha, ser_doc, nro_doc from traslado where idTraslado = '" + alb.getId() + "'";
+                        ResultSet rs = con.consulta(st, ver_det_env);
+                        if (rs.next()) {
+                            alb.setFecha(rs.getString("fecha"));
+                            alb.setSer(rs.getInt("ser_doc"));
+                            alb.setNro(rs.getInt("nro_doc"));
+                        }
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
+
+                    Cl_Productos pro = new Cl_Productos();
+
+                    String nom_alm_or = t_guias.getValueAt(i, 3).toString();
+                    //ver id almacen origen:
+                    int id_ao = ver_id_alm(nom_alm_or);
+                    System.out.println("almacen origen " + id_ao + "\n");
+
+                    String ruc = ruc_alm("" + id_ao);
+                    String raz = raz_soc("" + id_ao);
+
+                    //seleccionar detalle envio
+                    try {
+                        Statement st = con.conexion();
+                        String ver_det_env = "select cant, idProductos from productos_traslado where idTraslado = '" + alb.getId() + "' ";
+                        ResultSet rs = con.consulta(st, ver_det_env);
+                        while (rs.next()) {
+                            pro.setCan(rs.getDouble("cant"));
+                            pro.setId_pro(rs.getInt("idProductos"));
+                            // Seleccionar cantidad actual producto en almacen destino
+                            try {
+                                Statement st1 = con.conexion();
+                                String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                                ResultSet rs1 = con.consulta(st1, ver_pro);
+                                if (rs1.next()) {
+                                    pro.setCan_act_pro(rs1.getDouble("cant"));
+                                }
+                                con.cerrar(rs1);
+                                con.cerrar(st1);
+                            } catch (Exception ex) {
+                                System.out.println(ex);
+                            }
+                            double can_new = pro.getCan_act_pro() + pro.getCan();
+
+                            try {
+                                Statement st1 = con.conexion();
+                                String cam_can = "update producto_almacen set cant = '" + can_new + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + id_ao + "'";
+                                con.actualiza(st1, cam_can);
+                                con.cerrar(st1);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+
+                            try {
+                                Statement st1 = con.conexion();
+                                String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0.00' , '0.00', '0.00', "
+                                        + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + id_ao + "', '" + ruc + "', '" + raz + "', '5')";
+                                con.actualiza(st1, ins_kardex);
+                                con.cerrar(st1);
+                            } catch (Exception ex) {
+                                System.out.print(ex);
+                            }
+                        }
+                        con.cerrar(rs);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    // cambiar cantidades de almacen origen
+
+//                try {
+//                    Statement st = con.conexion();
+//                    String del_det = "delete * from productos_traslado where idTraslado = '" + alb.getId() + "'";
+//                    con.actualiza(st, del_det);
+//                    con.cerrar(st);
+//                } catch (Exception e) {
+//                    System.out.println(e);
+//                }
+                    try {
+                        Statement st = con.conexion();
+                        String del_tra = "update traslado set estado = '2' where idTraslado = '" + alb.getId() + "'";
+                        con.actualiza(st, del_tra);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                    + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
+            ver_guia(query);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
-
-
     }//GEN-LAST:event_btn_anuActionPerformed
+
+    private void t_guiasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_guiasMouseReleased
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        String texto = jTextField1.getText();
+        String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                + "estado from traslado where (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                + "'" + frm_menu.alm.getDireccion() + "') and '"+valor+"' like '"+texto+"' order by fecha desc, idTraslado desc";
+        ver_guia(query);
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     private void llenar_tguias(int idtra) {
         frm_reg_traslado_almacen traslado = null;
@@ -435,6 +556,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_guia;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;

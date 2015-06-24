@@ -12,50 +12,62 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
  * @author luis-d
  */
 public class frm_reg_empresa extends javax.swing.JInternalFrame {
-Cl_Empresa emp = new Cl_Empresa();
-Cl_Conectar con = new Cl_Conectar();
-String accion;
+
+    Cl_Empresa emp = new Cl_Empresa();
+    Cl_Conectar con = new Cl_Conectar();
+    DefaultTableModel modelo = null;
+    int i;
+    public static String accion;
+
     /**
      * Creates new form frm_reg_empresa
      */
     public frm_reg_empresa() {
         initComponents();
-        
         cargar_empresa();
     }
-    
-    private void cargar_empresa(){
+
+    private void cargar_empresa() {
         try {
+            modelo = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            modelo.addColumn("RUC");
+            modelo.addColumn("Razon Social");
+            modelo.addColumn("Direccion");
             Statement st = con.conexion();
             String query = "select * from empresa";
             ResultSet rs = con.consulta(st, query);
-            if (rs.next()) {
-                txt_ruc.setText(rs.getString("ruc"));
-                txt_raz.setText(rs.getString("raz_soc"));
-                txt_dir.setText(rs.getString("dir"));
-                txt_raz.setEditable(true);
-                txt_dir.setEditable(true);
-                btn_reg.setEnabled(true);
-                txt_ruc.requestFocus();
-                accion = "modificar";
-            } else {
-                txt_ruc.requestFocus();
-                accion = "registrar";
+            while (rs.next()) {
+                Object[] fila = new Object[3];
+                fila[0] = rs.getString("ruc");
+                fila[1] = rs.getString("raz_soc");
+                fila[2] = rs.getString("dir");
+                modelo.addRow(fila);
             }
+            t_empresa.setModel(modelo);
+            t_empresa.getColumnModel().getColumn(0).setPreferredWidth(70);
+            t_empresa.getColumnModel().getColumn(1).setPreferredWidth(200);
+            t_empresa.getColumnModel().getColumn(2).setPreferredWidth(250);
         } catch (SQLException ex) {
             System.out.print(ex);
         }
     }
-    
+
     private void llenar() {
-        emp.setRaz_soc(txt_raz.getText());
         emp.setRuc(txt_ruc.getText());
+        emp.setRaz_soc(txt_raz.getText());
         emp.setDir(txt_dir.getText());
     }
 
@@ -68,54 +80,27 @@ String accion;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_reg = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        t_empresa = new javax.swing.JTable();
+        btn_mod = new javax.swing.JButton();
+        btn_nuevo = new javax.swing.JButton();
+        btn_grabar = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_ruc = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txt_raz = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         txt_dir = new javax.swing.JTextField();
-        btn_reg = new javax.swing.JButton();
+        btn_eli = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
-        setTitle("Datos de Empresa");
+        setTitle("Empresas");
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel1.setText("RUC:");
-
-        txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_rucKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_rucKeyTyped(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel2.setText("Razon Social:");
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel3.setText("Direccion:");
-
-        txt_raz.setEditable(false);
-        txt_raz.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_razKeyPressed(evt);
-            }
-        });
-
-        txt_dir.setEditable(false);
-        txt_dir.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_dirKeyPressed(evt);
-            }
-        });
-
-        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/accept.png"))); // NOI18N
+        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_get.png"))); // NOI18N
         btn_reg.setText("Registrar");
         btn_reg.setEnabled(false);
         btn_reg.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +114,149 @@ String accion;
             }
         });
 
+        t_empresa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        t_empresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_empresaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                t_empresaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(t_empresa);
+
+        btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_edit.png"))); // NOI18N
+        btn_mod.setText("Modificar");
+        btn_mod.setEnabled(false);
+        btn_mod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modActionPerformed(evt);
+            }
+        });
+
+        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application.png"))); // NOI18N
+        btn_nuevo.setText("Nuevo");
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nuevoActionPerformed(evt);
+            }
+        });
+
+        btn_grabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_add.png"))); // NOI18N
+        btn_grabar.setText("Grabar");
+        btn_grabar.setEnabled(false);
+        btn_grabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_grabarActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
+        jButton4.setText("Cerrar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Empresa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.red));
+        jPanel1.setForeground(new java.awt.Color(212, 2, 2));
+
+        jLabel1.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel1.setText("RUC:");
+
+        txt_ruc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_rucActionPerformed(evt);
+            }
+        });
+        txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_rucKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rucKeyTyped(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel2.setText("Razon Social:");
+
+        txt_raz.setEditable(false);
+        txt_raz.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_razKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel3.setText("Direccion:");
+
+        txt_dir.setEditable(false);
+        txt_dir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_dirKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_dir)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_raz, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 82, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_raz, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        btn_eli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/delete.png"))); // NOI18N
+        btn_eli.setText("Eliminar");
+        btn_eli.setEnabled(false);
+        btn_eli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,42 +264,40 @@ String accion;
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_nuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_dir)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_raz, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 103, Short.MAX_VALUE))))
+                        .addComponent(btn_eli)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_grabar)
+                        .addGap(32, 32, 32)
+                        .addComponent(btn_mod)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_reg))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_reg)))
+                        .addComponent(jButton4)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_raz, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_eli, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -179,33 +305,22 @@ String accion;
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
-        if (accion.equals("registrar")) {
-            try {
-                Statement st = con.conexion();
-                String ins_emp = "insert into empresa Values ('"+emp.getRuc()+"', '"+emp.getRaz_soc()+"', '"+emp.getDir()+"')";
-                con.actualiza(st, ins_emp);
-                con.cerrar(st);
-                JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-        } else {
-            try {
-                Statement st = con.conexion();
-                String act_emp = "update empresa set raz_soc = '"+emp.getRaz_soc()+"', dir = '"+emp.getDir()+"' where ruc = '"+emp.getRuc()+"'";
-                con.actualiza(st, act_emp);
-                con.cerrar(st);
-                JOptionPane.showMessageDialog(null, "Se ha modificado correctamente");
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
+        try {
+            Statement st = con.conexion();
+            String ins_emp = "insert into empresa Values ('" + emp.getRuc() + "', '" + emp.getRaz_soc() + "', '" + emp.getDir() + "')";
+            con.actualiza(st, ins_emp);
+            con.cerrar(st);
+            JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+            cargar_empresa();
+            btn_nuevo.doClick();
+        } catch (Exception ex) {
+            System.out.print(ex);
         }
-        this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void txt_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            if (txt_ruc.getText().length()==11) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_ruc.getText().length() == 11) {
                 txt_raz.setEditable(true);
                 txt_raz.requestFocus();
             }
@@ -213,7 +328,7 @@ String accion;
     }//GEN-LAST:event_txt_rucKeyPressed
 
     private void txt_razKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_razKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_raz.getText().isEmpty()) {
                 txt_dir.setEditable(true);
                 txt_dir.requestFocus();
@@ -222,7 +337,7 @@ String accion;
     }//GEN-LAST:event_txt_razKeyPressed
 
     private void txt_dirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dirKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_dir.getText().isEmpty()) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
@@ -231,24 +346,149 @@ String accion;
     }//GEN-LAST:event_txt_dirKeyPressed
 
     private void txt_rucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyTyped
-        if(txt_ruc.getText().length()==11) evt.consume();       
+        if (txt_ruc.getText().length() == 11) {
+            evt.consume();
+        }
         char car = evt.getKeyChar();
-        if((car<'0' || car>'9')) evt.consume();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txt_rucKeyTyped
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btn_reg.doClick();
         }
-            
+
     }//GEN-LAST:event_btn_regKeyPressed
+
+    private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
+        txt_dir.setText("");
+        txt_dir.setEditable(false);
+        txt_raz.setText("");
+        txt_raz.setEditable(false);
+        txt_ruc.setText("");
+        txt_ruc.requestFocus();
+        btn_reg.setEnabled(false);
+    }//GEN-LAST:event_btn_nuevoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txt_rucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_rucActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_rucActionPerformed
+
+    private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
+        if (usu.getPer_eli_empresa().equals("1")) {
+            txt_ruc.setText(t_empresa.getValueAt(i, 0).toString());
+            txt_raz.setText(t_empresa.getValueAt(i, 1).toString());
+            txt_dir.setText(t_empresa.getValueAt(i, 2).toString());
+            txt_ruc.setEditable(true);
+            txt_raz.setEditable(true);
+            txt_dir.setEditable(true);
+            txt_ruc.requestFocus();
+            btn_grabar.setEnabled(true);
+            btn_mod.setEnabled(false);
+            btn_reg.setEnabled(false);
+            btn_eli.setEnabled(false);
+            btn_nuevo.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
+        }
+    }//GEN-LAST:event_btn_modActionPerformed
+
+    private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
+        //grabar modificaciones
+        llenar();
+        try {
+            Statement st = con.conexion();
+            String act_emp = "update empresa set raz_soc = '" + emp.getRaz_soc() + "', dir = '" + emp.getDir() + "' where ruc = '" + emp.getRuc() + "'";
+            con.actualiza(st, act_emp);
+            con.cerrar(st);
+            JOptionPane.showMessageDialog(null, "Se ha modificado correctamente");
+            cargar_empresa();
+            btn_grabar.setEnabled(false);
+            btn_mod.setEnabled(false);
+            btn_reg.setEnabled(false);
+            btn_eli.setEnabled(false);
+            btn_nuevo.setEnabled(true);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+    }//GEN-LAST:event_btn_grabarActionPerformed
+
+    private void btn_eliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliActionPerformed
+        if (usu.getPer_eli_empresa().equals("1")) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la empresa?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                try {
+                    emp.setRuc(t_empresa.getValueAt(i, 0).toString());
+                    Statement st = con.conexion();
+                    String del_emp = "delete from empresa where ruc = '" + emp.getRuc() + "'";
+                    con.actualiza(st, del_emp);
+                    con.cerrar(st);
+                    cargar_empresa();
+                    btn_grabar.setEnabled(false);
+                    btn_mod.setEnabled(false);
+                    btn_reg.setEnabled(false);
+                    btn_nuevo.setEnabled(true);
+                    btn_eli.setEnabled(false);
+                } catch (Exception e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
+        }
+    }//GEN-LAST:event_btn_eliActionPerformed
+
+    private void t_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMouseClicked
+
+    }//GEN-LAST:event_t_empresaMouseClicked
+
+    private void t_empresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMousePressed
+        i = t_empresa.getSelectedRow();
+        btn_eli.setEnabled(true);
+        btn_mod.setEnabled(true);
+
+        if (evt.getClickCount() == 2) {
+            if (accion.equals("almacen")) {
+                frm_reg_almacen almacen = null;
+                almacen.txt_ruc.setText(t_empresa.getValueAt(i, 0).toString());
+                almacen.txt_raz.setText(t_empresa.getValueAt(i, 1).toString());
+                almacen.btn_bus_cue.setEnabled(true);
+                accion = "empresa";
+                this.dispose();
+            }
+
+            if (accion.equals("compra_prod")) {
+                frm_reg_compra_prod compra_prod = null;
+                compra_prod.txt_ruc_dest.setText(t_empresa.getValueAt(i, 0).toString());
+                compra_prod.cbx_alm.setEnabled(true);
+                compra_prod.cbx_alm.requestFocus();
+                accion = "empresa";
+                this.dispose();
+            }
+        }
+
+    }//GEN-LAST:event_t_empresaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_eli;
+    private javax.swing.JButton btn_grabar;
+    private javax.swing.JButton btn_mod;
+    private javax.swing.JButton btn_nuevo;
     private javax.swing.JButton btn_reg;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable t_empresa;
     private javax.swing.JTextField txt_dir;
     private javax.swing.JTextField txt_raz;
     private javax.swing.JTextField txt_ruc;

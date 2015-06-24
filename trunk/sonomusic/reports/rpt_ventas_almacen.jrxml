@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ventas_almacen" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f65db704-b029-4c1d-a7d9-80c31b038d5a">
 	<property name="ireport.zoom" value="2.0490403660952117"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="89"/>
 	<parameter name="fecha_inicio" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -68,7 +68,9 @@ FROM
 WHERE
      almacen.`idAlmacen` = $P{almacen}
      and pedido.`est_ped` = 1
-     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin} group by pedido.`idPedido`]]>
+     and pedido.`fec_ped` BETWEEN $P{fecha_inicio} and $P{fecha_fin} group by pedido.`idPedido`
+
+order by  pedido.`fec_ped` asc,  pedido.`idPedido` asc]]>
 	</queryString>
 	<field name="pedido_idPedido" class="java.lang.Integer"/>
 	<field name="pedido_fec_ped" class="java.sql.Date"/>
@@ -109,6 +111,10 @@ WHERE
 	<field name="empleados_nom_per" class="java.lang.String"/>
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{pedido_total}]]></variableExpression>
+	</variable>
+	<variable name="nro" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -322,9 +328,9 @@ WHERE
 			<textField>
 				<reportElement x="0" y="4" width="14" height="14" uuid="6ebe1a5e-761a-4b66-b0b9-77017834d3eb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{pedido_idPedido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["--"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="494" y="4" width="14" height="14" uuid="ae2f72d9-ae05-41c2-8b05-47304f8cd118"/>

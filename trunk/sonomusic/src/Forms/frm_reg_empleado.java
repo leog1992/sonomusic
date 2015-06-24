@@ -502,7 +502,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 Statement st = con.conexion();
                 String insert_per = "update empleados set nom_per='" + emp.getNom() + "', dir_per='" + emp.getDir() + "', "
                         + "tel_per='" + emp.getTel() + "', tel2_per='" + emp.getTel2() + "', img_per='" + emp.getImg() + "', "
-                        + "sueldo='" + emp.getSueldo() + "', fec_nac='" + emp.getFec_nac() + "', idAlmacen='" + alm.getId() + "', "
+                        + "sueldo='" + emp.getSueldo() + "', fecha='" + emp.getFec_nac() + "', idAlmacen='" + alm.getId() + "', "
                         + "idMetas='" + met.getId() + "', idCargo='" + car.getId() + "' where dni='" + emp.getDni() + "'";
                 con.actualiza(st, insert_per);
                 con.cerrar(st);

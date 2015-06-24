@@ -5,11 +5,17 @@
  */
 package Clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Dereck
  */
 public class Cl_Empleado {
+    
+    Cl_Conectar con = new Cl_Conectar();
     private int dni;
     private String nom;
     private String dir;
@@ -106,5 +112,21 @@ public class Cl_Empleado {
         this.est = est;
     }
     
+    public String nom_emp (String dni) {
+        String nom = null;
+        try {
+            Statement st = con.conexion();
+            String ver_id = "select nom_per from empleados where dni = '"+dni+"'";
+            ResultSet rs = con.consulta(st, ver_id);
+            if (rs.next()) {
+                nom = rs.getString("nom_per");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return nom;
+    }
     
 }

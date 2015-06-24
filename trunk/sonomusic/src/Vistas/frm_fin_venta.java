@@ -42,12 +42,12 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     public static Cl_Varios ven = new Cl_Varios();
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Albaran alb = new Cl_Albaran();
-    Cl_Cliente cli = new Cl_Cliente();
+    public static Cl_Cliente cli = new Cl_Cliente();
     Cl_Pedido ped = new Cl_Pedido();
     Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     Cl_Tipo_Pago tipa = new Cl_Tipo_Pago();
     Cl_Productos pro;
-    Cl_Usuario usu = new Cl_Usuario();
+    public static Cl_Usuario usu = new Cl_Usuario();
     Cl_Proveedor prov = new Cl_Proveedor();
     public static Double total;
     public static String modo;
@@ -396,7 +396,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         tipa.setDesc(cbx_tipopago.getSelectedItem().toString());
         tido.setId(frm_reg_venta.cbx_tipd.getSelectedIndex() + 1);
         tido.setDesc(frm_reg_venta.cbx_tipd.getSelectedItem().toString());
-        cli.setNro_doc(frm_reg_venta.txt_nro_doc.getText());
+//        cli.setNro_doc(frm_reg_venta.txt_nro_doc.getText());
+//        cli.setNom_cli(frm_reg_venta.txt_nom.getText());
         tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
         tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
         ped.setTotal(total);
@@ -409,7 +410,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         System.out.println("================DATOS INSERTADOS EN LA TABLA PEDIDO(VENTA)================");
         System.out.println("Fecha Venta: " + frm_reg_venta.ped.getFec_ped() + "\nFecha Pago: " + ped.getFec_pag_ped() + "\nTipo Pago: " + tipa.getId()
                 + "\nDescuento: " + ped.getDes_ped() + "\nEstado: " + ped.getEst_ped() + "\nTipo Documento: " + tido.getId() + "\nSerie: " + tido.getSerie()
-                + "\nNro.Documento: " + tido.getNro() + "\nNick: " + frm_menu.usu.getNick() + "\nAlmacen: " + frm_menu.alm.getId() + "\nAlbaran: " + "null"
+                + "\nNro.Documento: " + tido.getNro() + "\nNick: " + usu.getNick() + "\nAlmacen: " + frm_menu.alm.getId() + "\nAlbaran: " + "null"
                 + "\nCliente: " + cli.getNro_doc() + "\nTotal: " + ped.getTotal());
         System.out.println("================FIN DE INSERTADOS EN LA TABLA PEDIDO(VENTA)================");
     }
@@ -427,8 +428,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                         + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + frm_menu.lbl_user.getText() + "', "
-                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "','" + total + "')";
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"','" + total + "')";
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -472,7 +473,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     Statement st = con.conexion();
                     String ins_kardex = "insert into kardex Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + idPro + "', '0.00', '0.00', '"
                             + cantidad + "', '" + precio + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
-                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + frm_reg_venta.txt_nom.getText() + "','" + tpventa + "')";
+                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + tpventa + "')";
                     con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -549,7 +550,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -561,7 +562,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                            + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
                     con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -588,8 +589,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 Statement st = con.conexion();
                 String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                         + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + frm_menu.lbl_user.getText() + "', "
-                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "','" + total + "')";
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"', '" + total + "')";
                 con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -652,7 +653,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-                        + ", '0.00', '" + frm_menu.lbl_user.getText() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                        + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                 con.actualiza(st, add_mov);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -703,6 +704,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 comision = total * 0.05;
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
+                txt_fec_pago.setEditable(true);
                 txt_fec_pago.setText(ven.fechaformateada(ven.getFechaActual()));
             } else {
                 txt_fec_pago.setEditable(true);
@@ -754,9 +756,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void chk_incluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_incluirActionPerformed

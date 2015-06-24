@@ -240,10 +240,29 @@ public class frm_login extends javax.swing.JFrame {
                 usu.setNick(txt_usu.getText());
                 try {
                     Statement st = con.conexion();
-                    String ver_usu = "select contra from usuario where nick = '" + usu.getNick() + "' and estado = '1'";
+                    String ver_usu = "select * from usuario where nick = '" + usu.getNick() + "' and estado = '1'";
                     ResultSet rs = con.consulta(st, ver_usu);
                     if (rs.next()) {
                         usu.setContra(rs.getString("contra"));
+                        frm_menu.usu.setPer_anu_traslado(rs.getString("pe_tras"));
+                        frm_menu.usu.setPer_compra_productos(rs.getString("pv_comp"));
+                        frm_menu.usu.setPer_compra_servicios(rs.getString("pv_coms"));
+                        frm_menu.usu.setPer_conf_documento(rs.getString("pm_docs"));
+                        frm_menu.usu.setPer_cuentas(rs.getString("pm_cue"));
+                        frm_menu.usu.setPer_eli_empresa(rs.getString("pe_emp"));
+                        frm_menu.usu.setPer_eli_producto(rs.getString("pe_prod"));
+                        frm_menu.usu.setPer_mod_almacen(rs.getString("pm_alm"));
+                        frm_menu.usu.setPer_mod_producto(rs.getString("pm_prod"));
+                        frm_menu.usu.setPer_reg_adelanto(rs.getString("pr_ade"));
+                        frm_menu.usu.setPer_reg_almacen(rs.getString("pr_alm"));
+                        frm_menu.usu.setPer_reg_oferta(rs.getString("pr_ofe"));
+                        frm_menu.usu.setPer_reg_producto(rs.getString("pr_prod"));
+                        frm_menu.usu.setPer_reg_traslado(rs.getString("pr_tras"));
+                        frm_menu.usu.setPer_reg_venta(rs.getString("pr_ven"));
+                        frm_menu.usu.setPer_usuario(rs.getString("pm_usu"));
+                        frm_menu.usu.setPer_ver_caja(rs.getString("pv_caj"));
+                        frm_menu.usu.setPer_ver_reportes(rs.getString("pv_rep"));
+                        frm_menu.usu.setPer_ver_rrhh(rs.getString("pv_rh"));
                         txt_pass.setEditable(true);
                         txt_pass.requestFocus();
                         lbl_user.setIcon(icon_ok);

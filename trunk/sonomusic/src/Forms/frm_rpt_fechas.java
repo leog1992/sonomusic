@@ -269,7 +269,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
             this.dispose();
             
         }
-        System.out.println("el ruc es "+alm.getRuc());
+        //System.out.println("el ruc es "+alm.getRuc());
     }//GEN-LAST:event_txt_fec_finKeyPressed
 
     private void txt_fec_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fec_iniActionPerformed

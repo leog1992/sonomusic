@@ -46,8 +46,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     Integer i;
     String fecha_hoy;
 
-    
-
     /**
      * Creates new form frm_ver_cobranzas
      */
@@ -58,7 +56,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                     + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "'";
+                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' order by p.idPedido asc";
             ver_pedidos(ver_ped);
         } catch (Exception e) {
             System.out.println("error " + e);
@@ -67,7 +66,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         txt_bus.requestFocus();
     }
     //
-    
+
     double pagados() {
         double pag = 0;
         try {
@@ -82,7 +81,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         }
         return pag;
     }
-    
 
     private void ver_pedidos(String query) {
         try {
@@ -362,21 +360,27 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         String buscar = txt_bus.getText();
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (cbx_estado.getSelectedIndex() == 0) {
-                String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                        + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                        + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                        + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped like '%" + buscar + "%'";
-                ver_pedidos(ver_ped);
-            } else {
-                String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                        + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                        + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                        + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.cli_doc like '%" + buscar + "%' or c.nom_per like '%" + buscar + "%'";
-                ver_pedidos(ver_ped);
+            if (txt_bus.getText().length() > 1) {
+                if (cbx_estado.getSelectedIndex() == 0) {
+                    if (txt_bus.getText().length() == 10) {
+                        buscar = ven.fechabase(buscar);
+                        System.out.println(buscar);
+                        String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
+                                + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
+                                + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
+                                + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped = '" + buscar + "'";
+                        ver_pedidos(ver_ped);
+                    }
+                } else {
+                    System.out.println("almacen: " + sonomusic.frm_menu.alm.getId());
+                    String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
+                            + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
+                            + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
+                            + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' "
+                            + "and (p.cli_doc like '%" + buscar + "%' or c.nom_per like '%" + buscar + "%') order by p.fec_ped desc, p.idPedido desc";
+                    ver_pedidos(ver_ped);
+                }
             }
-
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -423,13 +427,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             //seleccionar detalle de pedido, cantidad de productos;
             try {
                 Statement st = con.conexion();
-                String ver_ped = "select idProductos, precio, cantidad, sum(precio * cantidad) as suma_pro from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
+                String ver_ped = "select idProductos, precio, cantidad from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
                 ResultSet rs = con.consulta(st, ver_ped);
                 while (rs.next()) {
                     pro.setId_pro(rs.getInt("idProductos"));
                     pro.setCan(rs.getDouble("cantidad"));
                     pro.setPre_pro(rs.getDouble("precio"));
-                    suma_pro = rs.getDouble("suma_pro");
+                    suma_pro = pro.getCan() * pro.getPre_pro();
                     Double pro_can = 0.00;
                     Double new_can = 0.00;
                     Double pro_can_alm = 0.00;
@@ -444,6 +448,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         con.cerrar(rs1);
                         con.cerrar(st1);
                         new_can = pro.getCan() + pro_can;
+                        System.out.println("Cantidad actual" + new_can + " del producto " + pro.getId_pro() + "\n");
                     } catch (SQLException ex1) {
                         System.out.print(ex1);
                     }
@@ -458,6 +463,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         con.cerrar(rs1);
                         con.cerrar(st1);
                         new_can_alm = pro.getCan() + pro_can_alm;
+                        System.out.println("Cantidad Nueva" + new_can_alm + " del producto " + pro.getId_pro() + "en el almacen " + alm.getId() + "\n");
                     } catch (SQLException ex1) {
                         System.out.print(ex1);
                     }
@@ -467,6 +473,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         String upt_pro_alm = "update producto_almacen set cant = '" + new_can_alm + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
                         con.actualiza(st1, upt_pro_alm);
                         con.cerrar(st1);
+                        System.out.println("actualizando cantidad del producto " + pro.getId_pro() + " en el almacen " + alm.getId() + "\n");
                     } catch (Exception ex1) {
                         System.out.print(ex1);
                     }
@@ -476,6 +483,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         String upt_pro = "update productos set cant_actual = '" + new_can + "' where idProductos = '" + pro.getId_pro() + "'";
                         con.actualiza(st1, upt_pro);
                         con.cerrar(st1);
+                        System.out.println("atualizando cantidad total del producto " + pro.getId_pro() + "\n");
                     } catch (Exception ex1) {
                         System.out.print(ex1);
                     }
@@ -486,11 +494,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                                 + "'" + Tido.getSerie() + "', '" + Tido.getNro() + "', '" + Tido.getId() + "', '" + alm.getId() + "', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '5')";
                         con.actualiza(st1, ins_kardex);
                         con.cerrar(st1);
+                        System.out.println("insertando producto en el kardex \n");
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
 
                 }
+                con.cerrar(rs);
+                con.cerrar(st);
 
             } catch (SQLException ex) {
                 System.out.print(ex);
@@ -528,15 +539,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
             }
 
-            try {
-                Statement st1 = con.conexion();
-                String del_ped = "delete from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
-                con.actualiza(st1, del_ped);
-                con.cerrar(st1);
-            } catch (Exception ex1) {
-                System.out.print(ex1);
-            }
-
+//            try {
+//                Statement st1 = con.conexion();
+//                String del_ped = "delete from detalle_pedido where idPedido = '" + ped.getId_ped() + "'";
+//                con.actualiza(st1, del_ped);
+//                con.cerrar(st1);
+//            } catch (Exception ex1) {
+//                System.out.print(ex1);
+//            }
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                     + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
@@ -606,7 +616,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
         //cargar pagado
-        letras.lbl_pagado.setText(pagados()+"");
+        letras.lbl_pagado.setText(pagados() + "");
         letras.resta();
         letras.id = this.id;
         ven.llamar_ventana(letras);

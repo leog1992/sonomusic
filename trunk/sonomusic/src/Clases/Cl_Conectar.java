@@ -68,8 +68,8 @@ public class Cl_Conectar {
             conexion = DriverManager.getConnection(server, user, password);
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: Imposible realizar la conexion a BD." + server + "," + user + "," + password);
-            JOptionPane.showMessageDialog(null, "Error al conectar " + e.getLocalizedMessage());
+            //JOptionPane.showMessageDialog(null, "Error: Imposible realizar la conexion a BD." + server + "," + user + "," + password);
+            JOptionPane.showMessageDialog(null, "Error al conectar \n" + e.getLocalizedMessage());
             System.out.print(e);
             e.printStackTrace();
             System.exit(0);

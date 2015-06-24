@@ -105,6 +105,23 @@ public class Cl_Almacen {
         }
         return idalm;
     }
+    
+    public String nom_alm (String dir) {
+        String nom = null;
+        try {
+            Statement st = con.conexion();
+            String ver_id = "select nom_alm from almacen where dir_alm = '"+dir+"'";
+            ResultSet rs = con.consulta(st, ver_id);
+            if (rs.next()) {
+                nom = rs.getString("nom_alm");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return nom;
+    }
 
     public void setRuc(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -35,7 +35,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
 
         String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, m.monto, c.tipo_cargo from empleados as e "
                 + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c "
-                + "on e.idCargo=c.idCargo order by dni asc";
+                + "on e.idCargo=c.idCargo order by a.nom_alm asc, dni asc";
         ver_empleado(query);
     }
 

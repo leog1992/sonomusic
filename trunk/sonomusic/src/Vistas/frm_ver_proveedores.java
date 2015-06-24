@@ -18,7 +18,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sonomusic.frm_menu.usu;
 
 /**
  *
@@ -55,7 +57,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
-        //La cantidad de columnas que tiene la consulta
+            //La cantidad de columnas que tiene la consulta
             //Establecer como cabezeras el nombre de las colimnas
             mostrar.addColumn("RUC");
             mostrar.addColumn("Razon Social");
@@ -232,60 +234,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             txt_bus.requestFocus();
         }
 
-        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (funcion.equals("compra_prod")) {
-                frm_reg_compra_prod compra_pro = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_pro.txt_ruc.setText(pro.getRuc());
-                        compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_pro.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_pro.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_pro.cbx_alm.setEnabled(true);
-                        compra_pro.cbx_alm.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
-
-            if (funcion.equals("compra_serv")) {
-                frm_reg_compra_serv compra_serv = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_serv.txt_ruc.setText(pro.getRuc());
-                        compra_serv.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_serv.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_serv.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_serv.cbx_tipa.setSelectedIndex(0);
-                        compra_serv.cbx_tipa.setEnabled(true);
-                        compra_serv.cbx_tipa.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-
-            }
-            if (funcion.equals("compras_prov")) {
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                Map<String, Object> parametros = new HashMap<>();
-                parametros.put("proveedor", pro.getRuc());
-                ven.ver_reporte("rpt_compras_proveedor", parametros);
-                this.dispose();
-            }
-            funcion = "proveedor";
-        }
-
     }//GEN-LAST:event_t_proveedorKeyPressed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
@@ -298,51 +246,56 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void t_proveedorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMousePressed
-        i = t_proveedor.getSelectedRow();
-        pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-        btn_mod.setEnabled(true);
+
     }//GEN-LAST:event_t_proveedorMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
-        try {
-            frm_reg_proveedor prove = new frm_reg_proveedor();
-            pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-            Statement st = con.conexion();
-            String ver_prov = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-            ResultSet rs = con.consulta(st, ver_prov);
-            if (rs.next()) {
-                prove.txt_ruc.setText(pro.getRuc());
-                prove.txt_raz.setText(rs.getString("raz_soc_pro"));
-                prove.txt_contacto.setText(rs.getString("contacto"));
-                prove.txt_dir.setText(rs.getString("dir_pro"));
-                prove.txt_email.setText(rs.getString("email_contacto"));
-                prove.txt_tel.setText(rs.getString("tel_pro"));
-                prove.txt_tel1.setText(rs.getString("tel_contacto"));
-                prove.txt_tel2.setText(rs.getString("tel2_contacto"));
-                prove.txt_web.setText(rs.getString("web"));
-                prove.txt_ruc.setEditable(false);
-                prove.txt_raz.setEditable(true);
-                prove.txt_contacto.setEditable(true);
-                prove.txt_dir.setEditable(true);
-                prove.txt_email.setEditable(true);
-                prove.txt_web.setEditable(true);
-                prove.txt_tel.setEditable(true);
-                prove.txt_tel1.setEditable(true);
-                prove.txt_tel2.setEditable(true);
-                prove.btn_reg.setEnabled(true);
-                prove.accion = "mod";
+        if (usu.getPer_mod_proveedor().equals("1")) {
+            try {
+                frm_reg_proveedor prove = new frm_reg_proveedor();
+                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                Statement st = con.conexion();
+                String ver_prov = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
+                ResultSet rs = con.consulta(st, ver_prov);
+                if (rs.next()) {
+                    prove.txt_ruc.setText(pro.getRuc());
+                    prove.txt_raz.setText(rs.getString("raz_soc_pro"));
+                    prove.txt_contacto.setText(rs.getString("contacto"));
+                    prove.txt_dir.setText(rs.getString("dir_pro"));
+                    prove.txt_email.setText(rs.getString("email_contacto"));
+                    prove.txt_tel.setText(rs.getString("tel_pro"));
+                    prove.txt_tel1.setText(rs.getString("tel_contacto"));
+                    prove.txt_tel2.setText(rs.getString("tel2_contacto"));
+                    prove.txt_web.setText(rs.getString("web"));
+                    prove.txt_ruc.setEditable(false);
+                    prove.txt_raz.setEditable(true);
+                    prove.txt_contacto.setEditable(true);
+                    prove.txt_dir.setEditable(true);
+                    prove.txt_email.setEditable(true);
+                    prove.txt_web.setEditable(true);
+                    prove.txt_tel.setEditable(true);
+                    prove.txt_tel1.setEditable(true);
+                    prove.txt_tel2.setEditable(true);
+                    prove.btn_reg.setEnabled(true);
+                    prove.accion = "mod";
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+                ven.llamar_ventana(prove);
+                this.dispose();
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
             }
-            con.cerrar(rs);
-            con.cerrar(st);
-            ven.llamar_ventana(prove);
-            this.dispose();
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked
-        int i = t_proveedor.getSelectedRow();
+        int i;
+        i = t_proveedor.getSelectedRow();
+        pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+        btn_mod.setEnabled(true);
 
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
@@ -350,7 +303,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
 
             if (funcion.equals("compra_prod")) {
                 frm_reg_compra_prod compra_pro = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 try {
                     Statement st = con.conexion();
                     String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
@@ -359,9 +311,8 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                         compra_pro.txt_ruc.setText(pro.getRuc());
                         compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
                         compra_pro.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_pro.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_pro.cbx_alm.setEnabled(true);
-                        compra_pro.cbx_alm.requestFocus();
+                        compra_pro.btn_bus_emp.setEnabled(true);
+                        compra_pro.btn_bus_emp.requestFocus();
                         this.dispose();
                     }
                 } catch (SQLException ex) {

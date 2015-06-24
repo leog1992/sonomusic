@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_kardex" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93fcf8eb-7171-417b-a48e-905db1c5824d">
 	<property name="ireport.zoom" value="1.6105100000000012"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="68"/>
 	<parameter name="idalm" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -47,7 +47,7 @@ FROM
      INNER JOIN `tipo_movimiento` tipo_movimiento ON kardex.`idtipo_movimiento` = tipo_movimiento.`idtipo_movimiento`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
 where kardex.`idAlmacen` = $P{idalm} and kardex.`idProductos` = $P{idmat} and kardex.`fecha` between $P{fec_ini} and $P{fec_fin}
-order by kardex.`fecha` asc, kardex.`idKardex` desc]]>
+order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
 	</queryString>
 	<field name="idKardex" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
