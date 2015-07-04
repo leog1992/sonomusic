@@ -9,6 +9,7 @@ import Clases.Cl_Pedido;
 import Clases.Cl_Productos;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
+import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
 import static Vistas.frm_ver_letras_pedido.modelo;
 import java.awt.event.KeyEvent;
@@ -32,12 +33,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     Cl_Varios ven = new Cl_Varios();
     Cl_Pedido ped = new Cl_Pedido();
     Cl_Tipo_Pago tipa = new Cl_Tipo_Pago();
-    Cl_Tipo_Documentos Tido = new Cl_Tipo_Documentos();
+    Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Albaran alb = new Cl_Albaran();
     Cl_Productos pro = new Cl_Productos();
     Cl_Movimiento mov = new Cl_Movimiento();
     Cl_Cliente cli = new Cl_Cliente();
+    Cl_Usuario usu = new Cl_Usuario();
     public static String id;
 
     DefaultTableModel mostrar;
@@ -207,6 +209,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         btn_anu = new javax.swing.JButton();
         btn_pagar = new javax.swing.JButton();
         btn_det = new javax.swing.JButton();
+        btn_ent = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -301,6 +304,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_ent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/deposito.png"))); // NOI18N
+        btn_ent.setText("Entregar Producto");
+        btn_ent.setEnabled(false);
+        btn_ent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_entActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -325,6 +337,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addComponent(btn_ent)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
@@ -343,12 +357,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_det, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_ent, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -411,9 +426,9 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                     ped.setFec_ped(rs.getString("fec_ped"));
                     alm.setId(rs.getInt("idAlmacen"));
                     alb.setId(rs.getInt("albaran"));
-                    Tido.setSerie(rs.getInt("serie_doc"));
-                    Tido.setNro(rs.getInt("nro_doc"));
-                    Tido.setId(rs.getInt("idtipo_doc"));
+                    tido.setSerie(rs.getInt("serie_doc"));
+                    tido.setNro(rs.getInt("nro_doc"));
+                    tido.setId(rs.getInt("idtipo_doc"));
                     cli.setNro_doc(rs.getString("cli_doc"));
                     ped.setTotal(rs.getDouble("total"));
                 }
@@ -499,7 +514,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                     try {
                         Statement st1 = con.conexion();
                         String ins_kardex = "insert into kardex Values (null, '" + ped.getFec_ped() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00',"
-                                + "'" + Tido.getSerie() + "', '" + Tido.getNro() + "', '" + Tido.getId() + "', '" + alm.getId() + "', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '5')";
+                                + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "', '" + alm.getId() + "', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '5')";
                         con.actualiza(st1, ins_kardex);
                         con.cerrar(st1);
                         System.out.println("insertando producto en el kardex \n");
@@ -519,7 +534,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             System.out.print(tipa.getId());
             if (tipa.getId() == 1) {
                 try {
-                    mov.setGlosa("VENTA ANULADA - " + Tido.getSerie() + " - " + Tido.getNro() + " / " + cli.getNro_doc());
+                    mov.setGlosa("VENTA ANULADA - " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc());
                     mov.setFec_mov(ped.getFec_ped());
                     mov.setEgreso(ped.getTotal());
                     Statement st = con.conexion();
@@ -533,7 +548,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
             } else {
                 try {
-                    mov.setGlosa("VENTA ANULADA - " + Tido.getSerie() + " - " + Tido.getNro() + " / " + cli.getNro_doc());
+                    mov.setGlosa("VENTA ANULADA - " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc());
                     mov.setFec_mov(ped.getFec_ped());
                     mov.setEgreso(ped.getTotal());
                     Statement st = con.conexion();
@@ -587,7 +602,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         if (est.equals("POR RECOGER")) {
             btn_pagar.setEnabled(true);
             btn_anu.setEnabled(false);
+            btn_ent.setEnabled(true);
+        } else {
+            btn_ent.setEnabled(false);
+            btn_pagar.setEnabled(false);
+            btn_anu.setEnabled(false);
         }
+        
     }//GEN-LAST:event_t_facturasMousePressed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
@@ -691,10 +712,194 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         ven.llamar_ventana(detalle);
     }//GEN-LAST:event_btn_detActionPerformed
 
+    private void btn_entActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entActionPerformed
+        //seleccionar datos de la separacion
+        ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
+        try {
+            Statement st = con.conexion();
+            String ver_ped = "select cli_doc, cli_nom, nick from pedido where idPedido = '"+ped.getId_ped()+"'";
+            ResultSet rs = con.consulta(st, ver_ped);
+            if(rs.next()) {
+                cli.setNro_doc(rs.getString("cli_doc"));
+                cli.setNom_cli(rs.getString("cli_nom"));
+                usu.setNick(rs.getString("nick"));
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage()); 
+        }
+        
+        //Variables para registrar
+        ped.setFec_pag_ped(ven.getFechaActual());
+        ped.setFec_ped(ven.getFechaActual());
+        tipa.setId(1);
+        ped.setDes_ped(0);
+        ped.setEst_ped("1");
+        
+        //registrar venta en tabla pedido
+//        try {
+//                Statement st = con.conexion();
+//                String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
+//                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
+//                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+//                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"','" + total + "')";
+//                con.actualiza(st, ins_ven);
+//                con.cerrar(st);
+//            } catch (Exception ex) {
+//                System.out.println(ex.getLocalizedMessage());
+//            }
+            tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+//
+////        //buscar ultimo pedido
+//            try {
+//                Statement st = con.conexion();
+//                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
+//                        + "and fec_ped = '" + frm_reg_venta.ped.getFec_ped() + "' and idAlmacen = "
+//                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+//                ResultSet rs = con.consulta(st, buscar_pedido);
+//                if (rs.next()) {
+//                    ped.setId_ped(rs.getString("idPedido"));
+//                }
+//                con.cerrar(rs);
+//                con.cerrar(st);
+//            } catch (SQLException ex) {
+//                System.out.print(ex.getLocalizedMessage());
+//            }
+//
+//            //registrar detalle de venta
+//            int filas = frm_reg_venta.t_detalle.getRowCount();
+//            for (int j = 0; j <= (filas - 1); j++) {
+//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
+//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
+//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
+//                try {
+//                    Statement st = con.conexion();
+//                    String ins_det_ped = "insert into detalle_pedido Values ('" + idPro + "', '" + ped.getId_ped() + "', '" + precio + "', '" + cantidad + "')";
+//                    con.actualiza(st, ins_det_ped);
+//                    con.cerrar(st);
+//                } catch (Exception ex) {
+//                    System.err.print(ex.getLocalizedMessage());
+//                }
+////                //insertar datos en kardex
+//                try {
+//                    Statement st = con.conexion();
+//                    String ins_kardex = "insert into kardex Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + idPro + "', '0.00', '0.00', '"
+//                            + cantidad + "', '" + precio + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
+//                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + tpventa + "')";
+//                    con.actualiza(st, ins_kardex);
+//                    con.cerrar(st);
+//                } catch (Exception ex) {
+//                    System.err.print("Error en: " + ex.getLocalizedMessage());
+//                }
+//            }
+////
+//            //seleccionar cantidad de producto y restar
+//            for (int j = 0; j <= (filas - 1); j++) {
+//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
+//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
+//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
+//                Double cant_actual = 0.00;
+//                Double cant_nueva = 0.00;
+//
+//                try {
+//                    Statement st = con.conexion();
+//                    String bus_pro = "select cant_actual from productos where idProductos = '" + idPro + "'";
+//                    ResultSet rs = con.consulta(st, bus_pro);
+//                    if (rs.next()) {
+//                        cant_actual = rs.getDouble("cant_actual");
+//                    }
+//                    System.out.print("Seleccionando cantidad actual del producto: " + idPro + " cantidad: " + cant_actual + "\n");
+//                    con.cerrar(rs);
+//                    con.cerrar(st);
+//                    cant_nueva = cant_actual - cantidad;
+//                } catch (SQLException ex) {
+//                    System.err.print("Error en: " + ex.getLocalizedMessage());
+//                }
+////
+//                try {
+//                    Statement st = con.conexion();
+//                    String act_pro = "update productos set cant_actual = '" + cant_nueva + "' where idProductos = '" + idPro + "' ";
+//                    con.actualiza(st, act_pro);
+//                    con.cerrar(st);
+//                    System.out.print("actualizando cantidad actual Prod:" + idPro + " cantidad: " + cant_nueva + "\n");
+//                } catch (Exception ex) {
+//                    System.err.print(ex.getLocalizedMessage());
+//                }
+//            }
+////
+//            //verificar si producto existe en almacen
+//            try {
+//                for (int j = 0; j <= (filas - 1); j++) {
+//                    String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
+//                    Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
+//                    Statement st = con.conexion();
+//                    String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' and idProductos = '" + idPro + "'";
+//                    ResultSet rs = con.consulta(st, ver_prod_alm);
+//                    if (rs.next()) {
+//                        //si producto existe actualizar cantidad
+//                        Double cant = rs.getDouble("cant");
+//                        Double cant_act = cant - cantidad;
+//                        Statement st1 = con.conexion();
+//                        String act_pro_alm = "update producto_almacen set cant = '" + cant_act + "' where idProductos = '" + idPro + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
+//                        con.actualiza(st1, act_pro_alm);
+//                        con.cerrar(st1);
+//                    } else {
+//                        //si producto no existe agregar
+//                        double prec = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
+//                        Statement st1 = con.conexion();
+//                        String add_pro_alm = "insert into producto_almacen Values ('" + idPro + "', '" + frm_menu.alm.getId() + "', '" + cantidad + "','" + prec + "')";
+//                        con.actualiza(st1, add_pro_alm);
+//                        con.cerrar(st1);
+//                    }
+//                }
+//            } catch (SQLException ex) {
+//                System.err.print(ex.getLocalizedMessage());
+//            }
+////
+//            //registrar movimiento 
+//            if (cbx_tipopago.getSelectedIndex() == 0) {
+//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
+//                try {
+//                    Statement st = con.conexion();
+//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
+//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+//                    con.actualiza(st, add_mov);
+//                    con.cerrar(st);
+//                } catch (Exception ex) {
+//                    System.err.print("Error en:" + ex.getLocalizedMessage());
+//
+//                }
+//            } else {
+//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
+//                try {
+//                    Statement st = con.conexion();
+//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
+//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
+//                    con.actualiza(st, add_mov);
+//                    con.cerrar(st);
+//                } catch (Exception ex) {
+//                    System.err.print("Error en:" + ex.getLocalizedMessage());
+//
+//                }
+//            }
+//            //enviar por theard
+//
+//            if (modo.equals("VENTA")) {
+//                Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+//                imprime.set_tipv(txt_doc.getText());
+//                imprime.set_idped(ped.getId_ped());
+//                System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+//                imprime.start();
+//            }
+
+    }//GEN-LAST:event_btn_entActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
     private javax.swing.JButton btn_det;
+    private javax.swing.JButton btn_ent;
     private javax.swing.JButton btn_pagar;
     private javax.swing.JComboBox cbx_estado;
     private javax.swing.JButton jButton2;

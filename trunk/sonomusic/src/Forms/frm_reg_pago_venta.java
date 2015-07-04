@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Map;
 import sonomusic.frm_menu;
 
 public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
@@ -307,7 +309,12 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
+            // TICKET DE SEPARACION
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idped", ped.getId_ped());
+            parametros.put("Adelanto", monto);
+            String filename = "rpt_ticket_separacion";
+            ven.imp_reporte(filename, parametros);
         }
         
         String glosa = "CUOTA POR SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();

@@ -680,7 +680,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
                     ver_productos(query);
                     //productos.btn_enviar.setEnabled(true);
-                } 
+                }
                 ven.llamar_ventana(productos);
 
             } catch (Exception e) {
@@ -701,7 +701,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         win = "reg";
         subventana = "";
         System.out.println(pro.getPre_pro());
-
+        ventana = "producto";
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void txt_desKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_desKeyPressed
