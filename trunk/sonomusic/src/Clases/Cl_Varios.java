@@ -29,6 +29,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 
 /**
@@ -192,16 +193,17 @@ public class Cl_Varios {
             jasperReport = JasperCompileManager.compileReport("reports//" + filename + ".jrxml");
             jasperPrint = JasperFillManager.fillReport(
                     jasperReport, parametros, st);
-            JasperExportManager.exportReportToPdfFile(
-                    jasperPrint, "reports/" + filename + ".pdf");
-
-            try {
-                String imp = "reports/" + filename + ".pdf";
-                imprimir_java(imp);
-            } catch (IOException e) {
-                System.out.print(e);
-                JOptionPane.showMessageDialog(null, e);
-            }
+            JasperPrintManager.printReport(jasperPrint, false);
+//            JasperExportManager.exportReportToPdfFile(
+//                    jasperPrint, "reports/" + filename + ".pdf");
+//
+//            try {
+//                String imp = "reports/" + filename + ".pdf";
+//                imprimir_java(imp);
+//            } catch (IOException e) {
+//                System.out.print(e);
+//                JOptionPane.showMessageDialog(null, e);
+//            }
 
         } catch (JRException ex) {
             System.out.print(ex);

@@ -123,7 +123,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 fila[4] = rs.getObject("cli_doc");
                 fila[5] = rs.getString("nom_per");
                 fila[6] = formato.format(rs.getDouble("total"));
-                sum += (rs.getDouble("total"));
+
                 fila[7] = rs.getString("desc");
                 fila[8] = rs.getString("nick");
                 fila[9] = rs.getString("nom_alm");
@@ -136,6 +136,12 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
                 if (rs.getString("est_ped").equals("3")) {
                     fila[10] = "ANULADO";
+                }
+                if (rs.getString("est_ped").equals("4")) {
+                    fila[10] = "POR RECOGER";
+                }
+                if (rs.getString("est_ped").equals("1")) {
+                    sum += (rs.getDouble("total"));
                 }
 
                 mostrar.addRow(fila);
@@ -173,8 +179,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     void calcula_total() {
         double total = 0.0;
         for (int j = 0; j < t_facturas.getRowCount(); j++) {
-            double subtot = (double) t_facturas.getValueAt(j, 5);
-            total += subtot;
+            if (t_facturas.getValueAt(j, 10).toString().equals("PAGADO")) {
+                double subtot = (double) t_facturas.getValueAt(j, 5);
+                total += subtot;
+            }
         }
         txt_tot.setText(total + "");
     }
@@ -572,8 +580,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         }
         if (est.equals("SEPARADO")) {
             btn_pagar.setEnabled(true);
+            btn_anu.setEnabled(false);
         } else {
             btn_pagar.setEnabled(false);
+        }
+        if (est.equals("POR RECOGER")) {
+            btn_pagar.setEnabled(true);
+            btn_anu.setEnabled(false);
         }
     }//GEN-LAST:event_t_facturasMousePressed
 

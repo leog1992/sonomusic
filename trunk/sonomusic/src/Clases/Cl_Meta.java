@@ -75,12 +75,12 @@ public class Cl_Meta {
     public Double mis_metas (String user) {
         java.util.Date fecha = new Date();
         int mes = fecha.getMonth();
-        System.out.println(mes + "MES");
+        System.out.println(mes + " MES");
         Double metas = 0.00;
         try {
             Statement st = con.conexion();
             String mis_metas = "select sum(dp.precio* dp.cantidad) as sum_valor from detalle_pedido as dp inner join pedido as p "
-                    + "on dp.idPedido=p.idPedido where dp.precio > 50 and p.est_ped = '1' and p.nick = '"+user+"' and month(p.fec_ped) = '"+mes+"'";
+                    + "on dp.idPedido=p.idPedido where dp.precio > 50 and p.est_ped = '1' and p.nick = '"+user+"' and month(p.fec_ped) = '"+mes+1+"'";
             ResultSet rs = con.consulta(st, mis_metas);
             if (rs.next()) {
                 metas = rs.getDouble("sum_valor");

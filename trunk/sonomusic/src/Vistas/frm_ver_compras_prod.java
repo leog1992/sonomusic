@@ -58,11 +58,12 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
      */
     public frm_ver_compras_prod() {
         initComponents();
+        java.util.Date fecha = new Date();
         simbolo.setDecimalSeparator('.');
         formato = new DecimalFormat("####0.00", simbolo);
         String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' order by c.fecha_doc desc, c.idCompra desc";
+                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '"+fecha.getMonth()+"'  order by c.fecha_doc desc, c.idCompra desc";
         ver_compras(query);
         t_compras.setDefaultRenderer(Object.class, new table_render());
 

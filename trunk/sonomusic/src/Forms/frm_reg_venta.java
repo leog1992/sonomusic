@@ -1208,6 +1208,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 if (txt_nro_doc.getText().equals("-")) {
                     txt_nom.setEditable(true);
                     txt_nom.requestFocus();
+                    txt_nro_doc.setText("00000000");
                 }
             }
         }

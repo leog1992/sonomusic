@@ -290,7 +290,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             monto = restante;
             try {
                 Statement st = con.conexion();
-                String upd_com = "update pedido set est_ped = '1' where idPedido = '" + ped.getId_ped() + "'";
+                String upd_com = "update pedido set est_ped = '4' where idPedido = '" + ped.getId_ped() + "'";
                 con.actualiza(st, upd_com);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -310,7 +310,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
 
         }
         
-        String glosa = "SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
+        String glosa = "CUOTA POR SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
                 try {
                     Statement st = con.conexion();
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '" + monto + "' "
@@ -325,9 +325,9 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_addKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_addKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_add.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_add.doClick();
+//        }
     }//GEN-LAST:event_btn_addKeyPressed
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed

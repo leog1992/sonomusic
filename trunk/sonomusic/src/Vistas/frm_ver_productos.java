@@ -404,9 +404,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             String bus = txt_bus.getText();
             String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
                     + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas "
-                    + "WHERE MATCH (p.desc_pro, p.modelo, p.serie, p.marca) AGAINST ('%" + bus + "%') "
-                    //                    + "where p.desc_pro like '%" + bus + "%' "
-                    //                    + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%'"
+                    //+ "WHERE MATCH (p.desc_pro, p.modelo, p.serie, p.marca) AGAINST ('%" + bus + "%') "
+                    + "where p.desc_pro like '%" + bus + "%' "
+                    + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%'"
                     + " order by p.desc_pro asc, p.modelo asc";
             ver_productos(query);
         }
