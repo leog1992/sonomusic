@@ -301,6 +301,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
 
         } else {
             monto = real;
+            pagado = Double.parseDouble(txt_pag.getText());
             try {
                 Statement st = con.conexion();
                 String ins_pago = "insert into letras_pedido Values (null, '" + real + "', '" + fecha + "', '" + ped.getId_ped() + "')";
@@ -309,10 +310,13 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.out.print(ex);
             }
+            pagado = pagado + monto;
+            System.out.println(pagado);
             // TICKET DE SEPARACION
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("idped", ped.getId_ped());
             parametros.put("Adelanto", monto);
+            parametros.put("Acumulado", pagado);
             String filename = "rpt_ticket_separacion";
             ven.imp_reporte(filename, parametros);
         }
