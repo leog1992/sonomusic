@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_productos_vendedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f65db704-b029-4c1d-a7d9-80c31b038d5a">
 	<property name="ireport.zoom" value="2.0490403660952117"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="546"/>
+	<property name="ireport.y" value="133"/>
 	<parameter name="fec_ini" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -41,6 +41,7 @@ FROM
      INNER JOIN `empleados` empleados ON usuario.`dni` = empleados.`dni`
 WHERE
      pedido.`nick` = $P{nick}
+     and pedido.`est_ped` = 1
      and pedido.`fec_ped` between $P{fec_ini} and $P{fec_fin}
 
 GROUP BY
@@ -97,7 +98,7 @@ ORDER BY
 		<variableExpression><![CDATA[$F{ptotal}]]></variableExpression>
 	</variable>
 	<variable name="sum_com" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{ptotal} * $F{comision} / 100]]></variableExpression>
+		<variableExpression><![CDATA[( ($F{precio}>=50) ? $F{ptotal} * $F{comision} / 100 : 0.00 )]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -323,7 +324,7 @@ ORDER BY
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ptotal} * $F{comision} / 100]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( ($F{precio}>=50) ? $F{ptotal} * $F{comision} / 100 : 0.00 )]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="443" y="0" width="50" height="20" uuid="4d846823-bcab-4c4b-9ea6-5d95d45c7f18"/>
