@@ -665,6 +665,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("idped", ped.getId_ped());
             parametros.put("Adelanto", total);
+            parametros.put("Acumulado", total);
             String filename = "rpt_ticket_separacion";
             ven.imp_reporte(filename, parametros);
         }

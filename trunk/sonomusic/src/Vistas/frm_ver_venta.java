@@ -4,6 +4,7 @@ import Clases.Cl_Albaran;
 import Clases.Cl_Almacen;
 import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
+import Clases.Cl_Hilo_Imprime;
 import Clases.Cl_Movimiento;
 import Clases.Cl_Pedido;
 import Clases.Cl_Productos;
@@ -141,6 +142,9 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
                 if (rs.getString("est_ped").equals("4")) {
                     fila[10] = "POR RECOGER";
+                }
+                if (rs.getString("est_ped").equals("5")) {
+                    fila[10] = "ENTREGADO";
                 }
                 if (rs.getString("est_ped").equals("1")) {
                     sum += (rs.getDouble("total"));
@@ -596,19 +600,23 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         if (est.equals("SEPARADO")) {
             btn_pagar.setEnabled(true);
             btn_anu.setEnabled(false);
+            btn_ent.setEnabled(false);
         } else {
             btn_pagar.setEnabled(false);
         }
         if (est.equals("POR RECOGER")) {
-            btn_pagar.setEnabled(true);
+            btn_pagar.setEnabled(false);
             btn_anu.setEnabled(false);
             btn_ent.setEnabled(true);
         } else {
             btn_ent.setEnabled(false);
+        }
+        if (est.equals("ENTREGADO")) {
             btn_pagar.setEnabled(false);
             btn_anu.setEnabled(false);
-        }
-        
+            btn_ent.setEnabled(false);
+        } 
+
     }//GEN-LAST:event_t_facturasMousePressed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
@@ -714,184 +722,172 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
     private void btn_entActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entActionPerformed
         //seleccionar datos de la separacion
-        ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
+        String separacion = t_facturas.getValueAt(i, 0).toString();
         try {
             Statement st = con.conexion();
-            String ver_ped = "select cli_doc, cli_nom, nick from pedido where idPedido = '"+ped.getId_ped()+"'";
+            String ver_ped = "select cli_doc, cli_nom, nick, total from pedido where idPedido = '" + separacion + "'";
             ResultSet rs = con.consulta(st, ver_ped);
-            if(rs.next()) {
+            if (rs.next()) {
                 cli.setNro_doc(rs.getString("cli_doc"));
                 cli.setNom_cli(rs.getString("cli_nom"));
                 usu.setNick(rs.getString("nick"));
+                ped.setTotal(rs.getDouble("total"));
             }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage()); 
+            System.out.println(e.getLocalizedMessage());
         }
-        
+
         //Variables para registrar
         ped.setFec_pag_ped(ven.getFechaActual());
         ped.setFec_ped(ven.getFechaActual());
         tipa.setId(1);
+        tipa.setDesc("EFECTIVO");
+        tido.setId(2);
+        tido.setDesc("BOLETA");
+        tido.setSerie(tido.ver_ser(2, frm_menu.alm.getId()));
+        tido.setNro(tido.ver_num(2, frm_menu.alm.getId()));
         ped.setDes_ped(0);
         ped.setEst_ped("1");
-        
+
+        try {
+            Statement st = con.conexion();
+            String upd_com = "update pedido set est_ped = '5' where idPedido = '" + separacion + "'";
+            con.actualiza(st, upd_com);
+            con.cerrar(st);
+        } catch (Exception ex) {
+            System.out.print(ex);
+        }
+
         //registrar venta en tabla pedido
-//        try {
-//                Statement st = con.conexion();
-//                String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
-//                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-//                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-//                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"','" + total + "')";
-//                con.actualiza(st, ins_ven);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.println(ex.getLocalizedMessage());
-//            }
-            tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+        try {
+            Statement st = con.conexion();
+            String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
+                    + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
+                    + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+                    + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+            con.actualiza(st, ins_ven);
+            con.cerrar(st);
+        } catch (Exception ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+        tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+
+        //buscar ultimo pedido
+        try {
+            Statement st = con.conexion();
+            String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
+                    + "and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = "
+                    + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+            ResultSet rs = con.consulta(st, buscar_pedido);
+            if (rs.next()) {
+                ped.setId_ped(rs.getString("idPedido"));
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException ex) {
+            System.out.print(ex.getLocalizedMessage());
+        }
+
+        //registrar detalle de venta
+        try {
+            Statement st = con.conexion();
+            String det_ped = "select idProductos, cantidad, precio from detalle_pedido where idPedido = '" + separacion + "'";
+            ResultSet rs = con.consulta(st, det_ped);
+            while (rs.next()) {
+                //copiar datos de separacion a pedido entregado
+                pro.setCan(rs.getDouble("cantidad"));
+                pro.setId_pro(rs.getInt("idProductos"));
+                pro.setPre_pro(rs.getDouble("precio"));
+                try {
+                    Statement st1 = con.conexion();
+                    String ins_det_ped = "insert into detalle_pedido Values ('" + pro.getId_pro() + "', '" + ped.getId_ped() + "', '" + pro.getPre_pro() + "', '" + pro.getCan() + "')";
+                    con.actualiza(st1, ins_det_ped);
+                    con.cerrar(st1);
+                } catch (Exception ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+                //insertar datos en kardex
+                try {
+                    Statement st1 = con.conexion();
+                    String ins_kardex = "insert into kardex Values (null, '" + ped.getFec_ped() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '"
+                            + pro.getCan() + "', '" + pro.getPre_pro() + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
+                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','1')";
+                    con.actualiza(st1, ins_kardex);
+                    con.cerrar(st1);
+                } catch (Exception ex) {
+                    System.err.print("Error en: " + ex.getLocalizedMessage());
+                }
+                Double cant_actual = 0.00;
+                Double cant_nueva = 0.00;
+                try {
+                    Statement st1 = con.conexion();
+                    String bus_pro = "select cant_actual from productos where idProductos = '" + pro.getId_pro() + "'";
+                    ResultSet rs1 = con.consulta(st1, bus_pro);
+                    if (rs1.next()) {
+                        cant_actual = rs.getDouble("cant_actual");
+                    }
+                    System.out.print("Seleccionando cantidad actual del producto: " + pro.getId_pro() + " cantidad: " + cant_actual + "\n");
+                    con.cerrar(rs1);
+                    con.cerrar(st1);
+                    cant_nueva = cant_actual - pro.getCan();
+                } catch (SQLException ex) {
+                    System.err.print("Error en: " + ex.getLocalizedMessage());
+                }
 //
-////        //buscar ultimo pedido
-//            try {
-//                Statement st = con.conexion();
-//                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
-//                        + "and fec_ped = '" + frm_reg_venta.ped.getFec_ped() + "' and idAlmacen = "
-//                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
-//                ResultSet rs = con.consulta(st, buscar_pedido);
-//                if (rs.next()) {
-//                    ped.setId_ped(rs.getString("idPedido"));
-//                }
-//                con.cerrar(rs);
-//                con.cerrar(st);
-//            } catch (SQLException ex) {
-//                System.out.print(ex.getLocalizedMessage());
-//            }
-//
-//            //registrar detalle de venta
-//            int filas = frm_reg_venta.t_detalle.getRowCount();
-//            for (int j = 0; j <= (filas - 1); j++) {
-//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                try {
-//                    Statement st = con.conexion();
-//                    String ins_det_ped = "insert into detalle_pedido Values ('" + idPro + "', '" + ped.getId_ped() + "', '" + precio + "', '" + cantidad + "')";
-//                    con.actualiza(st, ins_det_ped);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print(ex.getLocalizedMessage());
-//                }
-////                //insertar datos en kardex
-//                try {
-//                    Statement st = con.conexion();
-//                    String ins_kardex = "insert into kardex Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + idPro + "', '0.00', '0.00', '"
-//                            + cantidad + "', '" + precio + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
-//                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + tpventa + "')";
-//                    con.actualiza(st, ins_kardex);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en: " + ex.getLocalizedMessage());
-//                }
-//            }
-////
-//            //seleccionar cantidad de producto y restar
-//            for (int j = 0; j <= (filas - 1); j++) {
-//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                Double cant_actual = 0.00;
-//                Double cant_nueva = 0.00;
-//
-//                try {
-//                    Statement st = con.conexion();
-//                    String bus_pro = "select cant_actual from productos where idProductos = '" + idPro + "'";
-//                    ResultSet rs = con.consulta(st, bus_pro);
-//                    if (rs.next()) {
-//                        cant_actual = rs.getDouble("cant_actual");
-//                    }
-//                    System.out.print("Seleccionando cantidad actual del producto: " + idPro + " cantidad: " + cant_actual + "\n");
-//                    con.cerrar(rs);
-//                    con.cerrar(st);
-//                    cant_nueva = cant_actual - cantidad;
-//                } catch (SQLException ex) {
-//                    System.err.print("Error en: " + ex.getLocalizedMessage());
-//                }
-////
-//                try {
-//                    Statement st = con.conexion();
-//                    String act_pro = "update productos set cant_actual = '" + cant_nueva + "' where idProductos = '" + idPro + "' ";
-//                    con.actualiza(st, act_pro);
-//                    con.cerrar(st);
-//                    System.out.print("actualizando cantidad actual Prod:" + idPro + " cantidad: " + cant_nueva + "\n");
-//                } catch (Exception ex) {
-//                    System.err.print(ex.getLocalizedMessage());
-//                }
-//            }
-////
-//            //verificar si producto existe en almacen
-//            try {
-//                for (int j = 0; j <= (filas - 1); j++) {
-//                    String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                    Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                    Statement st = con.conexion();
-//                    String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' and idProductos = '" + idPro + "'";
-//                    ResultSet rs = con.consulta(st, ver_prod_alm);
-//                    if (rs.next()) {
-//                        //si producto existe actualizar cantidad
-//                        Double cant = rs.getDouble("cant");
-//                        Double cant_act = cant - cantidad;
-//                        Statement st1 = con.conexion();
-//                        String act_pro_alm = "update producto_almacen set cant = '" + cant_act + "' where idProductos = '" + idPro + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
-//                        con.actualiza(st1, act_pro_alm);
-//                        con.cerrar(st1);
-//                    } else {
-//                        //si producto no existe agregar
-//                        double prec = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                        Statement st1 = con.conexion();
-//                        String add_pro_alm = "insert into producto_almacen Values ('" + idPro + "', '" + frm_menu.alm.getId() + "', '" + cantidad + "','" + prec + "')";
-//                        con.actualiza(st1, add_pro_alm);
-//                        con.cerrar(st1);
-//                    }
-//                }
-//            } catch (SQLException ex) {
-//                System.err.print(ex.getLocalizedMessage());
-//            }
-////
-//            //registrar movimiento 
-//            if (cbx_tipopago.getSelectedIndex() == 0) {
-//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
-//                try {
-//                    Statement st = con.conexion();
-//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
-//                    con.actualiza(st, add_mov);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en:" + ex.getLocalizedMessage());
-//
-//                }
-//            } else {
-//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
-//                try {
-//                    Statement st = con.conexion();
-//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
-//                    con.actualiza(st, add_mov);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en:" + ex.getLocalizedMessage());
-//
-//                }
-//            }
-//            //enviar por theard
-//
-//            if (modo.equals("VENTA")) {
-//                Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
-//                imprime.set_tipv(txt_doc.getText());
-//                imprime.set_idped(ped.getId_ped());
-//                System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-//                imprime.start();
-//            }
+                try {
+                    Statement st1 = con.conexion();
+                    String act_pro = "update productos set cant_actual = '" + cant_nueva + "' where idProductos = '" + pro.getId_pro() + "' ";
+                    con.actualiza(st1, act_pro);
+                    con.cerrar(st1);
+                    System.out.print("actualizando cantidad actual Prod:" + pro.getId_pro() + " cantidad: " + cant_nueva + "\n");
+                } catch (Exception ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+
+                try {
+                    Statement st1 = con.conexion();
+                    String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' and idProductos = '" + pro.getId_pro() + "'";
+                    ResultSet rs1 = con.consulta(st1, ver_prod_alm);
+                    if (rs1.next()) {
+                        //si producto existe actualizar cantidad
+                        Double cant = rs1.getDouble("cant");
+                        Double cant_act = cant - pro.getCan();
+                        Statement st2 = con.conexion();
+                        String act_pro_alm = "update producto_almacen set cant = '" + cant_act + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
+                        con.actualiza(st2, act_pro_alm);
+                        con.cerrar(st2);
+                    } else {
+                        //si producto no existe agregar
+                        Statement st2 = con.conexion();
+                        String add_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + frm_menu.alm.getId() + "', '" + pro.getCan() + "','" + pro.getPre_pro() + "')";
+                        con.actualiza(st2, add_pro_alm);
+                        con.cerrar(st2);
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+        imprime.set_tipv("BOLETA");
+        imprime.set_idped(ped.getId_ped());
+        System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+        imprime.start();
+
+        fecha_hoy = ven.getFechaActual();
+        String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
+                + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
+                + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
+                + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
+                + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' order by p.idPedido asc";
+        ver_pedidos(ver_ped);
 
     }//GEN-LAST:event_btn_entActionPerformed
 

@@ -35,7 +35,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
-                cbx_cargo.addItem(rs.getString("tipo_cargo"));
+                cbx_tienda.addItem(rs.getString("tipo_cargo"));
             }
             con.cerrar(rs);
             con.cerrar(st);
@@ -100,8 +100,8 @@ public class frm_metas extends javax.swing.JInternalFrame {
         txt_fec_ini.setText(ven.getFechaActual());
         txt_fec_fin.setText("");
         txt_fec_fin.setEditable(false);
-        cbx_cargo.setSelectedIndex(-1);
-        cbx_cargo.setEnabled(false);
+        cbx_tienda.setSelectedIndex(-1);
+        cbx_tienda.setEnabled(false);
         txt_monto.requestFocus();
     }
 
@@ -109,7 +109,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         met.setMonto(Double.parseDouble(txt_monto.getText()));
         met.setFec_ini(ven.fechabase(txt_fec_ini.getText()));
         met.setFec_fin(ven.fechabase(txt_fec_fin.getText()));
-        car.setId(cbx_cargo.getSelectedIndex() + 1);
+        car.setId(cbx_tienda.getSelectedIndex() + 1);
 
     }
 
@@ -124,7 +124,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         txt_monto = new javax.swing.JTextField();
         txt_fec_ini = new javax.swing.JFormattedTextField();
         txt_fec_fin = new javax.swing.JFormattedTextField();
-        cbx_cargo = new javax.swing.JComboBox();
+        cbx_tienda = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_metas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -162,7 +162,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         jLabel4.setText("Fecha de Fin:");
 
         jLabel5.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel5.setText("Tipo de Cargo:");
+        jLabel5.setText("Tienda:");
 
         txt_monto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,10 +214,10 @@ public class frm_metas extends javax.swing.JInternalFrame {
             }
         });
 
-        cbx_cargo.setEnabled(false);
-        cbx_cargo.addActionListener(new java.awt.event.ActionListener() {
+        cbx_tienda.setEnabled(false);
+        cbx_tienda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_cargoActionPerformed(evt);
+                cbx_tiendaActionPerformed(evt);
             }
         });
 
@@ -274,16 +274,13 @@ public class frm_metas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(120, 120, 120))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbx_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -292,7 +289,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_fec_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_fec_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 218, Short.MAX_VALUE))
+                        .addGap(0, 255, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -322,7 +319,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbx_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -348,9 +345,9 @@ public class frm_metas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fec_finActionPerformed
 
-    private void cbx_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_cargoActionPerformed
+    private void cbx_tiendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tiendaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbx_cargoActionPerformed
+    }//GEN-LAST:event_cbx_tiendaActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         txt_monto.requestFocus();
@@ -399,8 +396,8 @@ public class frm_metas extends javax.swing.JInternalFrame {
     private void txt_fec_finKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_finKeyPressed
         if (txt_fec_fin.getText().trim().length()==10) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                cbx_cargo.setEnabled(true);
-                cbx_cargo.requestFocus();
+                cbx_tienda.setEnabled(true);
+                cbx_tienda.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_fec_finKeyPressed
@@ -440,7 +437,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_reg;
-    private javax.swing.JComboBox cbx_cargo;
+    private javax.swing.JComboBox cbx_tienda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
