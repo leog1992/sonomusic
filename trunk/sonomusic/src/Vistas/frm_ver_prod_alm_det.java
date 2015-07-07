@@ -40,14 +40,14 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
     public frm_ver_prod_alm_det() {
         initComponents();
         txt_bus.requestFocus();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
-                + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
-                + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
-                + "on pa.idProductos=p.idProductos inner join clasificacion as c "
-                + "on p.id_clas=c.id_clas inner join und_medida as u "
-                + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
-                + " on pa.idAlmacen=a.idAlmacen order by p.desc_pro asc, p.modelo asc";
-        ver_productos(query);
+//        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
+//                + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
+//                + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
+//                + "on pa.idProductos=p.idProductos inner join clasificacion as c "
+//                + "on p.id_clas=c.id_clas inner join und_medida as u "
+//                + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
+//                + " on pa.idAlmacen=a.idAlmacen order by p.desc_pro asc, p.modelo asc";
+//        ver_productos(query);
         t_productos.setDefaultRenderer(Object.class, new table_render());
         ver_almacen();
     }
