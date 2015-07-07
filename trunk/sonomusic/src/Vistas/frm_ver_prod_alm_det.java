@@ -40,6 +40,34 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
     public frm_ver_prod_alm_det() {
         initComponents();
         txt_bus.requestFocus();
+        mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+        mostrar.addColumn("Id");
+            mostrar.addColumn("Descripcion");
+            mostrar.addColumn("Marca");
+            mostrar.addColumn("Cant. Act.");
+            mostrar.addColumn("Und. Med.");
+            mostrar.addColumn("Precio");
+            mostrar.addColumn("Clasificacion");
+            mostrar.addColumn("Grado");
+            mostrar.addColumn("Almacen");
+            mostrar.addColumn("Estado");
+            t_productos.setModel(mostrar);
+            t_productos.getColumnModel().getColumn(0).setPreferredWidth(30);
+            t_productos.getColumnModel().getColumn(1).setPreferredWidth(350);
+            t_productos.getColumnModel().getColumn(2).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(3).setPreferredWidth(60);
+            t_productos.getColumnModel().getColumn(4).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(5).setPreferredWidth(60);
+            t_productos.getColumnModel().getColumn(6).setPreferredWidth(50);
+            t_productos.getColumnModel().getColumn(7).setPreferredWidth(100);
+            t_productos.getColumnModel().getColumn(8).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(9).setPreferredWidth(90);
+            mostrar.fireTableDataChanged();
 //        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
 //                + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
 //                + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
@@ -73,7 +101,18 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             mostrar.addColumn("Grado");
             mostrar.addColumn("Almacen");
             mostrar.addColumn("Estado");
-            //mostrar.addColumn("Estado");
+            t_productos.setModel(mostrar);
+            t_productos.getColumnModel().getColumn(0).setPreferredWidth(30);
+            t_productos.getColumnModel().getColumn(1).setPreferredWidth(350);
+            t_productos.getColumnModel().getColumn(2).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(3).setPreferredWidth(60);
+            t_productos.getColumnModel().getColumn(4).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(5).setPreferredWidth(60);
+            t_productos.getColumnModel().getColumn(6).setPreferredWidth(50);
+            t_productos.getColumnModel().getColumn(7).setPreferredWidth(100);
+            t_productos.getColumnModel().getColumn(8).setPreferredWidth(80);
+            t_productos.getColumnModel().getColumn(9).setPreferredWidth(90);
+            mostrar.fireTableDataChanged();
 
             //Creando las filas para el JTable
             while (rs.next()) {
@@ -285,6 +324,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (cbx_clas.getSelectedIndex()==0) {
             String texto = txt_bus.getText();
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
                     + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
@@ -297,7 +337,22 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     + "or pa.precio like '%" + texto + "%' order by p.desc_pro asc, p.modelo asc;";
             ver_productos(query);
             t_productos.setDefaultRenderer(Object.class, new table_render());
-            t_productos.requestFocus();
+            } else {
+                Integer idclas = cbx_clas.getSelectedIndex();
+                 String texto = txt_bus.getText();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
+                    + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
+                    + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
+                    + "on pa.idProductos=p.idProductos inner join clasificacion as c "
+                    + "on p.id_clas=c.id_clas inner join und_medida as u "
+                    + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
+                    + " on pa.idAlmacen=a.idAlmacen where pa.idAlmacen = '"+idclas+"' and (p.desc_pro like '%" + texto + "%' or "
+                    + "p.modelo like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%' "
+                    + "or pa.precio like '%" + texto + "%') order by p.desc_pro asc, p.modelo asc;";
+            ver_productos(query);
+            t_productos.setDefaultRenderer(Object.class, new table_render());
+                
+            }
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
