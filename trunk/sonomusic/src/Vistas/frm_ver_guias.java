@@ -349,7 +349,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         int ida = 0;
         try {
             Statement st = con.conexion();
-            String ver_alm = "select idAlmacen from almacen where dir_alm like '" + dir_alm + "%'";
+            String ver_alm = "select idAlmacen from almacen where nom_alm like '" + dir_alm + "%'";
             ResultSet rs = con.consulta(st, ver_alm);
             if (rs.next()) {
                 ida = rs.getInt("idAlmacen");
