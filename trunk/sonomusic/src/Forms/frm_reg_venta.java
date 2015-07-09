@@ -154,6 +154,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
             con.cerrar(st);
             con.cerrar(rs);
+            cbx_vendedor.setSelectedItem(frm_menu.usu.getNick());
         } catch (SQLException e) {
             System.out.print(e);
         }
