@@ -76,8 +76,8 @@ public class frm_menu extends javax.swing.JFrame {
         txt_ruc.setText(alm.getRuc());
         txt_raz.setText(alm.getRaz_soc());
         // carga todas las notificacion primera vez
-        noti = new Cl_Hilo_Notificacion();
-        noti.start();
+        //noti = new Cl_Hilo_Notificacion();
+        //noti.start();
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
@@ -1610,7 +1610,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         if (usu.getPer_ver_reportes().equals("1")) {
-            //        frm_ver_empresa empresa = new frm_ver_empresa(); 
+//        frm_ver_empresa empresa = new frm_ver_empresa(); 
 //        empresa.ventana="venta_total";
 //        ven.llamar_ventana(empresa);          
         } else {

@@ -582,11 +582,11 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         frm_ver_prod_alm prod_alm = new frm_ver_prod_alm();
         Integer ida = cbx_alm_or.getSelectedIndex() + 1;
         String alm = cbx_alm_or.getSelectedItem().toString();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + ida + "' "
-                + "order by p.desc_pro asc";
-        pro.mostrar_productos(query);
+//        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+//                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
+//                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + ida + "' "
+//                + "order by p.desc_pro asc";
+//        pro.mostrar_productos(query);
         prod_alm.t_productos.setDefaultRenderer(Object.class, new table_render());
         prod_alm.txt_ida.setText(ida.toString());
         prod_alm.txt_noma.setText(alm);

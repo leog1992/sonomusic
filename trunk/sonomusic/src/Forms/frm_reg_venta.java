@@ -120,6 +120,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             System.out.println(ex.getMessage());
         }
         ver_vendedores("" + frm_menu.alm.getId());
+        cbx_vendedor.requestFocus();
     }
     //fin del constructor
 
@@ -570,6 +571,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel11.setText("iD:");
         jLabel11.setFocusable(false);
 
+        txt_id.setEditable(false);
         txt_id.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_idKeyPressed(evt);
@@ -602,6 +604,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         cbx_vendedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_vendedorActionPerformed(evt);
+            }
+        });
+        cbx_vendedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_vendedorKeyPressed(evt);
             }
         });
 
@@ -903,7 +910,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
             txt_id.setText("");
             txt_desc.requestFocus();
-            
+
             try {
                 TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
                 autocopletar.setMode(0);
@@ -923,7 +930,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Error");
             }
         }
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             String idpro = txt_id.getText();
             Integer idalm = frm_menu.alm.getId();
@@ -1136,9 +1143,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_tipdKeyPressed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-        txt_id.setEditable(true);
-        btn_add_pro.setEnabled(true);
-        txt_id.requestFocus();
+//        txt_id.setEditable(true);
+//        btn_add_pro.setEnabled(true);
+//        txt_id.requestFocus();
     }//GEN-LAST:event_formInternalFrameActivated
 
 
@@ -1147,7 +1154,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_nro_doc.getText().length() == 8 || txt_nro_doc.getText().length() == 11) {
 
-                
                 long doc = Long.parseLong(txt_nro_doc.getText());
                 if (!txt_nro_doc.getText().isEmpty()) {
                     cli.setNro_doc(txt_nro_doc.getText());
@@ -1194,9 +1200,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     txt_nro_doc.setText("00000000");
                     txt_nro_doc.requestFocus();
                 }
-                
+
                 if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
                     if (txt_nro_doc.getText().equals("00000000")) {
+                        txt_fec.setEditable(false);
+                        txt_fec.setBackground(Color.white);
+                        txt_fec.setForeground(Color.black);
                         txt_nro_doc.setText("");
                         txt_nro_doc.requestFocus();
                     }
@@ -1255,13 +1264,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 evt.consume();
             }
         }
-        
+
         if (cbx_tipd.getSelectedItem().equals("BOLETA")) {
             if (txt_nro_doc.getText().length() == 8) {
                 evt.consume();
             }
-        } 
-        
+        }
+
         if (cbx_tipd.getSelectedItem().equals("FACTURA")) {
             if (txt_nro_doc.getText().length() == 11) {
                 evt.consume();
@@ -1337,7 +1346,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_idKeyReleased
 
     private void txt_descKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyReleased
-            
+
     }//GEN-LAST:event_txt_descKeyReleased
 
     private void txt_descKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyPressed
@@ -1368,22 +1377,31 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_descFocusGained
 
     private void cbx_vendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_vendedorActionPerformed
-        try {
-            String user = cbx_vendedor.getSelectedItem().toString();
-            String query = "select nom_per from empleados where dni = '" + user + "'";
-            Statement st = con.conexion();
-            ResultSet rs = con.consulta(st, query);
 
-            if (rs.next()) {
-                txt_vend.setText(rs.getString("nom_per"));
-            }
-            con.cerrar(st);
-            con.cerrar(rs);
-
-        } catch (SQLException e) {
-            System.out.print(e);
-        }
     }//GEN-LAST:event_cbx_vendedorActionPerformed
+
+    private void cbx_vendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_vendedorKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                String user = cbx_vendedor.getSelectedItem().toString();
+                String query = "select nom_per from empleados where dni = '" + user + "'";
+                Statement st = con.conexion();
+                ResultSet rs = con.consulta(st, query);
+
+                if (rs.next()) {
+                    txt_vend.setText(rs.getString("nom_per"));
+                }
+                con.cerrar(st);
+                con.cerrar(rs);
+
+                txt_id.setEditable(true);
+                txt_id.requestFocus();
+
+            } catch (SQLException e) {
+                System.out.print(e);
+            }
+        }
+    }//GEN-LAST:event_cbx_vendedorKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
