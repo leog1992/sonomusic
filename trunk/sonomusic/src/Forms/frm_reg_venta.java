@@ -455,13 +455,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         cbx_alm.setText("-");
 
-        txt_fec.setEditable(false);
         try {
             txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec.setEnabled(false);
         txt_fec.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fecKeyPressed(evt);
@@ -483,8 +483,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
 
-        txt_nro_doc.setEditable(false);
         txt_nro_doc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_nro_doc.setEnabled(false);
         txt_nro_doc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nro_docKeyPressed(evt);
@@ -502,7 +502,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("Nombre:");
 
-        txt_nom.setEditable(false);
+        txt_nom.setFocusable(false);
         txt_nom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nomKeyPressed(evt);
@@ -571,20 +571,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel11.setText("iD:");
         jLabel11.setFocusable(false);
 
-        txt_id.setEditable(false);
+        txt_id.setEnabled(false);
         txt_id.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_idKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_idKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_idKeyTyped(evt);
-            }
         });
 
-        txt_desc.setEditable(false);
+        txt_desc.setEnabled(false);
         txt_desc.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txt_descFocusGained(evt);
@@ -601,11 +595,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Vendedor:");
 
-        cbx_vendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_vendedorActionPerformed(evt);
-            }
-        });
         cbx_vendedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_vendedorKeyPressed(evt);
@@ -613,6 +602,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         });
 
         txt_vend.setEditable(false);
+        txt_vend.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -904,9 +894,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             btn_add_pro.doClick();
         }
 
-        txt_desc.setText(txt_id.getText());
         if (Character.isLetter(evt.getKeyChar())) {
-            txt_desc.setEditable(true);
+            txt_desc.setEnabled(true);
 
             txt_id.setText("");
             txt_desc.requestFocus();
@@ -914,20 +903,18 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             try {
                 TextAutoCompleter autocopletar = new TextAutoCompleter(txt_desc);
                 autocopletar.setMode(0);
-                String busca = txt_desc.getText();
                 Statement st = con.conexion();
                 String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
                         + " from producto_almacen as pa inner join productos as p"
                         + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "' "
                         + "order by p.desc_pro asc, p.modelo asc";
-                //   + " and (p.desc_pro like '%" + busca + "%' or p.marca like '%" + busca + "%' or p.modelo like '%" + busca + "%')";
                 ResultSet rs = con.consulta(st, sql);
                 while (rs.next()) {
-
                     autocopletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " - " + rs.getString("p.marca") + " - " + rs.getString("p.modelo"));
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error");
+                System.out.println(e.getLocalizedMessage());
             }
         }
 
@@ -980,39 +967,20 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         //ENVIAR DATOS A FORMULARIO VENTA
                         filas_tabla = t_detalle.getRowCount();
                         if (cant_dis > 0) {
-                            if (frm_reg_venta.cbx_tipd.getSelectedItem().equals("BOLETA") || frm_reg_venta.cbx_tipd.getSelectedItem().equals("NOTA DE VENTA") && filas_tabla <= 5) {
 
-                                Integer copiado = 0;
+                            Integer copiado = 0;
 
-                                if (filas_tabla > 0) {
-                                    for (int x = 0; x < filas_tabla; x++) {
-                                        Integer id_pro_tabla;
-                                        id_pro_tabla = (Integer) t_detalle.getValueAt(x, 0);
+                            if (filas_tabla > 0) {
+                                for (int x = 0; x < filas_tabla; x++) {
+                                    Integer id_pro_tabla;
+                                    id_pro_tabla = (Integer) t_detalle.getValueAt(x, 0);
 
-                                        if (id_pro_tabla == idpro) {
-                                            copiado++;
-                                        }
+                                    if (id_pro_tabla == idpro) {
+                                        copiado++;
                                     }
+                                }
 
-                                    if (copiado == 0) {
-                                        if (ofe.precio_oferta(frm_menu.alm.getId(), rs1.getInt("idProductos")) == 0.00) {
-                                            fila[5] = rs1.getDouble("precio");
-                                        } else {
-                                            fila[5] = ofe.precio_oferta(frm_menu.alm.getId(), rs1.getInt("idProductos"));
-                                        }
-                                        detalle.addRow(fila);
-                                        txt_id.setText("");
-                                        txt_id.requestFocus();
-                                        btn_desc.setEnabled(true);
-                                        subtotal();
-                                        total();
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
-                                        txt_id.setText("");
-                                        txt_id.requestFocus();
-                                    }
-
-                                } else {
+                                if (copiado == 0) {
                                     if (ofe.precio_oferta(frm_menu.alm.getId(), rs1.getInt("idProductos")) == 0.00) {
                                         fila[5] = rs1.getDouble("precio");
                                     } else {
@@ -1024,49 +992,26 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                     btn_desc.setEnabled(true);
                                     subtotal();
                                     total();
-                                }
-                            } else if (frm_reg_venta.cbx_tipd.getSelectedItem().equals("FACTURA") && filas_tabla <= 10) {
-
-                                Integer copiado = 0;
-                                if (filas_tabla > 0) {
-                                    for (int x = 0; x < filas_tabla; x++) {
-                                        Integer id_pro_tabla;
-                                        id_pro_tabla = Integer.parseInt(frm_reg_venta.t_detalle.getValueAt(x, 0).toString());
-
-                                        if (id_pro_tabla == idpro) {
-                                            copiado++;
-                                        }
-                                    }
-                                    if (copiado == 0) {
-                                        fila[5] = rs1.getDouble("precio"); // PRECIO VENTA
-                                        detalle.addRow(fila);
-                                        txt_id.setText("");
-                                        txt_id.requestFocus();
-                                        btn_desc.setEnabled(true);
-                                        subtotal();
-                                        total();
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
-                                        txt_id.setText("");
-                                        txt_id.requestFocus();
-                                    }
-
                                 } else {
-                                    fila[5] = rs1.getDouble("precio"); // PRECIO VENTA
-                                    detalle.addRow(fila);
+                                    JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
                                     txt_id.setText("");
                                     txt_id.requestFocus();
-                                    btn_desc.setEnabled(true);
-                                    subtotal();
-                                    total();
-
                                 }
+
                             } else {
-                                JOptionPane.showMessageDialog(null, "No hay espacio para continuar agregando productos");
+                                if (ofe.precio_oferta(frm_menu.alm.getId(), rs1.getInt("idProductos")) == 0.00) {
+                                    fila[5] = rs1.getDouble("precio");
+                                } else {
+                                    fila[5] = ofe.precio_oferta(frm_menu.alm.getId(), rs1.getInt("idProductos"));
+                                }
+                                detalle.addRow(fila);
                                 txt_id.setText("");
                                 txt_id.requestFocus();
+                                btn_desc.setEnabled(true);
+                                subtotal();
+                                total();
                             }
+
                         } else {
                             JOptionPane.showMessageDialog(null, "No existe suficiente producto para la operacion");
                             txt_id.setText("");
@@ -1092,13 +1037,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txt_idKeyPressed
 
-    private void txt_idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idKeyTyped
-        /*        char car = evt.getKeyChar();
-         if ((car < '0' || car > '9')) {
-         evt.consume();
-         }*/
-    }//GEN-LAST:event_txt_idKeyTyped
-
     private void t_detalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_detalleFocusLost
         btn_cam_can.setEnabled(false);
         btn_cpre.setEnabled(false);
@@ -1116,24 +1054,27 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void cbx_tipdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tipdKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
             if (cbx_tipd.getSelectedItem().equals("NOTA DE VENTA")) {
                 if (cbx_tip_venta.getSelectedItem().equals("VENTA")) {
                     txt_nro_doc.setText("00000000");
                     txt_nom.setText("CLIENTES GENERALES");
-                    txt_fec.setEditable(true);
+                    txt_fec.setEnabled(true);
                     txt_fec.requestFocus();
                     txt_fec.setBackground(Color.red);
                     txt_fec.setForeground(Color.white);
                 } else {
-                    txt_nro_doc.setEditable(true);
+                    txt_nro_doc.setText("");
+                    txt_nro_doc.setEnabled(true);
                     txt_nro_doc.requestFocus();
                     txt_nro_doc.setBackground(Color.red);
                     txt_nro_doc.setForeground(Color.white);
                 }
             } else if (cbx_tipd.getSelectedItem().equals("GUIA DE REMISION")) {
                 JOptionPane.showMessageDialog(null, "Error");
+                cbx_tipd.setSelectedIndex(0);
             } else {
-                txt_nro_doc.setEditable(true);
+                txt_nro_doc.setEnabled(true);
                 txt_nro_doc.requestFocus();
                 txt_nro_doc.setBackground(Color.red);
                 txt_nro_doc.setForeground(Color.white);
@@ -1164,6 +1105,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         if (rs.next()) {
                             txt_nro_doc.setText(rs.getString("nro_doc"));
                             txt_nom.setText(rs.getString("nom_per"));
+                            txt_fec.setEnabled(true);
                             txt_fec.setEditable(true);
                             txt_fec.requestFocus();
                             txt_nro_doc.setBackground(Color.white);
@@ -1203,6 +1145,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
                 if (cbx_tipd.getSelectedItem().equals("BOLETA") && tot > 750) {
                     if (txt_nro_doc.getText().equals("00000000")) {
+                        txt_fec.setEnabled(true);
                         txt_fec.setEditable(false);
                         txt_fec.setBackground(Color.white);
                         txt_fec.setForeground(Color.black);
@@ -1236,6 +1179,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             cbx_tipd.requestFocus();
             txt_nro_doc.setText("");
             txt_nom.setText("");
+            if (cbx_tip_venta.getSelectedIndex()==1) {
+                cbx_tipd.setSelectedIndex(0);
+            }
         }
 
     }//GEN-LAST:event_cbx_tip_ventaKeyPressed
@@ -1341,10 +1287,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_formKeyPressed
 
-    private void txt_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idKeyReleased
-
-    }//GEN-LAST:event_txt_idKeyReleased
-
     private void txt_descKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descKeyReleased
 
     }//GEN-LAST:event_txt_descKeyReleased
@@ -1376,10 +1318,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_id.setText("");
     }//GEN-LAST:event_txt_descFocusGained
 
-    private void cbx_vendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_vendedorActionPerformed
-
-    }//GEN-LAST:event_cbx_vendedorActionPerformed
-
     private void cbx_vendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_vendedorKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
@@ -1394,7 +1332,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 con.cerrar(st);
                 con.cerrar(rs);
 
-                txt_id.setEditable(true);
+                txt_id.setEnabled(true);
+                btn_add_pro.setEnabled(true);
                 txt_id.requestFocus();
 
             } catch (SQLException e) {
