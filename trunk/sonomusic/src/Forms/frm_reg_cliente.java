@@ -21,7 +21,7 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Cliente cli = new Cl_Cliente();
     public static String win = "reg";
-    public static String ventana="cliente";
+    public static String ventana = "cliente";
 
     public frm_reg_cliente() {
         initComponents();
@@ -241,10 +241,13 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
-        frm_ver_cliente cliente = new frm_ver_cliente();
-        ven.llamar_ventana(cliente);
-        win = "reg";
+        if (ventana.equals("cliente")) {
+            frm_ver_cliente cliente = new frm_ver_cliente();
+            ven.llamar_ventana(cliente);
+            win = "reg";
+        }
         this.dispose();
+
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void llenar() {
@@ -270,7 +273,7 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
                     + "'" + cli.getTel2() + "', '" + 1 + "')";
             con.actualiza(st, inser_cli);
             con.cerrar(st);
-            JOptionPane.showMessageDialog(null, "Se ha ingresado los datos correctamente");          
+            JOptionPane.showMessageDialog(null, "Se ha ingresado los datos correctamente");
             this.dispose();
         }
 
@@ -287,14 +290,14 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
         frm_ver_cliente cliente = new frm_ver_cliente();
         ven.llamar_ventana(cliente);
         win = "reg";
-        
+
         if (ventana.equals("reg_venta")) {
             this.dispose();
             cliente.dispose();
             frm_reg_venta.txt_nro_doc.requestFocus();
             frm_reg_venta.txt_nom.setText(txt_nom.getText());
         }
-        ventana="cliente";
+        ventana = "cliente";
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_limActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limActionPerformed
@@ -430,14 +433,14 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
         if (txt_tel.getText().length() == 9) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txt_telKeyTyped
 
     private void txt_tel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel1KeyTyped
         if (txt_tel1.getText().length() == 9) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txt_tel1KeyTyped
 
     private void cbx_cliKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_cliKeyPressed
