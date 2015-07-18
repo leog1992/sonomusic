@@ -45,7 +45,9 @@
                       <Component id="btn_det" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_pagar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="199" max="32767" attributes="0"/>
+                      <EmptySpace pref="93" max="32767" attributes="0"/>
+                      <Component id="jComboBox1" min="-2" pref="88" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_bus" min="-2" max="-2" attributes="0"/>
@@ -72,6 +74,7 @@
                   <Component id="btn_cer" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="cbx_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_pagar" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jComboBox1" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="475" max="32767" attributes="0"/>
@@ -204,6 +207,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pagarActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="PENDIENTE"/>
+            <StringItem index="1" value="PAGADOS"/>
+            <StringItem index="2" value="TODOS"/>
+          </StringArray>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

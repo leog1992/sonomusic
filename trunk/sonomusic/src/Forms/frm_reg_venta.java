@@ -41,8 +41,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     Cl_Tipo_Pago tipa = new Cl_Tipo_Pago();
     Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     public static DefaultTableModel detalle;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
-    DecimalFormat formato = null;
+    public static DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    public static DecimalFormat formato = null;
     public static String tipo_venta = "";
     Integer i;
 
@@ -144,6 +144,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         double igv;
         double tot;
         igv = subtotal() * 0.18;
+        txt_igv.setText(formato.format(igv));
         tot = subtotal() + igv;
         return tot;
     }
@@ -632,6 +633,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btn_add_proActionPerformed
 
+    
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         frm_fin_venta venta = new frm_fin_venta();
         venta.lbl_tot.setText("S/. " + formato.format(total()));
@@ -656,6 +658,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             venta.txt_tarj.setEnabled(true);
             venta.txt_tarj.setText("0");
             venta.txt_subt.setText("0");
+        }
+        tido.setId(cbx_tipd.getSelectedIndex() + 1);
+        tido.setDesc(cbx_tipd.getSelectedItem().toString());
+        tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
+        tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
+        venta.lbl_doc.setText(tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro());
+        if (cbx_tip_venta.getSelectedItem().equals("VENTA")){
+            venta.accion = "venta";
+        } else {
+            venta.accion = "separacion";
         }
         ven.llamar_ventana(venta);
 
@@ -945,10 +957,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Nro. de Documento no valido");
-                txt_nro_doc.setText("");
-                txt_nro_doc.requestFocus();
-            }
+//                JOptionPane.showMessageDialog(null, "Nro. de Documento no valido");
+//                txt_nro_doc.setText("");
+//                txt_nro_doc.requestFocus();
+//            }
             if (cbx_tipd.getSelectedItem().equals("BOLETA") && total() >= 750) {
                 if (txt_nro_doc.getText().equals("00000000")) {
                     JOptionPane.showMessageDialog(null, "Nro de Documento no valido");
@@ -966,14 +978,20 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     txt_nro_doc.setText("00000000");
                 }
             }
+            }
         }
     }//GEN-LAST:event_txt_nro_docKeyPressed
 
     private void txt_nomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nomKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_fec.requestFocus();
             txt_fec.setBackground(Color.red);
             txt_fec.setForeground(Color.white);
+            txt_nro_doc.setBackground(Color.white);
+            txt_nro_doc.setForeground(Color.black);
+            txt_fec.setEnabled(true);
+            txt_fec.setEditable(true);
+            txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+            txt_fec.requestFocus();
         }
     }//GEN-LAST:event_txt_nomKeyPressed
 
@@ -1145,7 +1163,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel cbx_alm;
     public static javax.swing.JComboBox cbx_tip_venta;
     public static javax.swing.JComboBox cbx_tipd;
-    private javax.swing.JComboBox cbx_vendedor;
+    public static javax.swing.JComboBox cbx_vendedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -63,7 +63,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         formato = new DecimalFormat("####0.00", simbolo);
         String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
                 + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '"+fecha.getMonth()+"'  order by c.fecha_doc desc, c.idCompra desc";
+                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '"+fecha.getMonth()+"'  and c.estado = '2' order by c.fecha_doc desc, c.idCompra desc";
         ver_compras(query);
         t_compras.setDefaultRenderer(Object.class, new table_render());
 
@@ -168,6 +168,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_compras = new javax.swing.JTable();
         btn_pagar = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -258,6 +259,8 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PENDIENTE", "PAGADOS", "TODOS" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -276,7 +279,9 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                         .addComponent(btn_det)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_pagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -298,7 +303,8 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                     .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
@@ -645,6 +651,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_pagar;
     private javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_bus;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable t_compras;

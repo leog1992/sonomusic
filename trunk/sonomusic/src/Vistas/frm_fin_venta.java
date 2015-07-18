@@ -45,10 +45,10 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     public static Cl_Pedido ped = new Cl_Pedido();
     Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     Cl_Tipo_Pago tipa = new Cl_Tipo_Pago();
-    Cl_Productos pro;
+    Cl_Productos pro = new Cl_Productos();
     Cl_Usuario usu = new Cl_Usuario();
     Cl_Proveedor prov = new Cl_Proveedor();
-    String accion = "venta";
+    public static String accion = "venta";
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
     DecimalFormat formato = null;
     double comision;
@@ -167,6 +167,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_efecKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_efecKeyTyped(evt);
+            }
         });
 
         txt_tarj.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -174,6 +177,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         txt_tarj.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_tarjKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_tarjKeyTyped(evt);
             }
         });
 
@@ -266,8 +272,9 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_reg)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_cerrar)))
                 .addContainerGap())
         );
@@ -373,269 +380,341 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         tido.setDesc(frm_reg_venta.cbx_tipd.getSelectedItem().toString());
         tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
         tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
+        ped.setFec_ped(frm_reg_venta.txt_fec.getText());
+        ped.setFec_pag_ped(ped.getFec_ped());
+        if (btn_cont.isSelected()) {
+            tipa.setId(1);
+        } else {
+            tipa.setId(2);
+        }
+        ped.setDes_ped(0);
+        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("VENTA") && btn_cont.isSelected()) {
+            ped.setEst_ped("1");
+        }
+        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("SEPARACION")) {
+            ped.setEst_ped("2");
+        }
+        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("VENTA") && btn_cred.isSelected()) {
+            ped.setEst_ped("6");
+        }
+        usu.setNick(frm_reg_venta.cbx_vendedor.getSelectedItem().toString());
+        cli.setNro_doc(frm_reg_venta.txt_nro_doc.getText());
+        cli.setNom_cli(frm_reg_venta.txt_nom.getText());
+        ped.setTotal(ped.getTotal() + comision);
     }
 
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-//        long time_start, time_end;
-//        time_start = System.currentTimeMillis();
-//        frm_reg_venta.llenar();//llenar de la clase reg_venta
-//        llenar();
-//        if (accion.equals("venta")) {
-//            int tpventa = (frm_reg_venta.cbx_tip_venta.getSelectedIndex() + 1);
-//            //crear pedido
-//            try {
-//                Statement st = con.conexion();
-//                String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
-//                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-//                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-//                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"','" + total + "')";
-//                con.actualiza(st, ins_ven);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.println(ex.getLocalizedMessage());
-//            }
-//            mostrarinsert();
-//            tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+        llenar();
+        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+        if (accion.equals("venta")) {
+            //crear pedido
+            try {
+                Statement st = con.conexion();
+                String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
+                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+                System.out.println(ins_ven);
+                //    con.actualiza(st, ins_ven);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.println(ex.getLocalizedMessage());
+            }
+            //tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
 //
-////        //buscar ultimo pedido
-//            try {
-//                Statement st = con.conexion();
-//                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
-//                        + "and fec_ped = '" + frm_reg_venta.ped.getFec_ped() + "' and idAlmacen = "
-//                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
-//                ResultSet rs = con.consulta(st, buscar_pedido);
-//                if (rs.next()) {
-//                    ped.setId_ped(rs.getString("idPedido"));
-//                }
-//                con.cerrar(rs);
-//                con.cerrar(st);
-//            } catch (SQLException ex) {
-//                System.out.print(ex.getLocalizedMessage());
-//            }
-//
-//            //registrar detalle de venta
-//            int filas = frm_reg_venta.t_detalle.getRowCount();
-//            for (int j = 0; j <= (filas - 1); j++) {
-//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                try {
-//                    Statement st = con.conexion();
-//                    String ins_det_ped = "insert into detalle_pedido Values ('" + idPro + "', '" + ped.getId_ped() + "', '" + precio + "', '" + cantidad + "')";
-//                    con.actualiza(st, ins_det_ped);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print(ex.getLocalizedMessage());
-//                }
-////                //insertar datos en kardex
-//                try {
-//                    Statement st = con.conexion();
-//                    String ins_kardex = "insert into kardex Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + idPro + "', '0.00', '0.00', '"
-//                            + cantidad + "', '" + precio + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
-//                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + tpventa + "')";
-//                    con.actualiza(st, ins_kardex);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en: " + ex.getLocalizedMessage());
-//                }
-//            }
-////
-//            //seleccionar cantidad de producto y restar
-//            for (int j = 0; j <= (filas - 1); j++) {
-//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                Double cant_actual = 0.00;
-//                Double cant_nueva = 0.00;
-//
-//                try {
-//                    Statement st = con.conexion();
-//                    String bus_pro = "select cant_actual from productos where idProductos = '" + idPro + "'";
-//                    ResultSet rs = con.consulta(st, bus_pro);
-//                    if (rs.next()) {
-//                        cant_actual = rs.getDouble("cant_actual");
-//                    }
-//                    System.out.print("Seleccionando cantidad actual del producto: " + idPro + " cantidad: " + cant_actual + "\n");
-//                    con.cerrar(rs);
-//                    con.cerrar(st);
-//                    cant_nueva = cant_actual - cantidad;
-//                } catch (SQLException ex) {
-//                    System.err.print("Error en: " + ex.getLocalizedMessage());
-//                }
-////
-//                try {
-//                    Statement st = con.conexion();
-//                    String act_pro = "update productos set cant_actual = '" + cant_nueva + "' where idProductos = '" + idPro + "' ";
-//                    con.actualiza(st, act_pro);
-//                    con.cerrar(st);
-//                    System.out.print("actualizando cantidad actual Prod:" + idPro + " cantidad: " + cant_nueva + "\n");
-//                } catch (Exception ex) {
-//                    System.err.print(ex.getLocalizedMessage());
-//                }
-//            }
-////
-//            //verificar si producto existe en almacen
-//            try {
-//                for (int j = 0; j <= (filas - 1); j++) {
-//                    String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                    Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                    Statement st = con.conexion();
-//                    String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' and idProductos = '" + idPro + "'";
-//                    ResultSet rs = con.consulta(st, ver_prod_alm);
-//                    if (rs.next()) {
-//                        //si producto existe actualizar cantidad
-//                        Double cant = rs.getDouble("cant");
-//                        Double cant_act = cant - cantidad;
-//                        Statement st1 = con.conexion();
-//                        String act_pro_alm = "update producto_almacen set cant = '" + cant_act + "' where idProductos = '" + idPro + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
-//                        con.actualiza(st1, act_pro_alm);
-//                        con.cerrar(st1);
-//                    } else {
-//                        //si producto no existe agregar
-//                        double prec = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                        Statement st1 = con.conexion();
-//                        String add_pro_alm = "insert into producto_almacen Values ('" + idPro + "', '" + frm_menu.alm.getId() + "', '" + cantidad + "','" + prec + "')";
-//                        con.actualiza(st1, add_pro_alm);
-//                        con.cerrar(st1);
-//                    }
-//                }
-//            } catch (SQLException ex) {
-//                System.err.print(ex.getLocalizedMessage());
-//            }
-////
-//            //registrar movimiento 
-//            if (cbx_tipopago.getSelectedIndex() == 0) {
-//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
-//                try {
-//                    Statement st = con.conexion();
-//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
-//                    con.actualiza(st, add_mov);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en:" + ex.getLocalizedMessage());
-//
-//                }
-//            } else {
-//                String glosa = "VENTA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
-//                try {
-//                    Statement st = con.conexion();
-//                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-//                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
-//                    con.actualiza(st, add_mov);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error en:" + ex.getLocalizedMessage());
-//
-//                }
-//            }
-//            //enviar por theard
-//
-//            if (modo.equals("VENTA")) {
-//                Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
-//                imprime.set_tipv(txt_doc.getText());
-//                imprime.set_idped(ped.getId_ped());
-//                System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-//                imprime.start();
-//            }
-//
-//            //SEPARACION
-//            //insertar separacion
-//        } else {
-//            ped.setEst_ped("2");
-//
-//            try {
-//                Statement st = con.conexion();
-//                String ins_ven = "insert into pedido Values (null, '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
-//                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
-//                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-//                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '"+cli.getNom_cli()+"', '" + total + "')";
-//                con.actualiza(st, ins_ven);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.println("Error en pedido: " + ex);
-//            }
-//
-//            //buscar ultimo pedido
-//            try {
-//                Statement st = con.conexion();
-//                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
-//                        + "and fec_ped = '" + frm_reg_venta.ped.getFec_ped() + "' and idAlmacen = "
-//                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
-//                ResultSet rs = con.consulta(st, buscar_pedido);
-//                if (rs.next()) {
-//                    ped.setId_ped(rs.getString("idPedido"));
-//                }
-//                con.cerrar(rs);
-//                con.cerrar(st);
-//            } catch (SQLException ex) {
-//                System.out.print("Error lectura de pedido: " + ex);
-//            }
-//
-//            //insertar en detalle pedido
-//            int filas = frm_reg_venta.t_detalle.getRowCount();
-//            for (int j = 0; j <= (filas - 1); j++) {
-//                String idPro = frm_reg_venta.t_detalle.getValueAt(j, 0).toString();
-//                Double cantidad = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString());
-//                Double precio = Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString());
-//                try {
-//                    Statement st = con.conexion();
-//                    String ins_det_ped = "insert into detalle_pedido Values ('" + idPro + "', '" + ped.getId_ped() + "', '" + precio + "', '" + cantidad + "')";
-//                    con.actualiza(st, ins_det_ped);
-//                    con.cerrar(st);
-//                } catch (Exception ex) {
-//                    System.err.print("Error detalle pedido: " + ex);
-//                }
-//            }
-//
-//            //insertar datos en letras_pedido
-//            try {
-//                Statement st = con.conexion();
-//                String sql = "insert into letras_pedido values(null, '" + Double.parseDouble(txt_entrega.getText()) + "', '" + frm_reg_venta.ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
-//                con.actualiza(st, sql);
-//                con.cerrar(st);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
-//            }
-//
-//            //imprimir resultados ingresados
-//            mostrarinsert();
-//
-//            //insertar datos en movimiento
-//            try {
-//                tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
-//            } catch (Exception e) {
-//                System.out.println(e);
-//            }
-//            total = entrega;
-//            String glosa = "SEPARACION / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
-//            try {
-//                Statement st = con.conexion();
-//                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + frm_reg_venta.ped.getFec_ped() + "' , '" + total + "' "
-//                        + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
-//                con.actualiza(st, add_mov);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.err.print("Error en:" + ex.getLocalizedMessage());
-//
-//            }
-//
-//            // TICKET DE SEPARACION
-//            Map<String, Object> parametros = new HashMap<>();
-//            parametros.put("idped", ped.getId_ped());
-//            parametros.put("Adelanto", total);
-//            parametros.put("Acumulado", total);
-//            String filename = "rpt_ticket_separacion";
-//            ven.imp_reporte(filename, parametros);
-//        }
-//
-//        //cerrr y volver abrir
-//        this.dispose();
-//        frm_reg_venta venta = null;
-//        venta.btn_clo.doClick();
-//        venta = new frm_reg_venta();
-//        ven.llamar_ventana(venta);
+//        //buscar ultimo pedido
+            try {
+                Statement st = con.conexion();
+                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
+                        + "and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = "
+                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+                System.out.println(buscar_pedido + "\n");
+                ResultSet rs = con.consulta(st, buscar_pedido);
+                if (rs.next()) {
+                    ped.setId_ped(rs.getString("idPedido"));
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print(ex.getLocalizedMessage());
+            }
+
+            //registrar detalle de venta
+            int filas = frm_reg_venta.t_detalle.getRowCount();
+            System.out.println(filas + "\n");
+            for (int j = 0; j < filas; j++) {
+                pro.setId_pro(Integer.parseInt(frm_reg_venta.t_detalle.getValueAt(j, 0).toString()));
+                pro.setCan(Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString()));
+                pro.setPre_pro(Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString()));
+                try {
+                    Statement st = con.conexion();
+                    String ins_det_ped = "insert into detalle_pedido Values ('" + pro.getId_pro() + "', '" + ped.getId_ped() + "', "
+                            + "'" + pro.getPre_pro() + "', '" + pro.getCan() + "')";
+                    System.out.println(ins_det_ped + "\n");
+                    //  con.actualiza(st, ins_det_ped);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+                //insertar datos en kardex
+                try {
+                    Statement st = con.conexion();
+                    String ins_kardex = "insert into kardex Values (null, '" + ped.getFec_ped() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '"
+                            + pro.getCan() + "', '" + pro.getPre_pro() + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
+                            + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','1')";
+                    System.out.println(ins_kardex);
+                    // con.actualiza(st, ins_kardex);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error en: " + ex.getLocalizedMessage());
+                }
+
+                //seleccionar cantidad de producto y restar
+                try {
+                    Statement st = con.conexion();
+                    String bus_pro = "select cant_actual from productos where idProductos = '" + pro.getId_pro() + "'";
+                    System.out.println(bus_pro + "\n");
+                    ResultSet rs = con.consulta(st, bus_pro);
+                    if (rs.next()) {
+                        pro.setCan_act_pro(rs.getDouble("cant_actual"));
+                    }
+                    con.cerrar(rs);
+                    con.cerrar(st);
+                    pro.setCan_act_pro(pro.getCan_act_pro() - pro.getCan());
+                } catch (SQLException ex) {
+                    System.err.print("Error en: " + ex.getLocalizedMessage());
+                }
+                //actualizar cantidad de productos en general
+                try {
+                    Statement st = con.conexion();
+                    String act_pro = "update productos set cant_actual = '" + pro.getCan_act_pro() + "' where idProductos = '" + pro.getId_pro() + "' ";
+                    System.out.println(act_pro);
+                    //con.actualiza(st, act_pro);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+
+                //consultar cantidad de producto en tienda
+                try {
+                    Statement st = con.conexion();
+                    String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' "
+                            + "and idProductos = '" + pro.getId_pro() + "'";
+                    System.out.println(ver_prod_alm + "\n");
+                    ResultSet rs = con.consulta(st, ver_prod_alm);
+                    if (rs.next()) {
+                        pro.setCan_act_pro(rs.getDouble("cant"));
+                    }
+                    pro.setCan_act_pro(pro.getCan_act_pro() - pro.getCan());
+                    con.cerrar(rs);
+                    con.cerrar(st);
+                } catch (SQLException ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+
+                //actualizar cantidad de productos en tienda
+                try {
+                    Statement st = con.conexion();
+                    String act_pro = "update producto_almacen set cant = '" + pro.getCan_act_pro() + "' where "
+                            + "idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
+                    System.out.println(act_pro + "\n");
+                    //con.actualiza(st, act_pro);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print(ex.getLocalizedMessage());
+                }
+            }
+            //registrar movimiento
+            switch (ped.getEst_ped()) {
+                case "1":
+                    System.out.println("Venta con Pago al Contado \n");
+                    //registro de pago en efectivo
+                    if (Double.parseDouble(txt_efec.getText()) > 0) {
+                        String glosa = "VENTA EN EFECTIVO / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNom_cli();
+                        try {
+                            Statement st = con.conexion();
+                            String add_mov_caja = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
+                                    + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                            System.out.println(add_mov_caja + "\n");
+                            //con.actualiza(st, add_mov_caja);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.err.print("Error en:" + ex.getLocalizedMessage());
+
+                        }
+                    }
+                    //registro de pago con tarjeta
+                    if (Double.parseDouble(txt_tarj.getText()) > 0) {
+                        String glosa = "VENTA CON TARJETA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNom_cli();
+                        try {
+                            Statement st = con.conexion();
+                            String add_mov_tarj = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
+                                    + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
+                            System.out.println(add_mov_tarj + "\n");
+                            //con.actualiza(st, add_mov_tarj);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.err.print("Error en:" + ex.getLocalizedMessage());
+
+                        }
+                    }
+
+                    //imprimir ticket de venta
+                    imprime.set_tipv(tido.getDesc());
+                    imprime.set_idped(ped.getId_ped());
+                    System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+                    //imprime.start();
+                    break;
+
+                case "6":
+                    // cambiar fecha de pago 
+                    ped.setFec_pag_ped("2015-01-01");
+                    try {
+                        Statement st = con.conexion();
+                        String upd_ped = "update pedido set fec_pag = '" + ped.getFec_pag_ped() + "' and est_ped = '" + ped.getEst_ped() + "' "
+                                + "where idPedido = '" + ped.getId_ped() + "'";
+                        System.out.println(upd_ped + "\n");
+                        //con.actualiza(st, upd_ped);
+                        con.cerrar(st);
+                    } catch (Exception ex) {
+                        System.err.print("Error en:" + ex.getLocalizedMessage());
+
+                    }
+                    //imprimir ticket de venta
+                    imprime.set_tipv(tido.getDesc());
+                    imprime.set_idped(ped.getId_ped());
+                    System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+                    //imprime.start();
+                    break;
+            }
+
+        } else {
+            //registrar separacion
+            try {
+                Statement st = con.conexion();
+                String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
+                        + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
+                        + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
+                        + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '" + ped.getTotal() + "')";
+                System.out.println(ins_ven + "\n");
+                //con.actualiza(st, ins_ven);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.println("Error en pedido: " + ex);
+            }
+
+            //buscar ultimo pedido
+            try {
+                Statement st = con.conexion();
+                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
+                        + "and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = "
+                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+                ResultSet rs = con.consulta(st, buscar_pedido);
+                if (rs.next()) {
+                    ped.setId_ped(rs.getString("idPedido"));
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print("Error lectura de pedido: " + ex);
+            }
+
+            //insertar detalle pedido en separacion
+            int filas = frm_reg_venta.t_detalle.getRowCount();
+            for (int j = 0; j < filas; j++) {
+                pro.setId_pro(Integer.parseInt(frm_reg_venta.t_detalle.getValueAt(j, 0).toString()));
+                pro.setCan(Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 3).toString()));
+                pro.setPre_pro(Double.parseDouble(frm_reg_venta.t_detalle.getValueAt(j, 5).toString()));
+                try {
+                    Statement st = con.conexion();
+                    String ins_det_ped = "insert into detalle_pedido Values ('" + pro.getId_pro() + "', '" + ped.getId_ped() + "', "
+                            + "'" + pro.getPre_pro() + "', '" + pro.getCan() + "')";
+                    System.out.println(ins_det_ped + "\n");
+                    //con.actualiza(st, ins_det_ped);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error detalle pedido: " + ex);
+                }
+            }
+            Double ent_efec;
+            Double ent_tarj;
+            ent_efec = Double.parseDouble(txt_efec.getText());
+            ent_tarj = Double.parseDouble(txt_tarj.getText());
+
+            //pago en efectivo
+            if (Double.parseDouble(txt_efec.getText()) > 0) {
+                String glosa = "ADELANTO DE SEPARACION EN EFECTIVO/ " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ent_efec + "' "
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                    System.out.println(add_mov + "\n");
+                    //con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error en:" + ex.getLocalizedMessage());
+                }
+
+                try {
+                    Statement st = con.conexion();
+                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
+                    System.out.println(ins_let_efec + "\n");
+                    //con.actualiza(st, ins_let_efec);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
+                }
+            }
+            //pago con tarjeta
+            if (Double.parseDouble(txt_tarj.getText()) > 0) {
+                String glosa = "ADELANTO DE SEPARACION CON TARJETA/ " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNro_doc();
+                try {
+                    Statement st = con.conexion();
+                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ent_efec + "' "
+                            + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'B', '" + frm_menu.cue.getId_cuen() + "')";
+                    System.out.println(add_mov + "\n");
+                    //con.actualiza(st, add_mov);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.err.print("Error en:" + ex.getLocalizedMessage());
+                }
+                
+                try {
+                    Statement st = con.conexion();
+                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
+                    System.out.println(ins_let_efec + "\n");
+                    //con.actualiza(st, ins_let_efec);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
+                }
+            }
+
+            //actualizar documentos
+            try {
+                tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            Double total = ent_efec + ent_tarj;
+            
+            // TICKET DE SEPARACION
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idped", ped.getId_ped());
+            parametros.put("Adelanto", total);
+            parametros.put("Acumulado", total);
+            String filename = "rpt_ticket_separacion";
+            ven.imp_reporte(filename, parametros);
+
+        }
+
+        //cerrr y volver abrir
+        this.dispose();
+        frm_reg_venta venta = null;
+        venta.btn_clo.doClick();
+        venta = new frm_reg_venta();
+        ven.llamar_ventana(venta);
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_add_notaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_notaActionPerformed
@@ -672,11 +751,13 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
     private void chk_incluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_incluirActionPerformed
         m_tarj = Double.parseDouble(txt_tarj.getText());
-        comision = m_tarj * 0.05;
+        comision = 0;
         if (chk_incluir.isSelected()) {
+            comision = m_tarj * 0.05;
             txt_com.setText(formato.format(comision));
             lbl_tot.setText("S/. " + formato.format(ped.getTotal() + comision));
         } else {
+            comision = 0;
             txt_com.setText("0.00");
             lbl_tot.setText("S/. " + formato.format(ped.getTotal()));
         }
@@ -695,15 +776,16 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     private void txt_tarjKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tarjKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             //verificar suma y activar aceptar
-            
             m_efect = Double.parseDouble(txt_efec.getText());
             m_tarj = Double.parseDouble(txt_tarj.getText());
             double suma_tot = m_efect + m_tarj;
-            if (ped.getTotal() - suma_tot <= 0) {
+            if (ped.getTotal() - suma_tot <= 0.0005) {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
             }
+            txt_subt.setText(formato.format(suma_tot));
         }
+
     }//GEN-LAST:event_txt_tarjKeyPressed
 
     private void btn_contActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_contActionPerformed
@@ -725,6 +807,20 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         txt_tarj.setText("0");
         txt_subt.setText("0");
     }//GEN-LAST:event_btn_credActionPerformed
+
+    private void txt_efecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_efecKeyTyped
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9') && car != '.') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_efecKeyTyped
+
+    private void txt_tarjKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tarjKeyTyped
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9') && car != '.') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_tarjKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
