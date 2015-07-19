@@ -416,13 +416,13 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
                         + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
                 System.out.println(ins_ven);
-                //    con.actualiza(st, ins_ven);
+                    con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.println(ex.getLocalizedMessage());
             }
-            //tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
-//
+            tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
+
 //        //buscar ultimo pedido
             try {
                 Statement st = con.conexion();
@@ -452,7 +452,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     String ins_det_ped = "insert into detalle_pedido Values ('" + pro.getId_pro() + "', '" + ped.getId_ped() + "', "
                             + "'" + pro.getPre_pro() + "', '" + pro.getCan() + "')";
                     System.out.println(ins_det_ped + "\n");
-                    //  con.actualiza(st, ins_det_ped);
+                    con.actualiza(st, ins_det_ped);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print(ex.getLocalizedMessage());
@@ -464,7 +464,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                             + pro.getCan() + "', '" + pro.getPre_pro() + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
                             + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','1')";
                     System.out.println(ins_kardex);
-                    // con.actualiza(st, ins_kardex);
+                    con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print("Error en: " + ex.getLocalizedMessage());
@@ -490,7 +490,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     Statement st = con.conexion();
                     String act_pro = "update productos set cant_actual = '" + pro.getCan_act_pro() + "' where idProductos = '" + pro.getId_pro() + "' ";
                     System.out.println(act_pro);
-                    //con.actualiza(st, act_pro);
+                    con.actualiza(st, act_pro);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print(ex.getLocalizedMessage());
@@ -519,7 +519,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     String act_pro = "update producto_almacen set cant = '" + pro.getCan_act_pro() + "' where "
                             + "idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
                     System.out.println(act_pro + "\n");
-                    //con.actualiza(st, act_pro);
+                    con.actualiza(st, act_pro);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print(ex.getLocalizedMessage());
@@ -537,7 +537,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                             String add_mov_caja = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
                                     + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                             System.out.println(add_mov_caja + "\n");
-                            //con.actualiza(st, add_mov_caja);
+                            con.actualiza(st, add_mov_caja);
                             con.cerrar(st);
                         } catch (Exception ex) {
                             System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -552,7 +552,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                             String add_mov_tarj = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
                                     + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
                             System.out.println(add_mov_tarj + "\n");
-                            //con.actualiza(st, add_mov_tarj);
+                            con.actualiza(st, add_mov_tarj);
                             con.cerrar(st);
                         } catch (Exception ex) {
                             System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -564,7 +564,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     imprime.set_tipv(tido.getDesc());
                     imprime.set_idped(ped.getId_ped());
                     System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-                    //imprime.start();
+                    imprime.start();
                     break;
 
                 case "6":
@@ -575,7 +575,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         String upd_ped = "update pedido set fec_pag = '" + ped.getFec_pag_ped() + "' and est_ped = '" + ped.getEst_ped() + "' "
                                 + "where idPedido = '" + ped.getId_ped() + "'";
                         System.out.println(upd_ped + "\n");
-                        //con.actualiza(st, upd_ped);
+                        con.actualiza(st, upd_ped);
                         con.cerrar(st);
                     } catch (Exception ex) {
                         System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -585,7 +585,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     imprime.set_tipv(tido.getDesc());
                     imprime.set_idped(ped.getId_ped());
                     System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-                    //imprime.start();
+                    imprime.start();
                     break;
             }
 
@@ -598,7 +598,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
                         + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '" + ped.getTotal() + "')";
                 System.out.println(ins_ven + "\n");
-                //con.actualiza(st, ins_ven);
+                con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.println("Error en pedido: " + ex);
@@ -631,7 +631,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     String ins_det_ped = "insert into detalle_pedido Values ('" + pro.getId_pro() + "', '" + ped.getId_ped() + "', "
                             + "'" + pro.getPre_pro() + "', '" + pro.getCan() + "')";
                     System.out.println(ins_det_ped + "\n");
-                    //con.actualiza(st, ins_det_ped);
+                    con.actualiza(st, ins_det_ped);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print("Error detalle pedido: " + ex);
@@ -650,7 +650,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ent_efec + "' "
                             + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                     System.out.println(add_mov + "\n");
-                    //con.actualiza(st, add_mov);
+                    con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -660,7 +660,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     Statement st = con.conexion();
                     String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
                     System.out.println(ins_let_efec + "\n");
-                    //con.actualiza(st, ins_let_efec);
+                    con.actualiza(st, ins_let_efec);
                     con.cerrar(st);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
@@ -674,7 +674,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ent_efec + "' "
                             + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'B', '" + frm_menu.cue.getId_cuen() + "')";
                     System.out.println(add_mov + "\n");
-                    //con.actualiza(st, add_mov);
+                    con.actualiza(st, add_mov);
                     con.cerrar(st);
                 } catch (Exception ex) {
                     System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -684,7 +684,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     Statement st = con.conexion();
                     String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
                     System.out.println(ins_let_efec + "\n");
-                    //con.actualiza(st, ins_let_efec);
+                    con.actualiza(st, ins_let_efec);
                     con.cerrar(st);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error en letras_pedido: " + e);
@@ -709,7 +709,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
         }
 
-        //cerrr y volver abrir
+        //cerrar y volver abrir
         this.dispose();
         frm_reg_venta venta = null;
         venta.btn_clo.doClick();
@@ -779,7 +779,12 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             m_efect = Double.parseDouble(txt_efec.getText());
             m_tarj = Double.parseDouble(txt_tarj.getText());
             double suma_tot = m_efect + m_tarj;
+            if (accion.equals("venta")) {
             if (ped.getTotal() - suma_tot <= 0.0005) {
+                btn_reg.setEnabled(true);
+                btn_reg.requestFocus();
+            } 
+            } else {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
             }
