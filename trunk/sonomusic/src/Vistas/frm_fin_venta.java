@@ -380,7 +380,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
         tido.setDesc(frm_reg_venta.cbx_tipd.getSelectedItem().toString());
         tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
         tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
-        ped.setFec_ped(frm_reg_venta.txt_fec.getText());
+        ped.setFec_ped(ven.fechabase(frm_reg_venta.txt_fec.getText()));
         ped.setFec_pag_ped(ped.getFec_ped());
         if (btn_cont.isSelected()) {
             tipa.setId(1);
