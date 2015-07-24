@@ -58,6 +58,8 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         btn_add = new javax.swing.JButton();
         btn_clo = new javax.swing.JButton();
         txt_fec = new javax.swing.JFormattedTextField();
+        cbx_tipa = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -176,6 +178,19 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             }
         });
 
+        cbx_tipa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EFECTIVO", "TARJETA" }));
+        cbx_tipa.setEnabled(false);
+        cbx_tipa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_tipaKeyPressed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel9.setText("Tipo de Pago");
+        jLabel9.setFocusable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,27 +221,23 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_deu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(100, 100, 100)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(txt_deu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_real, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_rest, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btn_add)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_clo)))))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_rest, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txt_real, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(cbx_tipa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_clo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -243,25 +254,39 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_tido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_deu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_real, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txt_rest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbx_tipa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txt_real, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txt_rest, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txt_deu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(btn_add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_sal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         pack();
@@ -278,12 +303,13 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         String fecha = ven.fechabase(txt_fec.getText());
+        String tipa = cbx_tipa.getSelectedItem().toString();
         ped.setId_ped(frm_ver_letras_pedido.id);
         Double monto;
         if (queda <= 0.00) {
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into letras_pedido Values (null, '" + restante + "', '" + fecha + "', '" + ped.getId_ped() + "')";
+                String ins_pago = "insert into letras_pedido Values (null, '" + restante + "', '" + fecha + "', '" + ped.getId_ped() + "', '" + tipa + "')";
                 con.actualiza(st, ins_pago);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -304,7 +330,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             pagado = Double.parseDouble(txt_pag.getText());
             try {
                 Statement st = con.conexion();
-                String ins_pago = "insert into letras_pedido Values (null, '" + real + "', '" + fecha + "', '" + ped.getId_ped() + "')";
+                String ins_pago = "insert into letras_pedido Values (null, '" + real + "', '" + fecha + "', '" + ped.getId_ped() + "', '" + tipa + "')";
                 con.actualiza(st, ins_pago);
                 con.cerrar(st);
             } catch (Exception ex) {
@@ -312,6 +338,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             }
             pagado = pagado + monto;
             System.out.println(pagado);
+
             // TICKET DE SEPARACION
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("idped", ped.getId_ped());
@@ -320,17 +347,30 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             String filename = "rpt_ticket_separacion";
             ven.imp_reporte(filename, parametros);
         }
-        
-        String glosa = "CUOTA POR SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '" + monto + "' "
-                            + ", '0.00', '" + frm_menu.usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.err.print("Error en:" + ex.getLocalizedMessage());
-                }
+        //REGISTRO DE MOVIMIENTO EN CAJA
+        if (tipa.equals("EFECTIVO")) {
+            String glosa = "CUOTA POR SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
+            try {
+                Statement st = con.conexion();
+                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '" + monto + "' "
+                        + ", '0.00', '" + frm_menu.usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
+                con.actualiza(st, add_mov);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.err.print("Error en:" + ex.getLocalizedMessage());
+            }
+        } else {
+            String glosa = "CUOTA POR SEPARACION / " + txt_tido.getText() + " / " + txt_dni.getText() + " - " + txt_raz.getText();
+            try {
+                Statement st = con.conexion();
+                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '" + monto + "' "
+                        + ", '0.00', '" + frm_menu.usu.getNick() + "','" + frm_menu.alm.getId() + "', 'B', '" + frm_menu.caja.getId() + "')";
+                con.actualiza(st, add_mov);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.err.print("Error en:" + ex.getLocalizedMessage());
+            }
+        }
         this.dispose();
 
     }//GEN-LAST:event_btn_addActionPerformed
@@ -344,8 +384,8 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec.getText().trim().length() == 10) {
-                txt_real.setEditable(true);
-                txt_real.requestFocus();
+                cbx_tipa.setEnabled(true);
+                cbx_tipa.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_fecKeyPressed
@@ -372,10 +412,20 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_realKeyPressed
 
+    private void cbx_tipaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tipaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_fec.getText().trim().length() == 10) {
+                txt_real.setEditable(true);
+                txt_real.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_cbx_tipaKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_clo;
+    private javax.swing.JComboBox cbx_tipa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -384,6 +434,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     public static javax.swing.JTextField txt_deu;
     public static javax.swing.JTextField txt_dni;
     public static javax.swing.JFormattedTextField txt_fec;

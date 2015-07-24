@@ -512,7 +512,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -628,9 +628,9 @@ public class frm_menu extends javax.swing.JFrame {
             jp_salirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_salirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jp_salirLayout.setVerticalGroup(
             jp_salirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -677,9 +677,9 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(jp_prod_alm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jp_caja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
                 .addComponent(jp_salir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1507,50 +1507,62 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jp_salirMousePressed
 
     private void jp_cajaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_cajaMousePressed
-        if (usu.getPer_reg_venta().equals("1")) {
-            frm_movimientos movi = new frm_movimientos();
-            ven.llamar_ventana(movi);
-        } else {
-            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        if (evt.getClickCount() == 2) {
+            if (usu.getPer_reg_venta().equals("1")) {
+                frm_movimientos movi = new frm_movimientos();
+                ven.llamar_ventana(movi);
+            } else {
+                JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+            }
         }
     }//GEN-LAST:event_jp_cajaMousePressed
 
     private void jp_ventasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_ventasMousePressed
-        if (usu.getPer_reg_venta().equals("1")) {
-            frm_reg_venta vent = new frm_reg_venta();
-            ven.llamar_ventana(vent);
-        } else {
-            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        if (evt.getClickCount() == 2) {
+            if (usu.getPer_reg_venta().equals("1")) {
+                frm_reg_venta vent = new frm_reg_venta();
+                ven.llamar_ventana(vent);
+            } else {
+                JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+            }
         }
     }//GEN-LAST:event_jp_ventasMousePressed
 
     private void jp_pedidoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_pedidoMousePressed
-        frm_ver_solicitudes solc = new frm_ver_solicitudes();
-        ven.llamar_ventana(solc);
+        if (evt.getClickCount() == 2) {
+            frm_ver_solicitudes solc = new frm_ver_solicitudes();
+            ven.llamar_ventana(solc);
+        }
     }//GEN-LAST:event_jp_pedidoMousePressed
 
     private void jp_envioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_envioMousePressed
-        frm_ver_guias guia = new frm_ver_guias();
-        ven.llamar_ventana(guia);
+        if (evt.getClickCount() == 2) {
+            frm_ver_guias guia = new frm_ver_guias();
+            ven.llamar_ventana(guia);
+        }
     }//GEN-LAST:event_jp_envioMousePressed
 
     private void jp_prod_almMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_prod_almMousePressed
-        frm_ver_prod_alm_det pro_det_alm = new frm_ver_prod_alm_det();
-        ven.llamar_ventana(pro_det_alm);
+        if (evt.getClickCount() == 2) {
+            frm_ver_prod_alm_det pro_det_alm = new frm_ver_prod_alm_det();
+            ven.llamar_ventana(pro_det_alm);
+        }
     }//GEN-LAST:event_jp_prod_almMousePressed
 
     private void jp_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_productosMousePressed
-        Cl_Productos prod = new Cl_Productos();
-        frm_ver_prod_alm mat = new frm_ver_prod_alm();
-        String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
-                + "order by p.desc_pro asc, p.modelo asc limit 0,50";
-        prod.mostrar_productos(query);
-        mat.txt_ida.setText("" + alm.getId());
-        mat.txt_noma.setText(alm.getNom());
-        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
-        ven.llamar_ventana(mat);
+        if (evt.getClickCount() == 2) {
+            Cl_Productos prod = new Cl_Productos();
+            frm_ver_prod_alm mat = new frm_ver_prod_alm();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
+                    + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
+                    + "order by p.desc_pro asc, p.modelo asc limit 0,50";
+            prod.mostrar_productos(query);
+            mat.txt_ida.setText("" + alm.getId());
+            mat.txt_noma.setText(alm.getNom());
+            mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+            ven.llamar_ventana(mat);
+        }
     }//GEN-LAST:event_jp_productosMousePressed
 
     private void lbl_nroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_nroMousePressed

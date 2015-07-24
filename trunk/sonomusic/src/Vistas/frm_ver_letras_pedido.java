@@ -312,7 +312,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
             double to = Double.parseDouble(lbl_total.getText());
             double res;
             for (int j = 0; j < t_letras.getRowCount(); j++) {
-                subtotal += Double.parseDouble(t_letras.getValueAt(j, 1).toString());
+                subtotal += Double.parseDouble(t_letras.getValueAt(j, 2).toString());
             }
             res = to - subtotal;
             pagven.txt_pag.setText(subtotal + "");

@@ -229,6 +229,11 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
         cbx_plazo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "a 15 dias", "a 30 dias", "a 45 dias" }));
         cbx_plazo.setEnabled(false);
+        cbx_plazo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_plazoKeyPressed(evt);
+            }
+        });
 
         btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
         btn_cerrar.setText("Cerrar");
@@ -267,7 +272,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_plazo, 0, 101, Short.MAX_VALUE))
+                        .addComponent(cbx_plazo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -416,7 +421,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
                         + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
                 System.out.println(ins_ven);
-                    con.actualiza(st, ins_ven);
+                con.actualiza(st, ins_ven);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.println(ex.getLocalizedMessage());
@@ -534,7 +539,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         String glosa = "VENTA EN EFECTIVO / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNom_cli();
                         try {
                             Statement st = con.conexion();
-                            String add_mov_caja = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
+                            String add_mov_caja = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + txt_efec.getText() + "' "
                                     + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                             System.out.println(add_mov_caja + "\n");
                             con.actualiza(st, add_mov_caja);
@@ -543,16 +548,39 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                             System.err.print("Error en:" + ex.getLocalizedMessage());
 
                         }
+                        //registrar pago en detalle_pago
+                        try {
+                            Statement st = con.conexion();
+                            String add_mov_caja = "insert into letras_pedido Values (null, '" + txt_efec.getText() + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'EFECTIVO')";
+                            System.out.println(add_mov_caja + "\n");
+                            con.actualiza(st, add_mov_caja);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.err.print("Error en:" + ex.getLocalizedMessage());
+
+                        }
+
                     }
                     //registro de pago con tarjeta
                     if (Double.parseDouble(txt_tarj.getText()) > 0) {
                         String glosa = "VENTA CON TARJETA / " + tido.getDesc() + " / " + tido.getSerie() + " - " + tido.getNro() + " / " + cli.getNom_cli();
                         try {
                             Statement st = con.conexion();
-                            String add_mov_tarj = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + ped.getTotal() + "' "
+                            String add_mov_tarj = "insert into movimiento Values (null, '" + glosa + "', '" + ped.getFec_ped() + "' , '" + txt_tarj.getText() + "' "
                                     + ", '0.00', '" + usu.getNick() + "','" + frm_menu.alm.getId() + "',  'B', '" + frm_menu.cue.getId_cuen() + "')";
                             System.out.println(add_mov_tarj + "\n");
                             con.actualiza(st, add_mov_tarj);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.err.print("Error en:" + ex.getLocalizedMessage());
+
+                        }
+                        //registrar pago en detalle_pago
+                        try {
+                            Statement st = con.conexion();
+                            String add_mov_caja = "insert into letras_pedido Values (null, '" + txt_efec.getText() + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'TARJETA')";
+                            System.out.println(add_mov_caja + "\n");
+                            con.actualiza(st, add_mov_caja);
                             con.cerrar(st);
                         } catch (Exception ex) {
                             System.err.print("Error en:" + ex.getLocalizedMessage());
@@ -569,7 +597,15 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
                 case "6":
                     // cambiar fecha de pago 
-                    ped.setFec_pag_ped("2015-01-01");
+                    int dias = 0;
+                    if (cbx_plazo.getSelectedIndex()== 0) {
+                        dias = 15;
+                    } else if (cbx_plazo.getSelectedIndex() == 1) {
+                        dias = 30;
+                    } else {
+                        dias = 45;
+                    }
+                    ped.setFec_pag_ped(ven.suma_dia(ped.getFec_ped(), dias).toString());
                     try {
                         Statement st = con.conexion();
                         String upd_ped = "update pedido set fec_pag = '" + ped.getFec_pag_ped() + "' and est_ped = '" + ped.getEst_ped() + "' "
@@ -679,7 +715,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 } catch (Exception ex) {
                     System.err.print("Error en:" + ex.getLocalizedMessage());
                 }
-                
+
                 try {
                     Statement st = con.conexion();
                     String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
@@ -698,7 +734,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 System.out.println(e);
             }
             Double total = ent_efec + ent_tarj;
-            
+
             // TICKET DE SEPARACION
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("idped", ped.getId_ped());
@@ -780,10 +816,10 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             m_tarj = Double.parseDouble(txt_tarj.getText());
             double suma_tot = m_efect + m_tarj;
             if (accion.equals("venta")) {
-            if (ped.getTotal() - suma_tot <= 0.0005) {
-                btn_reg.setEnabled(true);
-                btn_reg.requestFocus();
-            } 
+                if (ped.getTotal() - suma_tot <= 0.0005) {
+                    btn_reg.setEnabled(true);
+                    btn_reg.requestFocus();
+                }
             } else {
                 btn_reg.setEnabled(true);
                 btn_reg.requestFocus();
@@ -826,6 +862,13 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_tarjKeyTyped
+
+    private void cbx_plazoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_plazoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btn_reg.setEnabled(true);
+            btn_reg.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_plazoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

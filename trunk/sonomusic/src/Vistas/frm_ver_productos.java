@@ -12,6 +12,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Clases.Clase_CellEditor;
 import Clases.Clase_CellRender;
+import Clases.ImagenURL;
 import Clases.table_render;
 import Forms.frm_reg_compra_prod;
 import Forms.frm_reg_cotizacion;
@@ -451,6 +452,18 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_com.setText(rs.getString("comision"));
                     prod.txt_com.setEditable(true);
                     prod.btn_reg.setEnabled(true);
+
+                    //cargar imagen 
+                    ImagenURL Imagen = new ImagenURL();
+                    String imgname = rs.getString("nom_img");
+                    prod.txt_img.setText(imgname);
+                    prod.pro.setImg(imgname);
+                    String url;
+                    url = "http://conmetal.pe/images/productos/" + imgname;
+                    Imagen.setUrl(url);
+                    prod.jp_img.add(Imagen);
+                    prod.jp_img.repaint();
+                    //fin de carga
                 }
 
                 prod.win = "mod";

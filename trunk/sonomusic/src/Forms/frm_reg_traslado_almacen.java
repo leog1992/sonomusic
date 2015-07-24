@@ -143,7 +143,6 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         setTitle("Traslado entre Almacenes");
         setMaximumSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Opciones:");
 
@@ -182,7 +181,6 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Detalle:");
 
@@ -289,13 +287,17 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fecActionPerformed(evt);
+            }
+        });
         txt_fec.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fecKeyPressed(evt);
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Datos de la Unidad de Transporte:");
 
@@ -331,7 +333,6 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
         txt_ruc_alm.setEditable(false);
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Datos del Transportista:");
 
@@ -542,7 +543,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
         accion = "";
         this.dispose();
-        
+
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void chk_emitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_emitirActionPerformed
@@ -596,8 +597,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     private void t_detalleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMousePressed
         i = t_detalle.getSelectedRow();
-        btn_el.setEnabled(true);
-        btn_cc.setEnabled(true);
+        if (accion.equals("traslado")) {
+            btn_el.setEnabled(true);
+            btn_cc.setEnabled(true);
+        }
     }//GEN-LAST:event_t_detalleMousePressed
 
     private void btn_elActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_elActionPerformed
@@ -974,6 +977,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_consKeyPressed
 
+    private void txt_fecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fecActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
@@ -983,7 +990,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btn_reg;
     public static javax.swing.JComboBox cbx_alm_de;
     public static javax.swing.JComboBox cbx_alm_or;
-    private javax.swing.JCheckBox chk_emitir;
+    public static javax.swing.JCheckBox chk_emitir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

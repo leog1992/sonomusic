@@ -25,28 +25,23 @@ public class Cl_Productos {
     private double can_min_pro;
     private String est = "1";
     private double com_pro;
-    
+    private String img;
+
     private int tot_reg;
 
     public Cl_Productos() {
     }
 
-    public Cl_Productos(int id_pro, String des_pro, String mar_pro, String mod_pro, String ser_pro, String gra_pro, double cos_pro, double pre_pro, double can_act_pro, double can_min_pro, double com_pro) {
-        this.id_pro = id_pro;
-        this.des_pro = des_pro;
-        this.mar_pro = mar_pro;
-        this.mod_pro = mod_pro;
-        this.ser_pro = ser_pro;
-        this.gra_pro = gra_pro;
-        this.cos_pro = cos_pro;
-        this.pre_pro = pre_pro;
-        this.can_act_pro = can_act_pro;
-        this.can_min_pro = can_min_pro;
-        this.com_pro = com_pro;
-    }
-
     public int getId_pro() {
         return id_pro;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setId_pro(int id_pro) {
@@ -175,14 +170,14 @@ public class Cl_Productos {
             //Creando las filas para el JTable
             Object[] fila = new Object[10];
             while (rs.next()) {
-                
+
                 fila[0] = rs.getObject("idProductos");
                 fila[1] = rs.getObject("desc_pro") + " - " + rs.getObject("modelo") + " - " + rs.getObject("serie");
                 fila[2] = rs.getObject("marca");
                 fila[3] = rs.getObject("cant");
                 fila[4] = rs.getObject("desc_und");
                 if (ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos")) == 0.00) {
-                    fila[5] = rs.getDouble("precio");    
+                    fila[5] = rs.getDouble("precio");
                 } else {
                     fila[5] = ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos"));
                 }
@@ -227,7 +222,7 @@ public class Cl_Productos {
             prod.t_productos.setDefaultRenderer(Object.class, new table_render());
             mostrar.fireTableDataChanged();
             prod.t_productos.updateUI();
-         
+
         } catch (SQLException e) {
             System.out.print(e);
         }

@@ -43,8 +43,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         initComponents();
         System.out.println(frm_menu.alm.getDireccion());
         String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
-                + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
+                + "estado from traslado where estado = '0' and (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                + "'" + frm_menu.alm.getDireccion() + "') order by fecha desc, idTraslado desc";
         ver_guia(query);
     }
 
@@ -74,7 +74,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 fila[1] = ven.fechaformateada(rs.getString("fecha"));
                 fila[2] = rs.getString("idTraslado");
                 String origen = rs.getString("origen");
-                    fila[3] = alm.nom_alm(origen);
+                fila[3] = alm.nom_alm(origen);
                 fila[4] = rs.getString("raz_soc_dest");
                 String destino = rs.getString("destino");
                 fila[5] = alm.nom_alm(destino);
@@ -134,7 +134,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         btn_anu = new javax.swing.JButton();
         btn_envio = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbx_bus = new javax.swing.JComboBox();
+        cbx_estado = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -213,7 +214,19 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fecha", "Almacen" }));
+        cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fecha" }));
+        cbx_bus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_busActionPerformed(evt);
+            }
+        });
+
+        cbx_estado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PENDIENTE", "ANULADOS", "TODOS" }));
+        cbx_estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_estadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -230,8 +243,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_envio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
@@ -249,11 +264,12 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_envio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,6 +308,9 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             ResultSet rs = con.consulta(st, ver_guia);
             if (rs.next()) {
                 traslado.idtras = alb.getId();
+                traslado.cbx_alm_or.setEnabled(false);
+                traslado.chk_emitir.setEnabled(false);
+                traslado.txt_fec.setEnabled(false);
                 traslado.txt_fec.setText(ven.fechaformateada(rs.getString("fecha")));
                 traslado.cbx_alm_or.setSelectedIndex(alm.id_alm_dir(rs.getString("origen")) - 1);
                 traslado.cbx_alm_de.setSelectedIndex(alm.id_alm_dir(rs.getString("destino")) - 1);
@@ -333,7 +352,9 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         } else {
             btn_anu.setEnabled(true);
             if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 5))) {
-            btn_envio.setEnabled(true);
+                btn_envio.setEnabled(true);
+            } else {
+                btn_envio.setEnabled(false);
             }
         }
     }//GEN-LAST:event_t_guiasMousePressed
@@ -511,11 +532,40 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         String texto = jTextField1.getText();
-        String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
-                + "estado from traslado where (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                + "'" + frm_menu.alm.getDireccion() + "') and '"+valor+"' like '"+texto+"' order by fecha desc, idTraslado desc";
-        ver_guia(query);
+        if (cbx_bus.getSelectedIndex() == 0) {
+            texto = ven.fechabase(texto);
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where fecha = '"+texto+"' order by fecha desc, idTraslado desc";
+            ver_guia(query);
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void cbx_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_estadoActionPerformed
+        if (cbx_estado.getSelectedIndex() == 0) {
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where estado = '0' and (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                    + "'" + frm_menu.alm.getDireccion() + "') order by fecha desc, idTraslado desc";
+            ver_guia(query);
+        }
+        
+        if (cbx_estado.getSelectedIndex() == 1) {
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where estado = '2' and (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                    + "'" + frm_menu.alm.getDireccion() + "') order by fecha desc, idTraslado desc";
+            ver_guia(query);
+        }
+        
+        if (cbx_estado.getSelectedIndex() == 2) {
+            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
+                    + "estado from traslado where estado = '1' and (origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
+                    + "'" + frm_menu.alm.getDireccion() + "') order by fecha desc, idTraslado desc";
+            ver_guia(query);
+        }
+    }//GEN-LAST:event_cbx_estadoActionPerformed
+
+    private void cbx_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_busActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_busActionPerformed
 
     private void llenar_tguias(int idtra) {
         frm_reg_traslado_almacen traslado = null;
@@ -554,9 +604,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_anu;
     private javax.swing.JButton btn_envio;
     private javax.swing.JButton btn_guia;
+    private javax.swing.JComboBox cbx_bus;
+    private javax.swing.JComboBox cbx_estado;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
