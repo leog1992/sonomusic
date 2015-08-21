@@ -694,7 +694,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
                 try {
                     Statement st = con.conexion();
-                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
+                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'EFECTIVO')";
                     System.out.println(ins_let_efec + "\n");
                     con.actualiza(st, ins_let_efec);
                     con.cerrar(st);
@@ -718,7 +718,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
 
                 try {
                     Statement st = con.conexion();
-                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "' )";
+                    String ins_let_efec = "insert into letras_pedido values(null, '" + ent_efec + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'TARJETA')";
                     System.out.println(ins_let_efec + "\n");
                     con.actualiza(st, ins_let_efec);
                     con.cerrar(st);

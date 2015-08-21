@@ -24,13 +24,14 @@ import java.net.URLConnection;
 public class frm_loader extends javax.swing.JFrame {
 
     Cl_Descargar_Instalador bajar = new Cl_Descargar_Instalador();
+    Cl_Cargar_Splash hilo;
     Integer ver_actual;
     Integer ver_nueva;
     int act;
     /**
      * Creates new form frm_loader
      */
-    Cl_Cargar_Splash hilo;
+    
 
     public frm_loader() {
         initComponents();

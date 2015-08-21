@@ -55,7 +55,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         ver_clasificacion(query);
         String und = "select desc_und from und_medida";
         ver_unidad(und);
-
+        pro.setImg("noimage.jpg");
     }
 
     private void ver_clasificacion(String query) {
