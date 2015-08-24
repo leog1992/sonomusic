@@ -804,9 +804,9 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_claActionPerformed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void txt_codKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_codKeyPressed

@@ -728,9 +728,9 @@ public class frm_reg_compra_serv extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_subKeyPressed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void cbx_almKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_almKeyPressed

@@ -493,9 +493,9 @@ Integer i;
     }//GEN-LAST:event_t_productosMousePressed
 
     private void btn_addKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_addKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            btn_add.doClick();
-        }
+//        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+//            btn_add.doClick();
+//        }
     }//GEN-LAST:event_btn_addKeyPressed
 
 

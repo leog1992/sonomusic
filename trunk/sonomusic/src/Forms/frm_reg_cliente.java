@@ -393,9 +393,9 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_tel1KeyPressed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void txt_ndocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ndocKeyTyped

@@ -761,9 +761,9 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_nroKeyPressed
 
     private void txt_idpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_idpKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_F3) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_F3) {
+//            btn_reg.doClick();
+//        }
 
         if (evt.getKeyCode() == KeyEvent.VK_F2) {
             btn_busm.doClick();

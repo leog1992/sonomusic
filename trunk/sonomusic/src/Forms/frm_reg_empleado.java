@@ -6,9 +6,6 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,38 +18,16 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     Cl_Varios ven = new Cl_Varios();
     Cl_Empleado emp = new Cl_Empleado();
     Cl_Almacen alm = new Cl_Almacen();
-    Cl_Meta met = new Cl_Meta();
     Cl_Cargo car = new Cl_Cargo();
     public static String win = "reg";
 
     public frm_reg_empleado() {
         initComponents();
 
-        String k = "select * from metas";
-        cargarmetas(k);
         String a = "select * from almacen";
         cargaralmacen(a);
         String b = "select * from cargo";
         cargarcargo(b);
-    }
-
-    public void cargarmetas(String query) {
-        try {
-            Statement st = con.conexion();
-            ResultSet rs = con.consulta(st, query);
-
-            while (rs.next()) {
-                String cap;
-                cap = rs.getString("monto") + " - " + rs.getString("fec_inicio") + " - " + rs.getString("fec_fin");
-                cbx_mon.addItem(cap);
-            }
-            con.cerrar(st);
-            con.cerrar(rs);
-
-        } catch (Exception e) {
-            System.out.println("Ocurrio un error " + e.getMessage() + " en :" + e.getLocalizedMessage());
-        }
-
     }
 
     public void cargaralmacen(String query) {
@@ -111,10 +86,8 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         cbx_almacen = new javax.swing.JComboBox();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         cbx_cargo = new javax.swing.JComboBox();
-        cbx_mon = new javax.swing.JComboBox();
         txt_fec = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
 
@@ -278,11 +251,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Meta:");
-
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(212, 2, 2));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -297,18 +265,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         cbx_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_cargoKeyPressed(evt);
-            }
-        });
-
-        cbx_mon.setEnabled(false);
-        cbx_mon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_monActionPerformed(evt);
-            }
-        });
-        cbx_mon.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_monKeyPressed(evt);
             }
         });
 
@@ -355,12 +311,10 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_ndoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
@@ -404,10 +358,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txt_ndoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -427,11 +378,12 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbx_almacen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cbx_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cbx_mon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_lim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -457,8 +409,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         txt_fec.setEditable(false);
         cbx_almacen.setSelectedIndex(0);
         cbx_almacen.setEnabled(false);
-        cbx_mon.setSelectedIndex(0);
-        cbx_mon.setEnabled(false);
         cbx_cargo.setSelectedIndex(0);
         cbx_cargo.setEnabled(false);
         txt_ndoc.requestFocus();
@@ -475,7 +425,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
         emp.setSueldo(Double.parseDouble(txt_sue.getText()));
         emp.setFec_nac(ven.fechabase(txt_fec.getText()));
         alm.setId(cbx_almacen.getSelectedIndex() + 1);
-        met.setId(cbx_mon.getSelectedIndex() + 1);
         car.setId(cbx_cargo.getSelectedIndex() + 1);
 
     }
@@ -489,7 +438,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 String insert_per = "insert into empleados Values ('" + emp.getDni() + "', '" + emp.getNom() + "', "
                         + "'" + emp.getDir() + "', '" + emp.getTel() + "', '" + emp.getTel2() + "', "
                         + "'" + emp.getImg() + "', '" + emp.getEst() + "', '" + emp.getSueldo() + "', "
-                        + "'" + emp.getFec_nac() + "', '" + alm.getId() + "', '" + met.getId() + "', '" + car.getId() + "')";
+                        + "'" + emp.getFec_nac() + "', '" + alm.getId() + "', '" + car.getId() + "')";
                 con.actualiza(st, insert_per);
                 con.cerrar(st);
                 JOptionPane.showMessageDialog(null, "Se ha ingresado los datos corectamente");
@@ -503,7 +452,7 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
                 String insert_per = "update empleados set nom_per='" + emp.getNom() + "', dir_per='" + emp.getDir() + "', "
                         + "tel_per='" + emp.getTel() + "', tel2_per='" + emp.getTel2() + "', img_per='" + emp.getImg() + "', "
                         + "sueldo='" + emp.getSueldo() + "', fecha='" + emp.getFec_nac() + "', idAlmacen='" + alm.getId() + "', "
-                        + "idMetas='" + met.getId() + "', idCargo='" + car.getId() + "' where dni='" + emp.getDni() + "'";
+                        + " idCargo='" + car.getId() + "' where dni='" + emp.getDni() + "'";
                 con.actualiza(st, insert_per);
                 con.cerrar(st);
                 JOptionPane.showMessageDialog(null, "Se ha modificado los datos");
@@ -647,9 +596,9 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     private void cbx_almacenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_almacenKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (cbx_almacen.getSelectedIndex() != -1) {
-                cbx_mon.setEnabled(true);
+                cbx_cargo.setEnabled(true);
             }
-            cbx_mon.requestFocus();
+            cbx_cargo.requestFocus();
         }
     }//GEN-LAST:event_cbx_almacenKeyPressed
 
@@ -667,25 +616,14 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_cargoKeyPressed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void txt_ndocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_ndocActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_ndocActionPerformed
-
-    private void cbx_monActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_monActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbx_monActionPerformed
-
-    private void cbx_monKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_monKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_cargo.setEnabled(true);
-            cbx_cargo.requestFocus();
-        }
-    }//GEN-LAST:event_cbx_monKeyPressed
 
     private void cbx_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_cargoActionPerformed
         // TODO add your handling code here:
@@ -707,8 +645,6 @@ public class frm_reg_empleado extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_reg;
     public static javax.swing.JComboBox cbx_almacen;
     public static javax.swing.JComboBox cbx_cargo;
-    public static javax.swing.JComboBox cbx_mon;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -292,9 +292,9 @@ public class frm_mov_bancos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void btn_iniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_iniKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_ini.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_ini.doClick();
+//        }
     }//GEN-LAST:event_btn_iniKeyPressed
 
     private void btn_iniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniActionPerformed

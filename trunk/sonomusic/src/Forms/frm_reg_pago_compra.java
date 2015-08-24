@@ -410,9 +410,9 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_addKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_addKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_add.doClick();
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            btn_add.doClick();
+//        }
     }//GEN-LAST:event_btn_addKeyPressed
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed

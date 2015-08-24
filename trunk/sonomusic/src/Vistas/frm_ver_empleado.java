@@ -28,13 +28,13 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     DefaultTableModel mostrar;
     public static String fecha;
     DecimalFormatSymbols sim = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00",sim);
+    DecimalFormat formato = new DecimalFormat("####0.00", sim);
 
     public frm_ver_empleado() {
         initComponents();
 
-        String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, m.monto, c.tipo_cargo from empleados as e "
-                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c "
+        String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
                 + "on e.idCargo=c.idCargo order by a.nom_alm asc, dni asc";
         ver_empleado(query);
     }
@@ -105,6 +105,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         btn_mod = new javax.swing.JButton();
         btn_act = new javax.swing.JButton();
         cbx_tipo = new javax.swing.JComboBox();
+        btn_adel = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -206,6 +207,14 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_adel.setText("Adelantos");
+        btn_adel.setEnabled(false);
+        btn_adel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_adelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -218,6 +227,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                         .addComponent(btn_ret)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_act)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_adel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_clo))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -248,7 +259,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_ret, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_act, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_act, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_adel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -277,13 +289,12 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         if (estado.equals("-")) {
             btn_act.setEnabled(true);
             btn_ret.setEnabled(false);
+            btn_adel.setEnabled(false);
         } else {
             btn_act.setEnabled(false);
             btn_ret.setEnabled(true);
+            btn_adel.setEnabled(true);
         }
-
-        String dni = t_empleado.getValueAt(i, 0).toString();
-        String nom = t_empleado.getValueAt(i, 1).toString();
     }//GEN-LAST:event_t_empleadoMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
@@ -313,7 +324,6 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 }
                 empleado.txt_fec.setText(rs.getString("fecha"));
                 empleado.cbx_almacen.setSelectedItem(rs.getInt("idAlmacen") - 1);
-                empleado.cbx_mon.setSelectedItem(rs.getInt("idMetas") - 1);
                 empleado.cbx_cargo.setSelectedItem(rs.getInt("idCargo") - 1);
                 empleado.txt_ndoc.setEditable(false);
                 empleado.txt_nom.setEditable(true);
@@ -390,11 +400,11 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_tipoActionPerformed
 
     private void t_empleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_empleadoKeyPressed
-       
+
     }//GEN-LAST:event_t_empleadoKeyPressed
 
     private void t_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMouseClicked
-        if (evt.getClickCount()==2) {
+        if (evt.getClickCount() == 2) {
             if (ventana.equals("movimiento")) {
                 frm_movimientos movi = null;
                 emp.setDni((int) t_empleado.getValueAt(i, 0));
@@ -450,49 +460,48 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                             + "inner join detalle_pedido as dp on p.idPedido=dp.idPedido inner join productos as pr "
                             + "on dp.idProductos=pr.idProductos where p.nick='" + id + "' and MONTH(p.fec_ped)=03";
                     ResultSet rs = con.consulta(st, comision);
-                    System.out.println(id+" / "+fecha);
-                    double comi=0;
+                    System.out.println(id + " / " + fecha);
+                    double comi = 0;
                     while (rs.next()) {
-                        comi+= (rs.getDouble("comision")/100) * rs.getDouble("cantidad") * rs.getDouble("precio");
+                        comi += (rs.getDouble("comision") / 100) * rs.getDouble("cantidad") * rs.getDouble("precio");
                     }
-                    pago.txt_comision.setText(formato.format(comi)+"");
+                    pago.txt_comision.setText(formato.format(comi) + "");
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
                 }
-                
+
                 try {
                     Statement st = con.conexion();
-                    String sql="select monto from adelanto where dni='"+id+"'";
+                    String sql = "select monto from adelanto where dni='" + id + "'";
                     ResultSet rs = con.consulta(st, sql);
-                    double ade=0;
+                    double ade = 0;
                     while (rs.next()) {
-                        ade+=rs.getDouble("monto");
+                        ade += rs.getDouble("monto");
                     }
-                    pago.txt_adelanto.setText(formato.format(ade)+"");
+                    pago.txt_adelanto.setText(formato.format(ade) + "");
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
                 }
-                
-                 try {
+
+                try {
                     Statement st = con.conexion();
-                    String sql="select sueldo from empleados where dni='"+id+"'";
+                    String sql = "select sueldo from empleados where dni='" + id + "'";
                     ResultSet rs = con.consulta(st, sql);
-                    double ade=0;
+                    double ade = 0;
                     while (rs.next()) {
-                        ade+=rs.getDouble("sueldo");
+                        ade += rs.getDouble("sueldo");
                     }
-                    pago.txt_salario.setText(formato.format(ade)+"");
+                    pago.txt_salario.setText(formato.format(ade) + "");
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: "+e.getLocalizedMessage());
+                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
                 }
-                
-                
+
                 //envios
                 try {
-                    pago.txtdni.setText(id+"");
+                    pago.txtdni.setText(id + "");
                     pago.txtempleado.setText(nom);
-                    pago.txt_cargo.setText(car);                    
+                    pago.txt_cargo.setText(car);
                     pago.txt_fec.requestFocus();
                     this.dispose();
                 } catch (Exception e) {
@@ -502,9 +511,56 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_t_empleadoMouseClicked
 
+    private void btn_adelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adelActionPerformed
+        frm_ver_adelantos adelanto = new frm_ver_adelantos();
+        adelanto.txt_dni.setText(t_empleado.getValueAt(i, 0).toString());
+        String dni = t_empleado.getValueAt(i, 0).toString();
+        adelanto.txt_nom.setText(t_empleado.getValueAt(i, 1).toString());
+        cargar_adelanto(dni);
+        ven.llamar_ventana(adelanto);
+        this.dispose();
+
+    }//GEN-LAST:event_btn_adelActionPerformed
+
+    private void cargar_adelanto(String dni) {
+        DefaultTableModel modelo;
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            }
+        };
+        Statement st = con.conexion();
+        modelo.addColumn("Id");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Monto");
+        modelo.addColumn("Estado");
+        try {
+            String ver_ade = "select * from adelanto where dni = '" + dni + "'";
+            ResultSet rs = con.consulta(st, ver_ade);
+            Object fila[] = new Object[4];
+            while (rs.next()) {
+                fila[0] = rs.getString("idadelanto");
+                fila[1] = ven.fechaformateada(rs.getString("fecha"));
+                fila[2] = rs.getDouble("monto");
+                fila[3] = "--";
+                modelo.addRow(fila);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        frm_ver_adelantos.t_adelantos.setModel(modelo);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(0).setPreferredWidth(20);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(2).setPreferredWidth(80);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(3).setPreferredWidth(80);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_act;
+    private javax.swing.JButton btn_adel;
     private javax.swing.JButton btn_clo;
     private javax.swing.JButton btn_mod;
     private javax.swing.JButton btn_reg;

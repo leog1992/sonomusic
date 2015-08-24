@@ -262,9 +262,9 @@ public class frm_reg_cambio_contra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_con_nue2KeyPressed
 
     private void btn_grabaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_grabaKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            btn_graba.doClick();
-        }
+//        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+//            btn_graba.doClick();
+//        }
     }//GEN-LAST:event_btn_grabaKeyPressed
 
 

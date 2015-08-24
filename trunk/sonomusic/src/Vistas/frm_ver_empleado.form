@@ -34,6 +34,8 @@
                       <Component id="btn_ret" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_act" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_adel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_clo" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -71,6 +73,7 @@
                   <Component id="btn_ret" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_clo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_act" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_adel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -226,6 +229,15 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_tipoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_adel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adelantos"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_adelActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

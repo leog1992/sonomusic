@@ -295,9 +295,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_busActionPerformed
 
     private void txt_dniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_F2) {
-            btn_bus.doClick();
-        }
+        
     }//GEN-LAST:event_txt_dniKeyPressed
 
     private void txt_dniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyTyped

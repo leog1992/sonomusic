@@ -275,9 +275,9 @@ public class frm_cargos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_descKeyPressed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
-            btn_reg.doClick();
-        }
+//        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+//            btn_reg.doClick();
+//        }
     }//GEN-LAST:event_btn_regKeyPressed
 
     private void t_cargoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_cargoMousePressed
