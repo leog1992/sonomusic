@@ -7,6 +7,10 @@ import Clases.Cl_Varios;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,21 +25,21 @@ public class frm_metas extends javax.swing.JInternalFrame {
 
     public frm_metas() {
         initComponents();
-        txt_fec_ini.setText(ven.fechaformateada(ven.getFechaActual()));    
+        txt_fec_ini.setText(ven.fechaformateada(ven.getFechaActual()));
         txt_fec_fin.setText(ven.fechaformateada(ven.getFechaActual()));
-        String sql = "select tipo_cargo from cargo";
-        cargar_cargo(sql);
+        String sql = "select nom_alm from almacen order by idAlmacen asc";
+        cargar_tiendas(sql);
         String sql2 = "select m.idMetas, m.monto, m.estado, m.fec_inicio, m.fec_fin, "
-                + "c.tipo_cargo from metas as m inner join cargo as c on m.idcargo=c.idCargo order by idMetas asc;";
+                + "a.nom_alm from metas as m inner join almacen as a on m.idalmacen = a.idAlmacen order by idMetas asc;";
         ver_metas(sql2);
     }
 
-    void cargar_cargo(String sql) {
+    void cargar_tiendas(String sql) {
         try {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
-                cbx_tienda.addItem(rs.getString("tipo_cargo"));
+                cbx_tienda.addItem(rs.getString("nom_alm"));
             }
             con.cerrar(rs);
             con.cerrar(st);
@@ -44,7 +48,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         }
     }
 
-    void ver_metas(String sql) {
+    private void ver_metas(String sql) {
         modelo = new DefaultTableModel() {
 
             @Override
@@ -59,16 +63,16 @@ public class frm_metas extends javax.swing.JInternalFrame {
             modelo.addColumn("Monto");
             modelo.addColumn("Fecha Inicio");
             modelo.addColumn("Fecha Fin");
-            modelo.addColumn("Tipo Cargo");
+            modelo.addColumn("Tienda");
             modelo.addColumn("Estado");
 
             Object dato[] = new Object[6];
             while (rs.next()) {
                 dato[0] = rs.getObject("idMetas");
                 dato[1] = rs.getObject("monto");
-                dato[2] = rs.getObject("fec_inicio");
-                dato[3] = rs.getObject("fec_fin");
-                dato[4] = rs.getObject("tipo_cargo");
+                dato[2] = ven.fechaformateada(rs.getString("fec_inicio"));
+                dato[3] = ven.fechaformateada(rs.getString("fec_fin"));
+                dato[4] = rs.getObject("nom_alm");
                 String est = rs.getString("estado");
                 if (est.equals("1")) {
                     dato[5] = "Activo";
@@ -86,7 +90,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
             t_metas.getColumnModel().getColumn(3).setPreferredWidth(80);
             t_metas.getColumnModel().getColumn(4).setPreferredWidth(120);
             t_metas.getColumnModel().getColumn(5).setPreferredWidth(80);
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en: " + e.getLocalizedMessage());
         }
@@ -97,7 +101,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         txt_monto.setText("");
         txt_fec_ini.setText("");
         txt_fec_ini.setEditable(false);
-        txt_fec_ini.setText(ven.getFechaActual());
+        txt_fec_ini.setText(ven.fechaformateada(ven.getFechaActual()));
         txt_fec_fin.setText("");
         txt_fec_fin.setEditable(false);
         cbx_tienda.setSelectedIndex(-1);
@@ -164,6 +168,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(212, 2, 2));
         jLabel5.setText("Tienda:");
 
+        txt_monto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_monto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_montoActionPerformed(evt);
@@ -365,7 +370,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
             //JOptionPane.showMessageDialog(null, "Operacion realizada con exito");
             //mostrar
             String sql2 = "select m.idMetas, m.monto, m.estado, m.fec_inicio, m.fec_fin, "
-                    + "c.tipo_cargo from metas as m inner join cargo as c on m.idcargo=c.idCargo order by idMetas asc";
+                    + "a.nom_alm from metas as m inner join almacen as a on m.idalmacen = a.idAlmacen order by idMetas asc;";
             ver_metas(sql2);
 
         } catch (Exception e) {
@@ -385,8 +390,21 @@ public class frm_metas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_montoKeyPressed
 
     private void txt_fec_iniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_iniKeyPressed
-        if (txt_fec_ini.getText().trim().length()==10) {
+        if (txt_fec_ini.getText().trim().length() == 10) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+                String strFecha = txt_fec_ini.getText();
+                Date fecha = null;
+                try {
+                    fecha = formatoDelTexto.parse(ven.fechabase(strFecha));
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(fecha);
+                calendar.add(Calendar.DAY_OF_YEAR, 30);
+                SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+                txt_fec_fin.setText(ven.fechaformateada(formateador.format(calendar.getTime())));
                 txt_fec_fin.setEditable(true);
                 txt_fec_fin.requestFocus();
             }
@@ -394,7 +412,7 @@ public class frm_metas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_fec_iniKeyPressed
 
     private void txt_fec_finKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_finKeyPressed
-        if (txt_fec_fin.getText().trim().length()==10) {
+        if (txt_fec_fin.getText().trim().length() == 10) {
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 cbx_tienda.setEnabled(true);
                 cbx_tienda.requestFocus();
@@ -412,18 +430,18 @@ public class frm_metas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_metasMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int confirmar = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el Codigo " +t_metas.getValueAt(i, 0) );
-        if (JOptionPane.OK_OPTION== confirmar) {
+        int confirmar = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el Codigo " + t_metas.getValueAt(i, 0));
+        if (JOptionPane.OK_OPTION == confirmar) {
             try {
                 Statement st = con.conexion();
                 String sql = "delete from metas where idMetas ='" + met.getId() + "'";
                 con.consulta(st, sql);
                 con.cerrar(st);
                 String sql2 = "select m.idMetas, m.monto, m.estado, m.fec_inicio, m.fec_fin, "
-                        + "c.tipo_cargo from metas as m inner join cargo as c on m.idcargo=c.idCargo order by idMetas asc;";
+                        + "a.nom_alm from metas as m inner join almacen as a on m.idalmacen = a.idAlmacen order by idMetas asc;";
                 ver_metas(sql2);
             } catch (Exception e) {
-                System.out.println("Error en "+e.getLocalizedMessage());
+                System.out.println("Error en " + e.getLocalizedMessage());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -29,13 +29,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="842" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="952" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="btn_ret" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_act" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_adel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btn_rem" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_clo" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -46,6 +48,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_tipo" min="-2" pref="82" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="cbx_est" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_reg" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btn_mod" min="-2" max="-2" attributes="0"/>
@@ -65,6 +69,7 @@
                   <Component id="txt_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="cbx_tipo" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="cbx_est" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="310" max="-2" attributes="0"/>
@@ -74,6 +79,7 @@
                   <Component id="btn_clo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_act" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_adel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_rem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -238,6 +244,29 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_adelActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbx_est">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="ACTIVO"/>
+            <StringItem index="1" value="INACTIVO"/>
+            <StringItem index="2" value="TODOS"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_estActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_rem">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Remuneracion"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_remActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

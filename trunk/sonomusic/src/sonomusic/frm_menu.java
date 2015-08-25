@@ -203,9 +203,6 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem38 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         m_clientes = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -512,7 +509,7 @@ public class frm_menu extends javax.swing.JFrame {
         jp_productosLayout.setHorizontalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
         jp_productosLayout.setVerticalGroup(
             jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -767,38 +764,6 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem8);
-
-        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/adelanto.png"))); // NOI18N
-        jMenuItem9.setText("Adelantos");
-        jMenuItem9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem9);
-
-        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
-        jMenuItem11.setText("Pago Colaborador");
-        jMenuItem11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem11);
-
-        jMenuItem38.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jMenuItem38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem38.setText("Rpt.Pagos");
-        jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem38ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem38);
 
         jMenuBar1.add(jMenu1);
 
@@ -1701,23 +1666,6 @@ public class frm_menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
     }//GEN-LAST:event_jMenuItem37ActionPerformed
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        if (usu.getPer_reg_adelanto().equals("1")) {
-            frm_ver_adelantos ad = new frm_ver_adelantos();
-            ven.llamar_ventana(ad);
-        } else {
-            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
-        }
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        if (usu.getPer_ver_rrhh().equals("1")) {
-            frm_ver_pago pago = new frm_ver_pago();
-            ven.llamar_ventana(pago);
-        } else {
-            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
-        }
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
         if (usu.getPer_reg_venta().equals("1")) {
@@ -1791,14 +1739,6 @@ public class frm_menu extends javax.swing.JFrame {
         frm_reg_empresa empresa = new frm_reg_empresa();
         ven.llamar_ventana(empresa);
     }//GEN-LAST:event_jMenuItem43ActionPerformed
-
-    private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
-        if (usu.getPer_ver_reportes().equals("1")) {
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
-        }
-    }//GEN-LAST:event_jMenuItem38ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1808,22 +1748,22 @@ public class frm_menu extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(frm_menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         //</editor-fold>
         //</editor-fold>
 
@@ -1866,7 +1806,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
@@ -1895,7 +1834,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem37;
-    private javax.swing.JMenuItem jMenuItem38;
     private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
@@ -1906,7 +1844,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;

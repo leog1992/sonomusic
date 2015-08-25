@@ -35,7 +35,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
 
         String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
                 + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
-                + "on e.idCargo=c.idCargo order by a.nom_alm asc, dni asc";
+                + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
         ver_empleado(query);
     }
 
@@ -106,6 +106,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         btn_act = new javax.swing.JButton();
         cbx_tipo = new javax.swing.JComboBox();
         btn_adel = new javax.swing.JButton();
+        cbx_est = new javax.swing.JComboBox();
+        btn_rem = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -215,6 +217,21 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             }
         });
 
+        cbx_est.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ACTIVO", "INACTIVO", "TODOS" }));
+        cbx_est.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_estActionPerformed(evt);
+            }
+        });
+
+        btn_rem.setText("Remuneracion");
+        btn_rem.setEnabled(false);
+        btn_rem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_remActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,13 +239,15 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_ret)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_act)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_adel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_rem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_clo))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -238,6 +257,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_reg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_mod)))
@@ -252,7 +273,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     .addComponent(btn_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_est, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -260,7 +282,8 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     .addComponent(btn_ret, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_clo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_act, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_adel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_adel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_rem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -290,10 +313,12 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             btn_act.setEnabled(true);
             btn_ret.setEnabled(false);
             btn_adel.setEnabled(false);
+            btn_rem.setEnabled(false);
         } else {
             btn_act.setEnabled(false);
             btn_ret.setEnabled(true);
             btn_adel.setEnabled(true);
+            btn_rem.setEnabled(true);
         }
     }//GEN-LAST:event_t_empleadoMousePressed
 
@@ -427,87 +452,6 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     System.out.print(ex);
                 }
             }
-            if (ventana.equals("adelantos")) {
-                frm_reg_adelanto ade = null;
-                String id = t_empleado.getValueAt(i, 0).toString();
-                String nom = t_empleado.getValueAt(i, 1).toString();
-                String car = t_empleado.getValueAt(i, 2).toString();
-                String tel1 = t_empleado.getValueAt(i, 3).toString();
-                String tel2 = t_empleado.getValueAt(i, 4).toString();
-                try {
-                    ade.txt_dni.setText(id);
-                    ade.txt_empleado.setText(nom);
-                    ade.txtcargo.setText(car);
-                    ade.txttelefono1.setText(tel1);
-                    ade.txttelefono2.setText(tel2);
-                    ade.txt_fec.setEditable(true);
-                    ade.txt_fec.requestFocus();
-                    this.dispose();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-                }
-            }
-
-            if (ventana.equals("pago")) {
-                frm_reg_pago pago = null;
-                int id = (int) t_empleado.getValueAt(i, 0);
-                String nom = t_empleado.getValueAt(i, 1).toString();
-                String car = t_empleado.getValueAt(i, 2).toString();
-                //
-                try {
-                    Statement st = con.conexion();
-                    String comision = "select  pr.comision,  dp.cantidad, dp.precio from pedido as p "
-                            + "inner join detalle_pedido as dp on p.idPedido=dp.idPedido inner join productos as pr "
-                            + "on dp.idProductos=pr.idProductos where p.nick='" + id + "' and MONTH(p.fec_ped)=03";
-                    ResultSet rs = con.consulta(st, comision);
-                    System.out.println(id + " / " + fecha);
-                    double comi = 0;
-                    while (rs.next()) {
-                        comi += (rs.getDouble("comision") / 100) * rs.getDouble("cantidad") * rs.getDouble("precio");
-                    }
-                    pago.txt_comision.setText(formato.format(comi) + "");
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-                }
-
-                try {
-                    Statement st = con.conexion();
-                    String sql = "select monto from adelanto where dni='" + id + "'";
-                    ResultSet rs = con.consulta(st, sql);
-                    double ade = 0;
-                    while (rs.next()) {
-                        ade += rs.getDouble("monto");
-                    }
-                    pago.txt_adelanto.setText(formato.format(ade) + "");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-                }
-
-                try {
-                    Statement st = con.conexion();
-                    String sql = "select sueldo from empleados where dni='" + id + "'";
-                    ResultSet rs = con.consulta(st, sql);
-                    double ade = 0;
-                    while (rs.next()) {
-                        ade += rs.getDouble("sueldo");
-                    }
-                    pago.txt_salario.setText(formato.format(ade) + "");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-                }
-
-                //envios
-                try {
-                    pago.txtdni.setText(id + "");
-                    pago.txtempleado.setText(nom);
-                    pago.txt_cargo.setText(car);
-                    pago.txt_fec.requestFocus();
-                    this.dispose();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
-                }
-            }
         }
     }//GEN-LAST:event_t_empleadoMouseClicked
 
@@ -521,6 +465,84 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_adelActionPerformed
+
+    private void cbx_estActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_estActionPerformed
+        if (cbx_est.getSelectedIndex() == 0) {
+            String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                    + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
+                    + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
+            ver_empleado(query);
+        }
+        if (cbx_est.getSelectedIndex() == 1) {
+            String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                    + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
+                    + "on e.idCargo=c.idCargo where e.est_per = '0' order by a.nom_alm asc, dni asc";
+            ver_empleado(query);
+        }
+        if (cbx_est.getSelectedIndex() == 2) {
+            String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                    + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
+                    + "on e.idCargo=c.idCargo order by a.nom_alm asc, dni asc";
+            ver_empleado(query);
+        }
+    }//GEN-LAST:event_cbx_estActionPerformed
+
+    private void btn_remActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_remActionPerformed
+        frm_ver_pago pago = new frm_ver_pago();
+        String dni = t_empleado.getValueAt(i, 0).toString();
+        String sql = "select p.idpago, p.fecha , p.comisiones, p.otrosingresos, p.adelantos, p.otrosdescuentos, "
+                + "p.salario from pago as p where p.dni = '" + dni + "' order by p.idpago";
+        cargar_remuneracion(sql);
+        pago.txt_dni.setText(dni);
+        pago.txt_col.setText(t_empleado.getValueAt(i, 1).toString());
+        ven.llamar_ventana(pago);
+        this.dispose();
+    }//GEN-LAST:event_btn_remActionPerformed
+
+    void cargar_remuneracion(String sql) {
+        DefaultTableModel modelo;
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            }
+        };
+        try {
+            Statement st = con.conexion();
+            modelo.addColumn("Id");
+            modelo.addColumn("Fecha");
+            modelo.addColumn("Comision");
+            modelo.addColumn("Otros Ingresos");
+            modelo.addColumn("Adelantos");
+            modelo.addColumn("Otros Descuentos");
+            modelo.addColumn("Salario");
+
+            ResultSet rs = con.consulta(st, sql);
+            Object[] dato = new Object[7];
+            while (rs.next()) {
+                dato[0] = rs.getObject("idpago");
+                dato[1] = ven.fechaformateada(rs.getString("fecha"));
+                dato[2] = rs.getObject("comisiones");
+                dato[3] = rs.getObject("otrosingresos");
+                dato[4] = rs.getObject("adelantos");
+                dato[5] = rs.getObject("otrosdescuentos");
+                dato[6] = rs.getObject("salario");
+                modelo.addRow(dato);
+            }
+            con.cerrar(st);
+            con.cerrar(rs);
+            frm_ver_pago.t_pago.setModel(modelo);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(0).setPreferredWidth(30);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(1).setPreferredWidth(80);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(2).setPreferredWidth(60);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(3).setPreferredWidth(60);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(4).setPreferredWidth(60);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(5).setPreferredWidth(60);
+            frm_ver_pago.t_pago.getColumnModel().getColumn(6).setPreferredWidth(60);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
+        }
+    }
 
     private void cargar_adelanto(String dni) {
         DefaultTableModel modelo;
@@ -564,7 +586,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_clo;
     private javax.swing.JButton btn_mod;
     private javax.swing.JButton btn_reg;
+    private javax.swing.JButton btn_rem;
     private javax.swing.JButton btn_ret;
+    private javax.swing.JComboBox cbx_est;
     private javax.swing.JComboBox cbx_tipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

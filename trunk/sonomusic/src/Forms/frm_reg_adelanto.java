@@ -12,8 +12,11 @@ import Clases.Cl_Varios;
 import Vistas.frm_ver_adelantos;
 import Vistas.frm_ver_empleado;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
 
 /**
@@ -50,7 +53,6 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txt_empleado = new javax.swing.JTextField();
-        btn_bus = new javax.swing.JButton();
         txt_dni = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txt_fec = new javax.swing.JFormattedTextField();
@@ -58,12 +60,6 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         txt_monto = new javax.swing.JTextField();
         btn_reg = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        txtcargo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txttelefono1 = new javax.swing.JTextField();
-        txttelefono2 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -93,19 +89,15 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         jLabel1.setText("Empleado:");
 
         txt_empleado.setEditable(false);
+        txt_empleado.setFocusable(false);
         txt_empleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_empleadoActionPerformed(evt);
             }
         });
 
-        btn_bus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
-        btn_bus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_busActionPerformed(evt);
-            }
-        });
-
+        txt_dni.setEditable(false);
+        txt_dni.setFocusable(false);
         txt_dni.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_dniKeyPressed(evt);
@@ -119,7 +111,6 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Fecha:");
 
-        txt_fec.setEditable(false);
         try {
             txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -137,6 +128,7 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         jLabel3.setText("Monto:");
 
         txt_monto.setEditable(false);
+        txt_monto.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_monto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_montoKeyPressed(evt);
@@ -168,39 +160,6 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel4.setText("Cargo:");
-
-        txtcargo.setEditable(false);
-        txtcargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcargoActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel5.setText("Telefono 1:");
-
-        txttelefono1.setEditable(false);
-        txttelefono1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttelefono1ActionPerformed(evt);
-            }
-        });
-
-        txttelefono2.setEditable(false);
-        txttelefono2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttelefono2ActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel6.setText("Telefono 2:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,76 +167,44 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtcargo)
-                            .addComponent(txt_dni, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txttelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txttelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_bus, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
                         .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txttelefono2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txttelefono1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtcargo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_monto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -288,14 +215,8 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_empleadoActionPerformed
 
-    private void btn_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busActionPerformed
-        frm_ver_empleado em = new frm_ver_empleado();
-        em.ventana = "adelantos";
-        ven.llamar_ventana(em);
-    }//GEN-LAST:event_btn_busActionPerformed
-
     private void txt_dniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyPressed
-        
+
     }//GEN-LAST:event_txt_dniKeyPressed
 
     private void txt_dniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dniKeyTyped
@@ -315,21 +236,51 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
         txt_dni.requestFocus();
     }//GEN-LAST:event_formInternalFrameActivated
 
-    private void txttelefono1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttelefono1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txttelefono1ActionPerformed
-
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        frm_ver_adelantos adelanto = new frm_ver_adelantos();
+        adelanto.txt_dni.setText(txt_dni.getText());
+        String dni = txt_dni.getText();
+        adelanto.txt_nom.setText(txt_empleado.getText());
+        cargar_adelanto(dni);
+        ven.llamar_ventana(adelanto);
         this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    private void txttelefono2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttelefono2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txttelefono2ActionPerformed
-
-    private void txtcargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcargoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcargoActionPerformed
+    private void cargar_adelanto(String dni) {
+        DefaultTableModel modelo;
+        modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            }
+        };
+        Statement st = con.conexion();
+        modelo.addColumn("Id");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Monto");
+        modelo.addColumn("Estado");
+        try {
+            String ver_ade = "select * from adelanto where dni = '" + dni + "'";
+            ResultSet rs = con.consulta(st, ver_ade);
+            Object fila[] = new Object[4];
+            while (rs.next()) {
+                fila[0] = rs.getString("idadelanto");
+                fila[1] = ven.fechaformateada(rs.getString("fecha"));
+                fila[2] = rs.getDouble("monto");
+                fila[3] = "--";
+                modelo.addRow(fila);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        frm_ver_adelantos.t_adelantos.setModel(modelo);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(0).setPreferredWidth(20);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(2).setPreferredWidth(80);
+        frm_ver_adelantos.t_adelantos.getColumnModel().getColumn(3).setPreferredWidth(80);
+    }
 
     private void txt_montoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_montoKeyTyped
         if (Character.isLetter(evt.getKeyChar())) {
@@ -347,14 +298,11 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
         try {
-
             Statement st = con.conexion();
-            String sql = "insert into adelanto values(null, '" + ad.getFecha() + "','" + ad.getMonto() + "','" + emp.getDni() + "')";
+            String sql = "insert into adelanto values(null, '" + ad.getFecha() + "','" + ad.getMonto() + "','" + emp.getDni() + "', "
+                    + "'" + frm_menu.alm.getId() + "', '0')";
             con.actualiza(st, sql);
             con.cerrar(st);
-            frm_ver_adelantos ad = new frm_ver_adelantos();
-            ven.llamar_ventana(ad);
-            this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
         }
@@ -370,6 +318,14 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
             System.err.print("Error en:" + ex.getLocalizedMessage());
 
         }
+
+        frm_ver_adelantos adelanto = new frm_ver_adelantos();
+        adelanto.txt_dni.setText(txt_dni.getText());
+        String dni = txt_dni.getText();
+        adelanto.txt_nom.setText(txt_empleado.getText());
+        cargar_adelanto(dni);
+        ven.llamar_ventana(adelanto);
+        this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
@@ -377,21 +333,14 @@ public class frm_reg_adelanto extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_bus;
     public static javax.swing.JButton btn_reg;
     private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     public static javax.swing.JTextField txt_dni;
     public static javax.swing.JTextField txt_empleado;
     public static javax.swing.JFormattedTextField txt_fec;
     private javax.swing.JTextField txt_monto;
-    public static javax.swing.JTextField txtcargo;
-    public static javax.swing.JTextField txttelefono1;
-    public static javax.swing.JTextField txttelefono2;
     // End of variables declaration//GEN-END:variables
 }

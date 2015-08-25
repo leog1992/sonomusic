@@ -161,6 +161,9 @@ public class frm_ver_adelantos extends javax.swing.JInternalFrame {
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         frm_reg_adelanto ad = new frm_reg_adelanto();
+        ad.txt_dni.setText(txt_dni.getText());
+        ad.txt_empleado.setText(txt_nom.getText());
+        ad.txt_fec.requestFocus();
         ven.llamar_ventana(ad);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
