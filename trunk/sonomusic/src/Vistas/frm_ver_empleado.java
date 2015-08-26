@@ -1,9 +1,7 @@
 package Vistas;
 
 import Clases.*;
-import Forms.frm_reg_adelanto;
 import Forms.frm_reg_empleado;
-import Forms.frm_reg_pago;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class frm_ver_empleado extends javax.swing.JInternalFrame {
-
+    
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
     Cl_Empleado emp = new Cl_Empleado();
@@ -29,16 +27,16 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     public static String fecha;
     DecimalFormatSymbols sim = new DecimalFormatSymbols(Locale.US);
     DecimalFormat formato = new DecimalFormat("####0.00", sim);
-
+    
     public frm_ver_empleado() {
         initComponents();
-
+        
         String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
                 + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
                 + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
         ver_empleado(query);
     }
-
+    
     private void ver_empleado(String query) {
         try {
             mostrar = new DefaultTableModel() {
@@ -66,7 +64,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 fila[4] = rs.getObject("tel2_per");
                 fila[5] = rs.getObject("nom_alm");
                 fila[2] = rs.getObject("tipo_cargo");
-
+                
                 String estado = rs.getString("est_per");
                 if (estado.equals("1")) {
                     fila[6] = "ACTIVO";
@@ -88,9 +86,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.print(e);
         }
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -307,7 +305,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     private void t_empleadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMousePressed
         i = t_empleado.getSelectedRow();
         btn_mod.setEnabled(true);
-
+        
         String estado = t_empleado.getValueAt(i, 6).toString();
         if (estado.equals("-")) {
             btn_act.setEnabled(true);
@@ -325,7 +323,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
         //if (frm_menu.usu.getPem_emp().equals("1")) {
         frm_reg_empleado empleado = new frm_reg_empleado();
-
+        
         empleado.win = "mod";
         emp.setDni((int) t_empleado.getValueAt(i, 0));
         try {
@@ -348,10 +346,19 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                     System.out.println(ex);
                 }
                 empleado.txt_fec.setText(rs.getString("fecha"));
-                empleado.cbx_almacen.setSelectedItem(rs.getInt("idAlmacen") - 1);
-                empleado.cbx_cargo.setSelectedItem(rs.getInt("idCargo") - 1);
-                empleado.txt_ndoc.setEditable(false);
+                empleado.cbx_almacen.setSelectedIndex(rs.getInt("idAlmacen") - 1);
+                empleado.cbx_cargo.setSelectedIndex(rs.getInt("idCargo") - 1);
+                empleado.txt_ndoc.setEnabled(false);
                 empleado.txt_nom.setEditable(true);
+                empleado.txt_dir.setEditable(true);
+                empleado.txt_tel1.setEditable(true);
+                empleado.txt_tel2.setEditable(true);
+                empleado.txt_sue.setEditable(true);
+                empleado.txt_fec.setEditable(true);
+                empleado.cbx_almacen.setEnabled(true);
+                empleado.cbx_cargo.setEnabled(true);
+                empleado.btn_reg.setEnabled(true);
+                empleado.btn_lim.setEnabled(false);
                 empleado.txt_nom.requestFocus();
                 ven.llamar_ventana(empleado);
                 this.dispose();
@@ -389,13 +396,13 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 valor = "nom_per";
             }
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
+                
                 String buscar = txt_bus.getText();
                 String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e\n"
                         + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c \n"
                         + "on e.idCargo=c.idCargo where " + valor + " like '%" + buscar + "%' order by nom_per asc";
                 ver_empleado(query);
-
+                
             }
         } catch (Exception e) {
             System.out.println("error " + e.getMessage() + " en " + e.getLocalizedMessage());
@@ -498,7 +505,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         ven.llamar_ventana(pago);
         this.dispose();
     }//GEN-LAST:event_btn_remActionPerformed
-
+    
     void cargar_remuneracion(String sql) {
         DefaultTableModel modelo;
         modelo = new DefaultTableModel() {
@@ -516,7 +523,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             modelo.addColumn("Adelantos");
             modelo.addColumn("Otros Descuentos");
             modelo.addColumn("Salario");
-
+            
             ResultSet rs = con.consulta(st, sql);
             Object[] dato = new Object[7];
             while (rs.next()) {
@@ -543,7 +550,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
-
+    
     private void cargar_adelanto(String dni) {
         DefaultTableModel modelo;
         modelo = new DefaultTableModel() {

@@ -41,7 +41,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
      */
     public frm_reg_solicitud() {
         initComponents();
-        txt_id_des.requestFocus();
+        cbx_des.requestFocus();
         detalle = new DefaultTableModel();
 // {@Override
 //     public boolean isCellEditable (int fila, int columna) {
@@ -60,6 +60,27 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         t_solicitud.getColumnModel().getColumn(3).setPreferredWidth(60);
         t_solicitud.getColumnModel().getColumn(4).setPreferredWidth(80);
         btn_env.setVisible(false);
+        
+        cargar_almacen();
+    }
+
+    private void cargar_almacen() {
+        try {
+            Statement st = con.conexion();
+            String query = "select * from almacen";
+            ResultSet rs = con.consulta(st, query);
+
+            while (rs.next()) {
+                String cap;
+                cap = rs.getString("nom_alm");
+                cbx_des.addItem(cap);
+            }
+
+            con.cerrar(st);
+            con.cerrar(rs);
+        } catch (Exception e) {
+            System.out.println("Ocurrio un error " + e.getMessage() + " en :" + e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -78,8 +99,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txt_id_ori = new javax.swing.JTextField();
         txt_nom_ori = new javax.swing.JTextField();
-        txt_id_des = new javax.swing.JTextField();
-        txt_nom_des = new javax.swing.JTextField();
         txt_fec = new javax.swing.JFormattedTextField();
         spn_dias = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
@@ -92,6 +111,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
         btn_env = new javax.swing.JButton();
+        cbx_des = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -105,12 +125,12 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel2.setText("Almacen Origen:");
+        jLabel2.setText("Tienda Origen:");
         jLabel2.setFocusable(false);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel3.setText("Almacen Destino:");
+        jLabel3.setText("Tienda Destino:");
         jLabel3.setFocusable(false);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -129,16 +149,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
 
         txt_nom_ori.setEditable(false);
         txt_nom_ori.setFocusable(false);
-
-        txt_id_des.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_id_des.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_id_desKeyPressed(evt);
-            }
-        });
-
-        txt_nom_des.setEditable(false);
-        txt_nom_des.setFocusable(false);
 
         txt_fec.setEditable(false);
         try {
@@ -252,6 +262,12 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
         });
 
+        cbx_des.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_desKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,9 +301,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel3)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txt_id_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txt_nom_des, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(cbx_des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(41, 41, 41)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel4)
@@ -320,8 +334,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_id_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nom_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbx_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,7 +352,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                     .addComponent(btn_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_nom_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,34 +368,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_cerActionPerformed
-
-    private void txt_id_desKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_id_desKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            alm.setId(Integer.parseInt(txt_id_des.getText()));
-            try {
-                Statement st = con.conexion();
-                String ver_alm = "select nom_alm from almacen where idAlmacen = '" + alm.getId() + "'";
-                ResultSet rs = con.consulta(st, ver_alm);
-                if (rs.next()) {
-                    alm.setNom(rs.getString("nom_alm"));
-                    txt_nom_des.setText(alm.getNom());
-                    txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-                    txt_fec.setEditable(true);
-                    txt_fec.setFocusable(true);
-                    txt_fec.requestFocus();
-                } else {
-                    txt_id_des.setText("");
-                    txt_nom_des.setText("ALMACEN NO EXISTE");
-                    txt_id_des.requestFocus();
-                }
-                con.cerrar(rs);
-                con.cerrar(st);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
-                System.out.print(ex);
-            }
-        }
-    }//GEN-LAST:event_txt_id_desKeyPressed
 
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -437,7 +422,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private void llenar() {
         frm_menu menu = null;
         req.setAlm_ori(menu.alm.getId());
-        req.setAlm_des(Integer.parseInt(txt_id_des.getText()));
+        req.setAlm_des(cbx_des.getSelectedIndex() + 1);
         req.setDias(Integer.parseInt(spn_dias.getValue().toString()));
         req.setFec_rea("7000-01-01");
         req.setFec_sol(ven.fechabase(txt_fec.getText()));
@@ -519,7 +504,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
 
         }
-        
+
         //RECORRER TABLA Y DETECTA PRODUCTOS
         int nro_filas = t_solicitud.getRowCount();
         for (int j = 0; j < nro_filas; j++) {
@@ -533,7 +518,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "El Producto no existe en su almacen");
                     t_solicitud.setValueAt("0", j, 5);
                     btn_env.setEnabled(false);
-                }  else {
+                } else {
                     btn_env.setEnabled(true);
                 }
                 con.cerrar(rs);
@@ -552,7 +537,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         frm_reg_traslado_almacen traslado = new frm_reg_traslado_almacen();
         int idalm = Integer.parseInt(txt_id_ori.getText());
         traslado.cbx_alm_or.setEnabled(false);
-        traslado.cbx_alm_or.setSelectedIndex(Integer.parseInt(txt_id_des.getText()) - 1);
+        traslado.cbx_alm_or.setSelectedIndex(cbx_des.getSelectedIndex() + 1);
         traslado.cbx_alm_de.setEnabled(false);
         traslado.cbx_alm_de.setSelectedIndex(Integer.parseInt(txt_id_ori.getText()) - 1);
         System.out.println(idalm);
@@ -593,12 +578,22 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btn_envActionPerformed
 
+    private void cbx_desKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_desKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+            txt_fec.setEditable(true);
+            txt_fec.setFocusable(true);
+            txt_fec.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_desKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_bus;
     private javax.swing.JButton btn_cer;
     public static javax.swing.JButton btn_env;
     public static javax.swing.JButton btn_reg;
+    public static javax.swing.JComboBox cbx_des;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -610,10 +605,8 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     public static javax.swing.JSpinner spn_dias;
     public static javax.swing.JTable t_solicitud;
     public static javax.swing.JFormattedTextField txt_fec;
-    public static javax.swing.JTextField txt_id_des;
     public static javax.swing.JTextField txt_id_ori;
     public static javax.swing.JTextField txt_id_pro;
-    public static javax.swing.JTextField txt_nom_des;
     public static javax.swing.JTextField txt_nom_ori;
     private javax.swing.JTextField txt_nom_pro;
     // End of variables declaration//GEN-END:variables

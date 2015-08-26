@@ -249,7 +249,7 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         frm_menu menu = null;
         solicitud.txt_id_ori.setText("" + menu.alm.getId());
         solicitud.txt_nom_ori.setText(menu.alm.getNom());
-        solicitud.txt_id_des.requestFocus();
+        solicitud.cbx_des.requestFocus();
         ven.llamar_ventana(solicitud);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
@@ -264,7 +264,7 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
             ResultSet rs = con.consulta(st, ver_sol);
             if (rs.next()) {
                 soli.txt_id_ori.setText(rs.getString("id_alm_ori"));
-                soli.txt_id_des.setText(rs.getString("id_alm_des"));
+                soli.cbx_des.setSelectedIndex(rs.getInt("id_alm_des") - 1);
                 soli.txt_fec.setText(ven.fechaformateada(rs.getString("fec_sol")));
                 soli.spn_dias.setValue(rs.getInt("plazo"));
                 //soli.btn_env.setEnabled(true);
@@ -325,8 +325,8 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
 
     private void t_requerimientoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_requerimientoMousePressed
         i = t_requerimiento.getSelectedRow();
-        if (!t_requerimiento.getValueAt(i, 4).toString().equals(frm_menu.alm.getNom()) & 
-                !t_requerimiento.getValueAt(i, 3).toString().equals("ENVIADO")) {
+        if (!t_requerimiento.getValueAt(i, 4).toString().equals(frm_menu.alm.getNom())
+                & !t_requerimiento.getValueAt(i, 3).toString().equals("ENVIADO")) {
             btn_ver.setEnabled(true);
         } else {
             btn_ver.setEnabled(false);
@@ -339,30 +339,30 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         // Eliminando detalle de solicitud.
         try {
             Statement st = con.conexion();
-            String eli_det = "delete * from detalle_solicitud where idsolicitud = '"+idsol+"'";
+            String eli_det = "delete * from detalle_solicitud where idsolicitud = '" + idsol + "'";
             con.actualiza(st, eli_det);
             con.cerrar(st);
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        
+
         try {
             Statement st = con.conexion();
-            String eli_sol = "delete * from solicitud_articulos where idsolicitud = '"+idsol+"'";
+            String eli_sol = "delete * from solicitud_articulos where idsolicitud = '" + idsol + "'";
             con.actualiza(st, eli_sol);
             con.cerrar(st);
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         String query = "select sol.fec_sol, date_add(sol.fec_sol, INTERVAL sol.plazo DAY) as fec_apro, sol.idsolicitud, "
                 + "sol.estado, sol.id_alm_ori, sol.nick, emp.nom_per, sol.id_alm_des, sol.plazo, sol.fec_env from "
                 + "solicitud_articulos as sol inner join usuario as usu on sol.nick=usu.nick inner join empleados as emp on "
                 + "usu.dni=emp.dni where id_alm_ori = '" + frm_menu.alm.getId() + "' or id_alm_des = "
                 + "'" + frm_menu.alm.getId() + "' order by fec_apro desc";
         ver_requerimientos(query);
-        
-        
+
+
     }//GEN-LAST:event_btn_eliActionPerformed
 
 
