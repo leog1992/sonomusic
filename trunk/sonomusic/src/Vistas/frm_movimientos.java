@@ -45,7 +45,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         initComponents();
         simbolo.setDecimalSeparator('.');
         formato = new DecimalFormat("####0.00", simbolo);
-
+        fecha = ven.getFechaActual();
         mostrar = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
@@ -58,19 +58,17 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         mostrar.addColumn("Ingreso");
         mostrar.addColumn("Salida");
 
-        fecha = ven.getFechaActual();
-        Object[] caja = new Object[5];
-        caja[0] = "CAJA";
-        caja[1] = "SALDO ANTERIOR DE CAJA";
-        caja[2] = ven.fechaformateada(ven.getFechaActual());
-        caja[3] = formato.format(sal_ant());
-        caja[4] = "0.00";
-        mostrar.addRow(caja);
-
+//        Object[] caja = new Object[5];
+//        caja[0] = "CAJA";
+//        caja[1] = "SALDO ANTERIOR DE CAJA";
+//        caja[2] = ven.fechaformateada(ven.getFechaActual());
+//        caja[3] = formato.format(sal_ant());
+//        caja[4] = "0.00";
+//        mostrar.addRow(caja);
         String query = "select * from movimiento where fec_mov = '" + fecha + "' and"
                 + " idAlmacen = '" + frm_menu.alm.getId() + "' order by idMovimiento asc";
         ver_movimientos(query);
-
+        t_movimientos.setModel(mostrar);
         sumar_ing_caja();
         sumar_sal_caja();
         Double totalc;
@@ -90,7 +88,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         ven.derecha_celda(t_movimientos, 4);
         mostrar.fireTableDataChanged();
         t_movimientos.updateUI();
-        t_movimientos.setModel(mostrar);
+
     }
 
     private double sal_ant() {
@@ -112,6 +110,18 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
 
     private void ver_movimientos(String query) {
         try {
+            DefaultTableModel modelo = (DefaultTableModel) t_movimientos.getModel();
+            while (modelo.getRowCount() > 0) {
+                modelo.removeRow(0);
+            }
+            Object[] caja = new Object[5];
+            caja[0] = "CAJA";
+            caja[1] = "SALDO ANTERIOR DE CAJA";
+            caja[2] = ven.fechaformateada(ven.getFechaActual());
+            caja[3] = formato.format(sal_ant());
+            caja[4] = "0.00";
+            mostrar.addRow(caja);
+
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
