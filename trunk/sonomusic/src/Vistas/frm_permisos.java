@@ -95,6 +95,12 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         } else {
             usu.setPer_reg_traslado("0");
         }
+        
+        if (pe_tras.isSelected()) {
+            usu.setPer_anu_traslado("1");
+        } else {
+            usu.setPer_anu_traslado("0");
+        }
 
         if (pr_prod.isSelected()) {
             usu.setPer_reg_producto("1");
@@ -484,7 +490,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         Statement st = con.conexion();
         String ins_per = "update usuario set pr_ven = '"+usu.getPer_reg_venta()+"', pv_caj = '"+usu.getPer_ver_caja()+"', pv_rh = '"+usu.getPer_ver_rrhh()+"', pr_ade = '"+usu.getPer_reg_adelanto()+"',"
                 + "pv_rep = '"+usu.getPer_ver_reportes()+"', pr_ofe = '"+usu.getPer_reg_oferta()+"', pv_comp = '"+usu.getPer_compra_productos()+"', pv_coms = '"+usu.getPer_compra_servicios()+"', "
-                + "pr_alm = '"+usu.getPer_reg_almacen()+"', pm_alm = '"+usu.getPer_mod_almacen()+"', pr_tras = '"+usu.getPer_reg_traslado()+"', pr_prod = '"+usu.getPer_reg_producto()+"', "
+                + "pr_alm = '"+usu.getPer_reg_almacen()+"', pm_alm = '"+usu.getPer_mod_almacen()+"', pr_tras = '"+usu.getPer_reg_traslado()+"', pe_tras = '"+usu.getPer_anu_traslado()+"', pr_prod = '"+usu.getPer_reg_producto()+"', "
                 + "pm_prod = '"+usu.getPer_mod_producto()+"', pe_prod = '"+usu.getPer_eli_producto()+"', pm_docs = '"+usu.getPer_conf_documento()+"', pm_emp = '"+usu.getPer_mod_empresa()+"', "
                 + "pe_emp = '"+usu.getPer_eli_empresa()+"', pm_usu = '"+usu.getPer_usuario()+"', pm_cue = '"+usu.getPer_cuentas()+"' where nick = '"+usu.getNick()+"'";
         con.actualiza(st, ins_per);

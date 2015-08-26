@@ -29,7 +29,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
     public static DefaultTableModel mostrar;
     int i;
     public static String id;
-    public static String rpt;
+    public static String rpt = "";
 
     /**
      * Creates new form frm_ver_usuarios
@@ -369,6 +369,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         cambio.txt_con_ant.setEditable(true);
         cambio.txt_con_ant.requestFocus();
         ven.llamar_ventana(cambio);
+        this.dispose();
     }//GEN-LAST:event_btn_cambiar_passActionPerformed
 
 

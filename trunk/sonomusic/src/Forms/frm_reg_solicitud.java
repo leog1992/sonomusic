@@ -533,7 +533,9 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "El Producto no existe en su almacen");
                     t_solicitud.setValueAt("0", j, 5);
                     btn_env.setEnabled(false);
-                } 
+                }  else {
+                    btn_env.setEnabled(true);
+                }
                 con.cerrar(rs);
                 con.cerrar(st);
             } catch (SQLException | HeadlessException e) {
@@ -586,6 +588,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         }
         traslado.t_detalle.setModel(traslado.detalle);
         traslado.btn_reg.setEnabled(true);
+        traslado.accion = "traslado";
         ven.llamar_ventana(traslado);
         this.dispose();
     }//GEN-LAST:event_btn_envActionPerformed

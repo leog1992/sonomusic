@@ -90,7 +90,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         ven.derecha_celda(t_movimientos, 4);
         mostrar.fireTableDataChanged();
         t_movimientos.updateUI();
-
+        t_movimientos.setModel(mostrar);
     }
 
     private double sal_ant() {
@@ -131,7 +131,6 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             }
             con.cerrar(st);
             con.cerrar(rs);
-            t_movimientos.setModel(mostrar);
         } catch (SQLException e) {
             System.out.print(e);
         }
@@ -639,7 +638,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
             con.actualiza(st, ins_sal);
             con.cerrar(st);
         }
-
+        t_movimientos.removeAll();
         String query = "select * from movimiento where fec_mov = '" + fecha + "' and"
                 + " idAlmacen = '" + frm_menu.alm.getId() + "' order by idMovimiento asc";
         ver_movimientos(query);

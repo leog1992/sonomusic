@@ -8,6 +8,7 @@ package Forms;
 import Clases.Cl_Conectar;
 import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
+import Vistas.frm_ver_usuarios;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -211,8 +212,11 @@ public class frm_reg_cambio_contra extends javax.swing.JInternalFrame {
     private void btn_grabaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabaActionPerformed
         Statement st = con.conexion();
         String mod_usu = "update usuario set contra = '"+usu.getContra()+"' where nick = '"+usu.getNick()+"'";
-        
-        
+        con.actualiza(st, mod_usu);
+        con.cerrar(st);
+        frm_ver_usuarios usuario = new frm_ver_usuarios();
+        ven.llamar_ventana(usuario);
+        this.dispose();        
     }//GEN-LAST:event_btn_grabaActionPerformed
 
     private void txt_con_antKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_con_antKeyPressed
@@ -254,6 +258,7 @@ public class frm_reg_cambio_contra extends javax.swing.JInternalFrame {
             if (txt_con_nue2.getText().equals(txt_con_nue.getText())) {
                 btn_graba.setEnabled(true);
                 btn_graba.requestFocus();
+                usu.setContra(txt_con_nue2.getText());
             } else {
                 txt_con_nue2.setText("");
                 txt_con_nue2.requestFocus();

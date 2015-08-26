@@ -419,12 +419,13 @@ public class frm_reg_pago extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -455,6 +456,16 @@ public class frm_reg_pago extends javax.swing.JInternalFrame {
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
+
+        try {
+            Statement st = con.conexion();
+            String sql = "update adeanto set est = '1' where dni='" + emp.getDni() + "' and est = '0'";
+            con.actualiza(st, sql);
+            con.cerrar(st);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
+        }
+
         try {
             Statement st = con.conexion();
             String sql = "insert into pago values(null,'" + emp.getSueldo() + "','" + pag.getFec_pag() + "','" + pag.getCom_pag() + "','" + pag.getOtro_ing_pag() + "','" + pag.getAde_pag() + "'"
@@ -574,7 +585,7 @@ public class frm_reg_pago extends javax.swing.JInternalFrame {
                     Statement st = con.conexion();
                     String comision = "select  pr.comision,  dp.cantidad, dp.precio from pedido as p "
                             + "inner join detalle_pedido as dp on p.idPedido=dp.idPedido inner join productos as pr "
-                            + "on dp.idProductos=pr.idProductos where p.nick='" + dni + "' and MONTH(p.fec_ped)=03";
+                            + "on dp.idProductos=pr.idProductos where p.nick='" + dni + "' and MONTH(p.fec_ped)='" + mes + "'";
                     ResultSet rs = con.consulta(st, comision);
                     double comi = 0;
                     while (rs.next()) {
@@ -588,7 +599,7 @@ public class frm_reg_pago extends javax.swing.JInternalFrame {
 
                 try {
                     Statement st = con.conexion();
-                    String sql = "select monto from adelanto where dni='" + dni + "' and est = '1'";
+                    String sql = "select monto from adelanto where dni='" + dni + "' and est = '0'";
                     ResultSet rs = con.consulta(st, sql);
                     double ade = 0;
                     while (rs.next()) {
