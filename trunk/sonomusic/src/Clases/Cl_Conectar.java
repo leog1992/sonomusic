@@ -19,16 +19,16 @@ import javax.swing.JOptionPane;
 public class Cl_Conectar {
 
     private static Connection conexion = null;
-//    private static String bd = "conmetal_smi"; // Nombre de BD.
-//    private static String user = "conmetal_lsp"; // Usuario de BD.
-//    private static String password = "root/*123"; // Password de BD.
-    private static String bd = "sonomusic"; // Nombre de BD.
-    private static String user = "lspserver"; // Usuario de BD.
+    private static String bd = "conmetal_smi"; // Nombre de BD.
+    private static String user = "conmetal_lsp"; // Usuario de BD.
     private static String password = "root/*123"; // Password de BD.
+//    private static String bd = "sonomusic"; // Nombre de BD.
+//    private static String user = "lspserver"; // Usuario de BD.
+//    private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
-//    String server = "jdbc:mysql://conmetal.pe:3306/" + bd;
-    String server = "jdbc:mysql://"+leer()+":3306/" + bd;
+    String server = "jdbc:mysql://conmetal.pe:3306/" + bd;
+//    String server = "jdbc:mysql://"+leer()+":3306/" + bd;
 
     private String leer() {
         String server = null;
