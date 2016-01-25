@@ -21,7 +21,7 @@ import java.net.URLConnection;
  *
  * @author CONTABILIDAD 02
  */
-public class frm_loader extends javax.swing.JFrame {
+public final class frm_loader extends javax.swing.JFrame {
 
     Cl_Descargar_Instalador bajar = new Cl_Descargar_Instalador();
     Cl_Cargar_Splash hilo;
@@ -50,7 +50,7 @@ public class frm_loader extends javax.swing.JFrame {
         int version_nueva = 0;
         //REVISAR SI EXISTE NUEVA VERSION
         try {
-            URL url = new URL("http://www.lunasystemsperu.com/uploads_sm/version.txt");
+            URL url = new URL("http://www.lunasystemsperu.com/uploads_sm/version");
             URLConnection uc = url.openConnection();
             uc.connect();
             //Creamos el objeto con el que vamos a leer
@@ -61,7 +61,7 @@ public class frm_loader extends javax.swing.JFrame {
             }
             in.close();
             return version_nueva;
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException e) {
             System.out.println(e);
         }
 
@@ -157,10 +157,10 @@ public class frm_loader extends javax.swing.JFrame {
         if (progreso.getValue() == 40) {
             if (ver_actual < ver_nueva) {
                 act = 1;
-                msg.setText("Cargando Modulos ++++");
+                msg.setText("Actualizando Modulos");
             } else {
                 act = 0;
-                msg.setText("Cargando Modulos ----");
+                msg.setText("Cargando Modulos");
             }
 
         }

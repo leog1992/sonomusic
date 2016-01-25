@@ -52,7 +52,7 @@ public class Cl_Varios {
                 System.out.println("es instancia, no se debe mostrar");
                 mostrar = false;
             } else {
-                System.out.println("no lo es, puede mostrarse");
+                //System.out.println("no lo es, puede mostrarse");
             }
         }
         return mostrar;

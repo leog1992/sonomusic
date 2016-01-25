@@ -5,7 +5,6 @@
  */
 package Clases;
 
-import sonomusic.frm_loader;
 import javax.swing.JProgressBar;
 
 /**

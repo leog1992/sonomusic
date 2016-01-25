@@ -577,12 +577,14 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                         }
                         //registrar pago en detalle_pago
                         try {
+                            Double tarjeta = Double.parseDouble(txt_tarj.getText());
                             Statement st = con.conexion();
-                            String add_mov_caja = "insert into letras_pedido Values (null, '" + txt_efec.getText() + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'TARJETA')";
+                            String add_mov_caja = "insert into letras_pedido Values (null, '" + tarjeta + "', '" + ped.getFec_ped() + "', '" + ped.getId_ped() + "', 'TARJETA')";
                             System.out.println(add_mov_caja + "\n");
                             con.actualiza(st, add_mov_caja);
                             con.cerrar(st);
                         } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, ex);
                             System.err.print("Error en:" + ex.getLocalizedMessage());
 
                         }
@@ -598,7 +600,7 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
                 case "6":
                     // cambiar fecha de pago 
                     int dias = 0;
-                    if (cbx_plazo.getSelectedIndex()== 0) {
+                    if (cbx_plazo.getSelectedIndex() == 0) {
                         dias = 15;
                     } else if (cbx_plazo.getSelectedIndex() == 1) {
                         dias = 30;

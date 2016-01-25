@@ -593,6 +593,19 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 System.out.println(e.getLocalizedMessage());
             }
 
+            //eliminar pago en detalle_pago
+            try {
+                Statement st = con.conexion();
+                String del_mov_caja = "delete from letras_pedido where idPedido = '" + ped.getId_ped() + "'";
+                System.out.println(del_mov_caja + "\n");
+                con.actualiza(st, del_mov_caja);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex);
+                System.err.print("Error en:" + ex.getLocalizedMessage());
+
+            }
+
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
                     + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
@@ -928,7 +941,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_entActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        //seleccionar ventas
+        //seleccionar separaciones
         if (jComboBox1.getSelectedIndex() == 0) {
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
@@ -937,7 +950,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                     + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '2' order by p.idPedido asc";
             ver_pedidos(ver_ped);
         }
-        //seleccionar separaciones
+        //seleccionar creditos
         if (jComboBox1.getSelectedIndex() == 1) {
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
                     + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "

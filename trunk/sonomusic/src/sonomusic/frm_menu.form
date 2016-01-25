@@ -2,6 +2,24 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
+    <Container class="javax.swing.JMenuBar" name="jMenuBar2">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="File"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+          </Properties>
+        </Menu>
+      </SubComponents>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -846,6 +864,35 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu9">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="2" green="2" red="d4" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fe" green="fe" red="fe" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Acerca de"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Informacion"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem9ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar Actualizaciones"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -976,22 +1023,22 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jSeparator13" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="lbl_alm" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="txt_raz" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="lbl_ciudad" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="lbl_user" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jLabel10" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jSeparator9" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jLabel11" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jSeparator11" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jSeparator10" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="txt_ruc" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="lbl_pc" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
-                          <Component id="jSeparator12" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="txt_raz" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jSeparator10" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jSeparator13" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jSeparator11" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="jSeparator14" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel11" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jSeparator9" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel9" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jLabel10" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="lbl_ciudad" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="txt_ruc" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jSeparator12" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="lbl_alm" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="lbl_user" alignment="2" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   </Group>

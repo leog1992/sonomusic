@@ -247,24 +247,24 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txt_busKeyTyped
 
-    private int tot_reg () {
+    private int tot_reg() {
         int tot = 0;
         for (int j = 0; j < t_productos.getRowCount(); j++) {
-            tot++;            
+            tot++;
         }
         return tot;
     }
-    
+
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                String texto = txt_bus.getText();
-                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                        + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                        + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                        + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                        + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
-                pro.mostrar_productos(query);
-                jLabel3.setText(""+tot_reg());
+            String texto = txt_bus.getText();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                    + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
+            pro.mostrar_productos(query);
+            jLabel3.setText("" + tot_reg());
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -272,8 +272,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-       i = t_productos.getSelectedRow();
-        btn_kar.setEnabled(true);
+            i = t_productos.getSelectedRow();
+            btn_kar.setEnabled(true);
             if (funcion.equals("solicitar")) {
                 Object fila[] = new Object[5];
                 fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
