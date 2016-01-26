@@ -7,7 +7,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Forms.frm_reg_compra_serv;
+import Forms.frm_reg_compra;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author luis-d
  */
-public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
+public class frm_ver_compras extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
@@ -39,21 +39,20 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Productos mat = new Cl_Productos();
     DefaultTableModel mostrar;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
     Integer i;
 
     /**
      * Creates new form frm_ver_compras
      */
-    public frm_ver_compras_serv() {
+    public frm_ver_compras() {
         initComponents();
 
-        String query = "select c.idCompra, c.glosa, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'S' order by c.fecha_doc desc, c.idCompra desc";
+        String query = "select c.idcompra, c.periodo, c.ruc_prov, pr.raz_soc_pro, c.fec_com, c.fec_pago, td.desc_tipd, c.serie, c.nro, m.nombre, m.simbolo, m.siglas, c.tc, c.base, c.empresa, "
+                + "c.estado from compra as c inner join proveedor as pr on c.ruc_prov = pr.ruc_pro inner join tipo_doc as td on c.idtido = td.idtipo_doc inner join moneda as m on "
+                + "c.idmon = m.idmoneda";
         ver_compras(query);
-        t_compras.setDefaultRenderer(Object.class, new table_render());
+        txt_total.setText(ven.formato_totales(suma_compras()));
+        //     t_compras.setDefaultRenderer(Object.class, new table_render());
 
     }
 
@@ -66,58 +65,65 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                 }
             };
             mostrar.addColumn("Id");
-            mostrar.addColumn("glosa");
-            mostrar.addColumn("Fec. Compra");
+            mostrar.addColumn("Periodo");
+            mostrar.addColumn("Fec. Com.");
             mostrar.addColumn("Fec. Pago");
             mostrar.addColumn("Tipo Doc.");
-            mostrar.addColumn("Serie");
+            mostrar.addColumn("Ser.");
             mostrar.addColumn("Nro.");
             mostrar.addColumn("RUC");
             mostrar.addColumn("Razon Social");
+            mostrar.addColumn("Moneda");
+            mostrar.addColumn("Base");
+            mostrar.addColumn("Base M.N");
+            mostrar.addColumn("IGV");
             mostrar.addColumn("Total");
-            mostrar.addColumn("Almacen");
             mostrar.addColumn("Estado");
 
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
-                Object fila[] = new Object[12];
-                fila[0] = rs.getString("idCompra");
-                fila[1] = rs.getString("glosa");
-                fila[2] = ven.fechaformateada(rs.getString("fecha_doc"));
-                try {
-                    Statement st1 = con.conexion();
-                    String ver_fec = "select fec_venc from pago_compras where idCompra =  '" + rs.getString("idCompra") + "' and estado = '0' limit 1";
-                    ResultSet rs1 = con.consulta(st1, ver_fec);
-                    if (rs1.next()) {
-                        fila[3] = ven.fechaformateada(rs1.getString("fec_venc"));
-                    } else {
-                        fila[3] = ven.fechaformateada(rs.getString("fecha_pago"));
-                    }
-                    con.cerrar(rs1);
-                    con.cerrar(st1);
-                } catch (Exception e) {
-                    System.out.println(e);
+                Object fila[] = new Object[15];
+                String periodo = rs.getString("periodo");
+                int idcompra = rs.getInt("idcompra");
+                fila[0] = idcompra;
+                fila[1] = periodo;
+                fila[2] = ven.fechaformateada(rs.getString("fec_com"));
+                String fechadepago = fecha_pago(periodo, idcompra);
+                if (fechadepago.equals("7000-01-01")) {
+                    fila[3] = "-";
+                } else {
+                    fila[3] = ven.fechaformateada(fechadepago);
                 }
                 fila[4] = rs.getString("desc_tipd");
-                fila[5] = rs.getString("serie_doc");
-                fila[6] = rs.getString("nro_doc");
-                fila[7] = rs.getString("ruc_pro");
+                fila[5] = rs.getString("serie");
+                fila[6] = rs.getString("nro");
+                fila[7] = rs.getString("ruc_prov");
                 fila[8] = rs.getString("raz_soc_pro");
-                fila[9] = formato.format(rs.getDouble("total"));
-                fila[10] = rs.getString("nom_alm");
-                if (rs.getString("estado").equals("1")) {
-                    fila[11] = "PAGADO";
+                fila[9] = rs.getString("simbolo");
+                Double base;
+                if (!rs.getString("siglas").equals("PEN")) {
+                    base = rs.getDouble("base") * rs.getDouble("tc");
                 } else {
-                    fila[11] = "PENDIENTE";
+                    base = rs.getDouble("base");
                 }
+                fila[10] = ven.formato_numero(rs.getDouble("base"));
+                fila[11] = ven.formato_numero(base);
+                fila[12] = ven.formato_numero(base * 0.18);
+                fila[13] = ven.formato_numero(base * 1.18);
+                if (rs.getString("estado").equals("0")) {
+                    fila[14] = "PENDIENTE";
+                } else {
+                    fila[14] = "PAGADO";
+                }
+
                 mostrar.addRow(fila);
             }
             con.cerrar(st);
             con.cerrar(rs);
             t_compras.setModel(mostrar);
             t_compras.getColumnModel().getColumn(0).setPreferredWidth(30);
-            t_compras.getColumnModel().getColumn(1).setPreferredWidth(400);
+            t_compras.getColumnModel().getColumn(1).setPreferredWidth(60);
             t_compras.getColumnModel().getColumn(2).setPreferredWidth(75);
             t_compras.getColumnModel().getColumn(3).setPreferredWidth(75);
             t_compras.getColumnModel().getColumn(4).setPreferredWidth(80);
@@ -125,10 +131,14 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
             t_compras.getColumnModel().getColumn(6).setPreferredWidth(70);
             t_compras.getColumnModel().getColumn(7).setPreferredWidth(90);
             t_compras.getColumnModel().getColumn(8).setPreferredWidth(250);
-            t_compras.getColumnModel().getColumn(9).setPreferredWidth(60);
-            t_compras.getColumnModel().getColumn(10).setPreferredWidth(90);
-            t_compras.getColumnModel().getColumn(11).setPreferredWidth(80);
+            t_compras.getColumnModel().getColumn(9).setPreferredWidth(40);
+            t_compras.getColumnModel().getColumn(10).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(11).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(12).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(13).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(14).setPreferredWidth(70);
             ven.derecha_celda(t_compras, 0);
+            ven.centrar_celda(t_compras, 1);
             ven.centrar_celda(t_compras, 2);
             ven.centrar_celda(t_compras, 3);
             ven.centrar_celda(t_compras, 4);
@@ -136,10 +146,44 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
             ven.centrar_celda(t_compras, 6);
             ven.centrar_celda(t_compras, 7);
             ven.derecha_celda(t_compras, 9);
+            ven.derecha_celda(t_compras, 10);
+            ven.derecha_celda(t_compras, 11);
+            ven.derecha_celda(t_compras, 12);
+            ven.derecha_celda(t_compras, 13);
+            ven.centrar_celda(t_compras, 14);
 
         } catch (SQLException ex) {
             System.out.print(ex);
         }
+    }
+
+    private String fecha_pago(String periodo, int idcompra) {
+        String fecha = null;
+        try {
+            Statement st = con.conexion();
+            String ver_fec = "select fec_venc from pago_compras where idcompra = '" + idcompra + "' and periodo = '" + periodo + "' and estado = '0' order by fec_venc desc limit 1";
+            System.out.println(ver_fec);
+            ResultSet rs = con.consulta(st, ver_fec);
+            if (rs.next()) {
+                fecha = rs.getString("fec_venc");
+            } else {
+                fecha = "7000-01-01";
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return fecha;
+    }
+
+    private Double suma_compras() {
+        Double suma = 0.0;
+        int nro_filas = t_compras.getRowCount();
+        for (int j = 0; j < nro_filas; j++) {
+            suma += Double.parseDouble(t_compras.getValueAt(j, 11).toString());
+        }
+        return suma;
     }
 
     /**
@@ -160,10 +204,12 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_compras = new javax.swing.JTable();
         btn_pagar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txt_total = new javax.swing.JTextField();
 
         setClosable(true);
         setResizable(true);
-        setTitle("Ver Compras de Servicios");
+        setTitle("Ver Compras");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar por:");
@@ -227,6 +273,11 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setText("Total SOLES");
+
+        txt_total.setEditable(false);
+        txt_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -243,7 +294,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                         .addComponent(btn_anu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_pagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,6 +303,12 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_cer)
                         .addGap(9, 9, 9))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,8 +323,12 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                     .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -278,7 +339,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-        frm_reg_compra_serv compra = new frm_reg_compra_serv();
+        frm_reg_compra compra = new frm_reg_compra();
         ven.llamar_ventana(compra);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
@@ -438,7 +499,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-//  VER CUOTAS
+        //  VER CUOTAS
         frm_ver_cuota_compra cuota = new frm_ver_cuota_compra();
         pro.setRuc(t_compras.getValueAt(i, 7).toString());
         // CARGAR DATOS DE LA FACTURA
@@ -446,21 +507,8 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
         cuota.txt_raz.setText(t_compras.getValueAt(i, 8).toString());
         cuota.txt_tipd.setText(t_compras.getValueAt(i, 4).toString());
         cuota.txt_sndoc.setText(t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString());
-        cuota.txt_fec.setText(ven.fechaformateada(t_compras.getValueAt(i, 2).toString()));
-        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 9).toString()));
-        try {
-            Statement st = con.conexion();
-            String ver_cont = "select contacto, tel_contacto, tel2_contacto from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-            ResultSet rs = con.consulta(st, ver_cont);
-            if (rs.next()) {
-                cuota.txt_cont.setText(rs.getString("contacto"));
-                cuota.txt_tel.setText(rs.getString("tel_contacto") + " - " + rs.getString("tel2_contacto"));
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        cuota.txt_fec.setText(t_compras.getValueAt(i, 2).toString());
+        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 10).toString()));
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
 
@@ -490,7 +538,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                     fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
                 }
                 fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
-                fila[3] = formato.format(rs.getDouble("monto"));
+                fila[3] = ven.formato_numero(rs.getDouble("monto"));
                 if (rs.getString("estado").equals("0")) {
                     fila[4] = "Pendiente";
                 } else {
@@ -508,10 +556,10 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-        cuota.txt_dtot.setText(formato.format(com.getTotal()));
-        cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
-        cuota.txt_pen.setText(formato.format(cuota.pendiente()));
-        cuota.txt_pag.setText(formato.format(cuota.pagado()));
+        cuota.txt_dtot.setText(ven.formato_numero(com.getTotal()));
+        cuota.txt_tot.setText(ven.formato_numero(cuota.tot_cuotas()));
+        cuota.txt_pen.setText(ven.formato_numero(cuota.pendiente()));
+        cuota.txt_pag.setText(ven.formato_numero(cuota.pagado()));
         cuota.origen = "paga_servicio";
         ven.llamar_ventana(cuota);
         this.dispose();
@@ -527,7 +575,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                 fecha_tabla = formateador.parse((String) table.getValueAt(row, 3));
                 fecha_actual = formateador.parse(ven.fechaformateada(ven.getFechaActual()));
             } catch (ParseException ex) {
-                Logger.getLogger(frm_ver_compras_prod.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frm_ver_ingresos.class.getName()).log(Level.SEVERE, null, ex);
             }
             if ((fecha_tabla.before(fecha_actual) || fecha_tabla.equals(fecha_actual)) && String.valueOf(table.getValueAt(row, 11)).equals("PENDIENTE")) {
                 setBackground(Color.YELLOW);
@@ -536,7 +584,7 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
                 setBackground(Color.white);
                 setForeground(Color.black);
             }
-            
+
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
             return this;
         }
@@ -549,8 +597,10 @@ public class frm_ver_compras_serv extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_bus;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable t_compras;
     private javax.swing.JTextField txt_bus;
+    private javax.swing.JTextField txt_total;
     // End of variables declaration//GEN-END:variables
 }

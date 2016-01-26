@@ -16,7 +16,7 @@ import Clases.Cl_Varios;
 import Clases.Clase_CellEditor;
 import Clases.Clase_CellRender;
 import Clases.table_render;
-import Vistas.frm_ver_compras_prod;
+import Vistas.frm_ver_ingresos;
 import Vistas.frm_ver_productos;
 import Vistas.frm_ver_proveedores;
 import java.awt.event.KeyEvent;
@@ -37,7 +37,7 @@ import sonomusic.frm_menu;
  *
  * @author luis-d
  */
-public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
+public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
@@ -54,7 +54,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     /**
      * Creates new form frm_reg_compra
      */
-    public frm_reg_compra_prod() {
+    public frm_reg_ingreso() {
         initComponents();
         ver_almacen();
         txt_fec_com.setText(ven.fechaformateada(ven.getFechaActual()));
@@ -291,12 +291,10 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
         txt_ruc_dest.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_ruc_dest.setFocusable(false);
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("DETALLE DE COMPRA");
         jLabel8.setFocusable(false);
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 0, 0));
         jLabel9.setText("DATOS GENERALES");
         jLabel9.setFocusable(false);
@@ -722,7 +720,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_rucKeyPressed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
-        frm_ver_compras_prod compra = new frm_ver_compras_prod();
+        frm_ver_ingresos compra = new frm_ver_ingresos();
         ven.llamar_ventana(compra);
         this.dispose();
     }//GEN-LAST:event_btn_cerActionPerformed
@@ -1070,7 +1068,7 @@ public class frm_reg_compra_prod extends javax.swing.JInternalFrame {
             }
         }
 
-        frm_ver_compras_prod compra = new frm_ver_compras_prod();
+        frm_ver_ingresos compra = new frm_ver_ingresos();
         ven.llamar_ventana(compra);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed

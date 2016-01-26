@@ -7,13 +7,12 @@ package Vistas;
 
 import Clases.Cl_Conectar;
 import Clases.Cl_Proveedor;
+import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Forms.frm_reg_compra_prod;
-import Forms.frm_reg_compra_serv;
+import Forms.frm_reg_ingreso;
 import Forms.frm_reg_proveedor;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -31,6 +30,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Proveedor pro = new Cl_Proveedor();
+    Cl_Tipo_Documentos tido = new Cl_Tipo_Documentos();
     DefaultTableModel mostrar;
     public static String funcion = "proveedor";
     int i;
@@ -72,20 +72,27 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                 fila[1] = rs.getObject("raz_soc_pro");
                 fila[2] = rs.getObject("tel_pro");
                 fila[3] = rs.getObject("contacto");
-                if (rs.getString("estado").equals("1")) {
+                if (tido.validar_RUC(rs.getString("ruc_pro"))) {
                     fila[4] = "ACTIVO";
                 } else {
                     fila[4] = "-";
                 }
+//                if (rs.getString("estado").equals("1")) {
+//                    fila[4] = "ACTIVO";
+//                } else {
+//                    fila[4] = "-";
+//                }
                 mostrar.addRow(fila);
             }
             con.cerrar(st);
             con.cerrar(rs);
             t_proveedor.setModel(mostrar);
             t_proveedor.getColumnModel().getColumn(0).setPreferredWidth(80);
-            t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(300);
+            t_proveedor.getColumnModel().getColumn(1).setPreferredWidth(350);
             t_proveedor.getColumnModel().getColumn(2).setPreferredWidth(150);
-            t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(60);
+            t_proveedor.getColumnModel().getColumn(3).setPreferredWidth(200);
+            t_proveedor.getColumnModel().getColumn(4).setPreferredWidth(60);
+            ven.centrar_celda(t_proveedor, 2);
             mostrar.fireTableDataChanged();
         } catch (SQLException e) {
             System.out.print(e);
@@ -144,6 +151,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_proveedor.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 t_proveedorMouseClicked(evt);
@@ -188,7 +196,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 635, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_mod))
@@ -302,7 +310,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             txt_bus.requestFocus();
 
             if (funcion.equals("compra_prod")) {
-                frm_reg_compra_prod compra_pro = null;
+                frm_reg_ingreso compra_pro = null;
                 try {
                     Statement st = con.conexion();
                     String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
@@ -320,28 +328,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                 }
             }
 
-            if (funcion.equals("compra_serv")) {
-                frm_reg_compra_serv compra_serv = null;
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_serv.txt_ruc.setText(pro.getRuc());
-                        compra_serv.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_serv.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_serv.txt_tel.setText(rs.getString("tel_pro"));
-                        compra_serv.cbx_tipa.setSelectedIndex(0);
-                        compra_serv.cbx_tipa.setEnabled(true);
-                        compra_serv.cbx_tipa.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-
-            }
             if (funcion.equals("compras_prov")) {
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 Map<String, Object> parametros = new HashMap<>();

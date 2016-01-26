@@ -27,8 +27,8 @@ import Vistas.frm_und_medida;
 import Vistas.frm_ver_almacen;
 import Vistas.frm_ver_clasificacion;
 import Vistas.frm_ver_cliente;
-import Vistas.frm_ver_compras_prod;
-import Vistas.frm_ver_compras_serv;
+import Vistas.frm_ver_ingresos;
+import Vistas.frm_ver_compras;
 import Vistas.frm_ver_cotizacion;
 import Vistas.frm_ver_empleado;
 import Vistas.frm_ver_guias;
@@ -220,7 +220,6 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
         jMenuItem31 = new javax.swing.JMenuItem();
@@ -238,6 +237,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
@@ -910,20 +910,9 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
         jMenu3.add(jSeparator4);
 
-        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_producto.png"))); // NOI18N
-        jMenuItem15.setText("Compras Productos");
-        jMenuItem15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem15);
-
         jMenuItem21.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_servicio.png"))); // NOI18N
-        jMenuItem21.setText("Compras Servicios");
+        jMenuItem21.setText("Compras");
         jMenuItem21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1063,6 +1052,17 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem23);
+
+        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_producto.png"))); // NOI18N
+        jMenuItem15.setText("Ingreso de Productos");
+        jMenuItem15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem15);
         jMenu4.add(jSeparator3);
 
         jMenuItem27.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -1333,7 +1333,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         if (usu.getPer_compra_productos().equals("1")) {
-            frm_ver_compras_prod com = new frm_ver_compras_prod();
+            frm_ver_ingresos com = new frm_ver_ingresos();
             ven.llamar_ventana(com);
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
@@ -1350,7 +1350,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         if (usu.getPer_compra_servicios().equals("1")) {
-            frm_ver_compras_serv compra = new frm_ver_compras_serv();
+            frm_ver_compras compra = new frm_ver_compras();
             ven.llamar_ventana(compra);
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");

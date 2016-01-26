@@ -464,7 +464,7 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
             }
 
             if (accion.equals("compra_prod")) {
-                frm_reg_compra_prod compra_prod = null;
+                frm_reg_ingreso compra_prod = null;
                 compra_prod.txt_ruc_dest.setText(t_empresa.getValueAt(i, 0).toString());
                 compra_prod.cbx_alm.setEnabled(true);
                 compra_prod.cbx_alm.requestFocus();

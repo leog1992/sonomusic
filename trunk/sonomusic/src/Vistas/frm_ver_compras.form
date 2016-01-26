@@ -2,16 +2,10 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
-    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="fe" green="fe" red="fe" type="rgb"/>
-    </Property>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Ver Compras de Productos"/>
+    <Property name="title" type="java.lang.String" value="Ver Compras"/>
   </Properties>
-  <AccessibilityProperties>
-    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Ver Compras"/>
-  </AccessibilityProperties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -42,22 +36,25 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_anu" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btn_det" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_pagar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="93" max="32767" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace pref="342" max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_bus" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txt_bus" min="-2" pref="233" max="-2" attributes="0"/>
+                      <Component id="txt_bus" min="-2" pref="329" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btn_cer" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   </Group>
               </Group>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="txt_total" min="-2" pref="102" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,16 +66,19 @@
                   <Component id="txt_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_reg" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btn_det" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_anu" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_cer" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="cbx_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_pagar" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="475" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="448" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_total" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,12 +93,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_bus">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_busKeyPressed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_reg">
       <Properties>
@@ -129,21 +123,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_anuActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_det">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Recursos/clipboard_text.png"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Ver Detalle"/>
-        <Property name="enabled" type="boolean" value="false"/>
-        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-          <Insets value="[2, 8, 2, 8]"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_detActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btn_cer">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -163,14 +142,11 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
             <StringItem index="0" value="RUC"/>
-            <StringItem index="1" value="RAZON SOCIAL"/>
-            <StringItem index="2" value="NRO. DOC."/>
+            <StringItem index="1" value="Razon Social"/>
+            <StringItem index="2" value="Nro Doc."/>
           </StringArray>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_busActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
@@ -191,7 +167,7 @@
                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="autoResizeMode" type="int" value="4"/>
+            <Property name="autoResizeMode" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="t_comprasMousePressed"/>
@@ -208,15 +184,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_pagarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="PENDIENTE"/>
-            <StringItem index="1" value="PAGADOS"/>
-            <StringItem index="2" value="TODOS"/>
-          </StringArray>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Total SOLES"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_total">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
       </Properties>
     </Component>
   </SubComponents>

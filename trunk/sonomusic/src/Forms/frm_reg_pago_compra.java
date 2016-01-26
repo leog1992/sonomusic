@@ -8,8 +8,8 @@ package Forms;
 import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
-import Vistas.frm_ver_compras_prod;
-import Vistas.frm_ver_compras_serv;
+import Vistas.frm_ver_ingresos;
+import Vistas.frm_ver_compras;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -346,7 +346,7 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
 
     private void btn_cloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cloActionPerformed
         if (funcion.equals("productos")) {
-            frm_ver_compras_prod compras = new frm_ver_compras_prod();
+            frm_ver_ingresos compras = new frm_ver_ingresos();
             ven.llamar_ventana(compras);
         }
         funcion = "pagar";
@@ -396,12 +396,12 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
         }
 
         if (funcion.equals("productos")) {
-            frm_ver_compras_prod compras = new frm_ver_compras_prod();
+            frm_ver_ingresos compras = new frm_ver_ingresos();
             ven.llamar_ventana(compras);
             funcion = "pagar";
             this.dispose();
         } else {
-            frm_ver_compras_serv compra = new frm_ver_compras_serv();
+            frm_ver_compras compra = new frm_ver_compras();
             ven.llamar_ventana(compra);
             this.dispose();
             funcion = "pagar";

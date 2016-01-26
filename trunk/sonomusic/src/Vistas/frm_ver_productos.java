@@ -14,7 +14,7 @@ import Clases.Clase_CellEditor;
 import Clases.Clase_CellRender;
 import Clases.ImagenURL;
 import Clases.table_render;
-import Forms.frm_reg_compra_prod;
+import Forms.frm_reg_ingreso;
 import Forms.frm_reg_cotizacion;
 import Forms.frm_reg_ofertas;
 import Forms.frm_reg_productos;
@@ -577,7 +577,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
 
             if (ventana.equals("compra_prod")) {
-                frm_reg_compra_prod prod = null;
+                frm_reg_ingreso prod = null;
                 int tabla = prod.t_detalle.getRowCount();                   //obtener la cantidad de filas
                 String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
                 String id_prod = "";
@@ -617,7 +617,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         prod.txt_igv.setText(formato.format(prod.igv()));
                         prod.txt_tot.setText(formato.format(prod.total()));
                         prod.btn_reg.setEnabled(true);
-                        frm_reg_compra_prod.txt_idp.requestFocus();
+                        frm_reg_ingreso.txt_idp.requestFocus();
                         this.dispose();
                     }
 
@@ -628,9 +628,9 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_igv.setText(formato.format(prod.igv()));
                     prod.txt_tot.setText(formato.format(prod.total()));
                     prod.btn_reg.setEnabled(true);
-                    frm_reg_compra_prod.txt_idp.setText(t_productos.getValueAt(a, 0).toString());
-                    frm_reg_compra_prod.txt_desp.setText(t_productos.getValueAt(a, 1).toString());
-                    frm_reg_compra_prod.txt_idp.requestFocus();
+                    frm_reg_ingreso.txt_idp.setText(t_productos.getValueAt(a, 0).toString());
+                    frm_reg_ingreso.txt_desp.setText(t_productos.getValueAt(a, 1).toString());
+                    frm_reg_ingreso.txt_idp.requestFocus();
                     this.dispose();
                 }
             }
@@ -740,7 +740,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
 
             if (ventana.equals("compra_prod")) {
-                frm_reg_compra_prod prod = null;
+                frm_reg_ingreso prod = null;
                 int tabla = prod.t_detalle.getRowCount();                   //obtener la cantidad de filas
                 String id = t_productos.getValueAt(a, 0).toString();         //id del formulario ver_productos
                 String id_prod = "";
@@ -780,7 +780,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                         prod.txt_igv.setText(formato.format(prod.igv()));
                         prod.txt_tot.setText(formato.format(prod.total()));
                         prod.btn_reg.setEnabled(true);
-                        frm_reg_compra_prod.txt_idp.requestFocus();
+                        frm_reg_ingreso.txt_idp.requestFocus();
                         this.dispose();
                     }
 
@@ -791,7 +791,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_igv.setText(formato.format(prod.igv()));
                     prod.txt_tot.setText(formato.format(prod.total()));
                     prod.btn_reg.setEnabled(true);
-                    frm_reg_compra_prod.txt_idp.requestFocus();
+                    frm_reg_ingreso.txt_idp.requestFocus();
                     this.dispose();
                 }
             }

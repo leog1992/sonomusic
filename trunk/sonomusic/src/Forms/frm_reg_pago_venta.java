@@ -3,7 +3,7 @@ package Forms;
 import Clases.Cl_Conectar;
 import Clases.Cl_Pedido;
 import Clases.Cl_Varios;
-import Vistas.frm_ver_compras_prod;
+import Vistas.frm_ver_ingresos;
 import Vistas.frm_ver_letras_pedido;
 import java.awt.event.KeyEvent;
 import java.sql.Statement;
@@ -294,7 +294,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
 
     private void btn_cloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cloActionPerformed
         if (funcion.equals("productos")) {
-            frm_ver_compras_prod compras = new frm_ver_compras_prod();
+            frm_ver_ingresos compras = new frm_ver_ingresos();
             ven.llamar_ventana(compras);
         }
         funcion = "pagar";

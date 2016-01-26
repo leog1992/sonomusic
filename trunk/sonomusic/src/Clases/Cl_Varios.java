@@ -1,11 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Clases;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,6 +42,33 @@ import net.sf.jasperreports.engine.JasperReport;
 public class Cl_Varios {
 
     Cl_Conectar con = new Cl_Conectar();
+    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
+    DecimalFormat formato = null;
+
+    public String formato_numero(Double number) {
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("######0.00", simbolo);
+        String numero = "";
+        numero = formato.format(number);
+        return numero;
+    }
+
+    public String formato_tc(Double number) {
+        simbolo.setDecimalSeparator('.');
+        formato = new DecimalFormat("######0.000", simbolo);
+        String numero = "";
+        numero = formato.format(number);
+        return numero;
+    }
+
+    public String formato_totales(Double number) {
+        simbolo.setDecimalSeparator('.');
+        simbolo.setGroupingSeparator(',');
+        formato = new DecimalFormat("#,###,##0.00", simbolo);
+        String numero = "";
+        numero = formato.format(number);
+        return numero;
+    }
 
     public void llamar_ventana(JInternalFrame ventana1) {
         if (mostrar(ventana1)) {
@@ -49,7 +85,7 @@ public class Cl_Varios {
         boolean mostrar = true;
         for (int a = 0; a < sonomusic.frm_menu.contenedor.getComponentCount(); a++) {     // verificar si es instancia de algun componente que ya este en el jdesktoppane
             if (ventana1.getClass().isInstance(sonomusic.frm_menu.contenedor.getComponent(a))) {
-                System.out.println("es instancia, no se debe mostrar");
+                System.out.println("ya esta cargado, no se puede mostrar");
                 mostrar = false;
             } else {
                 //System.out.println("no lo es, puede mostrarse");
@@ -116,21 +152,6 @@ public class Cl_Varios {
         table.getColumnModel().getColumn(col).setCellRenderer(tcr);
     }
 
-    public void imprimir_java(String filename) throws IOException {
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        java.io.File fichero = new java.io.File(filename);
-        if (desktop.isSupported(Desktop.Action.PRINT)) {
-            try {
-                desktop.print(fichero);
-            } catch (Exception e) {
-                System.out.print("El sistema no permite imprimir usando la clase Desktop");
-                e.printStackTrace();
-            }
-        } else {
-            System.out.print("El sistema no permite imprimir usando la clase Desktop");
-        }
-    }
-
     public void ver_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();
 
@@ -146,14 +167,14 @@ public class Cl_Varios {
                 File file = new File("reports/" + filename + ".pdf");
                 Desktop.getDesktop().open(file);
             } catch (IOException e) {
-                System.out.print(e);
-                JOptionPane.showMessageDialog(null, "error pdf " + e);
+                System.out.print(e + " -- error io");
+                JOptionPane.showMessageDialog(null, "Error al Generar el PDF -- " + e);
             }
 
         } catch (JRException ex) {
-            System.out.print(ex);
-            JOptionPane.showMessageDialog(null, "error report " + ex);
-
+            System.out.print(ex + " -- error jre");
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error con el Reporte -- " + ex);
         }
     }
 
@@ -171,6 +192,46 @@ public class Cl_Varios {
             System.out.print(ex);
             JOptionPane.showMessageDialog(null, ex);
 
+        }
+    }
+
+    public String leer_archivo(String nom_arc) {
+        String linea = null;
+        try {
+            File Ffichero = new File(nom_arc);
+            /*Si existe el fichero*/
+            if (Ffichero.exists()) {
+                /*Abre un flujo de lectura a el fichero*/
+                BufferedReader Flee = new BufferedReader(new FileReader(Ffichero));
+                String Slinea;
+                /*Lee el fichero linea a linea hasta llegar a la ultima*/
+                while ((Slinea = Flee.readLine()) != null) {
+                    /*Imprime la linea leida*/
+                    linea = Slinea;
+                }
+                /*Cierra el flujo*/
+                Flee.close();
+            } else {
+                System.out.println("Fichero No Existe");
+                linea = "NO ALMACEN";
+            }
+        } catch (IOException ex) {
+            /*Captura un posible error y le imprime en pantalla*/
+            System.out.println(ex.getMessage());
+        }
+        return linea;
+    }
+
+    public String ceros_izquierda(int largo, String string) {
+        String ceros = "";
+        int cantidad = largo - string.length();
+        if (cantidad >= 1) {
+            for (int i = 0; i < cantidad; i++) {
+                ceros += "0";
+            }
+            return (ceros + string);
+        } else {
+            return string;
         }
     }
 }

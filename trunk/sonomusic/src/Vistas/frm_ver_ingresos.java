@@ -12,7 +12,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Forms.frm_reg_compra_prod;
+import Forms.frm_reg_ingreso;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -38,7 +38,7 @@ import sonomusic.frm_menu;
  *
  * @author luis-d
  */
-public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
+public class frm_ver_ingresos extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
@@ -56,7 +56,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     /**
      * Creates new form frm_ver_compras
      */
-    public frm_ver_compras_prod() {
+    public frm_ver_ingresos() {
         initComponents();
         java.util.Date fecha = new Date();
         simbolo.setDecimalSeparator('.');
@@ -173,7 +173,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setResizable(true);
-        setTitle("Ver Compras de Productos");
+        setTitle("Ver Ingresos de Productos");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar por:");
@@ -320,7 +320,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-        frm_reg_compra_prod compra = new frm_reg_compra_prod();
+        frm_reg_ingreso compra = new frm_reg_ingreso();
         ven.llamar_ventana(compra);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
@@ -520,19 +520,6 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
         cuota.txt_sndoc.setText(t_compras.getValueAt(i, 4).toString() + " - " + t_compras.getValueAt(i, 5).toString());
         cuota.txt_fec.setText(ven.fechaformateada(t_compras.getValueAt(i, 1).toString()));
         com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 8).toString()));
-        try {
-            Statement st = con.conexion();
-            String ver_cont = "select contacto, tel_contacto, tel2_contacto from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-            ResultSet rs = con.consulta(st, ver_cont);
-            if (rs.next()) {
-                cuota.txt_cont.setText(rs.getString("contacto"));
-                cuota.txt_tel.setText(rs.getString("tel_contacto") + " - " + rs.getString("tel2_contacto"));
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
 
@@ -628,7 +615,7 @@ public class frm_ver_compras_prod extends javax.swing.JInternalFrame {
                 fecha_tabla = formateador.parse((String) table.getValueAt(row, 2));
                 fecha_actual = formateador.parse(ven.fechaformateada(ven.getFechaActual()));
             } catch (ParseException ex) {
-                Logger.getLogger(frm_ver_compras_prod.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frm_ver_ingresos.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (fecha_tabla.before(fecha_actual) && String.valueOf(table.getValueAt(row, 10)).equals("PENDIENTE")) {
                 setBackground(Color.YELLOW);

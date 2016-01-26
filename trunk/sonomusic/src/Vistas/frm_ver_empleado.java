@@ -379,9 +379,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         String retira = "update empleados set est_per = '0' where dni = '" + emp.getDni() + "'";
         con.actualiza(st, retira);
         con.cerrar(st);
-        String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e"
-                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c"
-                + "on e.idCargo=c.idCargo order by dni asc";
+        String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
+                + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
         ver_empleado(query);
         //} else {
         //  JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
@@ -417,9 +417,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         String ingresa = "update empleados set est_per = '1' where dni = '" + emp.getDni() + "'";
         con.actualiza(st, ingresa);
         con.cerrar(st);
-        String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e\n"
-                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c \n"
-                + "on e.idCargo=c.idCargo order by dni asc";
+        String query = "sselect e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
+                + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
+                + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
         ver_empleado(query);
         //} else {
         // JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
