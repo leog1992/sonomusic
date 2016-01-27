@@ -13,26 +13,15 @@ import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
 import Forms.frm_reg_ingreso;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import sonomusic.frm_menu;
 
 /**
  *
@@ -48,8 +37,6 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Productos art = new Cl_Productos();
     DefaultTableModel mostrar;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
-    DecimalFormat formato = null;
     Integer i;
     String valor;
 
@@ -59,13 +46,12 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
     public frm_ver_ingresos() {
         initComponents();
         java.util.Date fecha = new Date();
-        simbolo.setDecimalSeparator('.');
-        formato = new DecimalFormat("####0.00", simbolo);
-        String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '"+fecha.getMonth()+"'  and c.estado = '2' order by c.fecha_doc desc, c.idCompra desc";
+        int mes = fecha.getMonth();
+        int anio = fecha.getYear() + 1900;
+        String query = "select c.idCompra, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from ingreso as c "
+                + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on c.idAlmacen=a.idAlmacen where "
+                + "c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '" + mes + "' and YEAR(c.fecha_doc) > '" + anio + "' and c.estado = '2' order by c.fecha_doc desc, c.idCompra desc";
         ver_compras(query);
-        t_compras.setDefaultRenderer(Object.class, new table_render());
 
     }
 
@@ -79,48 +65,29 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             };
             mostrar.addColumn("Id");
             mostrar.addColumn("Fec. Compra");
-            mostrar.addColumn("Fec. Pago");
             mostrar.addColumn("Tipo Doc.");
             mostrar.addColumn("Serie");
             mostrar.addColumn("Nro.");
             mostrar.addColumn("RUC");
             mostrar.addColumn("Razon Social");
+            mostrar.addColumn("Moneda");
             mostrar.addColumn("Total");
             mostrar.addColumn("Almacen");
-            mostrar.addColumn("Estado");
 
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
-                Object fila[] = new Object[11];
+                Object fila[] = new Object[10];
                 fila[0] = rs.getString("idCompra");
                 fila[1] = ven.fechaformateada(rs.getString("fecha_doc"));
-                try {
-                    Statement st1 = con.conexion();
-                    String ver_fec = "select fec_venc from pago_compras where idCompra =  '" + rs.getString("idCompra") + "' and estado = '0' limit 1";
-                    ResultSet rs1 = con.consulta(st1, ver_fec);
-                    if (rs1.next()) {
-                        fila[2] = ven.fechaformateada(rs1.getString("fec_venc"));
-                    } else {
-                        fila[2] = ven.fechaformateada(rs.getString("fecha_pago"));
-                    }
-                    con.cerrar(rs1);
-                    con.cerrar(st1);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                fila[3] = rs.getString("desc_tipd");
-                fila[4] = rs.getString("serie_doc");
-                fila[5] = rs.getString("nro_doc");
-                fila[6] = rs.getString("ruc_pro");
-                fila[7] = rs.getString("raz_soc_pro");
-                fila[8] = formato.format(rs.getDouble("total"));
+                fila[2] = rs.getString("desc_tipd");
+                fila[3] = rs.getString("serie_doc");
+                fila[4] = rs.getString("nro_doc");
+                fila[5] = rs.getString("ruc_pro");
+                fila[6] = rs.getString("raz_soc_pro");
+                fila[7] = "--";
+                fila[8] = ven.formato_numero(rs.getDouble("total"));
                 fila[9] = rs.getString("nom_alm");
-                if (rs.getString("estado").equals("1")) {
-                    fila[10] = "PAGADO";
-                } else {
-                    fila[10] = "PENDIENTE";
-                }
                 mostrar.addRow(fila);
             }
             con.cerrar(st);
@@ -128,21 +95,14 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             t_compras.setModel(mostrar);
             t_compras.getColumnModel().getColumn(0).setPreferredWidth(30);
             t_compras.getColumnModel().getColumn(1).setPreferredWidth(75);
-            t_compras.getColumnModel().getColumn(2).setPreferredWidth(75);
-            t_compras.getColumnModel().getColumn(3).setPreferredWidth(80);
-            t_compras.getColumnModel().getColumn(4).setPreferredWidth(35);
-            t_compras.getColumnModel().getColumn(4).setPreferredWidth(35);
-            t_compras.getColumnModel().getColumn(5).setPreferredWidth(70);
-            t_compras.getColumnModel().getColumn(6).setPreferredWidth(90);
-            t_compras.getColumnModel().getColumn(7).setPreferredWidth(250);
+            t_compras.getColumnModel().getColumn(2).setPreferredWidth(80);
+            t_compras.getColumnModel().getColumn(3).setPreferredWidth(35);
+            t_compras.getColumnModel().getColumn(4).setPreferredWidth(45);
+            t_compras.getColumnModel().getColumn(5).setPreferredWidth(90);
+            t_compras.getColumnModel().getColumn(6).setPreferredWidth(250);
+            t_compras.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_compras.getColumnModel().getColumn(8).setPreferredWidth(60);
             t_compras.getColumnModel().getColumn(9).setPreferredWidth(80);
-            t_compras.getColumnModel().getColumn(10).setPreferredWidth(80);
-            //ven.centrar_celda(t_compras, 1);
-//            ven.centrar_celda(t_compras, 2);
-//            ven.centrar_celda(t_compras, 4);
-//            ven.centrar_celda(t_compras, 5);
-//            ven.derecha_celda(t_compras, 8);
 
         } catch (SQLException ex) {
             System.out.print(ex);
@@ -167,8 +127,6 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
         cbx_bus = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_compras = new javax.swing.JTable();
-        btn_pagar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -251,16 +209,6 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(t_compras);
 
-        btn_pagar.setText("Pagar");
-        btn_pagar.setEnabled(false);
-        btn_pagar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pagarActionPerformed(evt);
-            }
-        });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PENDIENTE", "PAGADOS", "TODOS" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -277,11 +225,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
                         .addComponent(btn_anu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_det)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_pagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,11 +246,9 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
                     .addComponent(btn_det, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_anu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -327,14 +269,8 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
 
     private void t_comprasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_comprasMousePressed
         i = t_compras.getSelectedRow();
-        com.setEst(t_compras.getValueAt(i, 10).toString());
         btn_anu.setEnabled(true);
         btn_det.setEnabled(true);
-        if (!com.getEst().equals("PAGADO")) {
-            btn_pagar.setEnabled(true);
-        } else {
-            btn_pagar.setEnabled(false);
-        }
     }//GEN-LAST:event_t_comprasMousePressed
 
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
@@ -473,25 +409,6 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             }
             System.out.print("Eliminando detalle de compra \n");
 
-            //  registrar en movimientos. 
-            if (t_compras.getValueAt(i, 10).equals("PAGADO")) {
-                String glosa = "ANULACION DE COMPRA - " + t_compras.getValueAt(i, 3) + " / " + t_compras.getValueAt(i, 4) + " - " + t_compras.getValueAt(i, 5) + " - " + pro.getRuc();
-                try {
-                    Statement st = con.conexion();
-                    String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + com.getFec_com() + "', '" + monto + "', '0.00' , '" + frm_menu.lbl_user.getText() + "', "
-                            + " 'C', '1')";
-                    con.actualiza(st, add_mov);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-            }
-
-            String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                    + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                    + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' order by c.fecha_doc desc, c.idCompra desc";
-            ver_compras(query);
-
             System.out.print("Mostrando lista \n");
             txt_bus.requestFocus();
 
@@ -508,74 +425,6 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btn_detActionPerformed
-
-    private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
-//  VER CUOTAS
-        frm_ver_cuota_compra cuota = new frm_ver_cuota_compra();
-        pro.setRuc(t_compras.getValueAt(i, 6).toString());
-        // CARGAR DATOS DE LA FACTURA
-        cuota.txt_ruc.setText(t_compras.getValueAt(i, 6).toString());
-        cuota.txt_raz.setText(t_compras.getValueAt(i, 7).toString());
-        cuota.txt_tipd.setText(t_compras.getValueAt(i, 3).toString());
-        cuota.txt_sndoc.setText(t_compras.getValueAt(i, 4).toString() + " - " + t_compras.getValueAt(i, 5).toString());
-        cuota.txt_fec.setText(ven.fechaformateada(t_compras.getValueAt(i, 1).toString()));
-        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 8).toString()));
-        com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-        cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-
-        //  CARGAR CUOTAS GENERADAS EN COMPRA
-        try {
-
-            cuota.mostrar = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int fila, int columna) {
-                    return false;
-                }
-            };
-            cuota.mostrar.addColumn("Nro Cuota");
-            cuota.mostrar.addColumn("Fecha Pago");
-            cuota.mostrar.addColumn("Fec. Venc.");
-            cuota.mostrar.addColumn("Monto");
-            cuota.mostrar.addColumn("Estado");
-            Statement st = con.conexion();
-            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
-            ResultSet rs = con.consulta(st, ver_cuotas);
-            while (rs.next()) {
-                Object fila[] = new Object[5];
-                fila[0] = rs.getString("idpago");
-                if (rs.getString("fec_pago").equals("7000-01-01")) {
-                    fila[1] = "-";
-                } else {
-                    fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
-                }
-                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
-                fila[3] = formato.format(rs.getDouble("monto"));
-                if (rs.getString("estado").equals("0")) {
-                    fila[4] = "Pendiente";
-                } else {
-                    fila[4] = "Pagado";
-                }
-                cuota.mostrar.addRow(fila);
-            }
-            cuota.t_cuotas.setModel(cuota.mostrar);
-            ven.centrar_celda(cuota.t_cuotas, 1);
-            ven.centrar_celda(cuota.t_cuotas, 2);
-            ven.derecha_celda(cuota.t_cuotas, 3);
-            ven.centrar_celda(cuota.t_cuotas, 4);
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        cuota.txt_dtot.setText(formato.format(com.getTotal()));
-        cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
-        cuota.txt_pen.setText(formato.format(cuota.pendiente()));
-        cuota.txt_pag.setText(formato.format(cuota.pagado()));
-        cuota.origen = "paga_producto";
-        ven.llamar_ventana(cuota);
-        this.dispose();
-
-    }//GEN-LAST:event_btn_pagarActionPerformed
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -605,40 +454,13 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
         txt_bus.requestFocus();
     }//GEN-LAST:event_cbx_busActionPerformed
 
-    public class table_render extends DefaultTableCellRenderer {
-
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-            SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-            Date fecha_tabla = null;
-            Date fecha_actual = null;
-            try {
-                fecha_tabla = formateador.parse((String) table.getValueAt(row, 2));
-                fecha_actual = formateador.parse(ven.fechaformateada(ven.getFechaActual()));
-            } catch (ParseException ex) {
-                Logger.getLogger(frm_ver_ingresos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (fecha_tabla.before(fecha_actual) && String.valueOf(table.getValueAt(row, 10)).equals("PENDIENTE")) {
-                setBackground(Color.YELLOW);
-                setForeground(Color.black);
-            } else {
-                setBackground(Color.white);
-                setForeground(Color.black);
-            }
-            
-            super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-            return this;
-        }
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anu;
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_det;
-    private javax.swing.JButton btn_pagar;
     private javax.swing.JButton btn_reg;
     private javax.swing.JComboBox cbx_bus;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable t_compras;

@@ -9,7 +9,6 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Forms.frm_reg_ingreso;
 import Forms.frm_reg_proveedor;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -300,7 +299,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked
-        int i;
         i = t_proveedor.getSelectedRow();
         pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
         btn_mod.setEnabled(true);
@@ -308,25 +306,6 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-
-            if (funcion.equals("compra_prod")) {
-                frm_reg_ingreso compra_pro = null;
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        compra_pro.txt_ruc.setText(pro.getRuc());
-                        compra_pro.txt_raz.setText(rs.getString("raz_soc_pro"));
-                        compra_pro.txt_dir.setText(rs.getString("dir_pro"));
-                        compra_pro.btn_bus_emp.setEnabled(true);
-                        compra_pro.btn_bus_emp.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
 
             if (funcion.equals("compras_prov")) {
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());

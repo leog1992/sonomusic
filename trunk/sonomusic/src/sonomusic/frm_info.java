@@ -44,7 +44,7 @@ public class frm_info extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lsp_nb.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("contaPLUS");
+        jLabel2.setText("Sono Music Import - POS");
 
         jLabel3.setText("Luna Systems Peru");
 
@@ -57,7 +57,7 @@ public class frm_info extends javax.swing.JInternalFrame {
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("contaPLUS, pequeño aplicativo para llevar ordenadamento el registro de compras y ventas de tus empresas, y a la vez generar el Libro Electronico de cada para exportarlo al PLE\n");
+        jTextArea1.setText("software para la gestion de tienda de Instrumentos Musicales y Accesorios.\nCompras, Ventas, Ingresos a Almacen, Deudas, Cobros, Caja Chica, Bancos, Pago a Personal, Adelantos, Metas, Reportes Web");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setFocusable(false);
         jScrollPane1.setViewportView(jTextArea1);
@@ -108,15 +108,15 @@ public class frm_info extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();

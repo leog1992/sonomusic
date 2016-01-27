@@ -69,8 +69,8 @@
                   </Group>
                   <Component id="jLabel1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="89" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -96,7 +96,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="contaPLUS"/>
+        <Property name="text" type="java.lang.String" value="Sono Music Import - POS"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -130,7 +130,7 @@
             </Property>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="contaPLUS, peque&#xf1;o aplicativo para llevar ordenadamento el registro de compras y ventas de tus empresas, y a la vez generar el Libro Electronico de cada para exportarlo al PLE&#xa;"/>
+            <Property name="text" type="java.lang.String" value="software para la gestion de tienda de Instrumentos Musicales y Accesorios.&#xa;Compras, Ventas, Ingresos a Almacen, Deudas, Cobros, Caja Chica, Bancos, Pago a Personal, Adelantos, Metas, Reportes Web"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
