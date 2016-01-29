@@ -13,8 +13,6 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,21 +23,19 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
-    public Cl_Compra com = new Cl_Compra();
+    public static Cl_Compra com = new Cl_Compra();
+    public static String periodo;
     public double monto;
     public String fec_pag;
     public String fec_venc;
     public String est;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
-    DecimalFormat formato = null;
+    public static int moneda;
 
     /**
      * Creates new form frm_reg_cuota
      */
     public frm_reg_cuota() {
         initComponents();
-        simbolo.setDecimalSeparator('.');
-        formato = new DecimalFormat("####0.00", simbolo);
     }
 
     /**
@@ -166,7 +162,8 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
         llenar();
         try {
             Statement st = con.conexion();
-            String ins_cuota = "insert into pago_compras Values (null, '" + com.getId() + "', '7000-01-01', '" + fec_venc + "', '" + monto + "', '0')";
+            String ins_cuota = "insert into pago_compras Values (null, '" + periodo + "','" + com.getId() + "', '" + fec_venc + "', '" + monto + "','7000-01-01', "
+                    + "'" + moneda + "', '0.0','0','0')";
             con.actualiza(st, ins_cuota);
             con.cerrar(st);
         } catch (Exception ex) {
@@ -183,31 +180,59 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
                 }
             };
             mostrar.addColumn("Nro Cuota");
-            mostrar.addColumn("Fecha Pago");
             mostrar.addColumn("Fec. Venc.");
+            mostrar.addColumn("Cuota");
+            mostrar.addColumn("Fecha Pago");
+            mostrar.addColumn("Moneda");
+            mostrar.addColumn("Tipo Cambio");
             mostrar.addColumn("Monto");
             mostrar.addColumn("Estado");
+
             Statement st = con.conexion();
-            String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
+            String ver_cuotas = "select pc.idpago, pc.fec_venc, pc.fec_pago, pc.monto_cuota, m.simbolo, pc.tc, pc.monto, pc.estado from pago_compras as pc inner join moneda as m "
+                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "'";
             ResultSet rs = con.consulta(st, ver_cuotas);
+            Double tot_cuotas = 0.0;
+            Double tot_monto = 0.0;
             while (rs.next()) {
-                Object fila[] = new Object[5];
+                Object fila[] = new Object[8];
                 fila[0] = rs.getString("idpago");
-                fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
-                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
-                fila[3] = rs.getDouble("monto");
-                if (rs.getString("estado").equals("0")) {
-                    fila[4] = "Pendiente";
+                fila[1] = ven.fechaformateada(rs.getString("fec_venc"));
+                fila[2] = rs.getDouble("monto_cuota");
+                tot_cuotas += rs.getDouble("monto_cuota");
+                if (rs.getString("fec_pago").equals("7000-01-01")) {
+                    fila[3] = "-";
                 } else {
-                    fila[4] = "Pagado";
+                    fila[3] = ven.fechaformateada(rs.getString("fec_pago"));
+                }
+                fila[4] = rs.getString("simbolo");
+                fila[5] = ven.formato_tc(rs.getDouble("tc"));
+                fila[6] = ven.formato_numero(rs.getDouble("monto"));
+                tot_monto += rs.getDouble("monto");
+                if (rs.getString("estado").equals("0")) {
+                    fila[7] = "Pendiente";
+                } else {
+                    fila[7] = "Pagado";
                 }
                 mostrar.addRow(fila);
             }
             cuota.t_cuotas.setModel(mostrar);
             cuota.t_cuotas.updateUI();
-//            cuota.txt_tot.setText(formato.format(cuota.tot_cuotas()));
-//            cuota.txt_pen.setText(formato.format(cuota.pendiente()));
-//            cuota.txt_pag.setText(formato.format(cuota.pagado()));
+            ven.derecha_celda(cuota.t_cuotas, 0);
+            ven.centrar_celda(cuota.t_cuotas, 1);
+            ven.derecha_celda(cuota.t_cuotas, 2);
+            ven.centrar_celda(cuota.t_cuotas, 3);
+            ven.derecha_celda(cuota.t_cuotas, 4);
+            ven.derecha_celda(cuota.t_cuotas, 5);
+            ven.derecha_celda(cuota.t_cuotas, 6);
+            ven.centrar_celda(cuota.t_cuotas, 7);
+            cuota.txt_dtot.setText(ven.formato_numero(com.getTotal()));
+            cuota.txt_tot.setText(ven.formato_numero(tot_cuotas));
+            cuota.txt_pen.setText(ven.formato_numero(com.getTotal() - tot_monto));
+            cuota.txt_pag.setText(ven.formato_numero(tot_monto));
+            if (tot_cuotas == com.getTotal()) {
+                cuota.btn_addc.setEnabled(false);
+            }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException e) {

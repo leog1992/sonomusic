@@ -38,6 +38,7 @@ public class frm_info extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setTitle("Acerca de contaPLUS - Luna Systems Peru");
 

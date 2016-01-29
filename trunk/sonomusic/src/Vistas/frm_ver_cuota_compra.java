@@ -13,8 +13,6 @@ import Forms.frm_reg_pago_compra;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,6 +27,8 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
     public Cl_Compra com = new Cl_Compra();
     public DefaultTableModel mostrar;
     public static String origen;
+    public static String periodo;
+    public static int moneda;
     int i;
 
     /**
@@ -42,7 +42,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         double total = 0;
         int filas = t_cuotas.getRowCount();
         for (int j = 0; j < filas; j++) {
-            total += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
+            total += Double.parseDouble(t_cuotas.getValueAt(j, 2).toString());
         }
         return total;
     }
@@ -59,7 +59,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         int filas = t_cuotas.getRowCount();
         for (int j = 0; j < filas; j++) {
             if (t_cuotas.getValueAt(j, 4).equals("Pagado")) {
-                pagado += Double.parseDouble(t_cuotas.getValueAt(j, 3).toString());
+                pagado += Double.parseDouble(t_cuotas.getValueAt(j, 6).toString());
             }
         }
         return pagado;
@@ -385,21 +385,22 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
 
     private void btn_addcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcActionPerformed
         frm_reg_cuota reg = new frm_reg_cuota();
+        frm_reg_cuota.periodo = periodo;
+        frm_reg_cuota.moneda= moneda;
+        frm_reg_cuota.com.setTotal(com.getTotal());
         reg.com.setId(com.getId());
         ven.llamar_ventana(reg);
     }//GEN-LAST:event_btn_addcActionPerformed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
-        if (origen.equals("paga_producto")) {
-            frm_ver_ingresos producto = new frm_ver_ingresos();
-            ven.llamar_ventana(producto);
-        }
+        frm_ver_compras compras = new frm_ver_compras();
+        ven.llamar_ventana(compras);
         this.dispose();
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void t_cuotasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_cuotasMousePressed
         i = t_cuotas.getSelectedRow();
-        String estado = t_cuotas.getValueAt(i, 4).toString();
+        String estado = t_cuotas.getValueAt(i, 7).toString();
         if (estado.equals("Pendiente")) {
             btn_regp.setEnabled(true);
             btn_elic.setEnabled(true);
@@ -442,11 +443,6 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         pagar.txt_sal.setText(ven.formato_numero(restante));
         pagar.restante = restante;
         pagar.com.setId(com.getId());
-        if (origen.equals("paga_producto")) {
-            pagar.funcion = "productos";
-        } else {
-            pagar.funcion = "servicios";
-        }
         pagar.glosa = "PAGO DE COMPRA - " + txt_tipd.getText() + " / " + txt_sndoc.getText() + " - " + txt_ruc.getText();
         ven.llamar_ventana(pagar);
         this.dispose();
@@ -465,62 +461,62 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-            } 
-            
+            }
+
             //CARGAR REGISTROS EN TABLA
             try {
-            
-            mostrar = new DefaultTableModel() {
-                @Override
-                public boolean isCellEditable(int fila, int columna) {
-                    return false;
+
+                mostrar = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int fila, int columna) {
+                        return false;
+                    }
+                };
+                mostrar.addColumn("Nro Cuota");
+                mostrar.addColumn("Fecha Pago");
+                mostrar.addColumn("Fec. Venc.");
+                mostrar.addColumn("Monto");
+                mostrar.addColumn("Estado");
+                Statement st = con.conexion();
+                String ver_cuotas = "select * from pago_compras where idCompra = '" + com.getId() + "'";
+                ResultSet rs = con.consulta(st, ver_cuotas);
+                while (rs.next()) {
+                    Object fila[] = new Object[5];
+                    fila[0] = rs.getString("idpago");
+                    if (rs.getString("fec_pago").equals("7000-01-01")) {
+                        fila[1] = "-";
+                    } else {
+                        fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
+                    }
+                    fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
+                    fila[3] = ven.formato_numero(rs.getDouble("monto"));
+                    if (rs.getString("estado").equals("0")) {
+                        fila[4] = "Pendiente";
+                    } else {
+                        fila[4] = "Pagado";
+                    }
+                    mostrar.addRow(fila);
                 }
-            };
-            mostrar.addColumn("Nro Cuota");
-            mostrar.addColumn("Fecha Pago");
-            mostrar.addColumn("Fec. Venc.");
-            mostrar.addColumn("Monto");
-            mostrar.addColumn("Estado");
-            Statement st = con.conexion();
-            String ver_cuotas = "select * from pago_compras where idCompra = '"+com.getId()+"'";
-            ResultSet rs = con.consulta(st, ver_cuotas);
-            while (rs.next()) {
-                Object fila[] = new Object[5];
-                fila[0] = rs.getString("idpago");
-                if (rs.getString("fec_pago").equals("7000-01-01")){
-                    fila[1] = "-";
-                } else {
-                    fila[1] = ven.fechaformateada(rs.getString("fec_pago"));
-                }
-                fila[2] = ven.fechaformateada(rs.getString("fec_venc"));
-                fila[3] = ven.formato_numero(rs.getDouble("monto"));
-                if (rs.getString("estado").equals("0")) {
-                    fila[4] = "Pendiente";
-                } else {
-                    fila[4] = "Pagado";
-                }
-                mostrar.addRow(fila);
+                t_cuotas.setModel(mostrar);
+                ven.centrar_celda(t_cuotas, 1);
+                ven.centrar_celda(t_cuotas, 2);
+                ven.derecha_celda(t_cuotas, 3);
+                ven.centrar_celda(t_cuotas, 4);
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            t_cuotas.setModel(mostrar);
-            ven.centrar_celda(t_cuotas, 1);
-            ven.centrar_celda(t_cuotas, 2);
-            ven.derecha_celda(t_cuotas, 3);
-            ven.centrar_celda(t_cuotas, 4);
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        txt_dtot.setText(ven.formato_numero(com.getTotal()));
-        txt_tot.setText(ven.formato_numero(tot_cuotas()));
-        txt_pen.setText(ven.formato_numero(pendiente()));
-        txt_pag.setText(ven.formato_numero(pagado()));
+            txt_dtot.setText(ven.formato_numero(com.getTotal()));
+            txt_tot.setText(ven.formato_numero(tot_cuotas()));
+            txt_pen.setText(ven.formato_numero(pendiente()));
+            txt_pag.setText(ven.formato_numero(pagado()));
         }
     }//GEN-LAST:event_btn_elicActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_addc;
+    public static javax.swing.JButton btn_addc;
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_elic;
     private javax.swing.JButton btn_regp;
@@ -540,13 +536,13 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
     public static javax.swing.JTable t_cuotas;
     public static javax.swing.JTextField txt_dtot;
     public static javax.swing.JFormattedTextField txt_fec;
-    private javax.swing.JTextField txt_mon;
+    public static javax.swing.JTextField txt_mon;
     public static javax.swing.JTextField txt_pag;
     public static javax.swing.JTextField txt_pen;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_ruc;
     public static javax.swing.JTextField txt_sndoc;
-    private javax.swing.JTextField txt_tc;
+    public static javax.swing.JTextField txt_tc;
     public static javax.swing.JTextField txt_tipd;
     public static javax.swing.JTextField txt_tot;
     // End of variables declaration//GEN-END:variables

@@ -629,7 +629,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 btn_anu.setEnabled(true);
                 btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
-                btn_pagar.setEnabled(false);
+                btn_pagar.setEnabled(true);
                 break;
             case "ANULADO":
                 btn_anu.setEnabled(false);
@@ -666,6 +666,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
         frm_ver_letras_pedido letras = new frm_ver_letras_pedido();
+        String est = t_facturas.getValueAt(i, 10).toString();
+        if (est.equals("PAGADO")) {
+            letras.btn_registrar.setEnabled(false);
+        } 
         letras.lbl_dni.setText(t_facturas.getValueAt(i, 4).toString());
         letras.lbl_nombre.setText(t_facturas.getValueAt(i, 5).toString());
         letras.lbl_tipo_doc.setText(t_facturas.getValueAt(i, 3).toString());
@@ -923,6 +927,17 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
+
+        //cambiar pagos de separacion a boleta entregada
+//        try {
+//            Statement st = con.conexion();
+//            String upd_letra_pedido = "update letras_pedido set idPedido = '" + ped.getId_ped() + "' where idPedido = '" + separacion + "'";
+//            System.out.println(upd_letra_pedido);
+//            con.actualiza(st, upd_letra_pedido);
+//            con.cerrar(st);
+//        } catch (Exception e) {
+//            System.out.println(e.getLocalizedMessage());
+//        }
 
         Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
         imprime.set_tipv("BOLETA");

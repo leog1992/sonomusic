@@ -142,6 +142,8 @@ public class frm_ver_pago extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        frm_ver_empleado empleado = new frm_ver_empleado();
+        ven.llamar_ventana(empleado);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

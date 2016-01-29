@@ -665,7 +665,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         String raz = "";
         String dir = "";
         if (accion.equals("traslado")) {
-
+            String almacen = "HACIA TIENDA " + cbx_alm_de.getSelectedItem().toString();
             try {
                 int idalma = cbx_alm_de.getSelectedIndex() + 1;
                 Statement st = con.conexion();
@@ -790,7 +790,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getCos_pro() + "',"
-                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_or + "', '" + ruc + "', '" + raz + "', '11')";
+                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
                     con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {
@@ -800,7 +800,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         }
         if (accion.equals("compruebat")) {
-
+            String almacen = "DESDE TIENDA " + cbx_alm_or.getSelectedItem().toString();
             try {
                 int idalma = cbx_alm_de.getSelectedIndex() + 1;
                 Statement st = con.conexion();
@@ -876,7 +876,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 try {
                     Statement st = con.conexion();
                     String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getCos_pro() + "', '0.00', '0.00', "
-                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_de + "', '" + ruc + "', '" + raz + "', '11')";
+                            + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_de + "', '" + ruc + "', '" + almacen + "', '11')";
                     con.actualiza(st, ins_kardex);
                     con.cerrar(st);
                 } catch (Exception ex) {

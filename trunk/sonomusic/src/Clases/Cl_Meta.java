@@ -97,7 +97,7 @@ public class Cl_Meta {
         Double monto = 0.00;
         try {
             Statement st = con.conexion();
-            String metas = "select monto from metas where curdate() between fec_inicio and fec_fin and idCargo = '"+idcar+"' order by idMetas desc limit 1";
+            String metas = "select monto from metas where curdate() between fec_inicio and fec_fin order by idMetas desc limit 1";
             ResultSet rs = con.consulta(st, metas);
             if (rs.next()) {
                 monto = rs.getDouble("monto");

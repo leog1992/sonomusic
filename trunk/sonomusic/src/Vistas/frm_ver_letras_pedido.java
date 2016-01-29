@@ -347,7 +347,7 @@ public class frm_ver_letras_pedido extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anular;
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_registrar;
+    public static javax.swing.JButton btn_registrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

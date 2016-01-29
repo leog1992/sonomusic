@@ -16,6 +16,7 @@ import Forms.frm_reg_deposito;
 import Forms.frm_reg_empresa;
 import Forms.frm_reg_venta;
 import Forms.frm_rpt_fechas;
+import Forms.frm_tipo_cambio;
 import Vistas.frm_banco;
 import Vistas.frm_cargos;
 import Vistas.frm_cuentas;
@@ -41,10 +42,6 @@ import Vistas.frm_ver_solicitudes;
 import Vistas.frm_ver_usuarios;
 import Vistas.frm_ver_venta;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,7 +65,9 @@ public class frm_menu extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         capt_nom_pc();
-        ver_id_almacen();
+        String nom_alm = ven.leer_archivo("almacen.txt");
+        ver_id_almacen(nom_alm);
+        ver_tipo_cambio();
         lbl_alm.setText(alm.getNom());
         lbl_ciudad.setText(alm.getCiudad());
         txt_ruc.setText(alm.getRuc());
@@ -81,45 +80,33 @@ public class frm_menu extends javax.swing.JFrame {
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
 
-    private String leer_almacen() {
-        String almacen = null;
-        try {
-            File Ffichero = new File("almacen.txt");
-
-            /*Si existe el fichero*/
-            if (Ffichero.exists()) {
-                /*Abre un flujo de lectura a el fichero*/
-                BufferedReader Flee = new BufferedReader(new FileReader(Ffichero));
-                String Slinea;
-                //System.out.println("**********Leyendo Fichero***********");  
-                /*Lee el fichero linea a linea hasta llegar a la ultima*/
-                while ((Slinea = Flee.readLine()) != null) {
-                    /*Imprime la linea leida*/
-                    almacen = Slinea;
-                    // System.out.println(Slinea);                
-                }
-                //System.out.println("*********Fin Leer Fichero**********");  
-                /*Cierra el flujo*/
-                Flee.close();
-                //return txt_alm;
-            } else {
-                System.out.println("Fichero No Existe");
-            }
-        } catch (IOException ex) {
-            /*Captura un posible error y le imprime en pantalla*/
-            System.out.println(ex.getMessage());
-        }
-        return almacen;
-    }
-
     private void capt_nom_pc() {
         lbl_pc.setText(System.getProperty("user.name").toUpperCase());
     }
 
-    private void ver_id_almacen() {
+    private void ver_tipo_cambio() {
         try {
             Statement st = con.conexion();
-            String ver_id = "select idAlmacen, nom_alm, dir_alm, ciudad, raz_soc, ruc, cuenta from almacen where nom_alm = '" + leer_almacen() + "'";
+            String ver_tc = "select compra, venta from tipo_cambio where fecha = '" + ven.getFechaActual() + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                lbl_venta.setText(rs.getString("venta"));
+                lbl_compra.setText(rs.getString("compra"));
+            } else {
+                lbl_venta.setText("0.000");
+                lbl_compra.setText("0.000");
+                frm_tipo_cambio cambio = new frm_tipo_cambio();
+                ven.llamar_ventana(cambio);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
+    private void ver_id_almacen(String nom_alm) {
+        try {
+            Statement st = con.conexion();
+            String ver_id = "select idAlmacen, nom_alm, dir_alm, ciudad, raz_soc, ruc, cuenta from almacen where nom_alm = '" + nom_alm + "'";
             ResultSet rs = con.consulta(st, ver_id);
             if (rs.next()) {
                 alm.setId(rs.getInt("idAlmacen"));
@@ -174,30 +161,19 @@ public class frm_menu extends javax.swing.JFrame {
         jSeparator13 = new javax.swing.JSeparator();
         jSeparator14 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        jp_ventas = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jp_pedido = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jp_envio = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jp_productos = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jp_prod_alm = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jp_caja = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jp_salir = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbl_nro = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        lbl_compra = new javax.swing.JLabel();
+        lbl_venta = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -207,7 +183,9 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         m_clientes = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
         m_ofertas = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem28 = new javax.swing.JMenuItem();
@@ -245,8 +223,10 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem40 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem44 = new javax.swing.JMenuItem();
+        jSeparator18 = new javax.swing.JPopupMenu.Separator();
         jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem36 = new javax.swing.JMenuItem();
         jMenuItem37 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
@@ -380,276 +360,6 @@ public class frm_menu extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        jp_ventas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_ventasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_ventasMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_ventasMousePressed(evt);
-            }
-        });
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Vender");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ventas2.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_ventasLayout = new javax.swing.GroupLayout(jp_ventas);
-        jp_ventas.setLayout(jp_ventasLayout);
-        jp_ventasLayout.setHorizontalGroup(
-            jp_ventasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_ventasLayout.setVerticalGroup(
-            jp_ventasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_ventasLayout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jp_pedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_pedido.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_pedidoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_pedidoMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_pedidoMousePressed(evt);
-            }
-        });
-
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Pedidos");
-        jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_pedidoLayout = new javax.swing.GroupLayout(jp_pedido);
-        jp_pedido.setLayout(jp_pedidoLayout);
-        jp_pedidoLayout.setHorizontalGroup(
-            jp_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_pedidoLayout.setVerticalGroup(
-            jp_pedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_pedidoLayout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addContainerGap())
-        );
-
-        jp_envio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_envio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_envioMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_envioMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_envioMousePressed(evt);
-            }
-        });
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Traslados");
-        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel18.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios2.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_envioLayout = new javax.swing.GroupLayout(jp_envio);
-        jp_envio.setLayout(jp_envioLayout);
-        jp_envioLayout.setHorizontalGroup(
-            jp_envioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_envioLayout.setVerticalGroup(
-            jp_envioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_envioLayout.createSequentialGroup()
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addContainerGap())
-        );
-
-        jp_productos.setToolTipText("Mis Productos");
-        jp_productos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_productos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_productosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_productosMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_productosMousePressed(evt);
-            }
-        });
-
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Mis Productos");
-        jLabel14.setToolTipText("Mis Productos");
-        jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel19.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/productos.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_productosLayout = new javax.swing.GroupLayout(jp_productos);
-        jp_productos.setLayout(jp_productosLayout);
-        jp_productosLayout.setHorizontalGroup(
-            jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-        );
-        jp_productosLayout.setVerticalGroup(
-            jp_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_productosLayout.createSequentialGroup()
-                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addContainerGap())
-        );
-
-        jp_prod_alm.setToolTipText("Productos en Tiendas");
-        jp_prod_alm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_prod_alm.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_prod_almMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_prod_almMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_prod_almMousePressed(evt);
-            }
-        });
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Productos en Tiendas");
-        jLabel15.setToolTipText("Productos en Tiendas");
-        jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel20.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/productos_almacen.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_prod_almLayout = new javax.swing.GroupLayout(jp_prod_alm);
-        jp_prod_alm.setLayout(jp_prod_almLayout);
-        jp_prod_almLayout.setHorizontalGroup(
-            jp_prod_almLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_prod_almLayout.setVerticalGroup(
-            jp_prod_almLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_prod_almLayout.createSequentialGroup()
-                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15)
-                .addContainerGap())
-        );
-
-        jp_caja.setToolTipText("Caja Chica");
-        jp_caja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_caja.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_cajaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_cajaMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_cajaMousePressed(evt);
-            }
-        });
-
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Caja Chica");
-        jLabel16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel21.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica2.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_cajaLayout = new javax.swing.GroupLayout(jp_caja);
-        jp_caja.setLayout(jp_cajaLayout);
-        jp_cajaLayout.setHorizontalGroup(
-            jp_cajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_cajaLayout.setVerticalGroup(
-            jp_cajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_cajaLayout.createSequentialGroup()
-                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16)
-                .addContainerGap())
-        );
-
-        jp_salir.setToolTipText("Salir");
-        jp_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jp_salir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jp_salirMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jp_salirMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jp_salirMousePressed(evt);
-            }
-        });
-
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Salir");
-        jLabel17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jLabel22.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salir_sistema.png"))); // NOI18N
-
-        javax.swing.GroupLayout jp_salirLayout = new javax.swing.GroupLayout(jp_salir);
-        jp_salir.setLayout(jp_salirLayout);
-        jp_salirLayout.setHorizontalGroup(
-            jp_salirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jp_salirLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jp_salirLayout.setVerticalGroup(
-            jp_salirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_salirLayout.createSequentialGroup()
-                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
-                .addContainerGap())
-        );
-
-        jLabel1.setText("Notificaciones:");
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/asterisk_orange.png"))); // NOI18N
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -659,7 +369,7 @@ public class frm_menu extends javax.swing.JFrame {
         });
 
         lbl_nro.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        lbl_nro.setText("lbl_nro");
+        lbl_nro.setText("Notificaciones");
         lbl_nro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbl_nro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -667,51 +377,144 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("TC. Compra");
+
+        jLabel8.setText("TC. Venta");
+
+        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ventas2.png"))); // NOI18N
+        jLabel4.setText("Vender");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios.png"))); // NOI18N
+        jLabel5.setText("Pedidos");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jLabel18.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios2.png"))); // NOI18N
+        jLabel18.setText("Traslados");
+        jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jLabel19.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/productos.png"))); // NOI18N
+        jLabel19.setText("Mis Productos");
+        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jLabel20.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/productos_almacen.png"))); // NOI18N
+        jLabel20.setText("Productos en Tiendas");
+        jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jLabel21.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica2.png"))); // NOI18N
+        jLabel21.setText("Caja Chica");
+        jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel21.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
+
+        jLabel22.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salir_sistema.png"))); // NOI18N
+        jLabel22.setText("Salir");
+        jLabel22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
+
+        lbl_compra.setText("lbl_compra");
+
+        lbl_venta.setText("lbl_venta");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jp_ventas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_envio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_productos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_prod_alm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jp_caja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
-                .addComponent(jp_salir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_compra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_venta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_nro)))
+                        .addComponent(lbl_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(lbl_nro))
-                .addContainerGap())
-            .addComponent(jp_pedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_ventas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_envio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_prod_alm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_caja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_salir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel21)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lbl_compra))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_venta)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(lbl_nro)))
+                    .addComponent(jLabel22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
@@ -725,7 +528,7 @@ public class frm_menu extends javax.swing.JFrame {
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 304, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         contenedor.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -803,6 +606,7 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem12);
+        jMenu2.add(jSeparator17);
 
         jMenuItem13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compras.png"))); // NOI18N
@@ -815,10 +619,22 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem13);
 
+        jMenuItem38.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
+        jMenuItem38.setText("Vender");
+        jMenuItem38.setPreferredSize(new java.awt.Dimension(165, 30));
+        jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem38ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem38);
+
         m_ofertas.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         m_ofertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/basket.png"))); // NOI18N
         m_ofertas.setText("Ofertas");
         m_ofertas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        m_ofertas.setPreferredSize(new java.awt.Dimension(165, 30));
         m_ofertas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_ofertasActionPerformed(evt);
@@ -1125,16 +941,16 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem18);
 
-        jMenuItem19.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica.png"))); // NOI18N
-        jMenuItem19.setText("Caja Chica");
-        jMenuItem19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem44.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem44.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/adelanto.png"))); // NOI18N
+        jMenuItem44.setText("Tipo de Cambio");
+        jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                jMenuItem44ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem19);
+        jMenu5.add(jMenuItem44);
+        jMenu5.add(jSeparator18);
 
         jMenuItem35.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/connect.png"))); // NOI18N
@@ -1146,6 +962,17 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem35);
+
+        jMenuItem19.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica.png"))); // NOI18N
+        jMenuItem19.setText("Caja Chica");
+        jMenuItem19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem19);
 
         jMenuItem36.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
@@ -1340,14 +1167,6 @@ public class frm_menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
-    private void jp_ventasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_ventasMouseEntered
-        jp_ventas.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_ventasMouseEntered
-
-    private void jp_ventasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_ventasMouseExited
-        jp_ventas.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_ventasMouseExited
-
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         if (usu.getPer_compra_servicios().equals("1")) {
             frm_ver_compras compra = new frm_ver_compras();
@@ -1446,127 +1265,6 @@ public class frm_menu extends javax.swing.JFrame {
         mat.t_productos.setDefaultRenderer(Object.class, new table_render());
         ven.llamar_ventana(mat);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jp_pedidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_pedidoMouseEntered
-        jp_pedido.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_pedidoMouseEntered
-
-    private void jp_pedidoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_pedidoMouseExited
-        jp_pedido.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_pedidoMouseExited
-
-    private void jp_envioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_envioMouseEntered
-        jp_envio.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_envioMouseEntered
-
-    private void jp_envioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_envioMouseExited
-        jp_envio.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_envioMouseExited
-
-    private void jp_productosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_productosMouseEntered
-        jp_productos.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_productosMouseEntered
-
-    private void jp_productosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_productosMouseExited
-        jp_productos.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_productosMouseExited
-
-    private void jp_prod_almMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_prod_almMouseEntered
-        jp_prod_alm.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_prod_almMouseEntered
-
-    private void jp_prod_almMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_prod_almMouseExited
-        jp_prod_alm.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_prod_almMouseExited
-
-    private void jp_cajaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_cajaMouseEntered
-        jp_caja.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_cajaMouseEntered
-
-    private void jp_cajaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_cajaMouseExited
-        jp_caja.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_cajaMouseExited
-
-    private void jp_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_salirMouseEntered
-        jp_salir.setBackground(new java.awt.Color(224, 224, 224));
-    }//GEN-LAST:event_jp_salirMouseEntered
-
-    private void jp_salirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_salirMouseExited
-        jp_salir.setBackground(new java.awt.Color(240, 240, 240));
-    }//GEN-LAST:event_jp_salirMouseExited
-
-    private void jp_salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_salirMousePressed
-        System.exit(0);
-    }//GEN-LAST:event_jp_salirMousePressed
-
-    private void jp_cajaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_cajaMousePressed
-        if (evt.getClickCount() == 2) {
-            if (usu.getPer_reg_venta().equals("1")) {
-                frm_movimientos movi = new frm_movimientos();
-                ven.llamar_ventana(movi);
-            } else {
-                JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
-            }
-        }
-    }//GEN-LAST:event_jp_cajaMousePressed
-
-    private void jp_ventasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_ventasMousePressed
-        if (evt.getClickCount() == 2) {
-            if (usu.getPer_reg_venta().equals("1")) {
-                frm_reg_venta vent = new frm_reg_venta();
-                ven.llamar_ventana(vent);
-            } else {
-                JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
-            }
-        }
-    }//GEN-LAST:event_jp_ventasMousePressed
-
-    private void jp_pedidoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_pedidoMousePressed
-        if (evt.getClickCount() == 2) {
-            frm_ver_solicitudes solc = new frm_ver_solicitudes();
-            ven.llamar_ventana(solc);
-        }
-    }//GEN-LAST:event_jp_pedidoMousePressed
-
-    private void jp_envioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_envioMousePressed
-        if (evt.getClickCount() == 2) {
-            frm_ver_guias guia = new frm_ver_guias();
-            ven.llamar_ventana(guia);
-        }
-    }//GEN-LAST:event_jp_envioMousePressed
-
-    private void jp_prod_almMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_prod_almMousePressed
-        if (evt.getClickCount() == 2) {
-            frm_ver_prod_alm_det pro_det_alm = new frm_ver_prod_alm_det();
-            ven.llamar_ventana(pro_det_alm);
-        }
-    }//GEN-LAST:event_jp_prod_almMousePressed
-
-    private void jp_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_productosMousePressed
-        if (evt.getClickCount() == 2) {
-            Cl_Productos prod = new Cl_Productos();
-            frm_ver_prod_alm mat = new frm_ver_prod_alm();
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                    + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
-                    + "order by p.desc_pro asc, p.modelo asc limit 0,50";
-            prod.mostrar_productos(query);
-            mat.txt_ida.setText("" + alm.getId());
-            mat.txt_noma.setText(alm.getNom());
-            mat.t_productos.setDefaultRenderer(Object.class, new table_render());
-            ven.llamar_ventana(mat);
-        }
-    }//GEN-LAST:event_jp_productosMousePressed
-
-    private void lbl_nroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_nroMousePressed
-        noti = new Cl_Hilo_Notificacion();
-        noti.start();
-    }//GEN-LAST:event_lbl_nroMousePressed
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        noti = new Cl_Hilo_Notificacion();
-        noti.start();
-    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         if (usu.getPer_conf_documento().equals("1")) {
@@ -1772,6 +1470,44 @@ public class frm_menu extends javax.swing.JFrame {
         frm_info info = new frm_info();
         ven.llamar_ventana(info);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void lbl_nroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_nroMousePressed
+        noti = new Cl_Hilo_Notificacion();
+        noti.start();
+    }//GEN-LAST:event_lbl_nroMousePressed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        noti = new Cl_Hilo_Notificacion();
+        noti.start();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        if (evt.getClickCount() == 2) {
+            frm_movimientos caja = new frm_movimientos();
+            ven.llamar_ventana(caja);
+        }
+    }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
+        frm_reg_venta vender = new frm_reg_venta();
+        ven.llamar_ventana(vender);
+    }//GEN-LAST:event_jMenuItem38ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        if (evt.getClickCount() == 2) {
+            frm_reg_venta venta = new frm_reg_venta();
+            ven.llamar_ventana(venta);
+        }
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
+frm_tipo_cambio tipo_cambio = new frm_tipo_cambio();
+ven.llamar_ventana(tipo_cambio);
+    }//GEN-LAST:event_jMenuItem44ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1810,25 +1546,19 @@ public class frm_menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JDesktopPane contenedor;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -1872,12 +1602,14 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
     private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem40;
     private javax.swing.JMenuItem jMenuItem41;
     private javax.swing.JMenuItem jMenuItem42;
     private javax.swing.JMenuItem jMenuItem43;
+    private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
@@ -1893,6 +1625,8 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
+    private javax.swing.JPopupMenu.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1901,18 +1635,13 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JPanel jp_caja;
-    private javax.swing.JPanel jp_envio;
-    private javax.swing.JPanel jp_pedido;
-    private javax.swing.JPanel jp_prod_alm;
-    private javax.swing.JPanel jp_productos;
-    private javax.swing.JPanel jp_salir;
-    private javax.swing.JPanel jp_ventas;
     public static javax.swing.JLabel lbl_alm;
     private javax.swing.JLabel lbl_ciudad;
+    private javax.swing.JLabel lbl_compra;
     public static javax.swing.JLabel lbl_nro;
     private javax.swing.JLabel lbl_pc;
     public static javax.swing.JLabel lbl_user;
+    private javax.swing.JLabel lbl_venta;
     private javax.swing.JMenuItem m_clientes;
     private javax.swing.JMenuItem m_notas;
     private javax.swing.JMenuItem m_ofertas;

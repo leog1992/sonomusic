@@ -39,6 +39,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
     DefaultTableModel mostrar;
     Integer i;
     String valor;
+    int mes, anio;
 
     /**
      * Creates new form frm_ver_compras
@@ -46,11 +47,11 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
     public frm_ver_ingresos() {
         initComponents();
         java.util.Date fecha = new Date();
-        int mes = fecha.getMonth();
-        int anio = fecha.getYear() + 1900;
-        String query = "select c.idCompra, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from ingreso as c "
-                + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on c.idAlmacen=a.idAlmacen where "
-                + "c.tipo_compra = 'P' and MONTH(c.fecha_doc) > '" + mes + "' and YEAR(c.fecha_doc) > '" + anio + "' and c.estado = '2' order by c.fecha_doc desc, c.idCompra desc";
+        mes = fecha.getMonth() + 1;
+        anio = fecha.getYear() + 1900;
+        String query = "select c.idingreso, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm, m.simbolo from ingreso as c "
+                + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on "
+                + "c.idAlmacen=a.idAlmacen inner join moneda as m on c.idmon = m.idmoneda where MONTH(c.fecha_doc) = '" + mes + "' and YEAR(c.fecha_doc) = '" + anio + "' order by c.fecha_doc desc, c.idingreso desc";
         ver_compras(query);
 
     }
@@ -78,14 +79,14 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
                 Object fila[] = new Object[10];
-                fila[0] = rs.getString("idCompra");
+                fila[0] = rs.getString("idingreso");
                 fila[1] = ven.fechaformateada(rs.getString("fecha_doc"));
                 fila[2] = rs.getString("desc_tipd");
                 fila[3] = rs.getString("serie_doc");
                 fila[4] = rs.getString("nro_doc");
                 fila[5] = rs.getString("ruc_pro");
                 fila[6] = rs.getString("raz_soc_pro");
-                fila[7] = "--";
+                fila[7] = rs.getString("simbolo");
                 fila[8] = ven.formato_numero(rs.getDouble("total"));
                 fila[9] = rs.getString("nom_alm");
                 mostrar.addRow(fila);
@@ -103,7 +104,15 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             t_compras.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_compras.getColumnModel().getColumn(8).setPreferredWidth(60);
             t_compras.getColumnModel().getColumn(9).setPreferredWidth(80);
-
+            ven.derecha_celda(t_compras, 0);
+            ven.centrar_celda(t_compras, 1);
+            ven.centrar_celda(t_compras, 2);
+            ven.centrar_celda(t_compras, 3);
+            ven.centrar_celda(t_compras, 4);
+            ven.centrar_celda(t_compras, 5);
+            ven.derecha_celda(t_compras, 7);
+            ven.derecha_celda(t_compras, 8);
+            ven.centrar_celda(t_compras, 9);
         } catch (SQLException ex) {
             System.out.print(ex);
         }
@@ -282,7 +291,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String ver_alm = "select c.idtipo_doc, c.serie_doc, c.ruc_pro, p.raz_soc_pro, c.nro_doc, c.fecha_doc, c.total, "
-                        + "c.idAlmacen from compra as c inner join proveedor as p on c.ruc_pro=p.ruc_pro where c.idCompra = '" + com.getId() + "'";
+                        + "c.idAlmacen from ingreso as c inner join proveedor as p on c.ruc_pro=p.ruc_pro where c.idingreso = '" + com.getId() + "'";
                 ResultSet rs = con.consulta(st, ver_alm);
                 if (rs.next()) {
                     com.setFec_com(rs.getString("fecha_doc"));
@@ -303,7 +312,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             //seleccionar detalle de compra, cantidad de productos;
             try {
                 Statement st = con.conexion();
-                String ver_ped = "select idProductos, precio_compra, cant_compra from detalle_compra where idCompra = '" + com.getId() + "'";
+                String ver_ped = "select idProductos, precio_compra, cant_compra from detalle_ingreso where idCompra = '" + com.getId() + "'";
                 ResultSet rs = con.consulta(st, ver_ped);
                 int nro = 0;
                 while (rs.next()) {
@@ -391,7 +400,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             //eliminar
             try {
                 Statement st1 = con.conexion();
-                String del_ped = "delete from detalle_compra where idCompra = '" + com.getId() + "'";
+                String del_ped = "delete from detalle_ingreso where idCompra = '" + com.getId() + "'";
                 con.actualiza(st1, del_ped);
                 con.cerrar(st1);
             } catch (Exception ex1) {
@@ -401,7 +410,7 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
 
             try {
                 Statement st1 = con.conexion();
-                String del_ped = "delete from compra where idCompra = '" + com.getId() + "'";
+                String del_ped = "delete from ingreso where idingreso= '" + com.getId() + "'";
                 con.actualiza(st1, del_ped);
                 con.cerrar(st1);
             } catch (Exception ex1) {
@@ -410,6 +419,11 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
             System.out.print("Eliminando detalle de compra \n");
 
             System.out.print("Mostrando lista \n");
+            String query = "select c.idingreso, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm, m.simbolo from ingreso as c "
+                    + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on "
+                    + "c.idAlmacen=a.idAlmacen inner join moneda as m on c.idmon = m.idmoneda where MONTH(c.fecha_doc) = '" + mes + "' and YEAR(c.fecha_doc) = '" + anio + "' order by c.fecha_doc desc, c.idingreso desc";
+            ver_compras(query);
+
             txt_bus.requestFocus();
 
         }
@@ -430,19 +444,19 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String lee = txt_bus.getText();
             if (cbx_bus.getSelectedIndex() == 0) {
-                String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                        + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                        + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and  c.ruc_pro like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
+                String query = "select c.idingreso, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm, m.simbolo from ingreso as c "
+                    + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on "
+                    + "c.idAlmacen=a.idAlmacen inner join moneda as m on c.idmon = m.idmoneda where c.ruc_pro like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
                 ver_compras(query);
             } else if (cbx_bus.getSelectedIndex() == 1) {
-                String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                        + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                        + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and p.raz_soc_pro like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
+                String query = "select c.idingreso, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm, m.simbolo from ingreso as c "
+                    + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on "
+                    + "c.idAlmacen=a.idAlmacen inner join moneda as m on c.idmon = m.idmoneda where p.raz_soc_pro like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
                 ver_compras(query);
             } else {
-                String query = "select c.idCompra, c.fecha_doc, c.fecha_pago, c.total, t.desc_tipd, c.serie_doc, c.estado, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from compra as c "
-                        + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro "
-                        + "inner join almacen as a on c.idAlmacen=a.idAlmacen where c.tipo_compra = 'P' and c.nro_doc like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
+                String query = "select c.idingreso, c.fecha_doc, c.total, t.desc_tipd, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm, m.simbolo from ingreso as c "
+                    + "inner join tipo_doc as t on c.idtipo_doc=t.idtipo_doc inner join proveedor as p on c.ruc_pro=p.ruc_pro inner join almacen as a on "
+                    + "c.idAlmacen=a.idAlmacen inner join moneda as m on c.idmon = m.idmoneda where c.nro_doc like '%" + lee + "%' order by c.fecha_doc desc, c.idCompra desc ";
                 ver_compras(query);
             }
         }

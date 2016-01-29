@@ -353,7 +353,19 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
         if (usu.getPer_mod_almacen().equals("1")) {
+            alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
+            try {
+                Statement st = con.conexion();
+                String query = "select * from almacen where idalmance = '" + alm.getId() + "'";
+                ResultSet rs = con.consulta(st, query);
+                if (rs.next()) {
 
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
