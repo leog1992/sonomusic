@@ -459,7 +459,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             //actualizar pedido a anulado
             try {
                 Statement st = con.conexion();
-                String act_ped = "update pedido set est_ped = '3', descuento = '0.00', idTipo_pago='1' where idPedido = '" + ped.getId_ped() + "'";
+                String act_ped = "update pedido set est_ped = '3', total = '0.0', descuento = '0.00', idTipo_pago='1' where idPedido = '" + ped.getId_ped() + "'";
                 con.actualiza(st, act_ped);
                 con.cerrar(st);
             } catch (Exception ex) {

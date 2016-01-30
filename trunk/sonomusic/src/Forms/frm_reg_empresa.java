@@ -7,6 +7,8 @@ package Forms;
 
 import Clases.Cl_Conectar;
 import Clases.Cl_Empresa;
+import Clases.Cl_Varios;
+import Vistas.frm_sel_periodo;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,9 +25,11 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
 
     Cl_Empresa emp = new Cl_Empresa();
     Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
     DefaultTableModel modelo = null;
     int i;
-    public static String accion;
+    public static String accion = "";
+    public static String origen = "";
 
     /**
      * Creates new form frm_reg_empresa
@@ -445,10 +449,6 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_eliActionPerformed
 
     private void t_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMouseClicked
-
-    }//GEN-LAST:event_t_empresaMouseClicked
-
-    private void t_empresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMousePressed
         i = t_empresa.getSelectedRow();
         btn_eli.setEnabled(true);
         btn_mod.setEnabled(true);
@@ -462,7 +462,29 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
                 accion = "empresa";
                 this.dispose();
             }
+
+            if (origen.equals("rpt_venta_total")) {
+                frm_sel_periodo periodo = new frm_sel_periodo();
+                frm_sel_periodo.rpt = "rpt_ventas_empresa";
+                frm_sel_periodo.ruc = t_empresa.getValueAt(i, 0).toString();
+                ven.llamar_ventana(periodo);
+                origen = "";
+                this.dispose();
+            }
+            
+            if (origen.equals("rpt_compra_total")) {
+                frm_sel_periodo periodo = new frm_sel_periodo();
+                frm_sel_periodo.rpt = "compra_empresa";
+                frm_sel_periodo.ruc = t_empresa.getValueAt(i, 0).toString();
+                ven.llamar_ventana(periodo);
+                origen = "";
+                this.dispose();
+            }
         }
+    }//GEN-LAST:event_t_empresaMouseClicked
+
+    private void t_empresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empresaMousePressed
+
 
     }//GEN-LAST:event_t_empresaMousePressed
 

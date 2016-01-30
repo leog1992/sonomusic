@@ -41,6 +41,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         txt_fec_com.setText(ven.fechaformateada(ven.getFechaActual()));
         ver_monedas();
         ver_tido();
+        txt_ruc.requestFocus();
     }
 
     private void ver_tido() {
@@ -142,7 +143,6 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel1.setText("RUC:");
         jLabel1.setFocusable(false);
 
-        txt_ruc.setEditable(false);
         txt_ruc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -169,8 +169,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel10.setText("Glosa.");
         jLabel10.setFocusable(false);
 
-        txt_glosa.setEditable(false);
         txt_glosa.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_glosa.setEnabled(false);
         txt_glosa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_glosaKeyPressed(evt);
@@ -195,20 +195,20 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel13.setText("Total:");
         jLabel13.setFocusable(false);
 
-        txt_sub.setEditable(false);
         txt_sub.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_sub.setEnabled(false);
         txt_sub.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_subKeyPressed(evt);
             }
         });
 
-        txt_igv.setEditable(false);
         txt_igv.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_igv.setEnabled(false);
         txt_igv.setFocusable(false);
 
-        txt_tot.setEditable(false);
         txt_tot.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_tot.setEnabled(false);
         txt_tot.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_totKeyPressed(evt);
@@ -259,8 +259,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel15.setText("Serie:");
         jLabel15.setFocusable(false);
 
-        txt_ser.setEditable(false);
         txt_ser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_ser.setEnabled(false);
         txt_ser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_serKeyPressed(evt);
@@ -276,8 +276,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel16.setText("Nro. Doc:");
         jLabel16.setFocusable(false);
 
-        txt_nro.setEditable(false);
         txt_nro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_nro.setEnabled(false);
         txt_nro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nroKeyPressed(evt);
@@ -298,6 +298,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txt_fec_com.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_com.setEnabled(false);
         txt_fec_com.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_fec_comKeyPressed(evt);
@@ -308,28 +309,28 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(212, 2, 2));
         jLabel3.setText("Periodo:");
 
-        txt_per.setEditable(false);
         try {
             txt_per.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txt_per.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_per.setEnabled(false);
         txt_per.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_perKeyPressed(evt);
             }
         });
 
-        txt_empresa.setEditable(false);
         txt_empresa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_empresa.setEnabled(false);
         txt_empresa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_empresaKeyPressed(evt);
             }
         });
 
-        txt_raz_empresa.setEditable(false);
+        txt_raz_empresa.setEnabled(false);
 
         txt_id.setEditable(false);
 
@@ -346,8 +347,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
 
         jLabel5.setText("TC.");
 
-        txt_tc.setEditable(false);
         txt_tc.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_tc.setEnabled(false);
         txt_tc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_tcKeyPressed(evt);
@@ -500,8 +501,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
                         ResultSet rs = con.consulta(st, ver_pro);
                         if (rs.next()) {
                             txt_raz.setText(rs.getString("raz_soc_pro"));
-                            cbx_mon.setEnabled(true);
-                            cbx_mon.requestFocus();
+                            txt_fec_com.setEnabled(true);
+                            txt_fec_com.requestFocus();
                         } else {
                             txt_ruc.setText("");
                             txt_ruc.requestFocus();
@@ -527,7 +528,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
 
     private void cbx_tidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_ser.setEditable(true);
+            txt_ser.setEnabled(true);
             txt_ser.requestFocus();
         }
     }//GEN-LAST:event_cbx_tidoKeyPressed
@@ -535,7 +536,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
     private void txt_serKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_ser.getText().isEmpty()) {
-                txt_nro.setEditable(true);
+                txt_nro.setEnabled(true);
                 txt_nro.requestFocus();
             }
         }
@@ -544,7 +545,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
     private void txt_nroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nroKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_nro.getText().isEmpty()) {
-                txt_glosa.setEditable(true);
+                txt_glosa.setEnabled(true);
                 txt_glosa.requestFocus();
             }
         }
@@ -624,8 +625,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
     private void txt_glosaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_glosaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_glosa.getText().isEmpty()) {
-                txt_ruc.setEditable(true);
-                txt_ruc.requestFocus();
+                txt_sub.setEnabled(true);
+                txt_sub.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_glosaKeyPressed
@@ -666,8 +667,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
     private void txt_fec_comKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_comKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec_com.getText().length() == 10) {
-                txt_per.setEditable(true);
-                txt_per.requestFocus();
+                cbx_mon.setEnabled(true);
+                cbx_mon.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_fec_comKeyPressed
@@ -682,16 +683,18 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
                 String per_txt = txt_per.getText();
                 String mes_per = per_txt.charAt(0) + "" + per_txt.charAt(1);
                 String anio_per = per_txt.charAt(3) + "" + per_txt.charAt(4) + "" + per_txt.charAt(5) + "" + per_txt.charAt(6);
+                String empresa = txt_empresa.getText();
+
                 System.out.println(anio);
                 System.out.println(anio_per);
                 if (Integer.parseInt(anio) < Integer.parseInt(anio_per)) {
                     cbx_tido.setEnabled(true);
                     cbx_tido.requestFocus();
-                    txt_id.setText("" + ver_cod(per_txt));
+                    txt_id.setText("" + ver_cod(per_txt, empresa));
                 } else if (Double.parseDouble(mes) <= Double.parseDouble(mes_per)) {
                     cbx_tido.setEnabled(true);
                     cbx_tido.requestFocus();
-                    txt_id.setText("" + ver_cod(per_txt));
+                    txt_id.setText("" + ver_cod(per_txt, empresa));
                 } else {
                     JOptionPane.showMessageDialog(null, "no valida en el periodo");
                 }
@@ -705,7 +708,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
             com.setFec_com(txt_fec_com.getText());
             int moneda = cbx_mon.getSelectedIndex() + 1;
             txt_tc.setText(mon.tc_compra(ven.fechabase(com.getFec_com()), moneda).toString());
-            txt_tc.setEditable(true);
+            txt_tc.setEnabled(true);
             txt_tc.requestFocus();
         }
     }//GEN-LAST:event_cbx_monKeyPressed
@@ -714,7 +717,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             Double tc = Double.parseDouble(txt_tc.getText());
             if (tc > 0.0) {
-                txt_empresa.setEditable(true);
+                txt_empresa.setEnabled(true);
                 txt_empresa.requestFocus();
             }
         }
@@ -730,8 +733,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
                     ResultSet rs = con.consulta(st, ver_pro);
                     if (rs.next()) {
                         txt_raz_empresa.setText(rs.getString("raz_soc"));
-                        txt_sub.setEditable(true);
-                        txt_sub.requestFocus();
+                        txt_per.setEnabled(true);
+                        txt_per.requestFocus();
                     } else {
                         txt_empresa.setText("");
                         txt_empresa.requestFocus();
@@ -748,11 +751,11 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_empresaKeyPressed
 
-    private Integer ver_cod(String periodo) {
+    private Integer ver_cod(String periodo, String empresa) {
         Integer cod_com = 0;
         try {
             Statement st = con.conexion();
-            String ver_cod_per = "select idcompra from compra where periodo = '" + periodo + "' order by idcompra desc";
+            String ver_cod_per = "select idcompra from compra where periodo = '" + periodo + "' and empresa = '" + empresa + "' order by idcompra desc";
             ResultSet rs = con.consulta(st, ver_cod_per);
             if (rs.next()) {
                 cod_com = rs.getInt("idcompra");

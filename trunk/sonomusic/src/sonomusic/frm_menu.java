@@ -472,7 +472,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -528,7 +528,7 @@ public class frm_menu extends javax.swing.JFrame {
             contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedorLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 304, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 543, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         contenedor.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -656,7 +656,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem32.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem32.setText("Rpt. Venta x Almacen");
+        jMenuItem32.setText("Rpt. Venta x Tienda");
         jMenuItem32.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -699,7 +699,7 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem42.setText("Rpt. Ganancias por Almacen");
+        jMenuItem42.setText("Rpt. Ganancias por Tienda");
         jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem42ActionPerformed(evt);
@@ -1313,9 +1313,9 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         if (usu.getPer_ver_reportes().equals("1")) {
-//        frm_ver_empresa empresa = new frm_ver_empresa(); 
-//        empresa.ventana="venta_total";
-//        ven.llamar_ventana(empresa);          
+            frm_reg_empresa empresa = new frm_reg_empresa();
+            frm_reg_empresa.origen = "rpt_venta_total";
+            ven.llamar_ventana(empresa);
         } else {
             JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
@@ -1334,9 +1334,9 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         if (usu.getPer_ver_reportes().equals("1")) {
-//        frm_ver_empresa empresa = new frm_ver_empresa();
-//        empresa.ventana="compra_empresa";
-//        ven.llamar_ventana(empresa);
+          frm_reg_empresa empresa = new frm_reg_empresa();
+            frm_reg_empresa.origen = "rpt_compra_total";
+            ven.llamar_ventana(empresa);
         } else {
             JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
@@ -1505,8 +1505,8 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
-frm_tipo_cambio tipo_cambio = new frm_tipo_cambio();
-ven.llamar_ventana(tipo_cambio);
+        frm_tipo_cambio tipo_cambio = new frm_tipo_cambio();
+        ven.llamar_ventana(tipo_cambio);
     }//GEN-LAST:event_jMenuItem44ActionPerformed
     /**
      * @param args the command line arguments

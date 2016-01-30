@@ -141,13 +141,13 @@ public class Cl_Hilo_Notificacion extends Thread {
             contar = contar + 1;
         }
     }
-    
+
     private void notificar_pago_compra() {
         try {
             Statement st = con.conexion();
-            String ver_pagos = "select count(*) as contar from pago_compras where estado ='0' and fec_venc >= '"+ven.getFechaActual()+"'";
+            String ver_pagos = "select count(*) as contar from pago_compras where estado ='0' and fec_venc <= '" + ven.getFechaActual() + "'";
             ResultSet rs = con.consulta(st, ver_pagos);
-            if (rs.next()) { 
+            if (rs.next()) {
                 Notification.show("Pagos Pendiente", "Existe " + rs.getString("contar") + " pagos pendientes por realizar hasta la fecha.");
                 contar = contar + 1;
             }
@@ -157,8 +157,8 @@ public class Cl_Hilo_Notificacion extends Thread {
             System.out.println(e);
         }
     }
-    
-    private void camb_est_com () {
+
+    private void camb_est_com() {
         //sumar monto de cuotas
         try {
             Statement st = con.conexion();
@@ -170,7 +170,7 @@ public class Cl_Hilo_Notificacion extends Thread {
                 double monto_cuota = 0;
                 try {
                     Statement st1 = con.conexion();
-                    String idCom = "select total from compra where idCompra = '"+rs.getString("idCompra")+"'";        
+                    String idCom = "select total from compra where idCompra = '" + rs.getString("idCompra") + "'";
                     ResultSet rs1 = con.consulta(st1, idCom);
                     if (rs1.next()) {
                         monto = rs1.getDouble("total");
@@ -182,7 +182,7 @@ public class Cl_Hilo_Notificacion extends Thread {
                 }
                 monto_cuota = rs.getDouble("suma");
                 if (monto_cuota >= monto) {
-                    System.out.println("Compra pagada, modificar estado y fecha" +rs.getString("idCompra") + "\n");
+                    System.out.println("Compra pagada, modificar estado y fecha" + rs.getString("idCompra") + "\n");
                 }
             }
         } catch (Exception e) {

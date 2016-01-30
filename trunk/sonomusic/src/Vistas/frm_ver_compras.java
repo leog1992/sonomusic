@@ -11,6 +11,7 @@ import Forms.frm_reg_compra;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,6 +53,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                 }
             };
             mostrar.addColumn("Id");
+            mostrar.addColumn("Empresa");
             mostrar.addColumn("Periodo");
             mostrar.addColumn("Fec. Com.");
             mostrar.addColumn("Fec. Pago");
@@ -70,38 +72,40 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
-                Object fila[] = new Object[15];
+                Object fila[] = new Object[16];
                 String periodo = rs.getString("periodo");
                 int idcompra = rs.getInt("idcompra");
                 fila[0] = idcompra;
-                fila[1] = periodo;
-                fila[2] = ven.fechaformateada(rs.getString("fec_com"));
-                String fechadepago = fecha_pago(periodo, idcompra);
+                String empresa = rs.getString("empresa");
+                fila[1] = empresa;
+                fila[2] = periodo;
+                fila[3] = ven.fechaformateada(rs.getString("fec_com"));
+                String fechadepago = fecha_pago(periodo, idcompra, empresa);
                 if (fechadepago.equals("7000-01-01")) {
-                    fila[3] = "-";
+                    fila[4] = "-";
                 } else {
-                    fila[3] = ven.fechaformateada(fechadepago);
+                    fila[4] = ven.fechaformateada(fechadepago);
                 }
-                fila[4] = rs.getString("desc_tipd");
-                fila[5] = rs.getString("serie");
-                fila[6] = rs.getString("nro");
-                fila[7] = rs.getString("ruc_prov");
-                fila[8] = rs.getString("raz_soc_pro");
-                fila[9] = rs.getString("simbolo");
+                fila[5] = rs.getString("desc_tipd");
+                fila[6] = rs.getString("serie");
+                fila[7] = rs.getString("nro");
+                fila[8] = rs.getString("ruc_prov");
+                fila[9] = rs.getString("raz_soc_pro");
+                fila[10] = rs.getString("simbolo");
                 Double base;
                 if (!rs.getString("siglas").equals("PEN")) {
                     base = rs.getDouble("base") * rs.getDouble("tc");
                 } else {
                     base = rs.getDouble("base");
                 }
-                fila[10] = ven.formato_numero(rs.getDouble("base"));
-                fila[11] = ven.formato_numero(base);
-                fila[12] = ven.formato_numero(base * 0.18);
-                fila[13] = ven.formato_numero(base * 1.18);
+                fila[11] = ven.formato_numero(rs.getDouble("base"));
+                fila[12] = ven.formato_numero(base);
+                fila[13] = ven.formato_numero(base * 0.18);
+                fila[14] = ven.formato_numero(base * 1.18);
                 if (rs.getString("estado").equals("0")) {
-                    fila[14] = "PENDIENTE";
+                    fila[15] = "PENDIENTE";
                 } else {
-                    fila[14] = "PAGADO";
+                    fila[15] = "PAGADO";
                 }
 
                 mostrar.addRow(fila);
@@ -110,20 +114,21 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
             con.cerrar(rs);
             t_compras.setModel(mostrar);
             t_compras.getColumnModel().getColumn(0).setPreferredWidth(30);
-            t_compras.getColumnModel().getColumn(1).setPreferredWidth(60);
-            t_compras.getColumnModel().getColumn(2).setPreferredWidth(75);
+            t_compras.getColumnModel().getColumn(1).setPreferredWidth(90);
+            t_compras.getColumnModel().getColumn(2).setPreferredWidth(60);
             t_compras.getColumnModel().getColumn(3).setPreferredWidth(75);
-            t_compras.getColumnModel().getColumn(4).setPreferredWidth(80);
-            t_compras.getColumnModel().getColumn(5).setPreferredWidth(35);
-            t_compras.getColumnModel().getColumn(6).setPreferredWidth(70);
-            t_compras.getColumnModel().getColumn(7).setPreferredWidth(90);
-            t_compras.getColumnModel().getColumn(8).setPreferredWidth(250);
-            t_compras.getColumnModel().getColumn(9).setPreferredWidth(40);
-            t_compras.getColumnModel().getColumn(10).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(4).setPreferredWidth(75);
+            t_compras.getColumnModel().getColumn(5).setPreferredWidth(80);
+            t_compras.getColumnModel().getColumn(6).setPreferredWidth(35);
+            t_compras.getColumnModel().getColumn(7).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(8).setPreferredWidth(90);
+            t_compras.getColumnModel().getColumn(9).setPreferredWidth(250);
+            t_compras.getColumnModel().getColumn(10).setPreferredWidth(40);
             t_compras.getColumnModel().getColumn(11).setPreferredWidth(70);
             t_compras.getColumnModel().getColumn(12).setPreferredWidth(70);
             t_compras.getColumnModel().getColumn(13).setPreferredWidth(70);
             t_compras.getColumnModel().getColumn(14).setPreferredWidth(70);
+            t_compras.getColumnModel().getColumn(15).setPreferredWidth(70);
             ven.derecha_celda(t_compras, 0);
             ven.centrar_celda(t_compras, 1);
             ven.centrar_celda(t_compras, 2);
@@ -132,12 +137,13 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
             ven.centrar_celda(t_compras, 5);
             ven.centrar_celda(t_compras, 6);
             ven.centrar_celda(t_compras, 7);
-            ven.derecha_celda(t_compras, 9);
+            ven.centrar_celda(t_compras, 8);
             ven.derecha_celda(t_compras, 10);
             ven.derecha_celda(t_compras, 11);
             ven.derecha_celda(t_compras, 12);
             ven.derecha_celda(t_compras, 13);
-            ven.centrar_celda(t_compras, 14);
+            ven.derecha_celda(t_compras, 14);
+            ven.centrar_celda(t_compras, 15);
             txt_sub.setText(ven.formato_totales(suma_subtotal()));
             txt_igv.setText(ven.formato_totales(suma_subtotal() * 0.18));
             txt_total.setText(ven.formato_totales(suma_subtotal() * 1.18));
@@ -146,11 +152,12 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         }
     }
 
-    private String fecha_pago(String periodo, int idcompra) {
+    private String fecha_pago(String periodo, int idcompra, String empresa) {
         String fecha = null;
         try {
             Statement st = con.conexion();
-            String ver_fec = "select fec_venc from pago_compras where idcompra = '" + idcompra + "' and periodo = '" + periodo + "' and estado = '0' order by fec_venc asc limit 1";
+            String ver_fec = "select fec_venc from pago_compras where idcompra = '" + idcompra + "' and periodo = '" + periodo + "' and estado = '0' "
+                    + "and empresa = '" + empresa + "' order by fec_venc asc limit 1";
             System.out.println(ver_fec);
             ResultSet rs = con.consulta(st, ver_fec);
             if (rs.next()) {
@@ -170,7 +177,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         Double suma = 0.0;
         int nro_filas = t_compras.getRowCount();
         for (int j = 0; j < nro_filas; j++) {
-            suma += Double.parseDouble(t_compras.getValueAt(j, 11).toString());
+            suma += Double.parseDouble(t_compras.getValueAt(j, 12).toString());
         }
         return suma;
     }
@@ -337,15 +344,16 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_igv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txt_igv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -369,167 +377,26 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_comprasMousePressed
 
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
-//    int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la compra?");
-//    if (JOptionPane.OK_OPTION == confirmado) {
-//        String lote = "-";
-//        com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-//        Double suma_pro = 0.00;
-//        //seleccionar almacen
-//        try {
-//            Statement st = con.conexion();
-//            String ver_alm = "select c.idTipo_Documento, c.serie_doc, c.ruc_pro, p.raz_soc_pro, c.nro_doc, c.fec_com, "
-//                    + "c.idAlmacen from Compra as c inner join proveedor as p on c.ruc_pro=p.ruc_pro where c.idCompra = '"+com.getId()+"'";
-//            ResultSet rs = con.consulta(st, ver_alm);
-//            if (rs.next()) {
-//                com.setFec_com(rs.getString("fec_com"));
-//                pro.setRuc(rs.getString("ruc_pro"));
-//                pro.setRaz_soc(rs.getString("raz_soc_pro"));
-//                alm.setId(rs.getInt("idAlmacen"));
-//                tido.setId(rs.getInt("idTipo_Documento"));
-//                tido.setSerie(rs.getInt("serie_doc"));
-//                tido.setNro(rs.getInt("nro_doc"));
-//            }
-//            con.cerrar(rs);
-//            con.cerrar(st);
-//        } catch (SQLException ex) {
-//            System.out.print(ex);
-//        }
-//        
-//        //seleccionar detalle de compra, cantidad de productos;
-//        try {
-//            Statement st = con.conexion();
-//            String ver_ped = "select idMaterial, precio_com, cant_mat, lote from Detalle_Compra where idCompra = '"+com.getId()+"'";
-//            ResultSet rs = con.consulta(st, ver_ped);
-//            int nro = 0;
-//            while (rs.next()) {
-//                nro++;
-//                System.out.print(nro + "\n");
-//                mat.setId(rs.getInt("idMaterial"));
-//                mat.setCant(rs.getDouble("cant_mat"));
-//                mat.setPre(rs.getDouble("precio_com"));
-//                lote = rs.getString("lote");
-//                suma_pro = suma_pro + (mat.getCant() * mat.getPre());
-//                Double pro_can = 0.00;
-//                Double new_can = 0.00;
-//                Double pro_can_alm = 0.00;
-//                Double new_can_alm = 0.00;
-//                try {
-//                    Statement st1 = con.conexion();
-//                    String ver_pro = "select cant_actual from Material where idMaterial = '"+mat.getId()+"'";
-//                    ResultSet rs1 = con.consulta(st1, ver_pro);
-//                    if (rs1.next()) {
-//                        pro_can = rs1.getDouble("cant_actual");
-//                    }
-//                    con.cerrar(rs1);
-//                    con.cerrar(st1);
-//                    new_can = pro_can - mat.getCant();
-//                 } catch (SQLException ex1) {
-//                     System.out.print(ex1);
-//                 }
-//                System.out.print("Cantidad actual: " + pro_can + " Producto: " + mat.getId() + "\n");
-//                
-//                try {
-//                    Statement st1 = con.conexion();
-//                    String ver_pro = "select cant_mat from Material_Almacen where idMaterial = '"+mat.getId()+"' and idAlmacen = '"+alm.getId()+"'";
-//                    ResultSet rs1 = con.consulta(st1, ver_pro);
-//                    if (rs1.next()) {
-//                        pro_can_alm = rs1.getDouble("cant_mat");
-//                    }
-//                    con.cerrar(rs1);
-//                    con.cerrar(st1);
-//                    new_can_alm = pro_can_alm - mat.getCant();
-//                 } catch (SQLException ex1) {
-//                     System.out.print(ex1);
-//                 }
-//                System.out.print("Cantidad actual: " + pro_can_alm + " Producto: " + mat.getId() + " en Almacen: " + alm.getId() + "\n");
-//                
-//                try {
-//                    Statement st1 = con.conexion();
-//                    String upt_pro_alm = "update Material_Almacen set cant_mat = '"+new_can_alm+"' where idMaterial = '"+mat.getId()+"' and idAlmacen = '"+alm.getId()+"'";
-//                    con.actualiza(st1, upt_pro_alm);
-//                    con.cerrar(st1);
-//                 } catch (Exception ex1) {
-//                     System.out.print(ex1);
-//                 }
-//                System.out.print("Cantidad nueva: " + new_can_alm  + " Producto: " + mat.getId() + " en Almacen: " + alm.getId() + "\n");
-//                
-//                try {
-//                    Statement st1 = con.conexion();
-//                    String upt_pro = "update Material set cant_actual = '"+new_can+"' where idMaterial = '"+mat.getId()+"'";
-//                    con.actualiza(st1, upt_pro);
-//                    con.cerrar(st1);
-//                 } catch (Exception ex1) {
-//                     System.out.print(ex1);
-//                 }
-//                System.out.print("Cantidad nueva: " + new_can  + " Producto: " + mat.getId() + "\n");
-//
-//                try {
-//                    Statement st1 = con.conexion();
-//                    String ins_kardex = "insert into Kardex Values (null, '"+mat.getId()+"', '"+alm.getId()+"', '"+pro.getRuc()+"', '"+pro.getRaz_soc()+"', '"+com.getFec_com()+"', "
-//                            + "'"+tido.getId()+"', '"+tido.getSerie()+"', '"+tido.getNro()+"', '6',  '0.00', '0.00', '"+mat.getCant()+"', '"+mat.getPre()+"', '-', '"+lote+"')";
-//                    con.actualiza(st1, ins_kardex);
-//                    con.cerrar(st1);          
-//                } catch (Exception ex) {
-//                    System.out.print(ex);
-//                }
-//                System.out.print("Agregando al Kardex: Producto: " + mat.getId() + " - " + com.getFec_com()+ " - " + mat.getCant()+ "\n");
-//                
-//            }
-//            
-//        } catch (SQLException ex) {
-//            System.out.print(ex);
-//        }
-//        
-//        //calcular monto 
-//        Double monto = 0.00;
-//            monto = suma_pro; 
-//
-//        
-//        try {
-//            Statement st1 = con.conexion();
-//            String del_ped = "delete from Detalle_Compra where idCompra = '"+com.getId()+"'";
-//            con.actualiza(st1, del_ped);
-//            con.cerrar(st1);
-//         } catch (Exception ex1) {
-//             System.out.print(ex1);
-//         }
-//        System.out.print("Eliminando compra" + "\n");
-//        
-//        try {
-//            Statement st1 = con.conexion();
-//            String del_ped = "delete from Compra where idCompra = '"+com.getId()+"'";
-//            con.actualiza(st1, del_ped);
-//            con.cerrar(st1);
-//         } catch (Exception ex1) {
-//             System.out.print(ex1);
-//         }
-//        System.out.print("Eliminando detalle de compra \n");
-//        
-//        String query = "select c.idCompra, c.fec_com, c.fec_pago, t.nom_doc, c.serie_doc, c.nro_doc, c.ruc_pro, p.raz_soc_pro, a.nom_alm from Compra as c "
-//                + "inner join Tipo_Documento as t on c.idTipo_Documento=t.idTipo_Documento inner join Proveedor as p on c.ruc_pro=p.ruc_pro "
-//                + "inner join Almacen as a on c.idAlmacen=a.idAlmacen order by c.fec_com desc, c.idCompra desc";
-//        ver_compras(query);
-//        
-//        System.out.print("Mostrando lista \n");
-//        txt_bus.requestFocus();
-//        
-//    }
+        int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la compra?");
+        if (JOptionPane.OK_OPTION == confirmado) {
+
+        }
     }//GEN-LAST:event_btn_anuActionPerformed
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
         //  VER CUOTAS
         frm_ver_cuota_compra cuota = new frm_ver_cuota_compra();
-        pro.setRuc(t_compras.getValueAt(i, 7).toString());
+        pro.setRuc(t_compras.getValueAt(i, 8).toString());
         // CARGAR DATOS DE LA FACTURA
-        cuota.txt_ruc.setText(t_compras.getValueAt(i, 7).toString());
-        cuota.txt_raz.setText(t_compras.getValueAt(i, 8).toString());
-        cuota.txt_tipd.setText(t_compras.getValueAt(i, 4).toString());
-        cuota.txt_sndoc.setText(t_compras.getValueAt(i, 5).toString() + " - " + t_compras.getValueAt(i, 6).toString());
-        cuota.txt_fec.setText(t_compras.getValueAt(i, 2).toString());
-        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 10).toString()) * 1.18);
+        cuota.txt_ruc.setText(t_compras.getValueAt(i, 8).toString());
+        cuota.txt_raz.setText(t_compras.getValueAt(i, 9).toString());
+        cuota.txt_tipd.setText(t_compras.getValueAt(i, 5).toString());
+        cuota.txt_sndoc.setText(t_compras.getValueAt(i, 6).toString() + " - " + t_compras.getValueAt(i, 7).toString());
+        cuota.txt_fec.setText(t_compras.getValueAt(i, 3).toString());
+        com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 11).toString()) * 1.18);
         cuota.com.setTotal(com.getTotal());
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-        String periodo = t_compras.getValueAt(i, 1).toString();
+        String periodo = t_compras.getValueAt(i, 2).toString();
         cuota.periodo = periodo;
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
 

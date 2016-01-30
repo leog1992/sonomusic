@@ -24,6 +24,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
     public Cl_Usuario usu = new Cl_Usuario();
     public Cl_Cliente cli = new Cl_Cliente();
     public static String rpt = "";
+    public static String ruc = "";
 
     /**
      * Creates new form frm_rpt_fechas
@@ -210,7 +211,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fec_ini", fec_ini);
                 ven.ver_reporte("rpt_ganacia_ventas", parametros);
             }
-            
+
             // REPORTE DE VENTAS EN GENERAL
             if (rpt.equals("venta_total")) {
                 Map<String, Object> parametros = new HashMap<>();
@@ -224,7 +225,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_inicio", fec_ini);
                 parametros.put("fecha_fin", fec_fin);
-                parametros.put("almacen",alm.getId() );
+                parametros.put("almacen", alm.getId());
                 ven.ver_reporte("rpt_ventas_almacen", parametros);
             }
             // REPORTE E VENTAS X VENDEDOR
@@ -232,7 +233,7 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fecha_inicio", fec_ini);
                 parametros.put("fecha_fin", fec_fin);
-                parametros.put("usuario",usu.getNick());
+                parametros.put("usuario", usu.getNick());
                 ven.ver_reporte("rpt_ventas_vendedor", parametros);
             }
             // REPORTE DE GANANCIAS POR VENDEDOR
@@ -240,13 +241,13 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("fec_ini", fec_ini);
                 parametros.put("fec_fin", fec_fin);
-                parametros.put("nick",usu.getNick());
+                parametros.put("nick", usu.getNick());
                 ven.ver_reporte("rpt_ventas_productos_vendedor", parametros);
             }
             // REPORTE DE VENTAS POR CLIENTE
             if (rpt.equals("rpt_cliente")) {
                 Map<String, Object> parametros = new HashMap<>();
-                parametros.put("cliente",cli.getNro_doc());
+                parametros.put("cliente", cli.getNro_doc());
                 ven.ver_reporte("rpt_ventas_cliente", parametros);
             }
             //
@@ -257,17 +258,9 @@ public class frm_rpt_fechas extends javax.swing.JInternalFrame {
                 parametros.put("fec_fin", fec_fin);
                 ven.ver_reporte("rpt_caja_movimiento_cajas", parametros);
             }
-            //REPORTE COMPRA EMPRESA
-            if (rpt.equals("compra_empresa")) {
-                Map<String,Object> parametros = new HashMap<>();
-                parametros.put("fecha_doc", fec_ini);
-                parametros.put("fecha_pago", fec_fin);
-                parametros.put("ruc", frm_menu.alm.getRuc());
-                ven.ver_reporte("rpt_compras", parametros);
-                
-            }           
+            //REPORTES SUNAT
             this.dispose();
-            
+
         }
         //System.out.println("el ruc es "+alm.getRuc());
     }//GEN-LAST:event_txt_fec_finKeyPressed

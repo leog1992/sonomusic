@@ -53,10 +53,10 @@ public class Cl_Moneda {
         Double precio = 0.0;
         try {
             Statement st = con.conexion();
-            String ver_tc = "select precio_venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
+            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
-                precio = rs.getDouble("precio_venta");
+                precio = rs.getDouble("venta");
             } else {
                 precio = 0.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
@@ -74,10 +74,10 @@ public class Cl_Moneda {
         Double precio = 0.0;
         try {
             Statement st = con.conexion();
-            String ver_tc = "select precio_compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
+            String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
-                precio = rs.getDouble("precio_compra");
+                precio = rs.getDouble("compra");
             } else {
                 precio = 0.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");

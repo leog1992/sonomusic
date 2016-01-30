@@ -26,6 +26,7 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
     DefaultTableModel mostrar;
     //Variables 
     String fecha;
+    int moneda;
     Double pvta;
     Double pcom;
 
@@ -71,17 +72,19 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
             }
         };
         mostrar.addColumn("Fecha");
+        mostrar.addColumn("Moneda");
         mostrar.addColumn("P. Vta.");
         mostrar.addColumn("P. Com.");
         try {
             Statement st = con.conexion();
-            String ver_cam = "select fecha, compra, venta from tipo_cambio order by fecha desc";
+            String ver_cam = "select tc.fecha, m.nombre, tc.compra, tc.venta from tipo_cambio as tc inner join moneda as m on tc.idmon = m.idmoneda order by tc.fecha desc";
             ResultSet rs = con.consulta(st, ver_cam);
             Object fila[] = new Object[4];
             while (rs.next()) {
                 fila[0] = ven.fechaformateada(rs.getString("fecha"));
-                fila[1] = rs.getString("venta");
-                fila[2] = rs.getString("compra");
+                fila[1] = rs.getString("nombre");
+                fila[2] = rs.getString("venta");
+                fila[3] = rs.getString("compra");
                 mostrar.addRow(fila);
             }
             con.cerrar(rs);
@@ -92,8 +95,9 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
         }
         t_cambio.setModel(mostrar);
         t_cambio.getColumnModel().getColumn(0).setPreferredWidth(80);
-        t_cambio.getColumnModel().getColumn(1).setPreferredWidth(50);
+        t_cambio.getColumnModel().getColumn(1).setPreferredWidth(80);
         t_cambio.getColumnModel().getColumn(2).setPreferredWidth(50);
+        t_cambio.getColumnModel().getColumn(3).setPreferredWidth(50);
     }
 
     /**
@@ -119,6 +123,7 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cbx_mon = new javax.swing.JComboBox();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setTitle("Tipo de Cambio a Soles");
 
         jLabel2.setText("Fecha");
@@ -293,6 +298,7 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
 
     private void llenar() {
         fecha = ven.fechabase(txt_fec.getText());
+        moneda = cbx_mon.getSelectedIndex() + 1;
         pvta = Double.parseDouble(txt_ven.getText());
         pcom = Double.parseDouble(txt_com.getText());
     }
@@ -301,7 +307,7 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
         llenar();
         try {
             Statement st = con.conexion();
-            String ins_cam = "insert into tipo_cambio Values ('" + fecha + "', '" + pcom + "', '" + pvta + "')";
+            String ins_cam = "insert into tipo_cambio Values ('" + fecha + "', '" + moneda + "', '" + pvta + "', '" + pcom + "')";
             System.out.println(ins_cam);
             con.actualiza(st, ins_cam);
             con.cerrar(st);
