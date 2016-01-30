@@ -328,12 +328,13 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ven.ver_reporte("rpt_prod_alm", parametros);
                 this.dispose();
             }
-            // VALORIZADO DE ARTICULOS EN ALMACEN
+            // VALORIZACION DE ARTICULOS EN ALMACEN
             if (ventana.equals("rpt_ganancia_almacen")) {
                 int id = (int) t_almacen.getValueAt(i, 0);
                 Map<String, Object> parametros = new HashMap<>();
-                parametros.put("idalm", id);
+                parametros.put("ruc", id);
                 ven.ver_reporte("rpt_utilidad_almacen", parametros);
+                ventana = "";
                 this.dispose();
             }
 

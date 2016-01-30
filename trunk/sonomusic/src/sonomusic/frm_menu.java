@@ -221,6 +221,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem39 = new javax.swing.JMenuItem();
         jMenuItem40 = new javax.swing.JMenuItem();
+        jMenuItem45 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem44 = new javax.swing.JMenuItem();
@@ -401,6 +402,11 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         jLabel18.setBackground(new java.awt.Color(204, 204, 204));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -409,6 +415,11 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel18MouseClicked(evt);
+            }
+        });
 
         jLabel19.setBackground(new java.awt.Color(204, 204, 204));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -417,6 +428,11 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
 
         jLabel20.setBackground(new java.awt.Color(204, 204, 204));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -425,6 +441,11 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
+            }
+        });
 
         jLabel21.setBackground(new java.awt.Color(204, 204, 204));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -915,13 +936,23 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenuItem40.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem40.setText("Rpt. Valorizado Art. x Empresa");
+        jMenuItem40.setText("Rpt. Art. Valorizado x Empresa");
         jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem40ActionPerformed(evt);
             }
         });
         jMenu4.add(jMenuItem40);
+
+        jMenuItem45.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem45.setText("Rpt. Art. Valorizado x Tienda");
+        jMenuItem45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem45ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem45);
 
         jMenuBar1.add(jMenu4);
 
@@ -1334,7 +1365,7 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         if (usu.getPer_ver_reportes().equals("1")) {
-          frm_reg_empresa empresa = new frm_reg_empresa();
+            frm_reg_empresa empresa = new frm_reg_empresa();
             frm_reg_empresa.origen = "rpt_compra_total";
             ven.llamar_ventana(empresa);
         } else {
@@ -1413,9 +1444,9 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
         if (usu.getPer_ver_reportes().equals("1")) {
-            //        frm_ver_empresa empresa = new frm_ver_empresa();
-//        empresa.ventana = "rpt_ganancia_almacen";
-//        ven.llamar_ventana(empresa);
+            frm_reg_empresa empresa = new frm_reg_empresa();
+            frm_reg_empresa.origen = "rpt_ganancia_empresa";
+            ven.llamar_ventana(empresa);
         } else {
             JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
@@ -1508,6 +1539,53 @@ public class frm_menu extends javax.swing.JFrame {
         frm_tipo_cambio tipo_cambio = new frm_tipo_cambio();
         ven.llamar_ventana(tipo_cambio);
     }//GEN-LAST:event_jMenuItem44ActionPerformed
+
+    private void jMenuItem45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem45ActionPerformed
+        if (usu.getPer_ver_reportes().equals("1")) {
+            frm_ver_almacen empresa = new frm_ver_almacen();
+            frm_ver_almacen.ventana = "rpt_ganancia_almacen";
+            ven.llamar_ventana(empresa);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
+        }
+    }//GEN-LAST:event_jMenuItem45ActionPerformed
+
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        if (evt.getClickCount() == 2) {
+            frm_ver_prod_alm_det pro_det_alm = new frm_ver_prod_alm_det();
+            ven.llamar_ventana(pro_det_alm);
+        }
+    }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        if (evt.getClickCount() == 2) {
+            Cl_Productos prod = new Cl_Productos();
+            frm_ver_prod_alm mat = new frm_ver_prod_alm();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.costo_compra, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
+                    + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
+                    + "order by p.desc_pro asc, p.modelo asc";
+            prod.mostrar_productos(query);
+            mat.txt_ida.setText("" + alm.getId());
+            mat.txt_noma.setText(alm.getNom());
+            mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+            ven.llamar_ventana(mat);
+        }
+    }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        if (evt.getClickCount() == 2) {
+            frm_ver_guias guia = new frm_ver_guias();
+            ven.llamar_ventana(guia);
+        }
+    }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        if (evt.getClickCount() == 2) {
+            frm_ver_solicitudes solc = new frm_ver_solicitudes();
+            ven.llamar_ventana(solc);
+        }
+    }//GEN-LAST:event_jLabel5MouseClicked
     /**
      * @param args the command line arguments
      */
@@ -1610,6 +1688,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem42;
     private javax.swing.JMenuItem jMenuItem43;
     private javax.swing.JMenuItem jMenuItem44;
+    private javax.swing.JMenuItem jMenuItem45;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;

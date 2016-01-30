@@ -9,10 +9,13 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Empresa;
 import Clases.Cl_Varios;
 import Vistas.frm_sel_periodo;
+import static Vistas.frm_sel_periodo.ruc;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static sonomusic.frm_menu.usu;
@@ -471,12 +474,20 @@ public class frm_reg_empresa extends javax.swing.JInternalFrame {
                 origen = "";
                 this.dispose();
             }
-            
+
             if (origen.equals("rpt_compra_total")) {
                 frm_sel_periodo periodo = new frm_sel_periodo();
                 frm_sel_periodo.rpt = "compra_empresa";
                 frm_sel_periodo.ruc = t_empresa.getValueAt(i, 0).toString();
                 ven.llamar_ventana(periodo);
+                origen = "";
+                this.dispose();
+            }
+
+            if (origen.equals("rpt_ganancia_empresa")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("ruc", t_empresa.getValueAt(i, 0).toString());
+                ven.ver_reporte("rpt_utilidad_empresa", parametros);
                 origen = "";
                 this.dispose();
             }
