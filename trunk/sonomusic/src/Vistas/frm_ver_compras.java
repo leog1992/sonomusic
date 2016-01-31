@@ -396,6 +396,8 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 11).toString()) * 1.18);
         cuota.com.setTotal(com.getTotal());
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        String ruc_emp = t_compras.getValueAt(i, 1).toString();
+        cuota.ruc_emp = t_compras.getValueAt(i, 1).toString();
         String periodo = t_compras.getValueAt(i, 2).toString();
         cuota.periodo = periodo;
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
@@ -436,7 +438,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
 
             Statement st = con.conexion();
             String ver_cuotas = "select pc.idpago, pc.fec_venc, pc.fec_pago, pc.monto_cuota, m.simbolo, pc.tc, pc.monto, pc.estado from pago_compras as pc inner join moneda as m "
-                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "'";
+                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "' and pc.empresa = '" + ruc_emp + "'";
             ResultSet rs = con.consulta(st, ver_cuotas);
 
             while (rs.next()) {

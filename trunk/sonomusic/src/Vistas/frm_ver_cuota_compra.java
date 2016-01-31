@@ -29,6 +29,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
     public static String origen;
     public static String periodo;
     public static int moneda;
+    public static String ruc_emp;
     int i;
 
     /**
@@ -387,6 +388,7 @@ public class frm_ver_cuota_compra extends javax.swing.JInternalFrame {
         frm_reg_cuota reg = new frm_reg_cuota();
         frm_reg_cuota.periodo = periodo;
         frm_reg_cuota.moneda= moneda;
+        frm_reg_cuota.ruc_emp = ruc_emp;
         frm_reg_cuota.com.setTotal(com.getTotal());
         reg.com.setId(com.getId());
         ven.llamar_ventana(reg);
