@@ -33,20 +33,22 @@
      proveedor.`raz_soc_pro` AS proveedor_raz_soc_pro,
      proveedor.`dir_pro` AS proveedor_dir_pro,
      proveedor.`tel_pro` AS proveedor_tel_pro,
-     usuario.`nick` AS usuario_nick,
-     tipo_doc_A.`desc_tipd` AS tipo_doc_A_desc_tipd,
-     almacen.`idAlmacen` AS almacen_idAlmacen,
-     almacen.`nom_alm` AS almacen_nom_alm,
-     tipo_doc_A.`idtipo_doc` AS tipo_doc_A_idtipo_doc,
-     und_medida.`idUnd_medida` AS und_medida_idUnd_medida
+     usuario.`nick` AS usuario,
+     almacen.`idAlmacen` AS idAlmacen,
+     almacen.`nom_alm` AS nom_alm,
+     moneda.`nombre` AS moned,
+     tipo_doc.`desc_tipd` AS tipo_doc
 FROM
-     `ingreso` compra INNER JOIN `detalle_ingreso` detalle_compra ON compra.`idingreso` =detalle_compra.`idCompra`
+     `ingreso` compra INNER JOIN `detalle_ingreso` detalle_compra ON compra.`idingreso` = detalle_compra.`idCompra`
      INNER JOIN `productos` productos ON detalle_compra.`idProductos` = productos.`idProductos`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
      INNER JOIN `proveedor` proveedor ON compra.`ruc_pro` = proveedor.`ruc_pro`
      INNER JOIN `usuario` usuario ON compra.`nick` = usuario.`nick`
-     INNER JOIN `tipo_doc` tipo_doc_A ON compra.`idtipo_doc` = tipo_doc_A.`idtipo_doc`
-     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen` where  compra.`idingreso` = $P{compra}]]>
+     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen`
+     INNER JOIN `moneda` moneda ON compra.`idmon` = moneda.`idmoneda`
+     INNER JOIN `tipo_doc` tipo_doc ON compra.`idtipo_doc` = tipo_doc.`idtipo_doc`
+WHERE
+     compra.`idingreso` = $P{compra}]]>
 	</queryString>
 	<field name="compra_idCompra" class="java.lang.Integer"/>
 	<field name="compra_serie_doc" class="java.lang.Long"/>
@@ -73,17 +75,20 @@ FROM
 	<field name="proveedor_raz_soc_pro" class="java.lang.String"/>
 	<field name="proveedor_dir_pro" class="java.lang.String"/>
 	<field name="proveedor_tel_pro" class="java.lang.String"/>
-	<field name="usuario_nick" class="java.lang.String"/>
-	<field name="tipo_doc_A_desc_tipd" class="java.lang.String"/>
-	<field name="almacen_idAlmacen" class="java.lang.Integer"/>
-	<field name="almacen_nom_alm" class="java.lang.String"/>
-	<field name="tipo_doc_A_idtipo_doc" class="java.lang.Integer"/>
-	<field name="und_medida_idUnd_medida" class="java.lang.Long"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="idAlmacen" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom_alm" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="moned" class="java.lang.String"/>
+	<field name="tipo_doc" class="java.lang.String"/>
 	<variable name="sub_total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{detalle_compra_cant_compra}*$F{detalle_compra_precio_compra}/1.18]]></variableExpression>
 	</variable>
 	<variable name="igv" class="java.lang.Double">
-		<variableExpression><![CDATA[( ($F{tipo_doc_A_desc_tipd}.equals("BOLETA")) ? ($V{sub_total})*0.18 : ($V{sub_total})*0.18 )]]></variableExpression>
+		<variableExpression><![CDATA[( ($F{tipo_doc}.equals("BOLETA")) ? ($V{sub_total})*0.18 : ($V{sub_total})*0.18 )]]></variableExpression>
 	</variable>
 	<variable name="tot" class="java.lang.Double">
 		<variableExpression><![CDATA[$V{sub_total}+$V{igv}]]></variableExpression>
@@ -104,7 +109,7 @@ FROM
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="22" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalle de Compra]]></text>
+				<text><![CDATA[Detalle de Ingreso]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="54" y="55" width="29" height="15" uuid="80b888fb-2616-437d-a364-caf61f61308b"/>
@@ -128,35 +133,35 @@ FROM
 				<text><![CDATA[Tipo de Documento:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="186" y="55" width="60" height="15" uuid="d1d4f78d-c9c3-4375-91a6-7fb186ed76fb"/>
+				<reportElement x="186" y="55" width="76" height="15" uuid="d1d4f78d-c9c3-4375-91a6-7fb186ed76fb"/>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tipo_doc_A_desc_tipd}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tipo_doc}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="282" y="55" width="51" height="15" uuid="5e35c990-2bec-42d4-be53-98b9656de809"/>
+				<reportElement x="298" y="55" width="51" height="15" uuid="5e35c990-2bec-42d4-be53-98b9656de809"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_serie_doc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="246" y="55" width="33" height="15" uuid="0ed59488-e5c4-44e6-bc91-8f71d3de41a0"/>
+				<reportElement x="262" y="55" width="33" height="15" uuid="0ed59488-e5c4-44e6-bc91-8f71d3de41a0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Serie:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="383" y="55" width="51" height="15" uuid="5fc48b24-a007-4f7f-a126-a550c99073a8"/>
+				<reportElement x="399" y="55" width="51" height="15" uuid="5fc48b24-a007-4f7f-a126-a550c99073a8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_nro_doc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="340" y="55" width="40" height="15" uuid="6ab51bbd-65f2-4954-b727-34c34175c5a0"/>
+				<reportElement x="356" y="55" width="40" height="15" uuid="6ab51bbd-65f2-4954-b727-34c34175c5a0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -205,18 +210,25 @@ FROM
 				<textFieldExpression><![CDATA[$F{proveedor_tel_pro}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="439" y="55" width="40" height="15" uuid="91869dfc-fe83-4b0e-b7a3-55318014df2b"/>
+				<reportElement x="455" y="55" width="40" height="15" uuid="91869dfc-fe83-4b0e-b7a3-55318014df2b"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="481" y="55" width="51" height="15" uuid="b1b8520e-b0ca-4e44-884d-992fe43c1f03"/>
+				<reportElement x="497" y="55" width="51" height="15" uuid="b1b8520e-b0ca-4e44-884d-992fe43c1f03"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compra_fecha_doc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="112" width="68" height="15" uuid="0efaf69c-e472-4275-a35e-eb5f158483a3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{moned}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -329,7 +341,7 @@ FROM
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usuario_nick}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00">
 				<reportElement x="488" y="17" width="67" height="12" uuid="5c7cf5ed-6573-45fa-b9bf-69a23c668f89"/>

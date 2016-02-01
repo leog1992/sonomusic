@@ -305,7 +305,8 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         llenar();
-        try {
+        boolean existe = existe_tc(fecha, moneda + "");
+        if (existe == false) {
             Statement st = con.conexion();
             String ins_cam = "insert into tipo_cambio Values ('" + fecha + "', '" + moneda + "', '" + pvta + "', '" + pcom + "')";
             System.out.println(ins_cam);
@@ -318,11 +319,40 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
             txt_com.setText("");
             txt_com.setEnabled(false);
             txt_fec.requestFocus();
-        } catch (Exception e) {
-            System.out.println(e);
+        }
+
+        if (existe == true) {
+            Statement st = con.conexion();
+            String ins_cam = "update tipo_cambio set idmon = '" + moneda + "', venta =  '" + pvta + "', compra = '" + pcom + "' where fecha = '" + fecha + "'";
+            System.out.println(ins_cam);
+            con.actualiza(st, ins_cam);
+            con.cerrar(st);
+            ver_cambios();
+            txt_fec.setEnabled(true);
+            txt_ven.setEnabled(false);
+            txt_ven.setText("");
+            txt_com.setText("");
+            txt_com.setEnabled(false);
+            txt_fec.requestFocus();
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
+    private boolean existe_tc(String fecha, String idmon) {
+        boolean tc = false;
+        try {
+            Statement st = con.conexion();
+            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + idmon + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                tc = true;
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return tc;
+    }
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
         this.dispose();
     }//GEN-LAST:event_btn_cerActionPerformed
