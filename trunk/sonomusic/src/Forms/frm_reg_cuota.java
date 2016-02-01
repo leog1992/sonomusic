@@ -30,6 +30,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
     public String fec_venc;
     public String est;
     public static int moneda;
+    public static String empresa;
 
     /**
      * Creates new form frm_reg_cuota
@@ -162,7 +163,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
         llenar();
         try {
             Statement st = con.conexion();
-            String ins_cuota = "insert into pago_compras Values (null, '" + periodo + "','" + com.getId() + "', '" + fec_venc + "', '" + monto + "','7000-01-01', "
+            String ins_cuota = "insert into pago_compras Values (null, '" + periodo + "','" + com.getId() + "', '" + empresa + "','" + fec_venc + "', '" + monto + "','7000-01-01', "
                     + "'" + moneda + "', '0.0','0','0')";
             con.actualiza(st, ins_cuota);
             con.cerrar(st);
@@ -190,7 +191,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
 
             Statement st = con.conexion();
             String ver_cuotas = "select pc.idpago, pc.fec_venc, pc.fec_pago, pc.monto_cuota, m.simbolo, pc.tc, pc.monto, pc.estado from pago_compras as pc inner join moneda as m "
-                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "'";
+                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "' and pc.empresa = '"+empresa+"'";
             ResultSet rs = con.consulta(st, ver_cuotas);
             Double tot_cuotas = 0.0;
             Double tot_monto = 0.0;

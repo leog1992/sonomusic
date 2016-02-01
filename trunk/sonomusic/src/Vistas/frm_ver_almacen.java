@@ -261,9 +261,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerActionPerformed
 
     private void t_almacenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_almacenMousePressed
-        i = t_almacen.getSelectedRow();
-        btn_pred.setEnabled(true);
-        btn_ver.setEnabled(true);
+
     }//GEN-LAST:event_t_almacenMousePressed
 
     private void btn_predActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_predActionPerformed
@@ -310,6 +308,10 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
 
     private void t_almacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_almacenMouseClicked
         if (evt.getClickCount() == 2) {
+            i = t_almacen.getSelectedRow();
+            btn_pred.setEnabled(true);
+            btn_ver.setEnabled(true);
+            btn_mod.setEnabled(true);
 
             if (ventana.equals("rpt_venta_alm")) {
                 frm_rpt_fechas fec = new frm_rpt_fechas();
@@ -355,18 +357,30 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
         if (usu.getPer_mod_almacen().equals("1")) {
             alm.setId(Integer.parseInt(t_almacen.getValueAt(i, 0).toString()));
+            frm_reg_almacen frm_alm = new frm_reg_almacen();
             try {
                 Statement st = con.conexion();
-                String query = "select * from almacen where idalmance = '" + alm.getId() + "'";
+                String query = "select * from almacen where idAlmacen = '" + alm.getId() + "'";
                 ResultSet rs = con.consulta(st, query);
                 if (rs.next()) {
-
+                    frm_alm.txt_id.setText(rs.getString("idAlmacen"));
+                    frm_alm.txt_nom.setText(rs.getString("nom_alm"));
+                    frm_alm.txt_dir.setText(rs.getString("dir_alm"));
+                    frm_alm.txt_ciudad.setText(rs.getString("ciudad"));
+                    frm_alm.txt_ruc.setText(rs.getString("ruc"));
+                    frm_alm.txt_raz.setText(rs.getString("raz_soc"));
+                    frm_alm.txt_tel1.setText(rs.getString("telefono1"));
+                    frm_alm.txt_tel2.setText(rs.getString("telefono2"));
+                    frm_alm.origen = "ver_almacen";
+                    frm_alm.accion = "modificar";
                 }
                 con.cerrar(rs);
                 con.cerrar(st);
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
             }
+            ven.llamar_ventana(frm_alm);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }

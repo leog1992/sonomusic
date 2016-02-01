@@ -28,6 +28,8 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Empresa emp = new Cl_Empresa();
     public String idcuenta = "";
+    public static String accion = "registrar";
+    public static String origen = "reg_almacen";
 
     /**
      * Creates new form frm_reg_almacen
@@ -70,6 +72,9 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         btn_bus_cue = new javax.swing.JButton();
         lbl_idc = new javax.swing.JLabel();
         btn_bus_emp = new javax.swing.JButton();
+        txt_tel1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txt_tel2 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -210,6 +215,24 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_tel1.setEditable(false);
+        txt_tel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_tel1KeyPressed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(200, 2, 2));
+        jLabel12.setText("Telefonos");
+
+        txt_tel2.setEditable(false);
+        txt_tel2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_tel2KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,27 +253,32 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txt_dir)
                             .addComponent(txt_raz, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_ruc, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_bus_emp)))
-                        .addContainerGap())
+                                .addComponent(btn_bus_emp))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txt_tel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(txt_tel2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txt_dir)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel8))
-                        .addGap(376, 376, 376))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -293,6 +321,11 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,7 +348,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                             .addComponent(btn_bus_cue, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -377,63 +410,65 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         llenar();
-        try {
-            Statement st = con.conexion();
-            String ins_alm = "insert into almacen Values (null, '" + alm.getNom() + "', '" + alm.getDireccion() + "', '" + alm.getEst() + "', "
-                    + "'" + alm.getCiudad() + "', '" + emp.getRuc() + "', '" + emp.getRaz_soc() + "', '" + idcuenta + "')";
-            con.actualiza(st, ins_alm);
-            con.cerrar(st);
-            this.dispose();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error " + ex.getLocalizedMessage());
-        }
-
-        try {
-            Statement st = con.conexion();
-            String ver_alm = "select idAlmacen from almacen order by idAlmacen desc limit 1";
-            ResultSet rs = con.consulta(st, ver_alm);
-            if (rs.next()) {
-                alm.setId(rs.getInt("idAlmacen"));
+        if (accion.equals("registrar")) {
+            try {
+                Statement st = con.conexion();
+                String ins_alm = "insert into almacen Values (null, '" + alm.getNom() + "', '" + alm.getDireccion() + "', '" + alm.getEst() + "', "
+                        + "'" + alm.getCiudad() + "', '" + emp.getRuc() + "', '" + emp.getRaz_soc() + "', '" + idcuenta + "')";
+                con.actualiza(st, ins_alm);
+                con.cerrar(st);
+                this.dispose();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error " + ex.getLocalizedMessage());
             }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception ex) {
-            System.out.print(ex);
-        }
 
-        try {
-            Statement st = con.conexion();
-            String ver_doc = "select idtipo_doc from tipo_doc";
-            ResultSet rs = con.consulta(st, ver_doc);
-            while (rs.next()) {
-                try {
-                    Statement st1 = con.conexion();
-                    String ins_doc = "insert into documento_almacen Values ('" + rs.getInt("idtipo_doc") + "', "
-                            + "'" + alm.getId() + "', '0', '0')";
-                    con.actualiza(st1, ins_doc);
-                    con.cerrar(st1);
-                } catch (Exception ex) {
-                    System.out.print(ex);
+            try {
+                Statement st = con.conexion();
+                String ver_alm = "select idAlmacen from almacen order by idAlmacen desc limit 1";
+                ResultSet rs = con.consulta(st, ver_alm);
+                if (rs.next()) {
+                    alm.setId(rs.getInt("idAlmacen"));
                 }
-
-                try {
-                    Statement st1 = con.conexion();
-                    String nombre  = "CAJA SOLES - " + alm.getNom();
-                    String ins_caja = "insert into caja Values (null, '" + nombre + "', "
-                            + "'" + alm.getId() + "', '0')";
-                    con.actualiza(st1, ins_caja);
-                    con.cerrar(st1);
-                } catch (Exception e) {
-                    System.out.print(e);
-                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (Exception ex) {
+                System.out.print(ex);
             }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (SQLException ex) {
-            System.out.print(ex);
-        }
 
-        JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+            try {
+                Statement st = con.conexion();
+                String ver_doc = "select idtipo_doc from tipo_doc";
+                ResultSet rs = con.consulta(st, ver_doc);
+                while (rs.next()) {
+                    try {
+                        Statement st1 = con.conexion();
+                        String ins_doc = "insert into documento_almacen Values ('" + rs.getInt("idtipo_doc") + "', "
+                                + "'" + alm.getId() + "', '0', '0')";
+                        con.actualiza(st1, ins_doc);
+                        con.cerrar(st1);
+                    } catch (Exception ex) {
+                        System.out.print(ex);
+                    }
+
+                    try {
+                        Statement st1 = con.conexion();
+                        String nombre = "CAJA SOLES - " + alm.getNom();
+                        String ins_caja = "insert into caja Values (null, '" + nombre + "', "
+                                + "'" + alm.getId() + "', '0')";
+                        con.actualiza(st1, ins_caja);
+                        con.cerrar(st1);
+                    } catch (Exception e) {
+                        System.out.print(e);
+                    }
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException ex) {
+                System.out.print(ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+        }
         frm_ver_almacen almacen = new frm_ver_almacen();
         ven.llamar_ventana(almacen);
     }//GEN-LAST:event_btn_regActionPerformed
@@ -500,6 +535,14 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         ven.llamar_ventana(empresa);
     }//GEN-LAST:event_btn_bus_empActionPerformed
 
+    private void txt_tel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tel1KeyPressed
+
+    private void txt_tel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel2KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tel2KeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_bus_cue;
@@ -509,6 +552,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -519,12 +563,14 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JLabel lbl_idc;
     public static javax.swing.JTextField txt_banco;
-    private javax.swing.JTextField txt_ciudad;
+    public static javax.swing.JTextField txt_ciudad;
     public static javax.swing.JTextField txt_cuenta;
-    private javax.swing.JTextField txt_dir;
-    private javax.swing.JTextField txt_id;
-    private javax.swing.JTextField txt_nom;
+    public static javax.swing.JTextField txt_dir;
+    public static javax.swing.JTextField txt_id;
+    public static javax.swing.JTextField txt_nom;
     public static javax.swing.JTextField txt_raz;
     public static javax.swing.JTextField txt_ruc;
+    public static javax.swing.JTextField txt_tel1;
+    public static javax.swing.JTextField txt_tel2;
     // End of variables declaration//GEN-END:variables
 }

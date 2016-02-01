@@ -8,16 +8,11 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     compra.`idCompra` AS compra_idCompra,
-     compra.`glosa` AS compra_glosa,
+     compra.`idingreso` AS compra_idCompra,
      compra.`serie_doc` AS compra_serie_doc,
      compra.`nro_doc` AS compra_nro_doc,
      compra.`fecha_doc` AS compra_fecha_doc,
-     compra.`idTipo_pago` AS compra_idTipo_pago,
-     compra.`fecha_pago` AS compra_fecha_pago,
-     compra.`estado` AS compra_estado,
      compra.`total` AS compra_total,
-     compra.`tipo_compra` AS compra_tipo_compra,
      detalle_compra.`cant_compra` AS detalle_compra_cant_compra,
      detalle_compra.`precio_compra` AS detalle_compra_precio_compra,
      productos.`idProductos` AS productos_idProductos,
@@ -45,24 +40,19 @@
      tipo_doc_A.`idtipo_doc` AS tipo_doc_A_idtipo_doc,
      und_medida.`idUnd_medida` AS und_medida_idUnd_medida
 FROM
-     `compra` compra INNER JOIN `detalle_compra` detalle_compra ON compra.`idCompra` =detalle_compra.`idCompra`
+     `ingreso` compra INNER JOIN `detalle_ingreso` detalle_compra ON compra.`idingreso` =detalle_compra.`idCompra`
      INNER JOIN `productos` productos ON detalle_compra.`idProductos` = productos.`idProductos`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
      INNER JOIN `proveedor` proveedor ON compra.`ruc_pro` = proveedor.`ruc_pro`
      INNER JOIN `usuario` usuario ON compra.`nick` = usuario.`nick`
      INNER JOIN `tipo_doc` tipo_doc_A ON compra.`idtipo_doc` = tipo_doc_A.`idtipo_doc`
-     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen` where  compra.`idCompra` = $P{compra}]]>
+     INNER JOIN `almacen` almacen ON compra.`idAlmacen` = almacen.`idAlmacen` where  compra.`idingreso` = $P{compra}]]>
 	</queryString>
 	<field name="compra_idCompra" class="java.lang.Integer"/>
-	<field name="compra_glosa" class="java.lang.String"/>
 	<field name="compra_serie_doc" class="java.lang.Long"/>
 	<field name="compra_nro_doc" class="java.lang.Long"/>
 	<field name="compra_fecha_doc" class="java.sql.Date"/>
-	<field name="compra_idTipo_pago" class="java.lang.Integer"/>
-	<field name="compra_fecha_pago" class="java.sql.Date"/>
-	<field name="compra_estado" class="java.lang.String"/>
 	<field name="compra_total" class="java.math.BigDecimal"/>
-	<field name="compra_tipo_compra" class="java.lang.String"/>
 	<field name="detalle_compra_cant_compra" class="java.math.BigDecimal"/>
 	<field name="detalle_compra_precio_compra" class="java.math.BigDecimal"/>
 	<field name="productos_idProductos" class="java.lang.Integer"/>

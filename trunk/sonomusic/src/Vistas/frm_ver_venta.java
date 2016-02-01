@@ -661,13 +661,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 btn_anu.setEnabled(false);
                 btn_det.setEnabled(true);
                 btn_ent.setEnabled(true);
-                btn_pagar.setEnabled(false);
+                btn_pagar.setEnabled(true);
                 break;
             case "ENTREGADO":
                 btn_anu.setEnabled(false);
                 btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
-                btn_pagar.setEnabled(false);
+                btn_pagar.setEnabled(true);
                 break;
             case "POR COBRAR":
                 btn_anu.setEnabled(true);

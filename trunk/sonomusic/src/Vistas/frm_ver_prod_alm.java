@@ -61,6 +61,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         btn_kar = new javax.swing.JButton();
         cbx_bus = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -140,6 +141,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
         jLabel3.setText("jLabel3");
 
+        jButton1.setText("ver Historial");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,6 +167,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(txt_noma, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_kar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
@@ -185,7 +190,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -400,6 +406,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_kar;
     private javax.swing.JComboBox cbx_bus;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

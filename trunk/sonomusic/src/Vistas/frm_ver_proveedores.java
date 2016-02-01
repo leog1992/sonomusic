@@ -9,6 +9,7 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
+import Forms.frm_reg_ingreso;
 import Forms.frm_reg_proveedor;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -306,7 +307,27 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             txt_bus.setText("");
             txt_bus.requestFocus();
-
+            
+            if (funcion.equals("ingreso_almacen")) {
+                String ruc = t_proveedor.getValueAt(i, 0).toString();
+                frm_reg_ingreso.txt_ruc.setText(t_proveedor.getValueAt(i, 0).toString());
+                frm_reg_ingreso.txt_raz.setText(t_proveedor.getValueAt(i, 1).toString());
+                try {
+                    Statement st = con.conexion();
+                    String ver_dir = "select dir_pro from proveedor where ruc_pro = '"+ruc+"'";
+                    ResultSet rs = con.consulta(st, ver_dir);
+                    if (rs.next()) {
+                        frm_reg_ingreso.txt_dir.setText(rs.getString("dir_pro"));
+                    }
+                    con.cerrar(rs);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                }
+                frm_reg_ingreso.cbx_alm.setEnabled(true);
+                frm_reg_ingreso.cbx_alm.requestFocus();
+                this.dispose();
+            }
+            
             if (funcion.equals("compras_prov")) {
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 Map<String, Object> parametros = new HashMap<>();

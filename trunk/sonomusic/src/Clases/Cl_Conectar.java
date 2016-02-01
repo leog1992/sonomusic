@@ -19,48 +19,13 @@ import javax.swing.JOptionPane;
 public class Cl_Conectar {
 
     private static Connection conexion = null;
-//    private static String bd = "conmetal_smi"; // Nombre de BD.
-//    private static String user = "conmetal_lsp"; // Usuario de BD.
-//    private static String password = "root/*123"; // Password de BD.
     private static String bd = "sonomusic"; // Nombre de BD.
     private static String user = "lspserver"; // Usuario de BD.
     private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
-//    String server = "jdbc:mysql://conmetal.pe:3306/" + bd;
-    String server = "jdbc:mysql://192.168.22.55/" + bd;
-//    String server = "jdbc:mysql://"+leer()+":3306/" + bd;
-
-    private String leer() {
-        String server = null;
-        try {
-            File Ffichero = new File("server.txt");
-
-            /*Si existe el fichero*/
-            if (Ffichero.exists()) {
-                /*Abre un flujo de lectura a el fichero*/
-                BufferedReader Flee = new BufferedReader(new FileReader(Ffichero));
-                String Slinea;
-                //System.out.println("**********Leyendo Fichero***********");  
-                /*Lee el fichero linea a linea hasta llegar a la ultima*/
-                while ((Slinea = Flee.readLine()) != null) {
-                    /*Imprime la linea leida*/
-                    server = Slinea;
-                    // System.out.println(Slinea);                
-                }
-                //System.out.println("*********Fin Leer Fichero**********");  
-                /*Cierra el flujo*/
-                Flee.close();
-                //return txt_alm;
-            } else {
-                System.out.println("Fichero No Existe");
-            }
-        } catch (IOException ex) {
-            /*Captura un posible error y le imprime en pantalla*/
-            System.out.println(ex.getMessage());
-        }
-        return server;
-    }
+    String url_server = leer_archivo("server.txt");
+    String server = "jdbc:mysql://" + url_server + ":3306/" + bd;
 
     /**
      * Método neecesario para conectarse al Driver y poder usar MySQL.
@@ -167,5 +132,32 @@ public class Cl_Conectar {
                 System.out.print("Error: No es posible cerrar la conexión.");
             }
         }
+    }
+
+    public String leer_archivo(String nom_arc) {
+        String linea = null;
+        try {
+            File Ffichero = new File(nom_arc);
+            /*Si existe el fichero*/
+            if (Ffichero.exists()) {
+                /*Abre un flujo de lectura a el fichero*/
+                BufferedReader Flee = new BufferedReader(new FileReader(Ffichero));
+                String Slinea;
+                /*Lee el fichero linea a linea hasta llegar a la ultima*/
+                while ((Slinea = Flee.readLine()) != null) {
+                    /*Imprime la linea leida*/
+                    linea = Slinea;
+                }
+                /*Cierra el flujo*/
+                Flee.close();
+            } else {
+                System.out.println("Fichero No Existe");
+                linea = "NO ALMACEN";
+            }
+        } catch (IOException ex) {
+            /*Captura un posible error y le imprime en pantalla*/
+            System.out.println(ex.getMessage());
+        }
+        return linea;
     }
 }

@@ -354,50 +354,50 @@ public class frm_reg_pago_compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cloActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        String fecha = ven.fechabase(txt_fec.getText());
-
-        try {
-            Statement st = con.conexion();
-            String upd_pago = "update pago_compras set fec_pago = '" + fecha + "', monto = '" + real + "', estado = '1' where idpago = '" + idpago + "'";
-            con.actualiza(st, upd_pago);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        if (queda <= 0) {
-            Statement st = con.conexion();
-            String upd_compra = "update compra set fecha_pago = '" + fecha + "', estado = '1' where idCompra = '" + com.getId() + "'";
-            con.actualiza(st, upd_compra);
-            con.cerrar(st);
-        }
-
-        if (cbx_tipopago.getSelectedIndex() == 0) {
-            try {
-                Statement st = con.conexion();
-                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
-                        + "'" + frm_menu.caja.getId() + "')";
-                con.actualiza(st, add_mov);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-        } else {
-            try {
-                System.out.println("pago al banco");
-                Statement st = con.conexion();
-                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
-                        + "'" + frm_menu.cue.getId_cuen() + "')";
-                con.actualiza(st, add_mov);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-        }
-
-        frm_ver_compras compra = new frm_ver_compras();
-        ven.llamar_ventana(compra);
-        this.dispose();
+//        String fecha = ven.fechabase(txt_fec.getText());
+//
+//        try {
+//            Statement st = con.conexion();
+//            String upd_pago = "update pago_compras set fec_pago = '" + fecha + "', monto = '" + real + "', estado = '1' where idpago = '" + idpago + "'";
+//            con.actualiza(st, upd_pago);
+//            con.cerrar(st);
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//        if (queda <= 0) {
+//            Statement st = con.conexion();
+//            String upd_compra = "update compra set fecha_pago = '" + fecha + "', estado = '1' where idCompra = '" + com.getId() + "'";
+//            con.actualiza(st, upd_compra);
+//            con.cerrar(st);
+//        }
+//
+//        if (cbx_tipopago.getSelectedIndex() == 0) {
+//            try {
+//                Statement st = con.conexion();
+//                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'C', "
+//                        + "'" + frm_menu.caja.getId() + "')";
+//                con.actualiza(st, add_mov);
+//                con.cerrar(st);
+//            } catch (Exception ex) {
+//                System.out.print(ex);
+//            }
+//        } else {
+//            try {
+//                System.out.println("pago al banco");
+//                Statement st = con.conexion();
+//                String add_mov = "insert into movimiento Values (null, '" + glosa + "', '" + fecha + "' , '0.00', '" + real + "', '" + frm_menu.usu.getNick() + "', '" + frm_menu.alm.getId() + "', 'B', "
+//                        + "'" + frm_menu.cue.getId_cuen() + "')";
+//                con.actualiza(st, add_mov);
+//                con.cerrar(st);
+//            } catch (Exception ex) {
+//                System.out.print(ex);
+//            }
+//        }
+//
+//        frm_ver_compras compra = new frm_ver_compras();
+//        ven.llamar_ventana(compra);
+//        this.dispose();
 
     }//GEN-LAST:event_btn_addActionPerformed
 

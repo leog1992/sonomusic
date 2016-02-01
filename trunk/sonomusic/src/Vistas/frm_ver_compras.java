@@ -11,6 +11,7 @@ import Forms.frm_reg_compra;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,16 +30,20 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     Cl_Productos mat = new Cl_Productos();
     DefaultTableModel mostrar;
     Integer i;
+    String periodo;
 
     /**
      * Creates new form frm_ver_compras
      */
     public frm_ver_compras() {
         initComponents();
-
+        java.util.Date fecha = new Date();
+        int mes = fecha.getMonth() + 1;
+        int anio = fecha.getYear() + 1900;
+        periodo = String.format("%02d", mes) + "-" + anio;
         String query = "select c.idcompra, c.periodo, c.ruc_prov, pr.raz_soc_pro, c.fec_com, c.fec_pago, td.desc_tipd, c.serie, c.nro, m.nombre, m.simbolo, m.siglas, c.tc, c.base, c.empresa, "
                 + "c.estado from compra as c inner join proveedor as pr on c.ruc_prov = pr.ruc_pro inner join tipo_doc as td on c.idtido = td.idtipo_doc inner join moneda as m on "
-                + "c.idmon = m.idmoneda";
+                + "c.idmon = m.idmoneda where c.periodo = '" + periodo + "' order by c.periodo desc, c.idcompra desc";
         ver_compras(query);
         //     t_compras.setDefaultRenderer(Object.class, new table_render());
 
@@ -243,7 +248,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
             }
         });
 
-        cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "RUC", "Razon Social", "Nro Doc." }));
+        cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PROVEEDOR", "PERIODO", "NRO DOC", "EMPRESA", "FECHA" }));
 
         jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
 
@@ -305,7 +310,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                         .addComponent(btn_anu)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_pagar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_bus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,6 +404,8 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         String periodo = t_compras.getValueAt(i, 2).toString();
         cuota.periodo = periodo;
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        String empresa = t_compras.getValueAt(i, 1).toString();
+        cuota.empresa = t_compras.getValueAt(i, 1).toString();
 
         try {
             Statement st = con.conexion();
@@ -436,7 +443,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
 
             Statement st = con.conexion();
             String ver_cuotas = "select pc.idpago, pc.fec_venc, pc.fec_pago, pc.monto_cuota, m.simbolo, pc.tc, pc.monto, pc.estado from pago_compras as pc inner join moneda as m "
-                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "'";
+                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "' and pc.empresa = '"+empresa+"'";
             ResultSet rs = con.consulta(st, ver_cuotas);
 
             while (rs.next()) {

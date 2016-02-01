@@ -724,7 +724,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     private void btn_buspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buspActionPerformed
         frm_ver_proveedores proveedor = new frm_ver_proveedores();
-        proveedor.funcion = "compra_prod";
+        proveedor.funcion = "ingreso_almacen";
         ven.llamar_ventana(proveedor);
     }//GEN-LAST:event_btn_buspActionPerformed
 
@@ -1084,6 +1084,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 txt_idp.setEditable(true);
                 txt_idp.requestFocus();
                 btn_busm.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO NO ES CORRECTO");
             }
         }
     }//GEN-LAST:event_txt_tcKeyPressed
