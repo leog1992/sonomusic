@@ -13,8 +13,9 @@ import Forms.frm_reg_solicitud;
 import Forms.frm_reg_traslado_almacen;
 import Forms.frm_reg_venta;
 import Forms.frm_rpt_fechas;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -408,9 +409,146 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         frm_historial_producto historia = new frm_historial_producto();
+        String idpro = t_productos.getValueAt(i, 0).toString();
+        String idalm = txt_ida.getText();
+        
+        historia.txt_idpo.setText(t_productos.getValueAt(i, 0).toString());
+        historia.txt_desc.setText(t_productos.getValueAt(i, 1).toString());
+        historia.txt_marca.setText(t_productos.getValueAt(i, 2).toString());
+        historia.txt_cant.setText(ven.formato_numero(Double.parseDouble(t_productos.getValueAt(i, 3).toString())));
+        historia.lbl_und.setText(t_productos.getValueAt(i, 4).toString());
+        historia.txt_precio.setText(ven.formato_numero(Double.parseDouble(t_productos.getValueAt(i, 5).toString())));
+        
+        //cargar ingresos
+        DefaultTableModel model_ingreso;
+        model_ingreso = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        model_ingreso.addColumn("COD");
+        model_ingreso.addColumn("FECHA");
+        model_ingreso.addColumn("MOTIVO");
+        model_ingreso.addColumn("RUC");
+        model_ingreso.addColumn("RAZON SOCIAL - NOMBRE");
+        model_ingreso.addColumn("TIPO DOC.");
+        model_ingreso.addColumn("SERIE - NRO");
+        model_ingreso.addColumn("CANT");
+        model_ingreso.addColumn("PRE. UNI.");
+        model_ingreso.addColumn("SUB. TOTAL.");
+        Object[] fila_ing = new Object[10];
+        try {
+            Statement st = con.conexion();
+            String ver_ing = "select k.idKardex, k.fecha, tm.nombre as tipomov, k.doc_nro, k.nombre as raz_soc, td.desc_tipd, k.serie, k.numero, k.cant_ing, k.pre_uni_ing from "
+                    + "kardex as k inner join tipo_movimiento as tm on k.idtipo_movimiento = tm.idtipo_movimiento inner join tipo_doc as td on k.idtipo_doc = td.idtipo_doc"
+                    + " where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_sal = '0' and k.pre_uni_sal = '0' order by idKardex desc";
+            ResultSet rs = con.consulta(st, ver_ing);
+            while (rs.next()) {
+                fila_ing[0] = rs.getString("idKardex");
+                fila_ing[1] = ven.fechaformateada(rs.getString("fecha"));
+                fila_ing[2] = rs.getString("tipomov");
+                fila_ing[3] = rs.getString("doc_nro");
+                fila_ing[4] = rs.getString("raz_soc");
+                fila_ing[5] = rs.getString("desc_tipd");
+                fila_ing[6] = rs.getString("serie") + " - " + rs.getString("numero");
+                fila_ing[7] = ven.formato_numero(rs.getDouble("cant_ing"));
+                fila_ing[8] = ven.formato_numero(rs.getDouble("pre_uni_ing"));
+                fila_ing[9] = ven.formato_numero(rs.getDouble("cant_ing") * rs.getDouble("pre_uni_ing"));
+                model_ingreso.addRow(fila_ing);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        historia.t_ingresos.setModel(model_ingreso);
+        historia.t_ingresos.getColumnModel().getColumn(0).setPreferredWidth(45);
+        historia.t_ingresos.getColumnModel().getColumn(1).setPreferredWidth(70);
+        historia.t_ingresos.getColumnModel().getColumn(2).setPreferredWidth(150);
+        historia.t_ingresos.getColumnModel().getColumn(3).setPreferredWidth(80);
+        historia.t_ingresos.getColumnModel().getColumn(4).setPreferredWidth(300);
+        historia.t_ingresos.getColumnModel().getColumn(5).setPreferredWidth(100);
+        historia.t_ingresos.getColumnModel().getColumn(6).setPreferredWidth(90);
+        historia.t_ingresos.getColumnModel().getColumn(7).setPreferredWidth(60);
+        historia.t_ingresos.getColumnModel().getColumn(8).setPreferredWidth(60);
+        historia.t_ingresos.getColumnModel().getColumn(9).setPreferredWidth(60);
+        ven.derecha_celda(historia.t_ingresos, 0);
+        ven.centrar_celda(historia.t_ingresos, 1);
+        ven.centrar_celda(historia.t_ingresos, 2);
+        ven.centrar_celda(historia.t_ingresos, 3);
+        ven.centrar_celda(historia.t_ingresos, 5);
+        ven.centrar_celda(historia.t_ingresos, 6);
+        ven.derecha_celda(historia.t_ingresos, 7);
+        ven.derecha_celda(historia.t_ingresos, 8);
+        ven.derecha_celda(historia.t_ingresos, 9);
+        
+        //cargar salidas
+        DefaultTableModel model_salida;
+        model_salida = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        model_salida.addColumn("COD");
+        model_salida.addColumn("FECHA");
+        model_salida.addColumn("MOTIVO");
+        model_salida.addColumn("RUC");
+        model_salida.addColumn("RAZON SOCIAL - NOMBRE");
+        model_salida.addColumn("TIPO DOC.");
+        model_salida.addColumn("SERIE - NRO");
+        model_salida.addColumn("CANT");
+        model_salida.addColumn("PRE. UNI.");
+        model_salida.addColumn("SUB. TOTAL.");
+        Object[] fila_sal = new Object[10];
+        try {
+            Statement st = con.conexion();
+            String ver_ing = "select k.idKardex, k.fecha, tm.nombre as tipomov, k.doc_nro, k.nombre as raz_soc, td.desc_tipd, k.serie, k.numero, k.cant_sal, k.pre_uni_sal from "
+                    + "kardex as k inner join tipo_movimiento as tm on k.idtipo_movimiento = tm.idtipo_movimiento inner join tipo_doc as td on k.idtipo_doc = td.idtipo_doc "
+                    + "where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_ing = '0' and k.pre_uni_ing = '0' order by idKardex desc";
+            ResultSet rs = con.consulta(st, ver_ing);
+            while (rs.next()) {
+                fila_sal[0] = rs.getString("idKardex");
+                fila_sal[1] = ven.fechaformateada(rs.getString("fecha"));
+                fila_sal[2] = rs.getString("tipomov");
+                fila_sal[3] = rs.getString("doc_nro");
+                fila_sal[4] = rs.getString("raz_soc");
+                fila_sal[5] = rs.getString("desc_tipd");
+                fila_sal[6] = rs.getString("serie") + " - " + rs.getString("numero");
+                fila_sal[7] = ven.formato_numero(rs.getDouble("cant_sal"));
+                fila_sal[8] = ven.formato_numero(rs.getDouble("pre_uni_sal"));
+                fila_sal[9] = ven.formato_numero(rs.getDouble("cant_sal") * rs.getDouble("pre_uni_sal"));
+                model_salida.addRow(fila_sal);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        historia.t_salidas.setModel(model_salida);
+        historia.t_salidas.getColumnModel().getColumn(0).setPreferredWidth(45);
+        historia.t_salidas.getColumnModel().getColumn(1).setPreferredWidth(70);
+        historia.t_salidas.getColumnModel().getColumn(2).setPreferredWidth(150);
+        historia.t_salidas.getColumnModel().getColumn(3).setPreferredWidth(80);
+        historia.t_salidas.getColumnModel().getColumn(4).setPreferredWidth(300);
+        historia.t_salidas.getColumnModel().getColumn(5).setPreferredWidth(100);
+        historia.t_salidas.getColumnModel().getColumn(6).setPreferredWidth(90);
+        historia.t_salidas.getColumnModel().getColumn(7).setPreferredWidth(60);
+        historia.t_salidas.getColumnModel().getColumn(8).setPreferredWidth(60);
+        historia.t_salidas.getColumnModel().getColumn(9).setPreferredWidth(60);
+        ven.derecha_celda(historia.t_salidas, 0);
+        ven.centrar_celda(historia.t_salidas, 1);
+        ven.centrar_celda(historia.t_salidas, 2);
+        ven.centrar_celda(historia.t_salidas, 3);
+        ven.centrar_celda(historia.t_salidas, 5);
+        ven.centrar_celda(historia.t_salidas, 6);
+        ven.derecha_celda(historia.t_salidas, 7);
+        ven.derecha_celda(historia.t_salidas, 8);
+        ven.derecha_celda(historia.t_salidas, 9);
         ven.llamar_ventana(historia);
         this.dispose();
-            
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

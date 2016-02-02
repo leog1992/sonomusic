@@ -25,11 +25,12 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
 
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
-    Cl_Almacen alm = new Cl_Almacen();
+    public static Cl_Almacen alm = new Cl_Almacen();
     Cl_Empresa emp = new Cl_Empresa();
     public String idcuenta = "";
     public static String accion = "registrar";
     public static String origen = "reg_almacen";
+    String tel1, tel2;
 
     /**
      * Creates new form frm_reg_almacen
@@ -406,6 +407,8 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
         emp.setRuc(txt_ruc.getText());
         emp.setRaz_soc(txt_raz.getText());
         idcuenta = lbl_idc.getText();
+        tel1 = txt_tel1.getText();
+        tel2 = txt_tel2.getText();
     }
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
@@ -414,7 +417,7 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String ins_alm = "insert into almacen Values (null, '" + alm.getNom() + "', '" + alm.getDireccion() + "', '" + alm.getEst() + "', "
-                        + "'" + alm.getCiudad() + "', '" + emp.getRuc() + "', '" + emp.getRaz_soc() + "', '" + idcuenta + "')";
+                        + "'" + alm.getCiudad() + "', '" + emp.getRuc() + "', '" + emp.getRaz_soc() + "','" + tel1 + "','" + tel2 + "', '" + idcuenta + "')";
                 con.actualiza(st, ins_alm);
                 con.cerrar(st);
                 this.dispose();
@@ -449,17 +452,6 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
-
-                    try {
-                        Statement st1 = con.conexion();
-                        String nombre = "CAJA SOLES - " + alm.getNom();
-                        String ins_caja = "insert into caja Values (null, '" + nombre + "', "
-                                + "'" + alm.getId() + "', '0')";
-                        con.actualiza(st1, ins_caja);
-                        con.cerrar(st1);
-                    } catch (Exception e) {
-                        System.out.print(e);
-                    }
                 }
                 con.cerrar(rs);
                 con.cerrar(st);
@@ -467,10 +459,37 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
                 System.out.print(ex);
             }
 
+            try {
+                Statement st = con.conexion();
+                String nombre = "CAJA SOLES - " + alm.getNom();
+                String ins_caja = "insert into caja Values (null, '" + nombre + "', "
+                        + "'" + alm.getId() + "', '0')";
+                con.actualiza(st, ins_caja);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.print(e);
+            }
+
             JOptionPane.showMessageDialog(null, "Se ha registrado correctamente");
+        }
+
+        if (accion.equals("modificar")) {
+            try {
+                Statement st = con.conexion();
+                String upd_alm = "update almacen set nom_alm = '" + alm.getNom() + "', dir_alm = '" + alm.getDireccion() + "', ciudad = '" + alm.getCiudad() + "', "
+                        + "ruc = '" + emp.getRuc() + "', raz_soc = '" + emp.getRaz_soc() + "', telefono1 = '" + tel1 + "',telefono2 = '" + tel2 + "', cuenta = '" + lbl_idc.getText() + "' "
+                        + "where idAlmacen = '" + alm.getId() + "'";
+                System.out.println(upd_alm);
+                con.actualiza(st, upd_alm);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
+            }
+            JOptionPane.showMessageDialog(null, "SE HA MODIFICADO CORRECTAMENTE");
         }
         frm_ver_almacen almacen = new frm_ver_almacen();
         ven.llamar_ventana(almacen);
+        this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void btn_regKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_regKeyPressed
@@ -488,7 +507,8 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     private void txt_ciudadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ciudadKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_ciudad.getText().isEmpty()) {
-                btn_bus_emp.setEnabled(true);
+                txt_tel1.setEditable(true);
+                txt_tel1.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_ciudadKeyPressed
@@ -536,11 +556,20 @@ public class frm_reg_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_bus_empActionPerformed
 
     private void txt_tel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel1KeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txt_tel1.getText().isEmpty()) {
+                txt_tel2.setEditable(true);
+                txt_tel2.requestFocus();
+            }
+        }
     }//GEN-LAST:event_txt_tel1KeyPressed
 
     private void txt_tel2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tel2KeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txt_ciudad.getText().isEmpty()) {
+                btn_bus_emp.setEnabled(true);
+            }
+        }
     }//GEN-LAST:event_txt_tel2KeyPressed
 
 

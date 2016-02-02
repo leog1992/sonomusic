@@ -90,7 +90,7 @@ public class frm_cuentas extends javax.swing.JInternalFrame {
     void mostrar_banco() {
         try {
             Statement st = con.conexion();
-            String sql = "select nombre from banco";
+            String sql = "select nombre from banco order by idbanco";
             ResultSet rs = con.consulta(st, sql);
 
             while (rs.next()) {

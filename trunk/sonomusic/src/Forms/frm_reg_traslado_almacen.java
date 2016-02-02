@@ -753,7 +753,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 //registrar detalle de traslado
                 try {
                     Statement st = con.conexion();
-                    String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "')";
+                    String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0.0')";
                     con.actualiza(st, ins_tras);
                     con.cerrar(st);
                 } catch (Exception ex) {

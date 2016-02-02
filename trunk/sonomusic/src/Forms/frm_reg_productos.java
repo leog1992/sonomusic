@@ -691,16 +691,30 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Se ingreso los datos correctamente");
                     this.dispose();
                 } else {
+                    try {
+                        Statement st = con.conexion();
+                        String update = "update productos set desc_pro='" + pro.getDes_pro() + "', marca='" + pro.getMar_pro()
+                                + "', modelo='" + pro.getMod_pro() + "', serie='" + pro.getSer_pro() + "', "
+                                + "grado='" + pro.getGra_pro() + "', costo_compra='" + pro.getCos_pro() + "', precio_venta='" + pro.getPre_pro() + "', "
+                                + " id_clas='" + cla.getId() + "', idUnd_medida='" + med.getId_med() + "', "
+                                + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "', nom_img = '" + pro.getImg() + "'"
+                                + " where idProductos = '" + pro.getId_pro() + "'";
+                        con.actualiza(st, update);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
+                    if (cbx_todo.isSelected()) {
+                        try {
+                            Statement st = con.conexion();
+                            String update = "update producto_almacen set precio = '" + pro.getPre_pro() + "' where idProductos = '" + pro.getId_pro() + "'";
+                            con.actualiza(st, update);
+                            con.cerrar(st);
+                        } catch (Exception e) {
+                            System.out.println(e.getLocalizedMessage());
+                        }
+                    }
 
-                    Statement st = con.conexion();
-                    String update = "update productos set desc_pro='" + pro.getDes_pro() + "', marca='" + pro.getMar_pro()
-                            + "', modelo='" + pro.getMod_pro() + "', serie='" + pro.getSer_pro() + "', "
-                            + "grado='" + pro.getGra_pro() + "', costo_compra='" + pro.getCos_pro() + "', precio_venta='" + pro.getPre_pro() + "', "
-                            + " id_clas='" + cla.getId() + "', idUnd_medida='" + med.getId_med() + "', "
-                            + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "', nom_img = '" + pro.getImg() + "'"
-                            + " where idProductos = '" + pro.getId_pro() + "'";
-                    con.actualiza(st, update);
-                    con.cerrar(st);
                     win = "reg";
                     JOptionPane.showMessageDialog(null, "Se modifico los datos correctamente");
                     this.dispose();

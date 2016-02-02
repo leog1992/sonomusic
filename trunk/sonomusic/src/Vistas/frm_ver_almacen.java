@@ -9,10 +9,8 @@ import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
-import Clases.table_render;
 import Forms.frm_reg_almacen;
 import Forms.frm_rpt_fechas;
-import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +29,7 @@ import static sonomusic.frm_menu.usu;
  * @author Lorenzo
  */
 public class frm_ver_almacen extends javax.swing.JInternalFrame {
-
+    
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Productos pro = new Cl_Productos();
@@ -45,11 +43,11 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
      */
     public frm_ver_almacen() {
         initComponents();
-
+        
         String query = "select * from almacen order by nom_alm asc";
         ver_almacen(query);
     }
-
+    
     private void ver_almacen(String query) {
         try {
             mostrar = new DefaultTableModel() {
@@ -82,7 +80,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 } else {
                     fila[6] = "-";
                 }
-
+                
                 mostrar.addRow(fila);
             }
             con.cerrar(st);
@@ -99,7 +97,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.print(e);
         }
-
+        
     }
 
     /**
@@ -284,7 +282,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             System.out.print(ex);
         }
     }//GEN-LAST:event_btn_predActionPerformed
-
+    
 
     private void btn_verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verActionPerformed
 //        frm_ver_prod_alm mat = new frm_ver_prod_alm();
@@ -312,7 +310,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             btn_pred.setEnabled(true);
             btn_ver.setEnabled(true);
             btn_mod.setEnabled(true);
-
+            
             if (ventana.equals("rpt_venta_alm")) {
                 frm_rpt_fechas fec = new frm_rpt_fechas();
                 fec.rpt = "venta_almacen";
@@ -364,6 +362,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ResultSet rs = con.consulta(st, query);
                 if (rs.next()) {
                     frm_alm.txt_id.setText(rs.getString("idAlmacen"));
+                    frm_alm.alm.setId(rs.getInt("idAlmacen"));
                     frm_alm.txt_nom.setText(rs.getString("nom_alm"));
                     frm_alm.txt_dir.setText(rs.getString("dir_alm"));
                     frm_alm.txt_ciudad.setText(rs.getString("ciudad"));
@@ -373,6 +372,15 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                     frm_alm.txt_tel2.setText(rs.getString("telefono2"));
                     frm_alm.origen = "ver_almacen";
                     frm_alm.accion = "modificar";
+                    String lista[] = cuenta_bancaria(rs.getString("cuenta"));
+                    frm_alm.txt_banco.setText(lista[0]);
+                    frm_alm.txt_cuenta.setText(lista[1]);
+                    frm_alm.lbl_idc.setText(rs.getString("cuenta"));
+                    frm_alm.txt_dir.setEditable(true);
+                    frm_alm.txt_ciudad.setEditable(true);
+                    frm_alm.txt_tel1.setEditable(true);
+                    frm_alm.txt_tel2.setEditable(true);
+                    frm_alm.btn_reg.setEnabled(true);
                 }
                 con.cerrar(rs);
                 con.cerrar(st);
@@ -385,7 +393,24 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_btn_modActionPerformed
-
+    
+    private String[] cuenta_bancaria(String idcuenta) {
+        String lista[] = new String[2];
+        try {
+            Statement st = con.conexion();
+            String ver_cuenta = "select b.nombre, c.nro_cuenta from cuenta as c inner join banco as b on c.idbanco = b.idbanco where c.idcuenta = '" + idcuenta + "'";
+            ResultSet rs = con.consulta(st, ver_cuenta);
+            if (rs.next()) {
+                lista[0] = rs.getString("nombre");
+                lista[1] = rs.getString("nro_cuenta");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return lista;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
