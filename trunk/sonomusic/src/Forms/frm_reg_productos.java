@@ -131,6 +131,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jp_img = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txt_img = new javax.swing.JTextField();
+        cbx_todo = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -392,6 +393,13 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
         txt_img.setEditable(false);
 
+        cbx_todo.setText("Todas las tiendas");
+        cbx_todo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_todoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -452,6 +460,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(cbx_und, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txt_pven, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txt_gan, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(144, 144, 144)
@@ -459,8 +468,9 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel11))
-                                    .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbx_todo)
+                                            .addComponent(jLabel11))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jp_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -514,7 +524,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             .addComponent(txt_pven, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_pcom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbx_todo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -674,7 +685,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             + "'" + pro.getMar_pro() + "', '" + pro.getMod_pro() + "', '" + pro.getSer_pro() + "', "
                             + "'" + pro.getGra_pro() + "', '" + pro.getCos_pro() + "', '" + pro.getPre_pro() + "',"
                             + "'" + cla.getId() + "', '" + med.getId_med() + "', '" + "0" + "', "
-                            + "'" + pro.getCan_min_pro() + "', '" + pro.getEst() + "','" + pro.getCom_pro() + "', '"+pro.getImg()+"')";
+                            + "'" + pro.getCan_min_pro() + "', '" + pro.getEst() + "','" + pro.getCom_pro() + "', '" + pro.getImg() + "')";
                     con.actualiza(st, query);
                     con.cerrar(st);
                     JOptionPane.showMessageDialog(null, "Se ingreso los datos correctamente");
@@ -686,7 +697,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             + "', modelo='" + pro.getMod_pro() + "', serie='" + pro.getSer_pro() + "', "
                             + "grado='" + pro.getGra_pro() + "', costo_compra='" + pro.getCos_pro() + "', precio_venta='" + pro.getPre_pro() + "', "
                             + " id_clas='" + cla.getId() + "', idUnd_medida='" + med.getId_med() + "', "
-                            + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "', nom_img = '"+pro.getImg()+"'"
+                            + "cant_min = '" + pro.getCan_min_pro() + "', comision = '" + pro.getCom_pro() + "', nom_img = '" + pro.getImg() + "'"
                             + " where idProductos = '" + pro.getId_pro() + "'";
                     con.actualiza(st, update);
                     con.cerrar(st);
@@ -948,6 +959,10 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jp_imgMousePressed
 
+    private void cbx_todoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_todoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_todoActionPerformed
+
     public class ImagenLOCAL extends javax.swing.JPanel {
 
         public ImagenLOCAL() {
@@ -970,6 +985,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btn_reg;
     public static javax.swing.JComboBox cbo_gra;
     public static javax.swing.JComboBox cbx_cla;
+    private javax.swing.JCheckBox cbx_todo;
     public static javax.swing.JComboBox cbx_und;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;

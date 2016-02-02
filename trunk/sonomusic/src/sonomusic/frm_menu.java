@@ -1288,8 +1288,8 @@ public class frm_menu extends javax.swing.JFrame {
         frm_ver_prod_alm mat = new frm_ver_prod_alm();
         String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.costo_compra, p.estado, c.desc_clas, "
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
-                + "order by p.desc_pro asc, p.modelo asc";
+                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "'"
+                + "order by p.desc_pro asc, p.modelo asc limit 10";
         prod.mostrar_productos(query);
         mat.txt_ida.setText("" + alm.getId());
         mat.txt_noma.setText(alm.getNom());
@@ -1564,7 +1564,7 @@ public class frm_menu extends javax.swing.JFrame {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.costo_compra, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                     + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
-                    + "order by p.desc_pro asc, p.modelo asc";
+                    + "order by p.desc_pro asc, p.modelo asc limit 10";
             prod.mostrar_productos(query);
             mat.txt_ida.setText("" + alm.getId());
             mat.txt_noma.setText(alm.getNom());

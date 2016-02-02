@@ -98,6 +98,7 @@
                                           <Component id="txt_pven" min="-2" pref="70" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Component id="cbx_cla" min="-2" pref="307" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txt_gan" min="-2" pref="85" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
@@ -105,9 +106,11 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="txt_com" min="-2" pref="68" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cbx_todo" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <Component id="cbx_cla" min="-2" pref="307" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -180,6 +183,7 @@
                           <Component id="jLabel8" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="txt_pcom" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="cbx_todo" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -652,6 +656,14 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbx_todo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Todas las tiendas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_todoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
