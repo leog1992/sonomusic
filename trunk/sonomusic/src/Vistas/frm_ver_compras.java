@@ -401,8 +401,6 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 11).toString()) * 1.18);
         cuota.com.setTotal(com.getTotal());
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
-        String ruc_emp = t_compras.getValueAt(i, 1).toString();
-        cuota.ruc_emp = t_compras.getValueAt(i, 1).toString();
         String periodo = t_compras.getValueAt(i, 2).toString();
         cuota.periodo = periodo;
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
@@ -411,7 +409,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
 
         try {
             Statement st = con.conexion();
-            String ver_moneda = "select m.nombre, c.idmon, c.tc from compra as c inner join moneda as m on c.idmon = m.idmoneda where c.idcompra = '" + com.getId() + "' and c.periodo = '" + periodo + "' ";
+            String ver_moneda = "select m.nombre, c.idmon, c.tc from compra as c inner join moneda as m on c.idmon = m.idmoneda where c.idcompra = '" + com.getId() + "' and c.periodo = '" + periodo + "' and empresa = '" + empresa + "'";
             ResultSet rs = con.consulta(st, ver_moneda);
             if (rs.next()) {
                 cuota.txt_mon.setText(rs.getString("nombre"));
@@ -445,7 +443,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
 
             Statement st = con.conexion();
             String ver_cuotas = "select pc.idpago, pc.fec_venc, pc.fec_pago, pc.monto_cuota, m.simbolo, pc.tc, pc.monto, pc.estado from pago_compras as pc inner join moneda as m "
-                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "' and pc.empresa = '"+empresa+"'";
+                    + "on pc.idmon = m.idmoneda where pc.idcompra = '" + com.getId() + "' and pc.periodo = '" + periodo + "' and pc.empresa = '" + empresa + "'";
             ResultSet rs = con.consulta(st, ver_cuotas);
 
             while (rs.next()) {
