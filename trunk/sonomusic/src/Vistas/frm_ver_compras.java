@@ -401,6 +401,8 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         com.setTotal(Double.parseDouble(t_compras.getValueAt(i, 11).toString()) * 1.18);
         cuota.com.setTotal(com.getTotal());
         com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));
+        String ruc_emp = t_compras.getValueAt(i, 1).toString();
+        cuota.ruc_emp = t_compras.getValueAt(i, 1).toString();
         String periodo = t_compras.getValueAt(i, 2).toString();
         cuota.periodo = periodo;
         cuota.com.setId(Integer.parseInt(t_compras.getValueAt(i, 0).toString()));

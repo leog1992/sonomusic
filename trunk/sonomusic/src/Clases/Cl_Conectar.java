@@ -20,7 +20,7 @@ public class Cl_Conectar {
 
     private static Connection conexion = null;
     private static String bd = "sonomusic"; // Nombre de BD.
-    private static String user = "lspserver"; // Usuario de BD.
+    private static String user = "lspweb"; // Usuario de BD.
     private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
