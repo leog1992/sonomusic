@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sonomusic.frm_menu;
 import static sonomusic.frm_menu.usu;
 
 /**
@@ -29,7 +30,7 @@ import static sonomusic.frm_menu.usu;
  * @author Lorenzo
  */
 public class frm_ver_almacen extends javax.swing.JInternalFrame {
-    
+
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Productos pro = new Cl_Productos();
@@ -43,11 +44,11 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
      */
     public frm_ver_almacen() {
         initComponents();
-        
+
         String query = "select * from almacen order by nom_alm asc";
         ver_almacen(query);
     }
-    
+
     private void ver_almacen(String query) {
         try {
             mostrar = new DefaultTableModel() {
@@ -80,7 +81,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 } else {
                     fila[6] = "-";
                 }
-                
+
                 mostrar.addRow(fila);
             }
             con.cerrar(st);
@@ -97,7 +98,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.print(e);
         }
-        
+
     }
 
     /**
@@ -109,6 +110,11 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        j_fecha = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txt_fec = new javax.swing.JFormattedTextField();
+        jButton1 = new javax.swing.JButton();
         btn_mod = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
         txt_bus = new javax.swing.JTextField();
@@ -118,6 +124,56 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
         t_almacen = new javax.swing.JTable();
         btn_pred = new javax.swing.JButton();
         btn_ver = new javax.swing.JButton();
+
+        j_fecha.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel2.setText("Seleccionar Fecha de Reporte");
+
+        jLabel3.setText("Fecha:");
+
+        try {
+            txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout j_fechaLayout = new javax.swing.GroupLayout(j_fecha.getContentPane());
+        j_fecha.getContentPane().setLayout(j_fechaLayout);
+        j_fechaLayout.setHorizontalGroup(
+            j_fechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_fechaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(j_fechaLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(40, 40, 40))
+        );
+        j_fechaLayout.setVerticalGroup(
+            j_fechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_fechaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(j_fechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -282,7 +338,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             System.out.print(ex);
         }
     }//GEN-LAST:event_btn_predActionPerformed
-    
+
 
     private void btn_verActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verActionPerformed
 //        frm_ver_prod_alm mat = new frm_ver_prod_alm();
@@ -310,7 +366,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             btn_pred.setEnabled(true);
             btn_ver.setEnabled(true);
             btn_mod.setEnabled(true);
-            
+
             if (ventana.equals("rpt_venta_alm")) {
                 frm_rpt_fechas fec = new frm_rpt_fechas();
                 fec.rpt = "venta_almacen";
@@ -347,6 +403,16 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 ven.llamar_ventana(fec);
                 ventana = "";
                 this.dispose();
+            }
+
+            if (ventana.equals("rpt_kardex_hoy")) {
+                j_fecha.setModal(true);
+                j_fecha.setTitle("SELECCIONAR FECHA");
+                j_fecha.setSize(400, 200);
+                txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
+                j_fecha.requestFocus();
+                j_fecha.setLocationRelativeTo(frm_menu.contenedor);
+                j_fecha.setVisible(true);
             }
         }
 
@@ -393,7 +459,21 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_btn_modActionPerformed
-    
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (txt_fec.getText().length() == 10) {
+            int id = (int) t_almacen.getValueAt(i, 0);
+            String fecha = ven.fechabase(txt_fec.getText());
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idalm", id);
+            parametros.put("fec_ini", fecha);
+            ven.ver_reporte("rpt_kardex_dia", parametros);
+            ventana = "";
+            j_fecha.dispose();
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private String[] cuenta_bancaria(String idcuenta) {
         String lista[] = new String[2];
         try {
@@ -418,9 +498,14 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_pred;
     private javax.swing.JButton btn_reg;
     private javax.swing.JButton btn_ver;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JDialog j_fecha;
     private javax.swing.JTable t_almacen;
     private javax.swing.JTextField txt_bus;
+    private javax.swing.JFormattedTextField txt_fec;
     // End of variables declaration//GEN-END:variables
 }

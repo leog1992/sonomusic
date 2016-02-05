@@ -217,6 +217,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem46 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem39 = new javax.swing.JMenuItem();
@@ -902,6 +903,16 @@ public class frm_menu extends javax.swing.JFrame {
         jMenu4.add(jMenuItem15);
         jMenu4.add(jSeparator3);
 
+        jMenuItem46.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
+        jMenuItem46.setText("Rpt. Kardex Diario");
+        jMenuItem46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem46ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem46);
+
         jMenuItem27.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem27.setText("Rotulos por Almacen");
@@ -1586,6 +1597,12 @@ public class frm_menu extends javax.swing.JFrame {
             ven.llamar_ventana(solc);
         }
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jMenuItem46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem46ActionPerformed
+        frm_ver_almacen almacen = new frm_ver_almacen();
+        frm_ver_almacen.ventana = "rpt_kardex_hoy";
+        ven.llamar_ventana(almacen);
+    }//GEN-LAST:event_jMenuItem46ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1689,6 +1706,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem43;
     private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem45;
+    private javax.swing.JMenuItem jMenuItem46;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
