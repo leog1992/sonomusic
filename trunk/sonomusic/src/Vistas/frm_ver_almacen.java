@@ -319,23 +319,25 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_almacenMousePressed
 
     private void btn_predActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_predActionPerformed
-        try {
-            alm.setNom(t_almacen.getValueAt(i, 1).toString());
-            String ruta = "almacen.txt";
-            File archivo = new File(ruta);
-            BufferedWriter bw;
-            if (archivo.exists()) {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(alm.getNom());
-            } else {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(alm.getNom());
+        if (usu.getPer_mod_almacen().equals("1")) {
+            try {
+                alm.setNom(t_almacen.getValueAt(i, 1).toString());
+                String ruta = "almacen.txt";
+                File archivo = new File(ruta);
+                BufferedWriter bw;
+                if (archivo.exists()) {
+                    bw = new BufferedWriter(new FileWriter(archivo));
+                    bw.write(alm.getNom());
+                } else {
+                    bw = new BufferedWriter(new FileWriter(archivo));
+                    bw.write(alm.getNom());
+                }
+                bw.close();
+                JOptionPane.showMessageDialog(null, "Se ha establecido correctamente.\nReingrese al Sistema");
+                System.exit(0);
+            } catch (IOException ex) {
+                System.out.print(ex);
             }
-            bw.close();
-            JOptionPane.showMessageDialog(null, "Se ha establecido correctamente.\nReingrese al Sistema");
-            System.exit(0);
-        } catch (IOException ex) {
-            System.out.print(ex);
         }
     }//GEN-LAST:event_btn_predActionPerformed
 
