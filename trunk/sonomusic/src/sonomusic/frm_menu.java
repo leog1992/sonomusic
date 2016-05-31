@@ -171,7 +171,7 @@ public class frm_menu extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        lbl_salir = new javax.swing.JLabel();
         lbl_compra = new javax.swing.JLabel();
         lbl_venta = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -461,15 +461,15 @@ public class frm_menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel22.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salir_sistema.png"))); // NOI18N
-        jLabel22.setText("Salir");
-        jLabel22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_salir.setBackground(new java.awt.Color(204, 204, 204));
+        lbl_salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salir_sistema.png"))); // NOI18N
+        lbl_salir.setText("Salir");
+        lbl_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lbl_salir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel22MouseClicked(evt);
+                lbl_salirMouseClicked(evt);
             }
         });
 
@@ -495,7 +495,7 @@ public class frm_menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -535,7 +535,7 @@ public class frm_menu extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(lbl_nro)))
-                    .addComponent(jLabel22))
+                    .addComponent(lbl_salir))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1523,9 +1523,9 @@ public class frm_menu extends javax.swing.JFrame {
         noti.start();
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+    private void lbl_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_salirMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jLabel22MouseClicked
+    }//GEN-LAST:event_lbl_salirMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
         if (evt.getClickCount() == 2) {
@@ -1648,7 +1648,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1737,6 +1736,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_compra;
     public static javax.swing.JLabel lbl_nro;
     private javax.swing.JLabel lbl_pc;
+    private javax.swing.JLabel lbl_salir;
     public static javax.swing.JLabel lbl_user;
     private javax.swing.JLabel lbl_venta;
     private javax.swing.JMenuItem m_clientes;

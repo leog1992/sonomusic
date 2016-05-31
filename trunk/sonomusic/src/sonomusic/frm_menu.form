@@ -1245,7 +1245,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel21" min="-2" pref="64" max="-2" attributes="0"/>
                       <EmptySpace pref="417" max="32767" attributes="0"/>
-                      <Component id="jLabel22" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="lbl_salir" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
@@ -1296,7 +1296,7 @@
                                   <Component id="lbl_nro" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jLabel22" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbl_salir" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -1464,7 +1464,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel21MouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel22">
+            <Component class="javax.swing.JLabel" name="lbl_salir">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -1478,7 +1478,7 @@
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel22MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbl_salirMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lbl_compra">
