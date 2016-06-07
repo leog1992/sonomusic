@@ -53,7 +53,7 @@ public class Cl_Moneda {
         Double precio = 0.0;
         try {
             Statement st = con.conexion();
-            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
+            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
                 precio = rs.getDouble("venta");
@@ -74,7 +74,7 @@ public class Cl_Moneda {
         Double precio = 0.0;
         try {
             Statement st = con.conexion();
-            String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '"+moneda+"'";
+            String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
                 precio = rs.getDouble("compra");
@@ -88,6 +88,98 @@ public class Cl_Moneda {
             System.out.println(e.getLocalizedMessage());
         }
         return precio;
+    }
+
+    public Double cambio_venta_dolar(String fecha, int moneda, Double valor) {
+        //para cambiar de soles a dolares
+        Double precio = 0.0;
+        Double monto = 0.0;
+        try {
+            Statement st = con.conexion();
+            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                precio = rs.getDouble("venta");
+            } else {
+                precio = 0.0;
+                JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
+            }
+            monto = valor / precio;
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException | HeadlessException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return monto;
+    }
+
+    public Double cambio_compra_dolar(String fecha, int moneda, Double valor) {
+        //para cambiar de soles a dolares
+        Double precio = 0.0;
+        Double monto = 0.0;
+        try {
+            Statement st = con.conexion();
+            String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                precio = rs.getDouble("compra");
+            } else {
+                precio = 0.0;
+                JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
+            }
+            monto = valor / precio;
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return monto;
+    }
+
+    public Double cambio_venta_sol(String fecha, int moneda, Double valor) {
+        //para cambiar de dolares a soles
+        Double precio = 0.0;
+        Double monto = 0.0;
+        try {
+            Statement st = con.conexion();
+            String ver_tc = "select venta from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                precio = rs.getDouble("venta");
+            } else {
+                precio = 0.0;
+                JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
+            }
+            monto = valor * precio;
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException | HeadlessException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return monto;
+    }
+
+    public Double cambio_compra_sol(String fecha, int moneda, Double valor) {
+        //para cambiar de dolares a soles
+        Double precio = 0.0;
+        Double monto = 0.0;
+        try {
+            Statement st = con.conexion();
+            String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            ResultSet rs = con.consulta(st, ver_tc);
+            if (rs.next()) {
+                precio = rs.getDouble("compra");
+            } else {
+                precio = 0.0;
+                JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
+            }
+            monto = valor * precio;
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException | HeadlessException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return monto;
     }
 
 }

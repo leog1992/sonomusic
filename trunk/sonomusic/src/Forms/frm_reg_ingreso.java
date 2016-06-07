@@ -31,7 +31,7 @@ import sonomusic.frm_menu;
  * @author luis-d
  */
 public class frm_reg_ingreso extends javax.swing.JInternalFrame {
-
+    
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Proveedor pro = new Cl_Proveedor();
@@ -79,7 +79,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         t_detalle.getColumnModel().getColumn(5).setPreferredWidth(80);
         detalle.fireTableDataChanged();
     }
-
+    
     private void ver_almacen() {
         try {
             ArrayList almacen = new ArrayList();
@@ -103,7 +103,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Lista no disponible");
         }
     }
-
+    
     private void ver_tido() {
         try {
             ArrayList tido = new ArrayList();
@@ -127,7 +127,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage());
         }
     }
-
+    
     private void ver_monedas() {
         try {
             ArrayList array_mon = new ArrayList();
@@ -642,7 +642,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F2) {
             btn_busp.doClick();
         }
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_ruc.getText().length() == 11) {
                 pro.setRuc(txt_ruc.getText());
@@ -740,7 +740,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         //  prod.btn_enviar.setEnabled(true);
         ven.llamar_ventana(prod);
     }//GEN-LAST:event_btn_busmActionPerformed
-
+    
     private void ver_productos(String query) {
         try {
             frm_ver_productos prod = null;
@@ -789,7 +789,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 } else {
                     fila[9] = "-";
                 }
-
+                
                 prod.mostrar.addRow(fila);
             }
             con.cerrar(st);
@@ -813,7 +813,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             System.out.print(e);
         }
     }
-
+    
 
     private void btn_caActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_caActionPerformed
         Double cantidad = Double.parseDouble(JOptionPane.showInputDialog("Ingrese Cantidad"));
@@ -851,14 +851,14 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
             btn_ca.doClick();
         }
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_sub.setText(ven.formato_numero(subtotal()));
             txt_igv.setText(ven.formato_numero(igv()));
             txt_tot.setText(ven.formato_numero(total()));
             txt_idp.requestFocus();
         }
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             i = t_detalle.getSelectedRow();
             detalle.removeRow(i);
@@ -867,7 +867,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             txt_tot.setText(ven.formato_numero(total()));
         }
     }//GEN-LAST:event_t_detalleKeyPressed
-
+    
     private void llenar() {
         pro.setRuc(txt_ruc.getText());
         tido.setId(cbx_tido.getSelectedIndex() + 1);
@@ -1020,9 +1020,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
+            
         }
-
+        
         frm_ver_ingresos compra = new frm_ver_ingresos();
         ven.llamar_ventana(compra);
         this.dispose();
@@ -1071,7 +1071,11 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             com.setFec_com(txt_fec_com.getText());
             int moneda = cbx_mon.getSelectedIndex() + 1;
-            txt_tc.setText(mon.tc_compra(ven.fechabase(com.getFec_com()), moneda).toString());
+            if (moneda != 2) {
+                txt_tc.setText(ven.formato_tc(mon.tc_compra(ven.fechabase(com.getFec_com()), moneda)));
+            } else {
+                txt_tc.setText("1.000");
+            }
             txt_tc.setEditable(true);
             txt_tc.requestFocus();
         }
@@ -1089,22 +1093,22 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_txt_tcKeyPressed
-
+    
     public static Double subtotal() {
         int totalRow = t_detalle.getRowCount();
         double suma_sub = 0.00;
         for (int i = 0; i < totalRow; i++) {
             suma_sub += Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 5))) * Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 3))) / 1.18;
-
+            
         }
         return suma_sub;
     }
-
+    
     public static Double igv() {
         Double igv = subtotal() * 0.18;
         return igv;
     }
-
+    
     public static Double total() {
         double total = subtotal() + igv();
         return total;
@@ -1140,7 +1144,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     public static javax.swing.JTable t_detalle;
     public static javax.swing.JTextField txt_desp;
     public static javax.swing.JTextField txt_dir;
-    private javax.swing.JFormattedTextField txt_fec_com;
+    public static javax.swing.JFormattedTextField txt_fec_com;
     public static javax.swing.JTextField txt_idp;
     public static javax.swing.JTextField txt_igv;
     private javax.swing.JTextField txt_nro;

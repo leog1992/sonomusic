@@ -77,7 +77,8 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
         mostrar.addColumn("P. Com.");
         try {
             Statement st = con.conexion();
-            String ver_cam = "select tc.fecha, m.nombre, tc.compra, tc.venta from tipo_cambio as tc inner join moneda as m on tc.idmon = m.idmoneda order by tc.fecha desc";
+            String ver_cam = "select tc.fecha, m.nombre, tc.compra, tc.venta from tipo_cambio as tc inner join moneda as m on tc.idmon = m.idmoneda where "
+                    + "month(tc.fecha) = month(current_date()) order by tc.fecha desc";
             ResultSet rs = con.consulta(st, ver_cam);
             Object fila[] = new Object[4];
             while (rs.next()) {

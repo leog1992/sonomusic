@@ -8,6 +8,7 @@ package Vistas;
 import Clases.Cl_Clasificacion;
 import Clases.Cl_Conectar;
 import Clases.Cl_Medida;
+import Clases.Cl_Moneda;
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
 import Clases.Clase_CellEditor;
@@ -41,6 +42,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     Cl_Medida med = new Cl_Medida();
     Cl_Productos pro = new Cl_Productos();
     Cl_Varios ven = new Cl_Varios();
+    Cl_Moneda mon = new Cl_Moneda();
     public static String ventana = "productos";
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
     DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
@@ -752,17 +754,25 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 fila_compra[3] = "1";                                  //cantidad
                 fila_compra[4] = t_productos.getValueAt(a, 7);         //und. med
 
+                int id_moneda = prod.cbx_mon.getSelectedIndex();
+                double costo_compra = 0;
+                String fecha_compra = ven.fechabase(prod.txt_fec_com.getText());
                 try {
                     Statement st1 = con.conexion();
                     String ver_cos = "select costo_compra from productos where idProductos = '" + id + "'";
                     ResultSet rs1 = con.consulta(st1, ver_cos);
                     if (rs1.next()) {
-                        fila_compra[5] = rs1.getObject("costo_compra"); // Costo Compra
+                        costo_compra = rs1.getDouble("costo_compra"); // Costo Compra
                     }
                     con.cerrar(rs1);
                     con.cerrar(st1);
                 } catch (SQLException ex) {
                     System.out.print(ex);
+                }
+                if (id_moneda == 1) {
+                    fila_compra[5] = ven.formato_numero(costo_compra);
+                } else {
+                    fila_compra[5] = ven.formato_numero(mon.cambio_compra_dolar(fecha_compra, id_moneda + 1, costo_compra));
                 }
 
                 if (tabla > 0) {            //verifica si existen registros
