@@ -384,7 +384,38 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar la compra?");
         if (JOptionPane.OK_OPTION == confirmado) {
+            String per_compra = t_compras.getValueAt(i, 2).toString();
+            String id = t_compras.getValueAt(i, 0).toString();
+            String empresa = t_compras.getValueAt(i, 1).toString();
+            //anular pagos
+            try {
+                Statement st = con.conexion();
+                String del_pagos = "delete from pago_compras where periodo = '" + per_compra + "' and idcompra = '" + id + "' and empresa = '" + empresa + "'";
+                System.out.println(del_pagos);
+                con.actualiza(st, del_pagos);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
+                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            }
 
+            //eliminar compra
+            try {
+                Statement st = con.conexion();
+                String del_compra = "delete from compra where periodo = '" + per_compra + "' and idcompra = '" + id + "' and empresa = '" + empresa + "'";
+                System.out.println(del_compra);
+                con.actualiza(st, del_compra);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
+                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            }
+
+            //ccargar tabla
+            String query = "select c.idcompra, c.periodo, c.ruc_prov, pr.raz_soc_pro, c.fec_com, c.fec_pago, td.desc_tipd, c.serie, c.nro, m.nombre, m.simbolo, m.siglas, c.tc, c.base, c.empresa, "
+                    + "c.estado from compra as c inner join proveedor as pr on c.ruc_prov = pr.ruc_pro inner join tipo_doc as td on c.idtido = td.idtipo_doc inner join moneda as m on "
+                    + "c.idmon = m.idmoneda where c.periodo = '" + periodo + "' order by c.periodo desc, c.idcompra desc";
+            ver_compras(query);
         }
     }//GEN-LAST:event_btn_anuActionPerformed
 
