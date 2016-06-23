@@ -6,7 +6,7 @@
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
     <Property name="closable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Acerca de contaPLUS - Luna Systems Peru"/>
+    <Property name="title" type="java.lang.String" value="Acerca de SonoMusic - Luna Systems Peru"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>

@@ -242,7 +242,6 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem26 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
 
         jMenu7.setText("File");
         jMenuBar2.add(jMenu7);
@@ -1138,9 +1137,6 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu9.add(jMenuItem9);
 
-        jMenuItem11.setText("Buscar Actualizaciones");
-        jMenu9.add(jMenuItem11);
-
         jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);
@@ -1667,7 +1663,6 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;

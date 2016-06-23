@@ -40,7 +40,7 @@ public class frm_info extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
-        setTitle("Acerca de contaPLUS - Luna Systems Peru");
+        setTitle("Acerca de SonoMusic - Luna Systems Peru");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lsp_nb.png"))); // NOI18N
 
