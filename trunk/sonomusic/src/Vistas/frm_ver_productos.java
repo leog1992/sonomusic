@@ -51,14 +51,13 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     public frm_ver_productos() {
         initComponents();
-//        if (!ventana.equals("compra_prod")) {
-//        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, "
-//                + "c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado from productos as p inner join "
-//                + "und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on "
-//                + "p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc";
-//        ver_productos(query);
-//            t_productos.setDefaultRenderer(Object.class, new table_render());
-//        }
+        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, "
+                + "c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado from productos as p inner join "
+                + "und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on "
+                + "p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc limit 0";
+        ver_productos(query);
+        t_productos.setDefaultRenderer(Object.class, new table_render());
+
         String clas = "select * from clasificacion order by id_clas asc";
         ver_clasificacion(clas);
     }

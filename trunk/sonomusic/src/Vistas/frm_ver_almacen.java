@@ -416,6 +416,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 j_fecha.setLocationRelativeTo(frm_menu.contenedor);
                 j_fecha.setVisible(true);
             }
+            ventana = "";
         }
 
     }//GEN-LAST:event_t_almacenMouseClicked
