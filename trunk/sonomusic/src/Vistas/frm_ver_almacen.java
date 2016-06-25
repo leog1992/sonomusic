@@ -338,6 +338,9 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
             } catch (IOException ex) {
                 System.out.print(ex);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud., no tiene permisos para cambiar de tienda");
+            this.dispose();
         }
     }//GEN-LAST:event_btn_predActionPerformed
 
