@@ -158,23 +158,13 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Fecha");
 
-        cbx_alm_or.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_alm_orActionPerformed(evt);
-            }
-        });
+        cbx_alm_or.setEnabled(false);
         cbx_alm_or.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_alm_orKeyPressed(evt);
             }
         });
 
-        cbx_alm_de.setEnabled(false);
-        cbx_alm_de.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_alm_deActionPerformed(evt);
-            }
-        });
         cbx_alm_de.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_alm_deKeyPressed(evt);
@@ -564,14 +554,6 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_chk_emitirActionPerformed
 
-    private void cbx_alm_orActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_alm_orActionPerformed
-
-    }//GEN-LAST:event_cbx_alm_orActionPerformed
-
-    private void cbx_alm_deActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_alm_deActionPerformed
-
-    }//GEN-LAST:event_cbx_alm_deActionPerformed
-
     private void txt_serKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_num.setEditable(true);
@@ -908,21 +890,25 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     private void cbx_alm_deKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_alm_deKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                int idalm = cbx_alm_de.getSelectedIndex() + 1;
-                Statement st = con.conexion();
-                String ver_alm = "select ruc, raz_soc from almacen where idAlmacen = '" + idalm + "'";
-                ResultSet rs = con.consulta(st, ver_alm);
-                if (rs.next()) {
-                    txt_ruc_alm.setText(rs.getString("ruc"));
-                    txt_raz_alm.setText(rs.getString("raz_soc"));
-                    txt_fec.setEditable(true);
-                    txt_fec.requestFocus();
+            String almacen_destino = cbx_alm_de.getSelectedItem().toString();
+            if (!almacen_destino.equals(frm_menu.alm.getNom())) {
+                try {
+                    int idalm = cbx_alm_de.getSelectedIndex() + 1;
+                    Statement st = con.conexion();
+                    String ver_alm = "select ruc, raz_soc from almacen where idAlmacen = '" + idalm + "'";
+                    ResultSet rs = con.consulta(st, ver_alm);
+                    if (rs.next()) {
+                        txt_ruc_alm.setText(rs.getString("ruc"));
+                        txt_raz_alm.setText(rs.getString("raz_soc"));
+                        txt_fec.setEditable(true);
+                        txt_fec.requestFocus();
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-            } catch (Exception e) {
-                System.out.println(e);
+            } else {
+                JOptionPane.showMessageDialog(null, "NO SE PUEDE SELECCIONAR EL MISMO ALMACEN");
             }
-
         }
     }//GEN-LAST:event_cbx_alm_deKeyPressed
 

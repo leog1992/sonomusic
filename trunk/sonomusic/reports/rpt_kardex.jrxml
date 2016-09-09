@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_kardex" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93fcf8eb-7171-417b-a48e-905db1c5824d">
 	<property name="ireport.zoom" value="1.6105100000000012"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="68"/>
+	<property name="ireport.x" value="353"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idalm" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,6 +15,7 @@
 	<parameter name="fec_fin" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="saldo_anterior" class="java.lang.Double"/>
 	<queryString>
 		<![CDATA[SELECT
      kardex.`idKardex` AS idKardex,
@@ -46,8 +47,7 @@ FROM
      INNER JOIN `almacen` almacen ON kardex.`idAlmacen` = almacen.`idAlmacen`
      INNER JOIN `tipo_movimiento` tipo_movimiento ON kardex.`idtipo_movimiento` = tipo_movimiento.`idtipo_movimiento`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
-where kardex.`idAlmacen` = $P{idalm} and kardex.`idProductos` = $P{idmat} and kardex.`fecha` between $P{fec_ini} and $P{fec_fin}
-order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
+where kardex.`idAlmacen` = $P{idalm} and kardex.`idProductos` = $P{idmat} and kardex.`fecha` between $P{fec_ini} and $P{fec_fin} ORDER BY kardex.`fecha` asc, kardex.`idKardex` asc]]>
 	</queryString>
 	<field name="idKardex" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -119,6 +119,13 @@ order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
 	</variable>
 	<variable name="sal_can" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{cant_ing} - $F{cant_sal}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="suma_ingreso" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cant_ing}]]></variableExpression>
+	</variable>
+	<variable name="suma_salida" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cant_sal}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -230,10 +237,42 @@ order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{und_medida}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="682" y="132" width="35" height="15" uuid="10a27177-2d0f-4714-93d5-7d125ed24528"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sal_can}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="35" splitType="Stretch">
+		<band height="50" splitType="Stretch">
+			<rectangle>
+				<reportElement x="522" y="35" width="105" height="15" uuid="e6d04233-8c31-404c-9b04-dfc6fcc14a33"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="732" y="35" width="70" height="15" uuid="cf6b1a88-a093-43d7-80b8-14c9f40d3944"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="627" y="35" width="105" height="15" uuid="ed7cfb61-0dc4-4a9f-b0f9-0a054e2f9de2"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="35" width="522" height="15" uuid="27e0847d-1dff-4a16-951b-d044431fc2b6"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="20" width="522" height="15" uuid="52a01c84-6fce-441a-a3e5-59e8c2ef89a4"/>
 				<graphicElement>
@@ -383,6 +422,49 @@ order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
 				</textElement>
 				<text><![CDATA[P.U.A.]]></text>
 			</staticText>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="592" y="35" width="35" height="15" uuid="e6246928-7c62-4395-a92e-70f5dff7837b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{saldo_anterior}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="35" width="45" height="15" uuid="fecff2b9-3ffb-4369-9f79-f196ea6b3c48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="35" width="55" height="15" uuid="0bc2fe3b-8fee-4725-a2cc-b3de9edf3c76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="35" width="157" height="15" uuid="2d1838ef-b1e9-4846-9112-29ed011167d5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[SALDO ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="35" width="70" height="15" uuid="a99ca19b-d26e-497f-94c9-68614c13bd4a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="35" width="125" height="15" uuid="5c2ddcff-e4d7-48eb-8dcd-35494d26ff7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -526,4 +608,7 @@ order by kardex.`fecha` asc, kardex.`idKardex` asc]]>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="50"/>
+	</columnFooter>
 </jasperReport>
