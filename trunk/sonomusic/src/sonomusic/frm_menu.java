@@ -9,7 +9,7 @@ import Clases.Cl_Usuario;
 import Vistas.frm_ver_ofertas;
 import Clases.Cl_Varios;
 import Clases.Cl_cuenta;
-import Clases.table_render;
+import Clases.render_productos;
 import Forms.frm_cierre_caja;
 import Forms.frm_conf_doc;
 import Forms.frm_reg_deposito;
@@ -42,6 +42,8 @@ import Vistas.frm_ver_solicitudes;
 import Vistas.frm_ver_usuarios;
 import Vistas.frm_ver_venta;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -49,6 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 public class frm_menu extends javax.swing.JFrame {
@@ -78,6 +81,21 @@ public class frm_menu extends javax.swing.JFrame {
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
+    }
+    
+    private void cargar_notificaciones() {
+        try {
+            Timer timer = new Timer(50000, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ver_tipo_cambio();
+                    System.out.println("ejecutando timer");
+                }
+            });
+            timer.start();
+            timer.setRepeats(true);
+        } catch (Exception e) {
+            System.out.println("Error grave " + e.getLocalizedMessage());
+        }
     }
 
     private void capt_nom_pc() {
@@ -610,6 +628,7 @@ public class frm_menu extends javax.swing.JFrame {
         m_clientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/user.png"))); // NOI18N
         m_clientes.setText("Clientes");
         m_clientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        m_clientes.setPreferredSize(new java.awt.Dimension(250, 23));
         m_clientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_clientesActionPerformed(evt);
@@ -621,6 +640,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cotizacion.png"))); // NOI18N
         jMenuItem12.setText("Cotizacion a Cliente");
         jMenuItem12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem12.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -633,6 +653,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compras.png"))); // NOI18N
         jMenuItem13.setText("Listar Ventas");
         jMenuItem13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem13.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem13ActionPerformed(evt);
@@ -643,7 +664,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem38.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pagos.png"))); // NOI18N
         jMenuItem38.setText("Vender");
-        jMenuItem38.setPreferredSize(new java.awt.Dimension(165, 30));
+        jMenuItem38.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem38ActionPerformed(evt);
@@ -655,7 +676,7 @@ public class frm_menu extends javax.swing.JFrame {
         m_ofertas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/basket.png"))); // NOI18N
         m_ofertas.setText("Ofertas");
         m_ofertas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        m_ofertas.setPreferredSize(new java.awt.Dimension(165, 30));
+        m_ofertas.setPreferredSize(new java.awt.Dimension(250, 23));
         m_ofertas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_ofertasActionPerformed(evt);
@@ -668,6 +689,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem28.setText("Rpt. Venta Total x Empresa");
         jMenuItem28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem28.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem28ActionPerformed(evt);
@@ -679,6 +701,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem32.setText("Rpt. Venta x Tienda");
         jMenuItem32.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem32.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem32ActionPerformed(evt);
@@ -690,6 +713,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem33.setText("Rpt. Venta x Vendedor");
         jMenuItem33.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem33.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem33ActionPerformed(evt);
@@ -700,6 +724,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem14.setText("Rpt. Ventas y Comision");
+        jMenuItem14.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem14ActionPerformed(evt);
@@ -711,6 +736,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem41.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem41.setText("Rpt. Producto x Cliente");
+        jMenuItem41.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem41ActionPerformed(evt);
@@ -721,6 +747,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jMenuItem42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         jMenuItem42.setText("Rpt. Ganancias por Tienda");
+        jMenuItem42.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem42ActionPerformed(evt);
@@ -1297,10 +1324,10 @@ public class frm_menu extends javax.swing.JFrame {
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                 + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "'"
                 + "order by p.desc_pro asc, p.modelo asc limit 0";
-        prod.mostrar_productos(query);
+        prod.mostrar_productos(query, mat.t_productos);
         mat.txt_ida.setText("" + alm.getId());
         mat.txt_noma.setText(alm.getNom());
-        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+        mat.t_productos.setDefaultRenderer(Object.class, new render_productos());
         ven.llamar_ventana(mat);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -1572,10 +1599,10 @@ public class frm_menu extends javax.swing.JFrame {
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                     + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "' "
                     + "order by p.desc_pro asc, p.modelo asc limit 0";
-            prod.mostrar_productos(query);
+            prod.mostrar_productos(query, mat.t_productos);
             mat.txt_ida.setText("" + alm.getId());
             mat.txt_noma.setText(alm.getNom());
-            mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+            mat.t_productos.setDefaultRenderer(Object.class, new render_productos());
             ven.llamar_ventana(mat);
         }
     }//GEN-LAST:event_jLabel19MouseClicked

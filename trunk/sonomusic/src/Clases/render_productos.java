@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author lubricante
  */
-public class table_render extends DefaultTableCellRenderer {
+public class render_productos extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
         if (String.valueOf(table.getValueAt(row, 9)).equals("POR TERMINAR")) {

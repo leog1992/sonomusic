@@ -10,7 +10,6 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Requerimiento;
 import Clases.Cl_Varios;
-import Clases.table_render;
 import Vistas.frm_ver_prod_alm;
 import Vistas.frm_ver_solicitudes;
 import java.awt.HeadlessException;
@@ -404,11 +403,10 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                 + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + menu.alm.getId() + "' "
                 + "and pa.cant <= p.cant_min and pa.cant = '0' order by p.desc_pro asc";
-        pro.mostrar_productos(query);
+        pro.mostrar_productos(query, mat.t_productos);
         mat.funcion = "solicitar";
         mat.txt_ida.setText("" + menu.alm.getId());
         mat.txt_noma.setText(menu.alm.getNom());
-        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
         ven.llamar_ventana(mat);
     }//GEN-LAST:event_btn_busActionPerformed
 
@@ -536,8 +534,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private void btn_envActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_envActionPerformed
         frm_reg_traslado_almacen traslado = new frm_reg_traslado_almacen();
         int idalm = Integer.parseInt(txt_id_ori.getText());
-        traslado.cbx_alm_or.setEnabled(false);
-        traslado.cbx_alm_or.setSelectedIndex(cbx_des.getSelectedIndex() + 1);
         traslado.cbx_alm_de.setEnabled(false);
         traslado.cbx_alm_de.setSelectedIndex(Integer.parseInt(txt_id_ori.getText()) - 1);
         System.out.println(idalm);

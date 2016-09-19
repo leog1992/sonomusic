@@ -381,8 +381,8 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void llenar() {
-        tido.setId(frm_reg_venta.cbx_tipd.getSelectedIndex() + 1);
-        tido.setDesc(frm_reg_venta.cbx_tipd.getSelectedItem().toString());
+        tido.setId(frm_reg_venta.cbx_documento_venta.getSelectedIndex() + 1);
+        tido.setDesc(frm_reg_venta.cbx_documento_venta.getSelectedItem().toString());
         tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
         tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
         ped.setFec_ped(ven.fechabase(frm_reg_venta.txt_fec.getText()));
@@ -393,13 +393,13 @@ public class frm_fin_venta extends javax.swing.JInternalFrame {
             tipa.setId(2);
         }
         ped.setDes_ped(0);
-        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("VENTA") && btn_cont.isSelected()) {
+        if (frm_reg_venta.cbx_tipo_venta.getSelectedItem().equals("VENTA") && btn_cont.isSelected()) {
             ped.setEst_ped("1");
         }
-        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("SEPARACION")) {
+        if (frm_reg_venta.cbx_tipo_venta.getSelectedItem().equals("SEPARACION")) {
             ped.setEst_ped("2");
         }
-        if (frm_reg_venta.cbx_tip_venta.getSelectedItem().equals("VENTA") && btn_cred.isSelected()) {
+        if (frm_reg_venta.cbx_tipo_venta.getSelectedItem().equals("VENTA") && btn_cred.isSelected()) {
             ped.setEst_ped("6");
         }
         usu.setNick(frm_reg_venta.cbx_vendedor.getSelectedItem().toString());

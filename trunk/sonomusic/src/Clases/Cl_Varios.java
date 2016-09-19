@@ -7,6 +7,7 @@ package Clases;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +26,7 @@ import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
@@ -78,6 +80,26 @@ public class Cl_Varios {
             Dimension jInternalFrameSize = ventana1.getSize();
             ventana1.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                     (desktopSize.height - jInternalFrameSize.height) / 2);
+        }
+    }
+    
+    public void solo_numeros(KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
+    }
+
+    public void solo_precio(KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9') && car != '.') {
+            evt.consume();
+        }
+    }
+
+    public void limitar_caracteres(KeyEvent evt, JTextField txt, int longitud) {
+        if (txt.getText().length() == longitud) {
+            evt.consume();
         }
     }
 
@@ -232,6 +254,24 @@ public class Cl_Varios {
             return (ceros + string);
         } else {
             return string;
+        }
+    }
+
+    public boolean esEntero(String numero) {
+        try {
+            Integer.parseInt(numero);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+
+    public boolean esDecimal(String numero) {
+        try {
+            Double.parseDouble(numero);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
         }
     }
 }

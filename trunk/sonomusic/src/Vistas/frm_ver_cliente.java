@@ -445,8 +445,8 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
                 if (rs.next()) {
                         //venta.txt_nrod.setText(cli.getNro_doc() + "");
                     //venta.txt_nomc.setText(rs.getString("nom_per"));                        
-                    frm_reg_venta.cbx_tipd.setEnabled(true);
-                    frm_reg_venta.cbx_tipd.requestFocus();
+                    frm_reg_venta.cbx_documento_venta.setEnabled(true);
+                    frm_reg_venta.cbx_documento_venta.requestFocus();
                     this.dispose();
                 }
             } catch (SQLException ex) {

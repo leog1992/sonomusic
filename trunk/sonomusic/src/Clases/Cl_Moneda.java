@@ -101,7 +101,7 @@ public class Cl_Moneda {
             if (rs.next()) {
                 precio = rs.getDouble("venta");
             } else {
-                precio = 0.0;
+                precio = 1.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
             }
             monto = valor / precio;
@@ -124,7 +124,7 @@ public class Cl_Moneda {
             if (rs.next()) {
                 precio = rs.getDouble("compra");
             } else {
-                precio = 0.0;
+                precio = 1.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
             }
             monto = valor / precio;

@@ -199,7 +199,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -278,25 +278,25 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
-            pro.mostrar_productos(query);
+            pro.mostrar_productos(query, t_productos);
         } else if (cbx_bus.getSelectedIndex() == 1) {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > p.cant_min order by p.desc_pro asc";
-            pro.mostrar_productos(query);
+            pro.mostrar_productos(query, t_productos);
         } else if (cbx_bus.getSelectedIndex() == 2) {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant < p.cant_min and pa.cant > 0 order by p.desc_pro asc";
-            pro.mostrar_productos(query);
+            pro.mostrar_productos(query, t_productos);
         } else {
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
                     + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant = 0 order by p.desc_pro asc";
-            pro.mostrar_productos(query);
+            pro.mostrar_productos(query, t_productos);
         }
         //falta demas oopciones del combo
     }//GEN-LAST:event_cbx_busKeyPressed
@@ -321,7 +321,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                     + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
                     + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
-            pro.mostrar_productos(query);
+            pro.mostrar_productos(query, t_productos);
             jLabel3.setText("" + tot_reg());
         }
     }//GEN-LAST:event_txt_busKeyPressed
@@ -365,48 +365,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     pedido.detalle.addRow(fila);
                     pedido.txt_id_pro.requestFocus();
                     pedido.btn_reg.setEnabled(true);
-                    funcion = "material_almacen";
-                    this.dispose();
-                }
-            }
-            //venta
-            if (funcion.equals("venta")) {
-                Object fila[] = new Object[6];
-                fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
-                fila[1] = t_productos.getValueAt(i, 1);                                         // DESCRIPCION
-                fila[2] = t_productos.getValueAt(i, 2);                                         // MARCA
-                fila[3] = "1.00";                                                               // CANTIDAD
-                fila[4] = t_productos.getValueAt(i, 4);                                         // UND MED
-                fila[5] = t_productos.getValueAt(i, 5);                                         // precio
-                frm_reg_venta venta = null;
-                int prod = (int) t_productos.getValueAt(i, 0);
-                Integer filas_tabla = frm_reg_venta.t_detalle.getRowCount();
-                Integer copiado = 0;
-                if (filas_tabla > 0) {
-                    for (int x = 0; x < filas_tabla; x++) {
-                        Integer id_pro_tabla;
-                        id_pro_tabla = Integer.parseInt(venta.t_detalle.getValueAt(x, 0).toString());
-                        if (id_pro_tabla == prod) {
-                            copiado++;
-                        }
-                    }
-                    if (copiado == 0) {
-                        frm_reg_venta.detalle.addRow(fila);
-                        frm_reg_venta.t_detalle.setModel(frm_reg_venta.detalle);
-                        frm_reg_venta.txt_id.requestFocus();
-                        frm_reg_venta.subtotal();
-                        frm_reg_venta.total();
-                        funcion = "material_almacen";
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
-                    }
-                } else {
-                    frm_reg_venta.detalle.addRow(fila);
-                    frm_reg_venta.t_detalle.setModel(frm_reg_venta.detalle);
-                    frm_reg_venta.txt_id.requestFocus();
-                    frm_reg_venta.subtotal();
-                    frm_reg_venta.total();
                     funcion = "material_almacen";
                     this.dispose();
                 }

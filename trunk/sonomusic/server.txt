@@ -1,1 +1,1 @@
-smidns.ddns.net
+localhost

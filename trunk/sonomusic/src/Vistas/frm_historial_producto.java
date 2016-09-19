@@ -7,7 +7,7 @@ package Vistas;
 
 import Clases.Cl_Productos;
 import Clases.Cl_Varios;
-import Clases.table_render;
+import Clases.render_productos;
 import static sonomusic.frm_menu.alm;
 
 /**
@@ -233,10 +233,10 @@ public class frm_historial_producto extends javax.swing.JInternalFrame {
                 + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
                 + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "'"
                 + "order by p.desc_pro asc, p.modelo asc limit 10";
-        prod.mostrar_productos(query);
+        prod.mostrar_productos(query, mat.t_productos);
         mat.txt_ida.setText("" + alm.getId());
         mat.txt_noma.setText(alm.getNom());
-        mat.t_productos.setDefaultRenderer(Object.class, new table_render());
+        mat.t_productos.setDefaultRenderer(Object.class, new render_productos());
         ven.llamar_ventana(mat);
         this.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed

@@ -13,7 +13,7 @@ import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Clases.table_render;
+import Clases.render_productos;
 import Vistas.frm_ver_ingresos;
 import Vistas.frm_ver_productos;
 import Vistas.frm_ver_proveedores;
@@ -805,7 +805,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             prod.t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             prod.t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
-            prod.t_productos.setDefaultRenderer(Object.class, new table_render());
+            prod.t_productos.setDefaultRenderer(Object.class, new render_productos());
 //            prod.mostrar.fireTableDataChanged();
 //            prod.t_productos.updateUI();
 

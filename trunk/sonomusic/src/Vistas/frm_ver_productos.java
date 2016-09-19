@@ -14,7 +14,7 @@ import Clases.Cl_Varios;
 import Clases.Clase_CellEditor;
 import Clases.Clase_CellRender;
 import Clases.ImagenURL;
-import Clases.table_render;
+import Clases.render_productos;
 import Forms.frm_reg_ingreso;
 import Forms.frm_reg_cotizacion;
 import Forms.frm_reg_ofertas;
@@ -56,7 +56,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 + "und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on "
                 + "p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc limit 0";
         ver_productos(query);
-        t_productos.setDefaultRenderer(Object.class, new table_render());
+        t_productos.setDefaultRenderer(Object.class, new render_productos());
 
         String clas = "select * from clasificacion order by id_clas asc";
         ver_clasificacion(clas);
@@ -143,7 +143,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
-            t_productos.setDefaultRenderer(Object.class, new table_render());
+            t_productos.setDefaultRenderer(Object.class, new render_productos());
         } catch (SQLException e) {
             System.out.print(e);
         }
@@ -213,7 +213,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
-            t_productos.setDefaultRenderer(Object.class, new table_render());
+            t_productos.setDefaultRenderer(Object.class, new render_productos());
             mostrar.fireTableDataChanged();
 
         } catch (SQLException e) {

@@ -4,6 +4,7 @@ import Vistas.frm_ver_prod_alm;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
 
@@ -144,8 +145,7 @@ public class Cl_Productos {
         this.can = can_act;
     }
 
-    public void mostrar_productos(String query) {
-        frm_ver_prod_alm prod = null;
+    public void mostrar_productos(String query, JTable tabla) {
         try {
             DefaultTableModel mostrar = new DefaultTableModel() {
                 @Override
@@ -202,26 +202,20 @@ public class Cl_Productos {
             }
             con.cerrar(st);
             con.cerrar(rs);
-            prod.t_productos.setModel(mostrar);
-//            ven.centrar_celda(prod.t_productos, 2);
-//            ven.centrar_celda(prod.t_productos, 8);
-//            ven.derecha_celda(prod.t_productos, 0);
-//            ven.derecha_celda(prod.t_productos, 3);
-//            ven.derecha_celda(prod.t_productos, 5);
-//            ven.derecha_celda(prod.t_productos, 6);
-            prod.t_productos.getColumnModel().getColumn(0).setPreferredWidth(30);
-            prod.t_productos.getColumnModel().getColumn(1).setPreferredWidth(350);
-            prod.t_productos.getColumnModel().getColumn(2).setPreferredWidth(80);
-            prod.t_productos.getColumnModel().getColumn(3).setPreferredWidth(60);
-            prod.t_productos.getColumnModel().getColumn(4).setPreferredWidth(100);
-            prod.t_productos.getColumnModel().getColumn(5).setPreferredWidth(60);
-            prod.t_productos.getColumnModel().getColumn(6).setPreferredWidth(50);
-            prod.t_productos.getColumnModel().getColumn(7).setPreferredWidth(100);
-            prod.t_productos.getColumnModel().getColumn(8).setPreferredWidth(80);
-            prod.t_productos.getColumnModel().getColumn(9).setPreferredWidth(100);
-            prod.t_productos.setDefaultRenderer(Object.class, new table_render());
+            tabla.setModel(mostrar);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(350);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(60);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(8).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(9).setPreferredWidth(100);
+            tabla.setDefaultRenderer(Object.class, new render_productos());
             mostrar.fireTableDataChanged();
-            prod.t_productos.updateUI();
+            tabla.updateUI();
 
         } catch (SQLException e) {
             System.out.print(e);
