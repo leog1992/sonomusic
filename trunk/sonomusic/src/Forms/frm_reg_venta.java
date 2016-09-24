@@ -1163,6 +1163,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     break;
             }
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
+        }
     }//GEN-LAST:event_cbx_documento_ventaKeyPressed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
@@ -1261,6 +1266,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 txt_nro_doc.requestFocus();
             }
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
+        }
 
     }//GEN-LAST:event_cbx_tipo_ventaKeyPressed
 
@@ -1336,6 +1345,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             detalle.removeRow(i);
             calcular_total();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_F3) {
+            cbx_tipo_venta.setEnabled(true);
+            cbx_tipo_venta.requestFocus();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
         }
     }//GEN-LAST:event_t_detalleKeyPressed
 
@@ -1428,27 +1446,29 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                     if (texto != null) {
                                         if (ven.esDecimal(texto)) {
                                             cantidad_nueva = Double.parseDouble(texto);
-                                            if (cantidad >= cantidad_nueva) {
-                                                fila[3] = ven.formato_numero(cantidad_nueva);
-                                            } else {
-                                                double exceso = cantidad_nueva - cantidad;
-                                                cantidad_nueva = cantidad;
-                                                fila[3] = ven.formato_numero(cantidad_nueva);
-                                                JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                                            }
+                                            //   if (cantidad >= cantidad_nueva) {
+                                            fila[3] = ven.formato_numero(cantidad_nueva);
+                                            /*    } else {
+                                             double exceso = cantidad_nueva - cantidad;
+                                             cantidad_nueva = cantidad;
+                                             fila[3] = ven.formato_numero(cantidad_nueva);
+                                             JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                                             }*/
 
                                         }
+                                    } else {
+                                        fila[3] = ven.formato_numero(cantidad_nueva);
                                     }
                                     fila[4] = rs.getString("desc_und");
                                     fila[5] = ven.formato_numero(rs.getDouble("precio"));
                                     fila[6] = ven.formato_numero(rs.getDouble("precio") * cantidad_nueva);
 
-                                    if (cantidad > 0.0) {
-                                        valida_tabla(Integer.parseInt(id_producto), fila);
-                                        calcular_total();
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
-                                    }
+                                    // if (cantidad > 0.0) {
+                                    valida_tabla(Integer.parseInt(id_producto), fila);
+                                    calcular_total();
+                                   // } else {
+                                    //     JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+                                    // }
                                 }
 
                                 con.cerrar(rs);
@@ -1549,10 +1569,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             jLabel3.setText("" + tot_reg());
             t_productos.requestFocus();
         }
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             j_productos.dispose();
-            txt_buscar_producto.requestFocus();        }
+            txt_buscar_producto.requestFocus();
+        }
     }//GEN-LAST:event_txt_busquedaKeyPressed
 
     private int tot_reg() {
@@ -1586,7 +1607,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String und_med = t_productos.getValueAt(nro_fila, 4).toString();
             double cantidad = Double.parseDouble(t_productos.getValueAt(nro_fila, 3).toString());
             double precio = Double.parseDouble(t_productos.getValueAt(nro_fila, 5).toString());
-            
+
             Object fila[] = new Object[7];
             fila[0] = id_producto;
             fila[1] = descripcion + " " + marca;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ver_guia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ddfdb103-644d-4740-95bd-81071684af51">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="22"/>
+	<property name="ireport.x" value="65"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idtraslado" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -41,15 +41,21 @@
      productos.`marca` AS marca,
      productos.`modelo` AS modelo,
      productos.`serie` AS serie,
-     und_medida.`desc_und` AS und_medida
+     und_medida.`desc_und` AS und_medida,
+     tipo_doc.`desc_tipd` AS tipo_documento
 FROM
      `empleados` empleados INNER JOIN `usuario` usuario ON empleados.`dni` = usuario.`dni`
      INNER JOIN `traslado` traslado ON usuario.`nick` = traslado.`nick`
      INNER JOIN `productos_traslado` productos_traslado ON traslado.`idTraslado` = productos_traslado.`idTraslado`
+     INNER JOIN `tipo_doc` tipo_doc ON traslado.`tipo_documento` = tipo_doc.`idtipo_doc`
      INNER JOIN `productos` productos ON productos_traslado.`idProductos` = productos.`idProductos`
      INNER JOIN `und_medida` und_medida ON productos.`idUnd_medida` = und_medida.`idUnd_medida`
 WHERE
-     traslado.`idTraslado` = $P{idtraslado}]]>
+     traslado.`idTraslado` = $P{idtraslado}
+ORDER BY
+     productos.`desc_pro` ASC,
+     productos.`marca` ASC,
+     productos.`modelo` ASC]]>
 	</queryString>
 	<field name="origen" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -117,6 +123,7 @@ WHERE
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="und_medida" class="java.lang.String"/>
+	<field name="tipo_documento" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -239,13 +246,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[RUC]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="456" y="0" width="99" height="15" uuid="d513d089-6ffb-4417-a366-8348fbae2d88"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[GUIA DE REMISION]]></text>
-			</staticText>
 			<image>
 				<reportElement mode="Transparent" x="0" y="0" width="121" height="75" uuid="1d43d716-8072-485f-b727-6f6454fe663a"/>
 				<imageExpression><![CDATA["C:\\Documents and Settings\\SONOMUSIC\\Mis documentos\\NetBeansProjects\\sonomusic\\trunk\\sonomusic\\reports\\logo_sonomusic.png"]]></imageExpression>
@@ -312,6 +312,13 @@ WHERE
 					<font size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="0" width="130" height="15" uuid="1a535a3e-9691-4760-ae60-a845ea772db2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_documento}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

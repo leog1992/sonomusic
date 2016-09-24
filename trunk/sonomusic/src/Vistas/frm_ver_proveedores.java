@@ -258,10 +258,10 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_proveedorMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
-        if (usu.getPer_mod_proveedor().equals("1")) {
+//        if (usu.getPer_mod_proveedor().equals("1")) {
             try {
                 frm_reg_proveedor prove = new frm_reg_proveedor();
-                pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+                //pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 Statement st = con.conexion();
                 String ver_prov = "select * from proveedor where ruc_pro = '" + pro.getRuc() + "'";
                 ResultSet rs = con.consulta(st, ver_prov);
@@ -294,27 +294,26 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
             }
-        } else {
+     /*   } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
-        }
+        }*/
     }//GEN-LAST:event_btn_modActionPerformed
 
     private void t_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_proveedorMouseClicked
-        i = t_proveedor.getSelectedRow();
-        pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
-        btn_mod.setEnabled(true);
-
         if (evt.getClickCount() == 2) {
+            i = t_proveedor.getSelectedRow();
+            pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
+            btn_mod.setEnabled(true);
             txt_bus.setText("");
             txt_bus.requestFocus();
-            
+
             if (funcion.equals("ingreso_almacen")) {
                 String ruc = t_proveedor.getValueAt(i, 0).toString();
                 frm_reg_ingreso.txt_ruc.setText(t_proveedor.getValueAt(i, 0).toString());
                 frm_reg_ingreso.txt_raz.setText(t_proveedor.getValueAt(i, 1).toString());
                 try {
                     Statement st = con.conexion();
-                    String ver_dir = "select dir_pro from proveedor where ruc_pro = '"+ruc+"'";
+                    String ver_dir = "select dir_pro from proveedor where ruc_pro = '" + ruc + "'";
                     ResultSet rs = con.consulta(st, ver_dir);
                     if (rs.next()) {
                         frm_reg_ingreso.txt_dir.setText(rs.getString("dir_pro"));
@@ -327,7 +326,7 @@ public class frm_ver_proveedores extends javax.swing.JInternalFrame {
                 frm_reg_ingreso.cbx_alm.requestFocus();
                 this.dispose();
             }
-            
+
             if (funcion.equals("compras_prov")) {
                 pro.setRuc(t_proveedor.getValueAt(i, 0).toString());
                 Map<String, Object> parametros = new HashMap<>();

@@ -827,14 +827,14 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btn_cerActionPerformed
 
-    void contar_filas () {
+    void contar_filas() {
         int contar_filas = t_detalle.getRowCount();
         if (contar_filas == 29) {
             txt_buscar_producto.setEnabled(false);
             JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL LIMITE DE 30 PRODUCTOS");
         }
     }
-    
+
     void cargar_productos_txt() {
         try {
             // autocompletar = new TextAutoCompleter(txt_buscar_producto);
@@ -878,24 +878,26 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                                     if (texto != null) {
                                         if (ven.esDecimal(texto)) {
                                             cantidad_nueva = Double.parseDouble(texto);
-                                            if (cantidad >= cantidad_nueva) {
-                                                fila[4] = ven.formato_numero(cantidad_nueva);
-                                            } else {
-                                                double exceso = cantidad_nueva - cantidad;
-                                                cantidad_nueva = cantidad;
-                                                fila[4] = ven.formato_numero(cantidad_nueva);
-                                                JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                                            }
+                                            // if (cantidad >= cantidad_nueva) {
+                                            fila[4] = ven.formato_numero(cantidad_nueva);
+                                            /* } else {
+                                             double exceso = cantidad_nueva - cantidad;
+                                             cantidad_nueva = cantidad;
+                                             fila[4] = ven.formato_numero(cantidad_nueva);
+                                             JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                                             }*/
                                         }
+                                    } else {
+                                        fila[4] = ven.formato_numero(cantidad_nueva);
                                     }
                                     fila[5] = rs.getString("desc_und");
 
-                                    if (cantidad > 0.0) {
-                                        valida_tabla(Integer.parseInt(id_producto), fila);
-                                        btn_enviar.setEnabled(true);
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
-                                    }
+                                    //if (cantidad > 0.0) {
+                                    valida_tabla(Integer.parseInt(id_producto), fila);
+                                    btn_enviar.setEnabled(true);
+                                    //} else {
+                                    //    JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+                                    //}
                                 }
 
                                 con.cerrar(rs);
@@ -966,7 +968,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         if (ingresar == true && cuenta_iguales == 0) {
             detalle.addRow(objeto);
             t_detalle.setModel(detalle);
-            contar_filas = t_detalle.getRowCount();
+            // contar_filas = t_detalle.getRowCount();
             contar_filas();
 //            String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
 //            if (texto != null) {
@@ -1233,8 +1235,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         parametros.put("direccion", direccion_almacen(frm_menu.alm.getRuc()));
         parametros.put("tienda", cbx_alm_de.getSelectedItem().toString());
         ven.ver_reporte("rpt_ver_guia", parametros);
-        
-                btn_cer.doClick();
+
+        btn_cer.doClick();
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private String direccion_almacen(String ruc) {
@@ -1253,8 +1255,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
         return direccion;
     }
-    
-    
+
+
     private void cbx_alm_deKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_alm_deKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String almacen_destino = cbx_alm_de.getSelectedItem().toString();

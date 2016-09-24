@@ -26,6 +26,7 @@ import Vistas.frm_mov_bancos;
 import Vistas.frm_movimientos;
 import Vistas.frm_und_medida;
 import Vistas.frm_ver_almacen;
+import Vistas.frm_ver_cierres;
 import Vistas.frm_ver_clasificacion;
 import Vistas.frm_ver_cliente;
 import Vistas.frm_ver_ingresos;
@@ -72,7 +73,7 @@ public class frm_menu extends javax.swing.JFrame {
         String nom_alm = ven.leer_archivo("almacen.txt");
         ver_id_almacen(nom_alm);
 
-        comprobar_caja();
+      //  comprobar_caja();
 
         ver_tipo_cambio();
         cargar_notificaciones();
@@ -322,6 +323,7 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem36 = new javax.swing.JMenuItem();
         jMenuItem37 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem43 = new javax.swing.JMenuItem();
         jMenuItem24 = new javax.swing.JMenuItem();
@@ -1220,6 +1222,15 @@ public class frm_menu extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem37);
 
+        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jMenuItem11.setText("Ver Cierres");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem11);
+
         jMenuBar1.add(jMenu5);
 
         jMenu6.setBackground(new java.awt.Color(212, 2, 2));
@@ -1810,6 +1821,11 @@ public class frm_menu extends javax.swing.JFrame {
         ven.solo_precio(evt);
         ven.limitar_caracteres(evt, txt_aperturar, 8);
     }//GEN-LAST:event_txt_aperturarKeyTyped
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        frm_ver_cierres cierre = new frm_ver_cierres();
+        ven.llamar_ventana(cierre);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1878,6 +1894,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
