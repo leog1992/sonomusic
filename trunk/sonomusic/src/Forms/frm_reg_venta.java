@@ -1520,7 +1520,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (ingresar == true && cuenta_iguales == 0) {
             detalle.addRow(objeto);
             t_detalle.setModel(detalle);
-            contar_filas = t_detalle.getRowCount();
+//            contar_filas = t_detalle.getRowCount();
 //            String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
 //            if (texto != null) {
 //                if (ven.esDecimal(texto)) {
@@ -1549,6 +1549,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             jLabel3.setText("" + tot_reg());
             t_productos.requestFocus();
         }
+        
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            j_productos.dispose();
+            txt_buscar_producto.requestFocus();        }
     }//GEN-LAST:event_txt_busquedaKeyPressed
 
     private int tot_reg() {
@@ -1582,6 +1586,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String und_med = t_productos.getValueAt(nro_fila, 4).toString();
             double cantidad = Double.parseDouble(t_productos.getValueAt(nro_fila, 3).toString());
             double precio = Double.parseDouble(t_productos.getValueAt(nro_fila, 5).toString());
+            
             Object fila[] = new Object[7];
             fila[0] = id_producto;
             fila[1] = descripcion + " " + marca;
@@ -1609,6 +1614,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (cantidad > 0.0) {
                 valida_tabla(Integer.parseInt(id_producto), fila);
                 calcular_total();
+                txt_busqueda.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
             }

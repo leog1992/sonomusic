@@ -114,10 +114,13 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         t_productos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -394,7 +397,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     if (copiado == 0) {
                         frm_reg_traslado_almacen.detalle.addRow(fila);
                         frm_reg_traslado_almacen.t_detalle.setModel(frm_reg_traslado_almacen.detalle);
-                        frm_reg_traslado_almacen.btn_reg.setEnabled(true);
+                        frm_reg_traslado_almacen.btn_enviar.setEnabled(true);
                         funcion = "material_almacen";
                         this.dispose();
                     } else {
@@ -403,7 +406,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 } else {
                     frm_reg_traslado_almacen.detalle.addRow(fila);
                     frm_reg_traslado_almacen.t_detalle.setModel(frm_reg_traslado_almacen.detalle);
-                    frm_reg_traslado_almacen.btn_reg.setEnabled(true);
+                    frm_reg_traslado_almacen.btn_enviar.setEnabled(true);
                     funcion = "material_almacen";
                     this.dispose();
                 }

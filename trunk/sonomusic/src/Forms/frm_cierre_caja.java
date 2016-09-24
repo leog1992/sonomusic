@@ -8,10 +8,10 @@ package Forms;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import javax.swing.JOptionPane;
 import sonomusic.frm_menu;
 
 /**
@@ -31,70 +31,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
      */
     public frm_cierre_caja() {
         initComponents();
-        simbolo.setDecimalSeparator('.');
-        formato = new DecimalFormat("###0.00", simbolo);
-        txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-        txt_ant.setText(formato.format(sal_ant()));
-        txt_ing.setText(formato.format(tot_ing()));
-        txt_egr.setText(formato.format(tot_sal()));
-        txt_act.setText(formato.format(sal_act()));
-    }
-
-    private double sal_ant() {
-        double sal = 0;
-        try {
-            Statement st = con.conexion();
-            String ver_sal = "select monto from caja where idAlmacen = '" + frm_menu.alm.getId() + "'";
-            ResultSet rs = con.consulta(st, ver_sal);
-            if (rs.next()) {
-                sal = rs.getDouble("monto");
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return sal;
-    }
-
-    private double tot_ing() {
-        double ing = 0;
-        try {
-            Statement st = con.conexion();
-            String ver_sal = "select entrada from movimiento where idAlmacen = '" + frm_menu.alm.getId() + "' and destino = 'C' and fec_mov = '" + ven.getFechaActual() + "'";
-            ResultSet rs = con.consulta(st, ver_sal);
-            while (rs.next()) {
-                ing += rs.getDouble("entrada");
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return ing;
-    }
-
-    private double tot_sal() {
-        double sal = 0;
-        try {
-            Statement st = con.conexion();
-            String ver_sal = "select salida from movimiento where idAlmacen = '" + frm_menu.alm.getId() + "' and destino = 'C' and fec_mov = '" + ven.getFechaActual() + "'";
-            ResultSet rs = con.consulta(st, ver_sal);
-            while (rs.next()) {
-                sal += rs.getDouble("salida");
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return sal;
-    }
-
-    private double sal_act() {
-        double act = 0.0;
-        act = sal_ant() + tot_ing() - tot_sal();
-        return act;
+        txt_fecha.setText(ven.fechaformateada(ven.getFechaActual()));
     }
 
     /**
@@ -106,22 +43,11 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        txt_ant = new javax.swing.JTextField();
-        txt_egr = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txt_ing = new javax.swing.JTextField();
-        txt_fec = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        txt_act = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txt_arq = new javax.swing.JTextField();
+        txt_arqueo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txt_dif = new javax.swing.JTextField();
+        txt_fecha = new javax.swing.JFormattedTextField();
+        jLabel8 = new javax.swing.JLabel();
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
@@ -129,155 +55,65 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Cierre de Caja");
 
-        jPanel1.setBackground(new java.awt.Color(254, 254, 254));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle de Movimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
-        jPanel1.setFocusable(false);
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setText("Fecha:");
-        jLabel4.setFocusable(false);
-
-        txt_ant.setEditable(false);
-        txt_ant.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_ant.setFocusable(false);
-
-        txt_egr.setEditable(false);
-        txt_egr.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_egr.setFocusable(false);
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("Total Ingresos:");
-        jLabel1.setFocusable(false);
-
-        txt_ing.setEditable(false);
-        txt_ing.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_ing.setFocusable(false);
-
-        txt_fec.setEditable(false);
-        try {
-            txt_fec.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txt_fec.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_fec.setFocusable(false);
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("Saldo Anterior:");
-        jLabel3.setFocusable(false);
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setText("Total Egresos:");
-        jLabel2.setFocusable(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_egr, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_ing, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_ant, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(78, 78, 78)
-                .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ant, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ing, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_egr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel2.setBackground(new java.awt.Color(254, 254, 254));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Saldos de Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(255, 0, 0)));
         jPanel2.setFocusable(false);
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setText("Saldo Actual:");
-        jLabel5.setFocusable(false);
-
-        txt_act.setEditable(false);
-        txt_act.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_act.setFocusable(false);
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel6.setText("Arqueo de Caja:");
-        jLabel6.setFocusable(false);
-
-        txt_arq.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_arq.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_arqueo.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_arqueo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_arqKeyPressed(evt);
+                txt_arqueoKeyPressed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel7.setText("Diferencia:");
+        jLabel7.setForeground(java.awt.Color.red);
+        jLabel7.setText("Fecha:");
         jLabel7.setFocusable(false);
 
-        txt_dif.setEditable(false);
-        txt_dif.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_dif.setFocusable(false);
+        try {
+            txt_fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fecha.setFocusable(false);
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel8.setForeground(java.awt.Color.red);
+        jLabel8.setText("Arqueo de Caja:");
+        jLabel8.setFocusable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txt_act, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_dif, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(txt_arq))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(55, 55, 55)
+                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_arqueo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_act, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_arq, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_dif, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_arqueo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -303,23 +139,20 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_reg)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_cer)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_reg)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_cer)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -335,48 +168,43 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cerActionPerformed
 
-    private void txt_arqKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_arqKeyPressed
+    private void txt_arqueoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_arqueoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            double dif = 0;
-            arq = Double.parseDouble(txt_arq.getText());
-            dif = arq - sal_act();
-            txt_dif.setText(formato.format(dif));
-            btn_reg.setEnabled(true);
+            double arqueo = Double.parseDouble(txt_arqueo.getText());
+            if (arqueo > 0.0) {
+                txt_arqueo.setText(ven.formato_numero(arqueo));
+                btn_reg.setEnabled(true);
+                btn_reg.requestFocus();
+            }
         }
-    }//GEN-LAST:event_txt_arqKeyPressed
+    }//GEN-LAST:event_txt_arqueoKeyPressed
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
         try {
+            //calcular monto del sistema.
+            double arqueo = Double.parseDouble(txt_arqueo.getText());
             Statement st = con.conexion();
-            String upt_caja = "update caja set monto = '"+arq+"' where idalmacen = '"+frm_menu.alm.getId()+"'";
-            con.actualiza(st, upt_caja);
+            String actualiza_caja = "update caja set monto_entrega = '" + arqueo + "', estado ='1' where fecha = current_date() and idalmacen = '" + frm_menu.alm.getId() + "'";
+            con.actualiza(st, actualiza_caja);
+            System.out.println(actualiza_caja);
             con.cerrar(st);
         } catch (Exception e) {
             System.out.println(e);
         }
+        JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE, HASTA LUEGO!!");
         this.dispose();
-        
+        System.exit(0);
+
     }//GEN-LAST:event_btn_regActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_reg;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txt_act;
-    private javax.swing.JTextField txt_ant;
-    private javax.swing.JTextField txt_arq;
-    private javax.swing.JTextField txt_dif;
-    private javax.swing.JTextField txt_egr;
-    private javax.swing.JFormattedTextField txt_fec;
-    private javax.swing.JTextField txt_ing;
+    private javax.swing.JTextField txt_arqueo;
+    private javax.swing.JFormattedTextField txt_fecha;
     // End of variables declaration//GEN-END:variables
 }

@@ -239,7 +239,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Permisos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(255, 0, 0))); // NOI18N
 
-        jLabel3.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel3.setForeground(java.awt.Color.red);
         jLabel3.setText("Administracion:");
 
         pv_rh.setForeground(new java.awt.Color(255, 0, 0));
@@ -248,13 +248,13 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         pr_ade.setForeground(new java.awt.Color(255, 0, 0));
         pr_ade.setText("Reg. Adelantos");
 
-        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel4.setForeground(java.awt.Color.red);
         jLabel4.setText("Reportes");
 
         pv_rep.setForeground(new java.awt.Color(255, 0, 0));
         pv_rep.setText("Ver Reportes");
 
-        jLabel5.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel5.setForeground(java.awt.Color.red);
         jLabel5.setText("Ventas");
 
         pr_ofe.setForeground(new java.awt.Color(255, 0, 0));
@@ -263,7 +263,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         pr_ven.setForeground(new java.awt.Color(255, 0, 0));
         pr_ven.setText("Reg. Ventas");
 
-        jLabel6.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel6.setForeground(java.awt.Color.red);
         jLabel6.setText("Compras");
 
         pr_comp.setForeground(new java.awt.Color(255, 0, 0));
@@ -272,7 +272,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         pr_coms.setForeground(new java.awt.Color(255, 0, 0));
         pr_coms.setText("Reg. Compra Servicios");
 
-        jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel7.setForeground(java.awt.Color.red);
         jLabel7.setText("Almacen");
 
         pr_alm.setForeground(new java.awt.Color(255, 0, 0));
@@ -301,13 +301,13 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         pe_prod.setForeground(new java.awt.Color(255, 0, 0));
         pe_prod.setText("Eli. Producto");
 
-        jLabel8.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel8.setForeground(java.awt.Color.red);
         jLabel8.setText("Contabilidad");
 
         pm_docs.setForeground(new java.awt.Color(255, 0, 0));
         pm_docs.setText("Conf. Documentos");
 
-        jLabel9.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel9.setForeground(java.awt.Color.red);
         jLabel9.setText("Datos Generales");
 
         pm_emp.setForeground(new java.awt.Color(255, 0, 0));

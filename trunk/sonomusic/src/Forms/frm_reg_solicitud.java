@@ -568,7 +568,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
         }
         traslado.t_detalle.setModel(traslado.detalle);
-        traslado.btn_reg.setEnabled(true);
+        traslado.btn_enviar.setEnabled(true);
         traslado.accion = "traslado";
         ven.llamar_ventana(traslado);
         this.dispose();

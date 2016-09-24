@@ -68,6 +68,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }
     //
 
+    void cargar_permiso() {
+        if (frm_menu.usu.getPer_ver_caja().equals("1")) {
+            txt_bus.setEnabled(false);
+
+        }
+    }
+
     double pagados() {
         double pag = 0;
         try {
@@ -122,7 +129,11 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
                 fila[4] = rs.getObject("cli_doc");
                 fila[5] = rs.getString("nom_per");
-                fila[6] = ven.formato_numero(rs.getDouble("total"));
+                if (frm_menu.usu.getPer_ver_caja().equals("0") && rs.getString("est_ped").equals("1")) {
+                    fila[6] = "0.00";
+                } else {
+                    fila[6] = ven.formato_numero(rs.getDouble("total"));
+                }
 
                 fila[7] = rs.getString("nick");
                 fila[8] = rs.getString("nom_alm");
@@ -145,10 +156,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 if (rs.getString("est_ped").equals("6")) {
                     fila[9] = "POR COBRAR";
                 }
-                
-                //if (rs.getString("est_ped").equals("1")) {
+
+                if (frm_menu.usu.getPer_ver_caja().equals("1")) {
                     sum += (rs.getDouble("total"));
-                //}
+                }
 
                 mostrar.addRow(fila);
             }
@@ -233,13 +244,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
         t_facturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"2", "B/001-00025", "C0U944", "LUIS ENRIQUE OYANGUREN GIRON", "S/. 59.00", "Pendiente de Pago", null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Ped.", "Glosa", "Nro Placa.", "Cliente", "Monto", "Estado", "Title 7", "Title 8", "Title 9", "Title 10"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
             }
         ));
         t_facturas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -333,7 +344,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_anu)
@@ -626,16 +637,22 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     private void t_facturasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_facturasMousePressed
         i = t_facturas.getSelectedRow();
         String est = t_facturas.getValueAt(i, 9).toString();
+
         switch (est) {
             case "PAGADO":
                 btn_anu.setEnabled(true);
-                btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
-                btn_pagar.setEnabled(true);
+                if (frm_menu.usu.getPer_ver_caja().equals("1")) {
+                    btn_det.setEnabled(true);
+                    btn_pagar.setEnabled(true);
+                } else {
+                    btn_det.setEnabled(false);
+                    btn_pagar.setEnabled(false);
+                }
                 break;
             case "ANULADO":
                 btn_anu.setEnabled(false);
-                btn_det.setEnabled(false);
+                btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
                 btn_pagar.setEnabled(false);
                 break;
