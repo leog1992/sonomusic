@@ -12,6 +12,7 @@ import Clases.Cl_cuenta;
 import Clases.render_productos;
 import Forms.frm_cierre_caja;
 import Forms.frm_conf_doc;
+import Forms.frm_configurar_documentos;
 import Forms.frm_reg_deposito;
 import Forms.frm_reg_empresa;
 import Forms.frm_reg_venta;
@@ -73,16 +74,15 @@ public class frm_menu extends javax.swing.JFrame {
         String nom_alm = ven.leer_archivo("almacen.txt");
         ver_id_almacen(nom_alm);
 
-      //  comprobar_caja();
-
+        //  comprobar_caja();
         ver_tipo_cambio();
         cargar_notificaciones();
-        
+
         lbl_alm.setText(alm.getNom());
         lbl_ciudad.setText(alm.getCiudad());
         txt_ruc.setText(alm.getRuc());
         txt_raz.setText(alm.getRaz_soc());
-        
+
         // carga todas las notificacion primera vez
         //noti = new Cl_Hilo_Notificacion();
         //noti.start();
@@ -129,7 +129,7 @@ public class frm_menu extends javax.swing.JFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-    
+
     private void ver_id_almacen(String nom_alm) {
         try {
             Statement st = con.conexion();
@@ -1500,8 +1500,10 @@ public class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         if (usu.getPer_conf_documento().equals("1")) {
-            frm_conf_doc conf = new frm_conf_doc();
-            ven.llamar_ventana(conf);
+            //frm_conf_doc conf = new frm_conf_doc();
+            //ven.llamar_ventana(conf);
+            frm_configurar_documentos configurar = new frm_configurar_documentos();
+            ven.llamar_ventana(configurar);
         } else {
             JOptionPane.showMessageDialog(null, "Ud. No tiene permisos");
         }
@@ -1725,14 +1727,22 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel21MouseClicked
 
     private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
-        frm_reg_venta vender = new frm_reg_venta();
-        ven.llamar_ventana(vender);
+        if (usu.getPer_reg_venta().equals("1")) {
+            frm_reg_venta vender = new frm_reg_venta();
+            ven.llamar_ventana(vender);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
     }//GEN-LAST:event_jMenuItem38ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        if (evt.getClickCount() == 2) {
-            frm_reg_venta venta = new frm_reg_venta();
-            ven.llamar_ventana(venta);
+        if (usu.getPer_reg_venta().equals("1")) {
+            if (evt.getClickCount() == 2) {
+                frm_reg_venta venta = new frm_reg_venta();
+                ven.llamar_ventana(venta);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 

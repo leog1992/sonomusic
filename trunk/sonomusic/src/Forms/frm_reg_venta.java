@@ -1455,6 +1455,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                              JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
                                              }*/
 
+                                        } else {
+                                            fila[3] = ven.formato_numero(cantidad_nueva);
                                         }
                                     } else {
                                         fila[3] = ven.formato_numero(cantidad_nueva);
@@ -1466,7 +1468,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                     // if (cantidad > 0.0) {
                                     valida_tabla(Integer.parseInt(id_producto), fila);
                                     calcular_total();
-                                   // } else {
+                                    // } else {
                                     //     JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
                                     // }
                                 }
@@ -1755,7 +1757,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                     + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
                     + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-                    + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+                    + "'" + frm_menu.alm.getId() + "', 'current_time()', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
             System.out.println(ins_ven);
             registro = con.actualiza(st, ins_ven);
             con.cerrar(st);

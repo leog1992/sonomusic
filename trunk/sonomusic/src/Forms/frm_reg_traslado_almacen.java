@@ -886,6 +886,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                                              fila[4] = ven.formato_numero(cantidad_nueva);
                                              JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
                                              }*/
+                                        } else {
+                                            fila[4] = ven.formato_numero(cantidad_nueva);
                                         }
                                     } else {
                                         fila[4] = ven.formato_numero(cantidad_nueva);
