@@ -11,7 +11,6 @@ import Clases.Cl_Varios;
 import Clases.Cl_cuenta;
 import Clases.render_productos;
 import Forms.frm_cierre_caja;
-import Forms.frm_conf_doc;
 import Forms.frm_configurar_documentos;
 import Forms.frm_reg_deposito;
 import Forms.frm_reg_empresa;
@@ -57,7 +56,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
-public class frm_menu extends javax.swing.JFrame {
+public final class frm_menu extends javax.swing.JFrame {
 
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
@@ -74,7 +73,8 @@ public class frm_menu extends javax.swing.JFrame {
         String nom_alm = ven.leer_archivo("almacen.txt");
         ver_id_almacen(nom_alm);
 
-        //  comprobar_caja();
+        verificar_cierre_anterior();
+        comprobar_caja();
         ver_tipo_cambio();
         cargar_notificaciones();
 
@@ -219,6 +219,27 @@ public class frm_menu extends javax.swing.JFrame {
         }
     }
 
+    void verificar_cierre_anterior() {
+        txt_tienda_cierre.setText(alm.getNom());
+        try {
+            Statement st = con.conexion();
+            String ver_caja = "select fecha from caja where idalmacen = '" + alm.getId() + "' and estado = '0' and fecha < current_date()";
+            ResultSet rs = con.consulta(st, ver_caja);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "SE ENCONTRO UNA CAJA NO CERRADA \nPOR FAVOR CIERRE LA CAJA");
+                txt_fecha_cierre.setText(ven.fechaformateada(rs.getString("fecha")));
+                j_cierre.setModal(true);
+                j_cierre.setSize(228, 180);
+                j_cierre.setLocationRelativeTo(null);
+                j_cierre.setVisible(true);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -234,6 +255,14 @@ public class frm_menu extends javax.swing.JFrame {
         txt_aperturar = new javax.swing.JTextField();
         txt_fecha = new javax.swing.JFormattedTextField();
         btn_aperturar = new javax.swing.JButton();
+        j_cierre = new javax.swing.JDialog();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txt_tienda_cierre = new javax.swing.JTextField();
+        txt_cierre = new javax.swing.JTextField();
+        txt_fecha_cierre = new javax.swing.JFormattedTextField();
+        btn_cerrar = new javax.swing.JButton();
         contenedor = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         lbl_user = new javax.swing.JLabel();
@@ -422,6 +451,89 @@ public class frm_menu extends javax.swing.JFrame {
                     .addComponent(txt_aperturar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_aperturar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        j_cierre.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        j_cierre.setTitle("Cierre de Caja Anterior");
+
+        jLabel13.setForeground(java.awt.Color.red);
+        jLabel13.setText("Fecha:");
+
+        jLabel14.setForeground(java.awt.Color.red);
+        jLabel14.setText("Tienda:");
+
+        jLabel15.setForeground(java.awt.Color.red);
+        jLabel15.setText("Monto de Cierre");
+
+        txt_tienda_cierre.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_tienda_cierre.setFocusable(false);
+
+        txt_cierre.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_cierre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_cierreKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cierreKeyTyped(evt);
+            }
+        });
+
+        try {
+            txt_fecha_cierre.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fecha_cierre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fecha_cierre.setFocusable(false);
+
+        btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica.png"))); // NOI18N
+        btn_cerrar.setText("Cerrar Caja");
+        btn_cerrar.setEnabled(false);
+        btn_cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout j_cierreLayout = new javax.swing.GroupLayout(j_cierre.getContentPane());
+        j_cierre.getContentPane().setLayout(j_cierreLayout);
+        j_cierreLayout.setHorizontalGroup(
+            j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_cierreLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel13))
+                .addGap(18, 18, 18)
+                .addGroup(j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_fecha_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tienda_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, j_cierreLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_cerrar)
+                .addContainerGap())
+        );
+        j_cierreLayout.setVerticalGroup(
+            j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_cierreLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tienda_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_cierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1833,9 +1945,43 @@ public class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_aperturarKeyTyped
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        if (usu.getPer_ver_caja().equals("1")) {
         frm_ver_cierres cierre = new frm_ver_cierres();
         ven.llamar_ventana(cierre);
+        } else {
+            JOptionPane.showMessageDialog(null, "UD NO TIENE PERMISOS PARA VER");
+        }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void txt_cierreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cierreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_cierre.getText().length() > 0) {
+                btn_cerrar.setEnabled(true);
+                btn_cerrar.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_cierreKeyPressed
+
+    private void txt_cierreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cierreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_cierreKeyTyped
+
+    private void btn_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrarActionPerformed
+        try {
+            //calcular monto del sistema.
+            String fecha_cierre = ven.fechabase(txt_fecha_cierre.getText());
+            double cierre = Double.parseDouble(txt_cierre.getText());
+            Statement st = con.conexion();
+            String actualiza_caja = "update caja set monto_entrega = '" + cierre + "', estado ='1' where fecha = '" + fecha_cierre + "' and idalmacen = '" + frm_menu.alm.getId() + "'";
+            con.actualiza(st, actualiza_caja);
+            System.out.println(actualiza_caja);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE, HASTA LUEGO!!");
+        j_cierre.dispose();
+    }//GEN-LAST:event_btn_cerrarActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -1874,11 +2020,15 @@ public class frm_menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aperturar;
+    private javax.swing.JButton btn_cerrar;
     public static javax.swing.JDesktopPane contenedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1969,6 +2119,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JDialog j_apertura;
+    private javax.swing.JDialog j_cierre;
     public static javax.swing.JLabel lbl_alm;
     private javax.swing.JLabel lbl_ciudad;
     private javax.swing.JLabel lbl_compra;
@@ -1981,9 +2132,12 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem m_notas;
     private javax.swing.JMenuItem m_ofertas;
     private javax.swing.JTextField txt_aperturar;
+    private javax.swing.JTextField txt_cierre;
     private javax.swing.JFormattedTextField txt_fecha;
+    private javax.swing.JFormattedTextField txt_fecha_cierre;
     private javax.swing.JLabel txt_raz;
     private javax.swing.JLabel txt_ruc;
     private javax.swing.JTextField txt_tienda;
+    private javax.swing.JTextField txt_tienda_cierre;
     // End of variables declaration//GEN-END:variables
 }

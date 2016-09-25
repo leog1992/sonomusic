@@ -6,11 +6,14 @@
 package Vistas;
 
 import Clases.Cl_Conectar;
+import Clases.Cl_Movimiento;
 import Clases.Cl_Varios;
+import Clases.render_cierre;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,14 +23,21 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
 
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
+    Cl_Movimiento mov = new Cl_Movimiento();
+    DefaultTableModel mostrar;
 
     /**
      * Creates new form frm_ver_cierres
      */
     public frm_ver_cierres() {
         initComponents();
+        String fecha = ven.fechaformateada(ven.getFechaActual());
+        txt_fecha_inicio.setText(fecha);
+        txt_fecha_fin.setText(fecha);
+
         String tienda = "select * from almacen order by idAlmacen asc";
         ver_tienda(tienda);
+
     }
 
     private void ver_tienda(String query) {
@@ -44,6 +54,51 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
             con.cerrar(rs);
         } catch (SQLException e) {
             System.out.print(e);
+        }
+    }
+
+    private void cargar_montos(String query) {
+        try {
+            mostrar = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+            Statement st = con.conexion();
+            mostrar.addColumn("Fecha");
+            mostrar.addColumn("Apertura");
+            mostrar.addColumn("Monto Sistema");
+            mostrar.addColumn("Monto Ingresado");
+            mostrar.addColumn("Diferencia");
+
+            ResultSet rs = con.consulta(st, query);
+            while (rs.next()) {
+                int almacen = cbx_tienda.getSelectedIndex() + 1;
+                Object[] fila = new Object[5];
+                fila[0] = ven.fechaformateada(rs.getString("fecha"));
+                double apertura = rs.getDouble("apertura");
+                fila[1] = ven.formato_numero(apertura);
+                double monto_sistema = mov.monto_sistema(rs.getString("fecha"), almacen);
+                double monto_entrega = rs.getDouble("monto_entrega");
+                fila[2] = ven.formato_numero(monto_sistema);
+                fila[3] = ven.formato_numero(monto_entrega);
+                double diferencia = monto_entrega - monto_sistema - apertura;
+                fila[4] = ven.formato_numero(diferencia);
+                mostrar.addRow(fila);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+            t_cierre.setModel(mostrar);
+            t_cierre.getColumnModel().getColumn(0).setPreferredWidth(75);
+            t_cierre.getColumnModel().getColumn(1).setPreferredWidth(80);
+            t_cierre.getColumnModel().getColumn(2).setPreferredWidth(80);
+            t_cierre.getColumnModel().getColumn(3).setPreferredWidth(80);
+            t_cierre.getColumnModel().getColumn(4).setPreferredWidth(80);
+            t_cierre.setDefaultRenderer(Object.class, new render_cierre());
+
+        } catch (SQLException ex) {
+            System.out.print(ex);
         }
     }
 
@@ -66,8 +121,10 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
         t_cierre = new javax.swing.JTable();
         cbx_cerrar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setTitle("Ver Cierres de Caja");
 
+        jLabel1.setForeground(java.awt.Color.red);
         jLabel1.setText("Seleccionar Tienda:");
 
         cbx_tienda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -76,8 +133,10 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(java.awt.Color.red);
         jLabel2.setText("Fecha Inicio:");
 
+        jLabel3.setForeground(java.awt.Color.red);
         jLabel3.setText("Fecha Termino:");
 
         try {
@@ -147,9 +206,7 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
                                     .addComponent(txt_fecha_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbx_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbx_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(343, 343, 343)
                         .addComponent(cbx_cerrar)))
                 .addContainerGap())
@@ -180,7 +237,7 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbx_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_cerrarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_cbx_cerrarActionPerformed
 
     private void cbx_tiendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tiendaKeyPressed
@@ -202,12 +259,14 @@ public class frm_ver_cierres extends javax.swing.JInternalFrame {
     private void txt_fecha_finKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_finKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fecha_fin.getText().length() == 10) {
-               // cargar cierres de caja
-                try {
-                    Statement st= con.conexion();
-                    String ver_cierre = "select fecha, monto_apertura, monto_sistema, monto_sistema from caja where id_almacen";
-                } catch (Exception e) {
-                }
+                // cargar cierres de caja
+                int almacen = cbx_tienda.getSelectedIndex() + 1;
+                String fecha_inicio, fecha_fin;
+                fecha_inicio = ven.fechabase(txt_fecha_inicio.getText());
+                fecha_fin = ven.fechabase(txt_fecha_fin.getText());
+                String ver_cierre = "select fecha, apertura, monto_sistema, monto_entrega from caja where idalmacen = '" + almacen + "' "
+                        + "and fecha between '" + fecha_inicio + "' and '" + fecha_fin + "'";
+                cargar_montos(ver_cierre);
             }
         }
     }//GEN-LAST:event_txt_fecha_finKeyPressed

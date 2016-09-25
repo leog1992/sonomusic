@@ -164,7 +164,7 @@ public class frm_reg_cuota extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String ins_cuota = "insert into pago_compras Values (null, '" + periodo + "','" + com.getId() + "', '" + empresa + "','" + fec_venc + "', '" + monto + "','7000-01-01', "
-                    + "'" + moneda + "', '0.0','0','0')";
+                    + "'" + moneda + "', '0.0','0','DEPOSITO', '0')";
             con.actualiza(st, ins_cuota);
             con.cerrar(st);
         } catch (Exception ex) {

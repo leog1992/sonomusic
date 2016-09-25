@@ -542,6 +542,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         });
 
         txt_ruc_alm.setEditable(false);
+        txt_ruc_alm.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         txt_raz_alm.setEditable(false);
 

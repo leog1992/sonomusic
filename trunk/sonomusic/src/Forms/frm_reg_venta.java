@@ -14,8 +14,12 @@ import Clases.Cl_Varios;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -1175,6 +1179,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     void cargar_datos_cliente() {
         cli.setNro_doc(txt_nro_doc.getText());
+        obtener_datos(cli.getNro_doc());
         try {
             Statement st = con.conexion();
             String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
@@ -1194,6 +1199,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Cliente no registrado");
                 frm_reg_cliente cliente = new frm_reg_cliente();
                 cli.setNro_doc(txt_nro_doc.getText());
+
                 ven.llamar_ventana(cliente);
                 frm_reg_cliente.ventana = "reg_venta";
                 if (txt_nro_doc.getText().length() == 8) {
@@ -1212,6 +1218,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         } catch (SQLException ex) {
             System.out.print(ex);
+        }
+    }
+
+    void obtener_datos(String ruc) {
+        try {
+            Desktop.getDesktop().browse(new URI("http://ws.insite.pe/sunat/test_ruc.php?ruc=" + ruc));
+        } catch (URISyntaxException | IOException ex) {
+            System.out.println(ex);
         }
     }
     private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
@@ -1320,18 +1334,18 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 ResultSet rs = con.consulta(st, pre_com);
                 double precio_b = 0;
                 if (rs.next()) {
-                    precio_b = rs.getDouble("costo_compra");
+                    precio_b = rs.getDouble("costo_compra") * 1.2;
                 }
                 con.cerrar(st);
                 con.cerrar(rs);
 
-                if (precio > precio_b) {
+                if (precio >= precio_b) {
                     precio_nuevo = precio;
-                    t_detalle.setValueAt(ven.formato_numero(precio), i, 5);
+                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
                 } else {
                     precio_nuevo = precio_b;
                     JOptionPane.showMessageDialog(null, "No se puede establecer ese precio");
-                    t_detalle.setValueAt(ven.formato_numero(precio_b * 0.2), i, 5);
+                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
                 }
                 double parcial = cantidad * precio_nuevo;
                 t_detalle.setValueAt(ven.formato_numero(parcial), i, 6);
@@ -1757,7 +1771,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                     + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
                     + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-                    + "'" + frm_menu.alm.getId() + "', 'current_time()', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+                    + "'" + frm_menu.alm.getId() + "', current_time(), '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
             System.out.println(ins_ven);
             registro = con.actualiza(st, ins_ven);
             con.cerrar(st);

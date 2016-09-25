@@ -35,20 +35,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Component id="btn_clo" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="txt_ing" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="txt_sal" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace pref="84" max="32767" attributes="0"/>
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txt_tot" min="-2" pref="100" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -76,6 +62,42 @@
                           <Component id="btn_reg" max="32767" attributes="0"/>
                           <Component id="txt_monto" max="32767" attributes="0"/>
                           <Component id="txt_fecha" pref="100" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="txt_inge" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="txt_ingb" min="-2" pref="100" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="txt_salb" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="txt_sale" min="-2" pref="100" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="88" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txt_totb" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txt_tote" min="-2" pref="100" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -120,10 +142,19 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_ing" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_sal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_inge" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_sale" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_tot" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_tote" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_ingb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_salb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel11" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_totb" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btn_clo" min="-2" pref="30" max="-2" attributes="0"/>
@@ -317,7 +348,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="2" green="2" red="d4" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Total Otros Ingresos:"/>
+        <Property name="text" type="java.lang.String" value="Total Ingresos Efectivo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -325,7 +356,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="2" green="2" red="d4" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Total Otros Egresos:"/>
+        <Property name="text" type="java.lang.String" value="Total Egresos Efectivo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -344,13 +375,13 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_ing">
+    <Component class="javax.swing.JTextField" name="txt_inge">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_sal">
+    <Component class="javax.swing.JTextField" name="txt_sale">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
@@ -361,10 +392,10 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="2" green="2" red="d4" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Total Otros Gastos:"/>
+        <Property name="text" type="java.lang.String" value="Total Efectivo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_tot">
+    <Component class="javax.swing.JTextField" name="txt_tote">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
@@ -381,6 +412,48 @@
       <Events>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fechaKeyPressed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel9">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="2" green="2" red="d4" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Total Ingresos Banco"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_ingb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel10">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="2" green="2" red="d4" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Total Egresos Banco"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_salb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="2" green="2" red="d4" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Total Banco"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_totb">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
