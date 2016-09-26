@@ -162,6 +162,9 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         t_productos = new javax.swing.JTable();
         btn_cer1 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_cc = new javax.swing.JButton();
         btn_el = new javax.swing.JButton();
@@ -404,6 +407,15 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
         jLabel14.setText("0");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel1.setText("Esc - Limpiar Busqueda");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel2.setText("Flecha Arriba y Abajo - Subir y Bajar en Cuadro");
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel3.setText("Enter - Busca / Seleccionar Producto");
+
         javax.swing.GroupLayout j_productosLayout = new javax.swing.GroupLayout(j_productos.getContentPane());
         j_productos.getContentPane().setLayout(j_productosLayout);
         j_productosLayout.setHorizontalGroup(
@@ -421,7 +433,14 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
-                        .addComponent(btn_cer1)))
+                        .addComponent(btn_cer1))
+                    .addGroup(j_productosLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel2)
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         j_productosLayout.setVerticalGroup(
@@ -435,7 +454,12 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     .addComponent(btn_cer1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addContainerGap())
         );
 
@@ -1592,31 +1616,29 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             String marca = t_productos.getValueAt(nro_fila, 2).toString();
             String und_med = t_productos.getValueAt(nro_fila, 4).toString();
             double cantidad = Double.parseDouble(t_productos.getValueAt(nro_fila, 3).toString());
-            double precio = Double.parseDouble(t_productos.getValueAt(nro_fila, 5).toString());
 
             Object fila[] = new Object[7];
             fila[0] = id_producto;
-            fila[1] = descripcion + " " + marca;
-            fila[2] = ven.formato_numero(cantidad);
+            fila[1] = descripcion;
+            fila[2] = marca;
+            fila[3] = ven.formato_numero(cantidad);
             String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
             double cantidad_nueva = 1;
             if (texto != null) {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
-                    if (cantidad >= cantidad_nueva) {
-                        fila[3] = ven.formato_numero(cantidad_nueva);
-                    } else {
-                        double exceso = cantidad_nueva - cantidad;
-                        cantidad_nueva = cantidad;
-                        fila[3] = ven.formato_numero(cantidad_nueva);
-                        JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                    }
+                    //if (cantidad >= cantidad_nueva) {
+                        fila[4] = ven.formato_numero(cantidad_nueva);
+                 //   } else {
+                 //       double exceso = cantidad_nueva - cantidad;
+                   //     cantidad_nueva = cantidad;
+                    //    fila[4] = ven.formato_numero(cantidad_nueva);
+                    //    JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                  //  }
 
                 }
             }
-            fila[4] = ven.formato_numero(precio);
             fila[5] = und_med;
-            fila[6] = ven.formato_numero(precio * cantidad_nueva);
 
             if (cantidad > 0.0) {
                 valida_tabla(Integer.parseInt(id_producto), fila);
@@ -1649,11 +1671,13 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btn_verificar;
     public static javax.swing.JComboBox cbx_alm_de;
     public static javax.swing.JComboBox cbx_documento;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1663,6 +1687,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
