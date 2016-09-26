@@ -1614,8 +1614,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
                 }
             }
-            fila[4] = und_med;
-            fila[5] = ven.formato_numero(precio);
+            fila[4] = ven.formato_numero(precio);
+            fila[5] = und_med;
             fila[6] = ven.formato_numero(precio * cantidad_nueva);
 
             if (cantidad > 0.0) {
