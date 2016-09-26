@@ -267,10 +267,10 @@ public class frm_permisos extends javax.swing.JInternalFrame {
         jLabel6.setText("Compras");
 
         pr_comp.setForeground(new java.awt.Color(255, 0, 0));
-        pr_comp.setText("Reg. Compra Productos");
+        pr_comp.setText("Reg. Compra");
 
         pr_coms.setForeground(new java.awt.Color(255, 0, 0));
-        pr_coms.setText("Reg. Compra Servicios");
+        pr_coms.setText("Reg. Ingresos");
 
         jLabel7.setForeground(java.awt.Color.red);
         jLabel7.setText("Almacen");
@@ -348,7 +348,7 @@ public class frm_permisos extends javax.swing.JInternalFrame {
                                     .addComponent(pr_ven)
                                     .addComponent(pr_coms)))
                             .addComponent(jLabel6))
-                        .addGap(40, 40, 40)
+                        .addGap(64, 64, 64)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(jPanel2Layout.createSequentialGroup()

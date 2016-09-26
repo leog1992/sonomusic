@@ -383,7 +383,7 @@ public class frm_reg_proveedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Se ha ingresado correctamente");
         } else {
             Statement st = con.conexion();
-            String mod_prov = "update proveedor set raz_soc_pro = '"+pro.getRaz()+"', dir_pro = '"+pro.getDir()+"', tel_pro = '"+pro.getTel()+"', web = '"+pro.getWeb()+"'"
+            String mod_prov = "update proveedor set raz_soc_pro = '"+pro.getRaz()+"', dir_pro = '"+pro.getDir()+"', tel_pro = '"+pro.getTel()+"', web = '"+pro.getWeb()+"', "
                     + " contacto = '"+pro.getCon()+"', tel_contacto = '"+pro.getTel1()+"', tel2_contacto = '"+pro.getTel2()+"', email_contacto = '"+pro.getEmail()+"' "
                     + " where ruc_pro = '"+pro.getRuc()+"'";
             con.actualiza(st, mod_prov);

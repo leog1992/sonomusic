@@ -14,8 +14,12 @@ import Clases.Cl_Varios;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -1173,6 +1177,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     break;
             }
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
+        }
     }//GEN-LAST:event_cbx_documento_ventaKeyPressed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
@@ -1180,6 +1189,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     void cargar_datos_cliente() {
         cli.setNro_doc(txt_nro_doc.getText());
+        obtener_datos(cli.getNro_doc());
         try {
             Statement st = con.conexion();
             String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
@@ -1199,6 +1209,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Cliente no registrado");
                 frm_reg_cliente cliente = new frm_reg_cliente();
                 cli.setNro_doc(txt_nro_doc.getText());
+
                 ven.llamar_ventana(cliente);
                 frm_reg_cliente.ventana = "reg_venta";
                 if (txt_nro_doc.getText().length() == 8) {
@@ -1217,6 +1228,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         } catch (SQLException ex) {
             System.out.print(ex);
+        }
+    }
+
+    void obtener_datos(String ruc) {
+        try {
+            Desktop.getDesktop().browse(new URI("http://ws.insite.pe/sunat/test_ruc.php?ruc=" + ruc));
+        } catch (URISyntaxException | IOException ex) {
+            System.out.println(ex);
         }
     }
     private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
@@ -1271,6 +1290,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 txt_nro_doc.requestFocus();
             }
         }
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
+        }
 
     }//GEN-LAST:event_cbx_tipo_ventaKeyPressed
 
@@ -1321,18 +1344,18 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 ResultSet rs = con.consulta(st, pre_com);
                 double precio_b = 0;
                 if (rs.next()) {
-                    precio_b = rs.getDouble("costo_compra");
+                    precio_b = rs.getDouble("costo_compra") * 1.2;
                 }
                 con.cerrar(st);
                 con.cerrar(rs);
 
-                if (precio > precio_b) {
+                if (precio >= precio_b) {
                     precio_nuevo = precio;
-                    t_detalle.setValueAt(ven.formato_numero(precio), i, 5);
+                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
                 } else {
                     precio_nuevo = precio_b;
                     JOptionPane.showMessageDialog(null, "No se puede establecer ese precio");
-                    t_detalle.setValueAt(ven.formato_numero(precio_b * 0.2), i, 5);
+                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
                 }
                 double parcial = cantidad * precio_nuevo;
                 t_detalle.setValueAt(ven.formato_numero(parcial), i, 6);
@@ -1346,6 +1369,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             detalle.removeRow(i);
             calcular_total();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_F3) {
+            cbx_tipo_venta.setEnabled(true);
+            cbx_tipo_venta.requestFocus();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_F1) {
+            txt_buscar_producto.setText("");
+            txt_buscar_producto.requestFocus();
         }
     }//GEN-LAST:event_t_detalleKeyPressed
 
@@ -1438,27 +1470,31 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                     if (texto != null) {
                                         if (ven.esDecimal(texto)) {
                                             cantidad_nueva = Double.parseDouble(texto);
-                                            if (cantidad >= cantidad_nueva) {
-                                                fila[3] = ven.formato_numero(cantidad_nueva);
-                                            } else {
-                                                double exceso = cantidad_nueva - cantidad;
-                                                cantidad_nueva = cantidad;
-                                                fila[3] = ven.formato_numero(cantidad_nueva);
-                                                JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                                            }
+                                            //   if (cantidad >= cantidad_nueva) {
+                                            fila[3] = ven.formato_numero(cantidad_nueva);
+                                            /*    } else {
+                                             double exceso = cantidad_nueva - cantidad;
+                                             cantidad_nueva = cantidad;
+                                             fila[3] = ven.formato_numero(cantidad_nueva);
+                                             JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                                             }*/
 
+                                        } else {
+                                            fila[3] = ven.formato_numero(cantidad_nueva);
                                         }
+                                    } else {
+                                        fila[3] = ven.formato_numero(cantidad_nueva);
                                     }
                                     fila[4] = rs.getString("desc_und");
                                     fila[5] = ven.formato_numero(rs.getDouble("precio"));
                                     fila[6] = ven.formato_numero(rs.getDouble("precio") * cantidad_nueva);
 
-                                    if (cantidad > 0.0) {
-                                        valida_tabla(Integer.parseInt(id_producto), fila);
-                                        calcular_total();
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
-                                    }
+                                    // if (cantidad > 0.0) {
+                                    valida_tabla(Integer.parseInt(id_producto), fila);
+                                    calcular_total();
+                                    // } else {
+                                    //     JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+                                    // }
                                 }
 
                                 con.cerrar(rs);
@@ -1559,6 +1595,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             jLabel3.setText("" + tot_reg());
             t_productos.requestFocus();
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            j_productos.dispose();
+            txt_buscar_producto.requestFocus();
+        }
         
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             j_productos.dispose();
@@ -1596,7 +1637,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String und_med = t_productos.getValueAt(nro_fila, 4).toString();
             double cantidad = Double.parseDouble(t_productos.getValueAt(nro_fila, 3).toString());
             double precio = Double.parseDouble(t_productos.getValueAt(nro_fila, 5).toString());
-            
+
             Object fila[] = new Object[7];
             fila[0] = id_producto;
             fila[1] = descripcion + " " + marca;
@@ -1744,7 +1785,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                     + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
                     + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-                    + "'" + frm_menu.alm.getId() + "', null, '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+                    + "'" + frm_menu.alm.getId() + "', current_time(), '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
             System.out.println(ins_ven);
             registro = con.actualiza(st, ins_ven);
             con.cerrar(st);

@@ -5,24 +5,23 @@
  */
 package Clases;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author Dereck
  */
 public class Cl_Movimiento {
+
     private int id;
     private String glosa;
     private String fec_mov;
     private double ingreso;
     private double egreso;
 
-    public Cl_Movimiento(int id, String glosa, String fec_mov, double ingreso, double egreso) {
-        this.id = id;
-        this.glosa = glosa;
-        this.fec_mov = fec_mov;
-        this.ingreso = ingreso;
-        this.egreso = egreso;
-    }
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
 
     public Cl_Movimiento() {
     }
@@ -66,6 +65,23 @@ public class Cl_Movimiento {
     public void setEgreso(double egreso) {
         this.egreso = egreso;
     }
-    
-    
+
+    public double monto_sistema(String fecha, int almacen) {
+        double monto = 0;
+        try {
+            Statement st = con.conexion();
+            String ver_monto = "select sum(entrada) as ingresos, sum(salida) as egresos from movimiento where fec_mov = '" + fecha + "' "
+                    + "and idalmacen = '" + almacen + "' and destino = 'C'";
+            ResultSet rs = con.consulta(st, ver_monto);
+            if (rs.next()) {
+                monto = rs.getDouble("ingresos") - rs.getDouble("egresos");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return monto;
+    }
+
 }

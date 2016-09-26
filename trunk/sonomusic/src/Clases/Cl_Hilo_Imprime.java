@@ -7,6 +7,7 @@ package Clases;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -59,12 +60,15 @@ public class Cl_Hilo_Imprime extends Thread {
             }
         }
 
-        if (tventa.equals("SEPARACION")) {
+        if (tventa.equals("VENTA")) {
             if (tipv.equals("NOTA DE VENTA")) {
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("idped", idped);
                 String filename = "rpt_ticket_notaventa";
-                //ven.imp_reporte(filename, parametros);
+                int confirmado = JOptionPane.showConfirmDialog(null, "¿DESEA IMPRIMIR EL TICKET?");
+                if (JOptionPane.OK_OPTION == confirmado) {
+                    ven.imp_reporte(filename, parametros);
+                }
             }
 
             if (tipv.equals("BOLETA")) {

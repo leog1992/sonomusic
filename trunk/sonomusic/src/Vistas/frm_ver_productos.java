@@ -20,6 +20,7 @@ import Forms.frm_reg_cotizacion;
 import Forms.frm_reg_ofertas;
 import Forms.frm_reg_productos;
 import Forms.frm_rpt_fechas;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -537,6 +538,26 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
         dato[4] = t_productos.getValueAt(a, 7);         //und. med
         dato[5] = t_productos.getValueAt(a, 3);         //precio
 
+        if (evt.getKeyCode() == KeyEvent.VK_C) {
+            pro.setId_pro(Integer.parseInt(t_productos.getValueAt(i, 0).toString()));
+            try {
+                Statement st = con.conexion();
+                String ver_cp = "select costo_compra, precio_venta from productos where idproductos = '"+pro.getId_pro()+"'";
+                ResultSet rs = con.consulta(st, ver_cp);
+                if (rs.next()) {
+                    double costo, precio, utilidad;
+                    costo = rs.getDouble("costo_compra");
+                    precio = rs.getDouble("precio_venta");
+                    utilidad = precio - costo;
+                    JOptionPane.showMessageDialog(null, "PRODUCTO SELECCIONADO: " + t_productos.getValueAt(a, 1) + t_productos.getValueAt(a, 2) + "\nCOSTO DEL "
+                            + "PRODUCTO: " + ven.formato_numero(costo) + "\nPRECIO DE VENTA: " + ven.formato_numero(precio) + "\nUTILIDAD: " + ven.formato_numero(utilidad));
+                }
+                con.cerrar(rs);
+                con.cerrar(st);
+            } catch (SQLException | HeadlessException e) {
+                System.out.println(e.getLocalizedMessage());
+            }
+        }
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             int i = t_productos.getSelectedRow();
             System.out.println(ventana + "\n");

@@ -402,7 +402,19 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private void btn_guiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guiaActionPerformed
         alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
         Map<String, Object> parametros = new HashMap<>();
+        String tienda = t_guias.getValueAt(i, 3).toString();
+        String tienda_destino = t_guias.getValueAt(i, 5).toString();
+        int id_almacen = ver_id_alm(tienda);
+        String ruc_almacen = ruc_alm(id_almacen + "");
+        System.out.println(ruc_almacen);
+        String razon_social = raz_soc(id_almacen + "");
+        System.out.println(razon_social);
+        String direccion_almacen = direccion_almacen(ruc_almacen);
         parametros.put("idtraslado", alb.getId());
+        parametros.put("ruc", ruc_almacen);
+        parametros.put("razon_social", razon_social);
+        parametros.put("direccion", direccion_almacen);
+        parametros.put("tienda", tienda_destino);
         ven.ver_reporte("rpt_ver_guia", parametros);
     }//GEN-LAST:event_btn_guiaActionPerformed
 
@@ -456,6 +468,24 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         }
         return raz;
     }
+
+    private String direccion_almacen(String ruc) {
+        String direccion = null;
+        try {
+            Statement st = con.conexion();
+            String ver_alm = "select dir from empresa where ruc = '" + ruc + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                direccion = rs.getString("dir");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return direccion;
+    }
+
 
     private void btn_anuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anuActionPerformed
         if (usu.getPer_anu_traslado().equals("1")) {

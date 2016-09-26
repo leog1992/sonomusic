@@ -22,6 +22,8 @@ import Vistas.frm_ver_guias;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.HeadlessException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -540,6 +542,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         });
 
         txt_ruc_alm.setEditable(false);
+        txt_ruc_alm.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         txt_raz_alm.setEditable(false);
 
@@ -825,6 +828,14 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btn_cerActionPerformed
 
+    void contar_filas() {
+        int contar_filas = t_detalle.getRowCount();
+        if (contar_filas == 29) {
+            txt_buscar_producto.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL LIMITE DE 30 PRODUCTOS");
+        }
+    }
+
     void cargar_productos_txt() {
         try {
             // autocompletar = new TextAutoCompleter(txt_buscar_producto);
@@ -868,24 +879,28 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                                     if (texto != null) {
                                         if (ven.esDecimal(texto)) {
                                             cantidad_nueva = Double.parseDouble(texto);
-                                            if (cantidad >= cantidad_nueva) {
-                                                fila[4] = ven.formato_numero(cantidad_nueva);
-                                            } else {
-                                                double exceso = cantidad_nueva - cantidad;
-                                                cantidad_nueva = cantidad;
-                                                fila[4] = ven.formato_numero(cantidad_nueva);
-                                                JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                                            }
+                                            // if (cantidad >= cantidad_nueva) {
+                                            fila[4] = ven.formato_numero(cantidad_nueva);
+                                            /* } else {
+                                             double exceso = cantidad_nueva - cantidad;
+                                             cantidad_nueva = cantidad;
+                                             fila[4] = ven.formato_numero(cantidad_nueva);
+                                             JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                                             }*/
+                                        } else {
+                                            fila[4] = ven.formato_numero(cantidad_nueva);
                                         }
+                                    } else {
+                                        fila[4] = ven.formato_numero(cantidad_nueva);
                                     }
                                     fila[5] = rs.getString("desc_und");
 
-                                    if (cantidad > 0.0) {
-                                        valida_tabla(Integer.parseInt(id_producto), fila);
-                                        btn_enviar.setEnabled(true);
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
-                                    }
+                                    //if (cantidad > 0.0) {
+                                    valida_tabla(Integer.parseInt(id_producto), fila);
+                                    btn_enviar.setEnabled(true);
+                                    //} else {
+                                    //    JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+                                    //}
                                 }
 
                                 con.cerrar(rs);
@@ -956,7 +971,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         if (ingresar == true && cuenta_iguales == 0) {
             detalle.addRow(objeto);
             t_detalle.setModel(detalle);
-            contar_filas = t_detalle.getRowCount();
+            // contar_filas = t_detalle.getRowCount();
+            contar_filas();
 //            String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
 //            if (texto != null) {
 //                if (ven.esDecimal(texto)) {
@@ -1213,10 +1229,36 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
             }
         }
-        btn_cer.doClick();
 
         //imprimir detalle de envio
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("idtraslado", alb.getId());
+        parametros.put("ruc", frm_menu.alm.getRuc());
+        parametros.put("razon_social", frm_menu.alm.getRaz_soc());
+        parametros.put("direccion", direccion_almacen(frm_menu.alm.getRuc()));
+        parametros.put("tienda", cbx_alm_de.getSelectedItem().toString());
+        ven.ver_reporte("rpt_ver_guia", parametros);
+
+        btn_cer.doClick();
     }//GEN-LAST:event_btn_enviarActionPerformed
+
+    private String direccion_almacen(String ruc) {
+        String direccion = null;
+        try {
+            Statement st = con.conexion();
+            String ver_alm = "select dir from empresa where ruc = '" + ruc + "'";
+            ResultSet rs = con.consulta(st, ver_alm);
+            if (rs.next()) {
+                direccion = rs.getString("dir");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return direccion;
+    }
+
 
     private void cbx_alm_deKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_alm_deKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {

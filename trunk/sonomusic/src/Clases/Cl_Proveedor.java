@@ -21,19 +21,6 @@ public class Cl_Proveedor {
     private String tel1;
     private String tel2;
     
-
-    public Cl_Proveedor(String ruc, String raz, String dir, String tel, String email, String web, String con, String tel1, String tel2) {
-        this.ruc = ruc;
-        this.raz = raz;
-        this.dir = dir;
-        this.tel = tel;
-        this.email = email;
-        this.web = web;
-        this.con = con;
-        this.tel1 = tel1;
-        this.tel2 = tel2;
-    }
-
     public Cl_Proveedor() {
     }
 
