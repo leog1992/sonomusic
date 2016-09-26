@@ -44,6 +44,7 @@ import Vistas.frm_ver_venta;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -70,11 +71,17 @@ public class frm_menu extends javax.swing.JFrame {
         capt_nom_pc();
         String nom_alm = ven.leer_archivo("almacen.txt");
         ver_id_almacen(nom_alm);
+
+        comprobar_caja();
+
         ver_tipo_cambio();
+        cargar_notificaciones();
+        
         lbl_alm.setText(alm.getNom());
         lbl_ciudad.setText(alm.getCiudad());
         txt_ruc.setText(alm.getRuc());
         txt_raz.setText(alm.getRaz_soc());
+        
         // carga todas las notificacion primera vez
         //noti = new Cl_Hilo_Notificacion();
         //noti.start();
@@ -82,12 +89,13 @@ public class frm_menu extends javax.swing.JFrame {
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
-    
+
     private void cargar_notificaciones() {
         try {
             Timer timer = new Timer(50000, new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ver_tipo_cambio();
+                    cargar_permisos();
                     System.out.println("ejecutando timer");
                 }
             });
@@ -120,7 +128,7 @@ public class frm_menu extends javax.swing.JFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
+    
     private void ver_id_almacen(String nom_alm) {
         try {
             Statement st = con.conexion();
@@ -134,7 +142,7 @@ public class frm_menu extends javax.swing.JFrame {
                 alm.setRaz_soc(rs.getString("raz_soc"));
                 alm.setDireccion(rs.getString("dir_alm"));
                 cue.setId_cuen(rs.getInt("cuenta"));
-                caja.setId(caja.id_caja(alm.getId()));
+//                caja.setId(caja.id_caja(alm.getId()));
             } else {
                 alm.setId(0);
                 alm.setNom("NO EXISTE");
@@ -153,6 +161,63 @@ public class frm_menu extends javax.swing.JFrame {
         }
     }
 
+    void cargar_permisos() {
+        try {
+            Statement st = con.conexion();
+            String ver_usu = "select * from usuario where nick = '" + usu.getNick() + "' and estado = '1'";
+            ResultSet rs = con.consulta(st, ver_usu);
+            if (rs.next()) {
+                usu.setContra(rs.getString("contra"));
+                usu.setPer_anu_traslado(rs.getString("pe_tras"));
+                usu.setPer_compra_productos(rs.getString("pv_comp"));
+                usu.setPer_compra_servicios(rs.getString("pv_coms"));
+                usu.setPer_conf_documento(rs.getString("pm_docs"));
+                usu.setPer_cuentas(rs.getString("pm_cue"));
+                usu.setPer_eli_empresa(rs.getString("pe_emp"));
+                usu.setPer_eli_producto(rs.getString("pe_prod"));
+                usu.setPer_mod_almacen(rs.getString("pm_alm"));
+                usu.setPer_mod_producto(rs.getString("pm_prod"));
+                usu.setPer_reg_adelanto(rs.getString("pr_ade"));
+                usu.setPer_reg_almacen(rs.getString("pr_alm"));
+                usu.setPer_reg_oferta(rs.getString("pr_ofe"));
+                usu.setPer_reg_producto(rs.getString("pr_prod"));
+                usu.setPer_reg_traslado(rs.getString("pr_tras"));
+                usu.setPer_reg_venta(rs.getString("pr_ven"));
+                usu.setPer_usuario(rs.getString("pm_usu"));
+                usu.setPer_ver_caja(rs.getString("pv_caj"));
+                usu.setPer_ver_reportes(rs.getString("pv_rep"));
+                usu.setPer_ver_rrhh(rs.getString("pv_rh"));
+            }
+        } catch (SQLException ex) {
+            System.out.print(ex);
+        }
+    }
+
+    void comprobar_caja() {
+        txt_fecha.setText(ven.fechaformateada(ven.getFechaActual()));
+        txt_tienda.setText(alm.getNom());
+        try {
+            Statement st = con.conexion();
+            String ver_caja = "select estado, apertura from caja where idalmacen = '" + alm.getId() + "' and fecha = current_date()";
+            ResultSet rs = con.consulta(st, ver_caja);
+            if (rs.next()) {
+                if (rs.getString("estado").equals("1")) {
+                    JOptionPane.showMessageDialog(null, "LA CAJA YA ESTA CERRADA,\nSE CERRARA EL SISTEMA");
+                    System.exit(0);
+                }
+            } else {
+                j_apertura.setModal(true);
+                j_apertura.setSize(228, 180);
+                j_apertura.setLocationRelativeTo(null);
+                j_apertura.setVisible(true);
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -160,6 +225,14 @@ public class frm_menu extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu7 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
+        j_apertura = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txt_tienda = new javax.swing.JTextField();
+        txt_aperturar = new javax.swing.JTextField();
+        txt_fecha = new javax.swing.JFormattedTextField();
+        btn_aperturar = new javax.swing.JButton();
         contenedor = new javax.swing.JDesktopPane();
         jPanel2 = new javax.swing.JPanel();
         lbl_user = new javax.swing.JLabel();
@@ -266,6 +339,89 @@ public class frm_menu extends javax.swing.JFrame {
 
         jMenu8.setText("Edit");
         jMenuBar2.add(jMenu8);
+
+        j_apertura.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        j_apertura.setTitle("Apertura de Caja");
+
+        jLabel1.setForeground(java.awt.Color.red);
+        jLabel1.setText("Fecha:");
+
+        jLabel7.setForeground(java.awt.Color.red);
+        jLabel7.setText("Tienda:");
+
+        jLabel12.setForeground(java.awt.Color.red);
+        jLabel12.setText("Monto Apertura:");
+
+        txt_tienda.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_tienda.setFocusable(false);
+
+        txt_aperturar.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_aperturar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_aperturarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_aperturarKeyTyped(evt);
+            }
+        });
+
+        try {
+            txt_fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fecha.setFocusable(false);
+
+        btn_aperturar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/caja_chica.png"))); // NOI18N
+        btn_aperturar.setText("Aperturar Caja");
+        btn_aperturar.setEnabled(false);
+        btn_aperturar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aperturarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout j_aperturaLayout = new javax.swing.GroupLayout(j_apertura.getContentPane());
+        j_apertura.getContentPane().setLayout(j_aperturaLayout);
+        j_aperturaLayout.setHorizontalGroup(
+            j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_aperturaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_aperturar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, j_aperturaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_aperturar)
+                .addContainerGap())
+        );
+        j_aperturaLayout.setVerticalGroup(
+            j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_aperturaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_aperturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_aperturar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_aperturar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - SONOMUSIC");
@@ -1626,6 +1782,34 @@ public class frm_menu extends javax.swing.JFrame {
         frm_ver_almacen.ventana = "rpt_kardex_hoy";
         ven.llamar_ventana(almacen);
     }//GEN-LAST:event_jMenuItem46ActionPerformed
+
+    private void btn_aperturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aperturarActionPerformed
+        //registrar apertura de caja
+        try {
+            double apertura = Double.parseDouble(txt_aperturar.getText());
+            Statement st = con.conexion();
+            String ins_apertura = "insert into caja values (current_date(), '" + alm.getId() + "', '" + apertura + "', '0', '0', '0')";
+            con.actualiza(st, ins_apertura);
+            con.cerrar(st);
+            j_apertura.dispose();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_btn_aperturarActionPerformed
+
+    private void txt_aperturarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_aperturarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_aperturar.getText().length() > 0) {
+                btn_aperturar.setEnabled(true);
+                btn_aperturar.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_aperturarKeyPressed
+
+    private void txt_aperturarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_aperturarKeyTyped
+        ven.solo_precio(evt);
+        ven.limitar_caracteres(evt, txt_aperturar, 8);
+    }//GEN-LAST:event_txt_aperturarKeyTyped
     /**
      * @param args the command line arguments
      */
@@ -1663,9 +1847,12 @@ public class frm_menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_aperturar;
     public static javax.swing.JDesktopPane contenedor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1675,6 +1862,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
@@ -1753,6 +1941,7 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JDialog j_apertura;
     public static javax.swing.JLabel lbl_alm;
     private javax.swing.JLabel lbl_ciudad;
     private javax.swing.JLabel lbl_compra;
@@ -1764,7 +1953,10 @@ public class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem m_clientes;
     private javax.swing.JMenuItem m_notas;
     private javax.swing.JMenuItem m_ofertas;
+    private javax.swing.JTextField txt_aperturar;
+    private javax.swing.JFormattedTextField txt_fecha;
     private javax.swing.JLabel txt_raz;
     private javax.swing.JLabel txt_ruc;
+    private javax.swing.JTextField txt_tienda;
     // End of variables declaration//GEN-END:variables
 }

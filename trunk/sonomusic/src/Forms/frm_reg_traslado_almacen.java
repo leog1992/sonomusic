@@ -10,7 +10,6 @@ import Clases.Cl_Conectar;
 import Clases.Cl_Productos;
 import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Varios;
-import Clases.render_productos;
 import Vistas.frm_ver_prod_alm;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -28,8 +27,8 @@ import java.awt.HeadlessException;
  *
  * @author pc
  */
-public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
-    
+public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
+
     Cl_Conectar con = new Cl_Conectar();
     Cl_Varios ven = new Cl_Varios();
     Cl_Albaran alb = new Cl_Albaran();
@@ -46,25 +45,25 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
      */
     public frm_reg_traslado_almacen() {
         initComponents();
-        
+
         cargar_productos_txt();
-        
+
         txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
-        
+
         String almacen = "select nom_alm from almacen order by idAlmacen asc";
         ver_almacen(almacen);
-        
+
         txt_partida.setText(frm_menu.alm.getDireccion().toUpperCase());
-        
+
         String documentos = "select desc_tipd from tipo_doc order by idtipo_doc asc";
         ver_documentos(documentos);
-        
+
         cbx_documento.setSelectedIndex(4);
-        
+
         detalle = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int fila, int columna) {
-                return columna == 4;
+                return false;
             }
         };
         detalle.addColumn("Id");
@@ -81,13 +80,19 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         t_detalle.getColumnModel().getColumn(4).setPreferredWidth(30);
         t_detalle.getColumnModel().getColumn(5).setPreferredWidth(30);
         detalle.fireTableDataChanged();
+        ven.centrar_celda(t_detalle, 0);
+        ven.centrar_celda(t_detalle, 2);
+        ven.derecha_celda(t_detalle, 3);
+        ven.derecha_celda(t_detalle, 4);
+        ven.centrar_celda(t_detalle, 5);
+
     }
-    
+
     private void ver_almacen(String query) {
         try {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
-            
+
             while (rs.next()) {
                 String fila;
                 fila = rs.getString("nom_alm");
@@ -99,12 +104,12 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             System.out.print(e);
         }
     }
-    
+
     private void ver_documentos(String query) {
         try {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
-            
+
             while (rs.next()) {
                 String fila;
                 fila = rs.getString("desc_tipd");
@@ -147,10 +152,18 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         txt_inscripcion = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
         txt_chofer1 = new javax.swing.JTextField();
+        j_productos = new javax.swing.JDialog();
+        jLabel6 = new javax.swing.JLabel();
+        txt_busqueda = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t_productos = new javax.swing.JTable();
+        btn_cer1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_cc = new javax.swing.JButton();
         btn_el = new javax.swing.JButton();
-        btn_reg = new javax.swing.JButton();
+        btn_enviar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         cbx_documento = new javax.swing.JComboBox();
@@ -160,7 +173,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         txt_num = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_fec = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lbl_tienda = new javax.swing.JLabel();
         cbx_alm_de = new javax.swing.JComboBox();
         txt_ruc_alm = new javax.swing.JTextField();
         txt_raz_alm = new javax.swing.JTextField();
@@ -178,6 +191,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
         txt_buscar_producto = new javax.swing.JTextField();
+        btn_recibir = new javax.swing.JButton();
+        btn_verificar = new javax.swing.JButton();
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Vehiculo"));
 
@@ -333,6 +348,95 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel6.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel6.setText("Buscar:");
+
+        txt_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_busquedaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_busquedaKeyTyped(evt);
+            }
+        });
+
+        jLabel13.setText("encontrados");
+
+        jScrollPane2.setBackground(new java.awt.Color(254, 254, 254));
+
+        t_productos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        t_productos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        t_productos.setRowHeight(20);
+        t_productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_productosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                t_productosMousePressed(evt);
+            }
+        });
+        t_productos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                t_productosKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(t_productos);
+
+        btn_cer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
+        btn_cer1.setText("Cerrar");
+        btn_cer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cer1ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("0");
+
+        javax.swing.GroupLayout j_productosLayout = new javax.swing.GroupLayout(j_productos.getContentPane());
+        j_productos.getContentPane().setLayout(j_productosLayout);
+        j_productosLayout.setHorizontalGroup(
+            j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_productosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(j_productosLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                        .addComponent(btn_cer1)))
+                .addContainerGap())
+        );
+        j_productosLayout.setVerticalGroup(
+            j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(j_productosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(btn_cer1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
         setTitle("Traslado entre Almacenes");
@@ -364,19 +468,19 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/printer.png"))); // NOI18N
-        btn_reg.setText("Registrar");
-        btn_reg.setEnabled(false);
-        btn_reg.addActionListener(new java.awt.event.ActionListener() {
+        btn_enviar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/delivery.png"))); // NOI18N
+        btn_enviar.setText("Enviar");
+        btn_enviar.setEnabled(false);
+        btn_enviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_regActionPerformed(evt);
+                btn_enviarActionPerformed(evt);
             }
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.red));
         jPanel1.setForeground(new java.awt.Color(212, 2, 2));
 
-        jLabel17.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel17.setForeground(java.awt.Color.red);
         jLabel17.setText("Tipo Documento:");
 
         cbx_documento.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -385,14 +489,13 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel18.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel18.setForeground(java.awt.Color.red);
         jLabel18.setText("Serie:");
 
-        jLabel19.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel19.setForeground(java.awt.Color.red);
         jLabel19.setText("Numero:");
 
         txt_ser.setEditable(false);
-        txt_ser.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txt_ser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_ser.setText("0");
         txt_ser.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -402,11 +505,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         });
 
         txt_num.setEditable(false);
-        txt_num.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txt_num.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_num.setText("0");
 
-        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel4.setForeground(java.awt.Color.red);
         jLabel4.setText("Fecha");
 
         try {
@@ -427,8 +529,8 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel3.setText("Tienda Destino");
+        lbl_tienda.setForeground(java.awt.Color.red);
+        lbl_tienda.setText("Tienda Destino");
 
         cbx_alm_de.setEnabled(false);
         cbx_alm_de.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -441,7 +543,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
         txt_raz_alm.setEditable(false);
 
-        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel8.setForeground(java.awt.Color.red);
         jLabel8.setText("Datos Tienda:");
 
         btn_cer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel.png"))); // NOI18N
@@ -452,11 +554,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel5.setForeground(java.awt.Color.red);
         jLabel5.setText("Motivo:");
 
         txt_motivo.setEditable(false);
-        txt_motivo.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txt_motivo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_motivo.setText("0");
         txt_motivo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -493,7 +594,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
+                            .addComponent(lbl_tienda)
                             .addComponent(jLabel8))
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -514,7 +615,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl_tienda, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbx_alm_de, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -542,13 +643,13 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Direcciones:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.red));
 
-        jLabel9.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel9.setForeground(java.awt.Color.red);
         jLabel9.setText("Punto de Partida:");
 
         txt_partida.setEditable(false);
         txt_partida.setFocusable(false);
 
-        jLabel20.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel20.setForeground(java.awt.Color.red);
         jLabel20.setText("Punto de Llegada:");
 
         txt_llegada.setEditable(false);
@@ -608,6 +709,9 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         ));
         t_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_detalleMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 t_detalleMousePressed(evt);
             }
@@ -620,7 +724,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -639,6 +743,24 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_recibir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_producto.png"))); // NOI18N
+        btn_recibir.setText("Recibir");
+        btn_recibir.setEnabled(false);
+        btn_recibir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_recibirActionPerformed(evt);
+            }
+        });
+
+        btn_verificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrow_redo.png"))); // NOI18N
+        btn_verificar.setText("Verificar Cantidad");
+        btn_verificar.setEnabled(false);
+        btn_verificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_verificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -646,12 +768,18 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_cc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_el)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_reg))
+                        .addComponent(btn_verificar)
+                        .addGap(145, 145, 145)
+                        .addComponent(btn_recibir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_enviar)
+                        .addGap(11, 11, 11))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -659,8 +787,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_buscar_producto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_add))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_add)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -679,9 +806,11 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_cc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_el, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_cc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_el, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_recibir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_verificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -695,7 +824,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         this.dispose();
 
     }//GEN-LAST:event_btn_cerActionPerformed
-    
+
     void cargar_productos_txt() {
         try {
             // autocompletar = new TextAutoCompleter(txt_buscar_producto);
@@ -742,44 +871,44 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                                             if (cantidad >= cantidad_nueva) {
                                                 fila[4] = ven.formato_numero(cantidad_nueva);
                                             } else {
-                                                cantidad_nueva = 1;
-                                                fila[4] = "1.00";
-                                                JOptionPane.showMessageDialog(null, "NO PUEDE SOBREPASAR CANTIDAD ACTUAL");
+                                                double exceso = cantidad_nueva - cantidad;
+                                                cantidad_nueva = cantidad;
+                                                fila[4] = ven.formato_numero(cantidad_nueva);
+                                                JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
                                             }
-                                            
                                         }
                                     }
                                     fila[5] = rs.getString("desc_und");
-                                    
+
                                     if (cantidad > 0.0) {
                                         valida_tabla(Integer.parseInt(id_producto), fila);
-                                        btn_reg.setEnabled(true);
+                                        btn_enviar.setEnabled(true);
                                     } else {
                                         JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
                                     }
                                 }
-                                
+
                                 con.cerrar(rs);
                                 con.cerrar(st);
-                                
+
                             } catch (SQLException | HeadlessException e) {
                                 System.out.println(e);
                                 JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
                             }
-                            
+
                             txt_buscar_producto.setText("");
                             txt_buscar_producto.requestFocus();
-                            
+
                         }
                         if (contiene_guion == false) {
                             txt_buscar_producto.setText("");
                             txt_buscar_producto.requestFocus();
                         }
-                        
+
                     }
                 }
             });
-            
+
             autocompletar.setMode(0);
             autocompletar.setCaseSensitive(false);
             Statement st = con.conexion();
@@ -799,7 +928,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-    
+
     private void valida_tabla(int producto, Object[] objeto) {
         //estado de ingreso
         boolean ingresar = false;
@@ -810,7 +939,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         if (contar_filas == 0) {
             ingresar = true;
         }
-        
+
         if (contar_filas > 0) {
             for (int j = 0; j < contar_filas; j++) {
                 int id_producto_fila = Integer.parseInt(t_detalle.getValueAt(j, 0).toString());
@@ -823,7 +952,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 }
             }
         }
-        
+
         if (ingresar == true && cuenta_iguales == 0) {
             detalle.addRow(objeto);
             t_detalle.setModel(detalle);
@@ -843,7 +972,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 //            }
         }
     }
-    
+
     private void txt_serKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_num.setEditable(true);
@@ -852,19 +981,15 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_serKeyPressed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        frm_ver_prod_alm prod_alm = new frm_ver_prod_alm();
-        Integer ida = frm_menu.alm.getId();
-        String alm = frm_menu.alm.getNom();
+        j_productos.setModal(true);
+        j_productos.setSize(1000, 450);
+        j_productos.setLocationRelativeTo(null);
         String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + ida + "' "
-                + "order by p.desc_pro asc limit 0";
-        pro.mostrar_productos(query, prod_alm.t_productos);
-        //prod_alm.t_productos.setDefaultRenderer(Object.class, new render_productos());
-        prod_alm.txt_ida.setText(ida.toString());
-        prod_alm.txt_noma.setText(alm);
-        prod_alm.funcion = "traslado";
-        ven.llamar_ventana(prod_alm);
+                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "' order by p.desc_pro asc limit 0";
+        pro.mostrar_productos(query, t_productos);
+        j_productos.setVisible(true);
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void t_detalleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMousePressed
@@ -883,7 +1008,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         Double cantidad = Double.parseDouble(JOptionPane.showInputDialog("Ingrese Cantidad"));
         t_detalle.setValueAt(cantidad, i, 3);
     }//GEN-LAST:event_btn_ccActionPerformed
-    
+
     private void datos_tienda(int id_almacen) {
         try {
             Statement st = con.conexion();
@@ -900,7 +1025,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             System.out.print(ex);
         }
     }
-    
+
     private void llenar() {
         alb.setFecha(ven.fechabase(txt_fec.getText()));
         alb.setMotivo("TRASLADO");
@@ -917,7 +1042,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             System.out.print(ex);
         }
-        
+
         try {
             Integer id = cbx_alm_de.getSelectedIndex() + 1;
             Statement st = con.conexion();
@@ -944,10 +1069,10 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         alb.setMarca(txt_marca1.getText());
         alb.setPlaca(txt_placa1.getText());
     }
-    
 
-    private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
-        btn_reg.setEnabled(false);
+
+    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
+        btn_enviar.setEnabled(false);
         llenar();
         Integer alm_or = frm_menu.alm.getId();
         Integer alm_de = cbx_alm_de.getSelectedIndex() + 1;
@@ -1019,7 +1144,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 for (int x = 0; x < filas; x++) {
                     pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
                     pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 4).toString()));
-                    
+
                     try {
                         Statement st = con.conexion();
                         String ver_pro_alm = "select costo_compra from productos where idProductos = '" + pro.getId_pro() + "'";
@@ -1036,7 +1161,7 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     //registrar detalle de traslado
                     try {
                         Statement st = con.conexion();
-                        String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "')";
+                        String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0')";
                         con.actualiza(st, ins_tras);
                         con.cerrar(st);
                     } catch (Exception ex) {
@@ -1058,9 +1183,9 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     } catch (SQLException ex) {
                         System.out.print(ex);
                     }
-                    
+
                     nueva_cant = cant_act - pro.getCan();
-                    
+
                     try {
                         Statement st = con.conexion();
                         String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where "
@@ -1070,124 +1195,28 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
-                    
+
                     try {
                         Statement st = con.conexion();
                         String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getCos_pro() + "',"
-                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
+                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
                         con.actualiza(st, ins_kardex);
                         con.cerrar(st);
                     } catch (Exception ex) {
                         System.out.print(ex);
                     }
-                    
+
                 }
 
                 //modificar numero de documento.
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
-                
+
             }
         }
-        /*
-         if (accion.equals("compruebat")) {
-         String almacen = "DESDE TIENDA " + cbx_alm_or.getSelectedItem().toString();
-         try {
-         int idalma = cbx_alm_de.getSelectedIndex() + 1;
-         Statement st = con.conexion();
-         String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
-         ResultSet rs = con.consulta(st, ver_emp);
-         if (rs.next()) {
-         ruc = rs.getString("ruc");
-         raz = rs.getString("raz_soc");
-         dir = rs.getString("dir_alm");
-         }
-         con.cerrar(rs);
-         con.cerrar(st);
-         } catch (SQLException ex) {
-         System.out.print(ex);
-         }
-
-         Integer filas = t_detalle.getRowCount();
-         for (int x = 0; x <= (filas - 1); x++) {
-         pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
-         pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 5).toString()));
-         System.out.println(pro.getCan() + " - id " + pro.getId_pro());
-
-         try {
-         Statement st1 = con.conexion();
-         String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
-         ResultSet rs1 = con.consulta(st1, ver_pre);
-         if (rs1.next()) {
-         pro.setCos_pro(rs1.getDouble("precio_venta"));
-         }
-         } catch (Exception e) {
-         System.out.println(e);
-         }
-
-         //registrar ingreso al segundo almacen (actualizar cantidades)
-         try {
-         Statement st = con.conexion();
-         String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
-         ResultSet rs = con.consulta(st, ver_pro_alm);
-         if (rs.next()) {
-         System.out.println(alm_or + " Cambiando cantidad en almacen");
-         cant_act = rs.getDouble("cant");
-         nueva_cant = cant_act + pro.getCan();
-
-         try {
-         Statement st1 = con.conexion();
-         String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where idAlmacen = '" + alm_de + "' and idProductos= '" + pro.getId_pro() + "'";
-         con.actualiza(st1, act_pro_alm);
-         con.cerrar(st1);
-         } catch (Exception ex) {
-         System.out.print(ex);
-         }
-
-         } else {
-         System.out.println(alm_de + " ingresando producto a almacen");
-         cant_act = 0.0;
-         nueva_cant = cant_act + pro.getCan();
-
-         try {
-         Statement st1 = con.conexion();
-         String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_de + "', '" + nueva_cant + "', '" + pro.getCos_pro() + "')";
-         con.actualiza(st1, ins_pro_alm);
-         con.cerrar(st1);
-         } catch (Exception ex) {
-         System.out.println(ex);
-         }
-         }
-         con.cerrar(rs);
-         con.cerrar(st);
-         } catch (SQLException ex) {
-         System.out.print(ex);
-         }
-
-         try {
-         Statement st = con.conexion();
-         String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getCos_pro() + "', '0.00', '0.00', "
-         + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + alm_de + "', '" + ruc + "', '" + almacen + "', '11')";
-         con.actualiza(st, ins_kardex);
-         con.cerrar(st);
-         } catch (Exception ex) {
-         System.out.print(ex);
-         }
-         }
-
-         try {
-         Statement st = con.conexion();
-         String upd_tra = "update traslado set estado = '1' where idTraslado = '" + idtras + "'";
-         con.actualiza(st, upd_tra);
-         con.cerrar(st);
-         } catch (Exception e) {
-         System.out.println(e);
-         }
-         }
-         */
         btn_cer.doClick();
 
         //imprimir detalle de envio
-    }//GEN-LAST:event_btn_regActionPerformed
+    }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void cbx_alm_deKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_alm_deKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1264,16 +1293,322 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_buscar_productoKeyPressed
 
+    private void btn_recibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recibirActionPerformed
+        if (accion.equals("verificar")) {
+            btn_recibir.setEnabled(false);
+            int alm_destino = frm_menu.alm.getId();
+            int alm_origen = cbx_alm_de.getSelectedIndex() + 1;
+            String ruc = txt_ruc_alm.getText().toUpperCase();
+            String almacen = "DESDE TIENDA " + cbx_alm_de.getSelectedItem().toString();
+            llenar();
+            Integer filas = t_detalle.getRowCount();
+            for (int x = 0; x < filas; x++) {
+                pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
+                pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 6).toString()));
+                double cantidad_enviada = Double.parseDouble(t_detalle.getValueAt(x, 4).toString());
+                System.out.println(pro.getCan() + " - id: " + pro.getId_pro());
+
+                try {
+                    Statement st = con.conexion();
+                    String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
+                    ResultSet rs = con.consulta(st, ver_pre);
+                    System.out.println(ver_pre);
+                    if (rs.next()) {
+                        pro.setPre_pro(rs.getDouble("precio_venta"));
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+                try {
+                    Statement st = con.conexion();
+                    String act_pro_alm = "Update productos_traslado set recibido = '" + pro.getCan() + "' where idtraslado = '" + idtras + "' and idProductos= '" + pro.getId_pro() + "'";
+                    con.actualiza(st, act_pro_alm);
+                    System.out.println(act_pro_alm);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+
+                if (pro.getCan() > 0) {
+                    //registrar ingreso al segundo almacen (actualizar cantidades)
+                    boolean existe_producto = false;
+                    try {
+                        Statement st = con.conexion();
+                        String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
+                        ResultSet rs = con.consulta(st, ver_pro_alm);
+                        System.out.println(ver_pro_alm);
+                        if (rs.next()) {
+                            System.out.println("almacen de destino: " + alm_destino + " Cambiando cantidad en almacen");
+                            pro.setCan_act_pro(rs.getDouble("cant"));
+                            pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
+                            existe_producto = true;
+                        } else {
+                            System.out.println("almacen de destino: " + alm_destino + " ingresando producto a almacen");
+                            pro.setCan_act_pro(0.0);
+                            pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
+                            existe_producto = false;
+                        }
+                        con.cerrar(rs);
+                        con.cerrar(st);
+                    } catch (SQLException ex) {
+                        System.out.print(ex);
+                    }
+
+                    if (existe_producto) {
+                        try {
+                            Statement st = con.conexion();
+                            String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "' where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
+                            con.actualiza(st, act_pro_alm);
+                            System.out.println(act_pro_alm);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+                    } else {
+                        try {
+                            Statement st = con.conexion();
+                            String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "')";
+                            con.actualiza(st, ins_pro_alm);
+                            System.out.println(ins_pro_alm);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
+                    }
+
+                    try {
+                        Statement st = con.conexion();
+                        String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00', "
+                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_destino + "', '" + ruc + "', '" + almacen + "', '11')";
+                        System.out.println(ins_kardex);
+                        con.actualiza(st, ins_kardex);
+                        con.cerrar(st);
+                    } catch (Exception ex) {
+                        System.out.print(ex);
+                    }
+                }
+
+                if (pro.getCan() == 0 || pro.getCan() < cantidad_enviada) {
+                    //devolver productos a tienda de origen siempre cuando cantidad aceptada 
+                    // sea igual a 0 o cantidad es menor a la cantidad enviada
+
+                    //buscar cantidad actual de productos en tienda origen
+                    double cantidad_actual_origen = 0;
+                    try {
+                        Statement st = con.conexion();
+                        String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
+                        ResultSet rs = con.consulta(st, ver_pro_alm);
+                        System.out.println(ver_pro_alm);
+                        if (rs.next()) {
+                            cantidad_actual_origen = rs.getDouble("cant");
+                        }
+                        con.cerrar(st);
+                        con.cerrar(rs);
+                    } catch (SQLException e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
+
+                    double cantidad_regreso = cantidad_actual_origen - pro.getCan();
+
+                    //actualizando cantidad actual de tienda de origen
+                    try {
+                        Statement st = con.conexion();
+                        String act_pro_alm = "Update producto_almacen set cant = '" + cantidad_regreso + "' where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
+                        con.actualiza(st, act_pro_alm);
+                        System.out.println(act_pro_alm);
+                        con.cerrar(st);
+                    } catch (Exception ex) {
+                        System.out.print(ex);
+                    }
+
+                    //guardando cambio en kardex de productos tienda de origen
+                    try {
+                        Statement st = con.conexion();
+                        String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', "
+                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_origen + "', '" + ruc + "', '" + almacen + "', '11')";
+                        System.out.println(ins_kardex);
+                        con.actualiza(st, ins_kardex);
+                        con.cerrar(st);
+                    } catch (Exception ex) {
+                        System.out.print(ex);
+                    }
+
+                }
+            }
+
+            try {
+                Statement st = con.conexion();
+                String upd_tra = "update traslado set estado = '1' where idTraslado = '" + idtras + "'";
+                con.actualiza(st, upd_tra);
+                System.out.println(upd_tra);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            btn_cer.doClick();
+        }
+
+    }//GEN-LAST:event_btn_recibirActionPerformed
+
+    private void t_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_detalleMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (accion.equals("verificar")) {
+                int nro_fila = t_detalle.getSelectedRow();
+                String id_producto = t_detalle.getValueAt(nro_fila, 0).toString();
+                double cantidad_actual = Double.parseDouble(t_detalle.getValueAt(nro_fila, 4).toString());
+                String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
+                double cantidad_nueva;
+                if (texto != null) {
+                    if (ven.esDecimal(texto)) {
+                        cantidad_nueva = Double.parseDouble(texto);
+                        if (cantidad_actual >= cantidad_nueva) {
+                            t_detalle.setValueAt(ven.formato_numero(cantidad_nueva), nro_fila, 6);
+                        } else {
+                            double exceso = cantidad_nueva - cantidad_actual;
+                            cantidad_nueva = cantidad_actual;
+                            t_detalle.setValueAt(ven.formato_numero(cantidad_nueva), nro_fila, 6);
+                            JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_t_detalleMouseClicked
+
+    private void btn_verificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_verificarActionPerformed
+        int cantidad_filas = t_detalle.getRowCount();
+        int contar_ceros = 0;
+        int contar_mayores = 0;
+        for (int j = 0; j < cantidad_filas; j++) {
+            double cantidad_aceptada = Double.parseDouble(t_detalle.getValueAt(j, 6).toString());
+            double cantidad_recibida = Double.parseDouble(t_detalle.getValueAt(j, 4).toString());
+            if (cantidad_aceptada == 0.0) {
+                contar_ceros++;
+            }
+            if (cantidad_aceptada > cantidad_recibida) {
+                JOptionPane.showMessageDialog(null, "Cantidad Aceptada no puede ser mayor a lo recibido en el Producto " + t_detalle.getValueAt(j, 1).toString());
+                contar_mayores++;
+            }
+        }
+
+        if (contar_ceros <= (cantidad_filas / 2) && contar_mayores == 0) {
+            btn_recibir.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR!!: CANTIDAD CERO EN LA MAYORIA DE PRODUCTOS RECIBIDOS");
+        }
+
+    }//GEN-LAST:event_btn_verificarActionPerformed
+
+    private void txt_busquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busquedaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String texto = txt_busqueda.getText();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
+                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
+                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
+                    + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
+            pro.mostrar_productos(query, t_productos);
+            jLabel14.setText("" + tot_reg());
+            t_productos.requestFocus();
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            j_productos.dispose();
+            txt_buscar_producto.requestFocus();
+        }
+    }//GEN-LAST:event_txt_busquedaKeyPressed
+
+    private void txt_busquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busquedaKeyTyped
+
+    }//GEN-LAST:event_txt_busquedaKeyTyped
+
+    private int tot_reg() {
+        int tot = 0;
+        for (int j = 0; j < t_productos.getRowCount(); j++) {
+            tot++;
+        }
+        return tot;
+    }
+
+    private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
+        if (evt.getClickCount() == 2) {
+        }
+    }//GEN-LAST:event_t_productosMouseClicked
+
+    private void t_productosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMousePressed
+        //        i = t_productos.getSelectedRow();
+        //        btn_kar.setEnabled(true);
+    }//GEN-LAST:event_t_productosMousePressed
+
+    private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            int nro_fila = t_productos.getSelectedRow();
+            String id_producto = t_productos.getValueAt(nro_fila, 0).toString();
+            String descripcion = t_productos.getValueAt(nro_fila, 1).toString();
+            String marca = t_productos.getValueAt(nro_fila, 2).toString();
+            String und_med = t_productos.getValueAt(nro_fila, 4).toString();
+            double cantidad = Double.parseDouble(t_productos.getValueAt(nro_fila, 3).toString());
+            double precio = Double.parseDouble(t_productos.getValueAt(nro_fila, 5).toString());
+
+            Object fila[] = new Object[7];
+            fila[0] = id_producto;
+            fila[1] = descripcion + " " + marca;
+            fila[2] = ven.formato_numero(cantidad);
+            String texto = JOptionPane.showInputDialog("Ingrese Cantidad");
+            double cantidad_nueva = 1;
+            if (texto != null) {
+                if (ven.esDecimal(texto)) {
+                    cantidad_nueva = Double.parseDouble(texto);
+                    if (cantidad >= cantidad_nueva) {
+                        fila[3] = ven.formato_numero(cantidad_nueva);
+                    } else {
+                        double exceso = cantidad_nueva - cantidad;
+                        cantidad_nueva = cantidad;
+                        fila[3] = ven.formato_numero(cantidad_nueva);
+                        JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                    }
+
+                }
+            }
+            fila[4] = und_med;
+            fila[5] = ven.formato_numero(precio);
+            fila[6] = ven.formato_numero(precio * cantidad_nueva);
+
+            if (cantidad > 0.0) {
+                valida_tabla(Integer.parseInt(id_producto), fila);
+                txt_busqueda.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+            }
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_busqueda.setText("");
+            txt_busqueda.requestFocus();
+        }
+    }//GEN-LAST:event_t_productosKeyPressed
+
+    private void btn_cer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cer1ActionPerformed
+        j_productos.dispose();
+    }//GEN-LAST:event_btn_cer1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_cc;
     private javax.swing.JButton btn_cer;
+    private javax.swing.JButton btn_cer1;
     private javax.swing.JButton btn_el;
-    public static javax.swing.JButton btn_reg;
+    public static javax.swing.JButton btn_enviar;
+    public static javax.swing.JButton btn_recibir;
     private javax.swing.JButton btn_transportista;
+    public static javax.swing.JButton btn_verificar;
     public static javax.swing.JComboBox cbx_alm_de;
-    private javax.swing.JComboBox cbx_documento;
+    public static javax.swing.JComboBox cbx_documento;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1286,9 +1621,9 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1297,21 +1632,26 @@ public class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JDialog j_productos;
     private javax.swing.JDialog jd_transportista;
+    public static javax.swing.JLabel lbl_tienda;
     private javax.swing.JRadioButton rbt_no;
     private javax.swing.JRadioButton rbt_si;
     public static javax.swing.JTable t_detalle;
+    public static javax.swing.JTable t_productos;
     public static javax.swing.JTextField txt_brevete;
     private javax.swing.JTextField txt_buscar_producto;
+    private javax.swing.JTextField txt_busqueda;
     public static javax.swing.JTextField txt_chofer1;
     public static javax.swing.JFormattedTextField txt_fec;
     public static javax.swing.JTextField txt_inscripcion;
-    private javax.swing.JTextField txt_llegada;
+    public static javax.swing.JTextField txt_llegada;
     public static javax.swing.JTextField txt_marca1;
     public static javax.swing.JTextField txt_modelo;
     public static javax.swing.JTextField txt_motivo;
     public static javax.swing.JTextField txt_num;
-    private javax.swing.JTextField txt_partida;
+    public static javax.swing.JTextField txt_partida;
     public static javax.swing.JTextField txt_placa1;
     public static javax.swing.JTextField txt_raz_alm;
     public static javax.swing.JTextField txt_razon_transporte;

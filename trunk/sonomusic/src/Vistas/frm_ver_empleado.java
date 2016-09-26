@@ -436,30 +436,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_empleadoKeyPressed
 
     private void t_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMouseClicked
-        if (evt.getClickCount() == 2) {
-            if (ventana.equals("movimiento")) {
-                frm_movimientos movi = null;
-                emp.setDni((int) t_empleado.getValueAt(i, 0));
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from empleados where dni = '" + emp.getDni() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        movi.txt_dni.setText(emp.getDni() + "");
-                        movi.txt_nom.setText(rs.getString("nom_per"));
-                        movi.rbt_ini.setEnabled(true);
-                        movi.rbt_ing.setEnabled(true);
-                        movi.rbt_ing.setSelected(true);
-                        movi.rbt_sal.setEnabled(true);
-                        movi.txt_mot.setEditable(true);
-                        movi.txt_mot.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
-        }
+
     }//GEN-LAST:event_t_empleadoMouseClicked
 
     private void btn_adelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adelActionPerformed

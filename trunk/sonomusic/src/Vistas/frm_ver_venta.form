@@ -36,7 +36,7 @@
                       <Component id="txt_bus" min="-2" pref="166" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_estado" min="-2" pref="153" max="-2" attributes="0"/>
-                      <EmptySpace pref="148" max="32767" attributes="0"/>
+                      <EmptySpace pref="154" max="32767" attributes="0"/>
                       <Component id="jComboBox1" min="-2" pref="149" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_anu" min="-2" max="-2" attributes="0"/>
@@ -136,42 +136,12 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="10" rowCount="4">
-                <Column editable="true" title="Id Ped." type="java.lang.Object">
-                  <Data value="2"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Glosa" type="java.lang.Object">
-                  <Data value="B/001-00025"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Nro Placa." type="java.lang.Object">
-                  <Data value="C0U944"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Cliente" type="java.lang.Object">
-                  <Data value="LUIS ENRIQUE OYANGUREN GIRON"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Monto" type="java.lang.Object">
-                  <Data value="S/. 59.00"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Estado" type="java.lang.Object">
-                  <Data value="Pendiente de Pago"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
+                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                <Column editable="true" title="Title 5" type="java.lang.Object"/>
+                <Column editable="true" title="Title 6" type="java.lang.Object"/>
                 <Column editable="true" title="Title 7" type="java.lang.Object"/>
                 <Column editable="true" title="Title 8" type="java.lang.Object"/>
                 <Column editable="true" title="Title 9" type="java.lang.Object"/>
