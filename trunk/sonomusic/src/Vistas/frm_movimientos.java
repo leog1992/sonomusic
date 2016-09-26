@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Map;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sonomusic.frm_menu;
@@ -37,6 +38,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
     double suma_salb;
     public static String ventana = "movimientos";
     String fecha;
+    private JLabel jLabel9;
 
     /**
      * Creates new form frm_movimientos
@@ -68,6 +70,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         sumar_ing_caja();
         sumar_sal_caja();
         Double totalc;
+        Double totalb;
         totalc = suma_ingc - suma_salc;
         totalb = suma_ingb - suma_salb;
         txt_tote.setText(ven.formato_numero(totalc));
@@ -158,7 +161,6 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
                     suma_salb += Double.parseDouble(t_movimientos.getValueAt(x, 4).toString());
                 }
             }
-            txt_sal.setText(ven.formato_numero(suma_salc));
         }
         txt_sale.setText(ven.formato_numero(suma_salc));
         txt_salb.setText(ven.formato_numero(suma_salb));

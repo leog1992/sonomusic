@@ -186,6 +186,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         t_productos = new javax.swing.JTable();
         btn_cer = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
         j_fin_venta = new javax.swing.JDialog();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
@@ -248,6 +251,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cbx_vendedor = new javax.swing.JComboBox();
         txt_vend = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
 
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Buscar:");
@@ -303,6 +309,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         jLabel14.setText("0");
 
+        jLabel28.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel28.setText("Esc - Limpiar Busqueda");
+
+        jLabel29.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel29.setText("Enter - Busca / Seleccionar Producto");
+
+        jLabel30.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        jLabel30.setText("Flecha Arriba y Abajo - Subir y Bajar en Cuadro");
+
         javax.swing.GroupLayout j_productosLayout = new javax.swing.GroupLayout(j_productos.getContentPane());
         j_productos.getContentPane().setLayout(j_productosLayout);
         j_productosLayout.setHorizontalGroup(
@@ -320,7 +335,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
-                        .addComponent(btn_cer)))
+                        .addComponent(btn_cer))
+                    .addGroup(j_productosLayout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel30)
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel29)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         j_productosLayout.setVerticalGroup(
@@ -335,12 +357,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(j_productosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel29))
                 .addContainerGap())
         );
 
         j_fin_venta.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         j_fin_venta.setTitle("Pagar Venta");
-        j_fin_venta.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel23.setForeground(new java.awt.Color(255, 0, 51));
         jLabel23.setText("Total");
@@ -890,7 +916,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     .addComponent(txt_nro_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btn_cpre.setText("Cambiar Precio");
@@ -922,6 +948,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         txt_vend.setEditable(false);
         txt_vend.setFocusable(false);
+
+        jLabel11.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
+        jLabel11.setText("F3 - Realizar Venta");
+
+        jLabel16.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
+        jLabel16.setText("F1 - Buscar Productos");
+
+        jLabel27.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
+        jLabel27.setText("F2 - Buscar Producto en otra ventana");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -965,13 +1000,25 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_vend)))
+                        .addComponent(txt_vend))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel27)
+                        .addGap(95, 95, 95)
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1647,15 +1694,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (texto != null) {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
-                    if (cantidad >= cantidad_nueva) {
+             //       if (cantidad >= cantidad_nueva) {
                         fila[3] = ven.formato_numero(cantidad_nueva);
-                    } else {
+             /*       } else {
                         double exceso = cantidad_nueva - cantidad;
                         cantidad_nueva = cantidad;
                         fila[3] = ven.formato_numero(cantidad_nueva);
                         JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
                     }
-
+*/
                 }
             }
             fila[4] = und_med;
@@ -2139,10 +2186,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     public static javax.swing.JCheckBox chk_incluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -2154,7 +2203,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

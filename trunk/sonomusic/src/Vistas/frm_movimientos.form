@@ -61,7 +61,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btn_reg" max="32767" attributes="0"/>
                           <Component id="txt_monto" max="32767" attributes="0"/>
-                          <Component id="txt_fecha" pref="100" max="32767" attributes="0"/>
+                          <Component id="txt_fecha" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
