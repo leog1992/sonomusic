@@ -30,6 +30,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import static sonomusic.frm_menu.usu;
 
 /**
@@ -158,6 +159,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     return false;
                 }
             };
+            TableRowSorter sorter = new TableRowSorter(mostrar);
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
@@ -203,7 +205,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
             con.cerrar(st);
             con.cerrar(rs);
-            this.t_productos.setModel(mostrar);
+            t_productos.setModel(mostrar);
             t_productos.getColumnModel().getColumn(0).setPreferredWidth(10);
             t_productos.getColumnModel().getColumn(1).setPreferredWidth(390);
             t_productos.getColumnModel().getColumn(2).setPreferredWidth(50);
@@ -215,7 +217,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
             t_productos.setDefaultRenderer(Object.class, new render_productos());
-            mostrar.fireTableDataChanged();
+            t_productos.setRowSorter(sorter);
 
         } catch (SQLException e) {
             System.out.print(e);

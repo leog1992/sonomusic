@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import static sonomusic.frm_menu.usu;
 
 /**
@@ -88,6 +89,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     return false;
                 }
             };
+            TableRowSorter sorter = new TableRowSorter(mostrar);
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
@@ -155,7 +157,9 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(100);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(80);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(90);
+            t_productos.setRowSorter(sorter);
             mostrar.fireTableDataChanged();
+            
         } catch (SQLException e) {
             System.out.print(e);
         }

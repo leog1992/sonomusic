@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import sonomusic.frm_menu;
 
 public class Cl_Productos {
@@ -153,6 +154,7 @@ public class Cl_Productos {
                     return false;
                 }
             };
+            TableRowSorter sorter = new TableRowSorter(mostrar);
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             //Establecer como cabezeras el nombre de las colimnas
@@ -215,6 +217,7 @@ public class Cl_Productos {
             tabla.getColumnModel().getColumn(9).setPreferredWidth(100);
             tabla.setDefaultRenderer(Object.class, new render_productos());
             mostrar.fireTableDataChanged();
+            tabla.setRowSorter(sorter);
             tabla.updateUI();
 
         } catch (SQLException e) {
