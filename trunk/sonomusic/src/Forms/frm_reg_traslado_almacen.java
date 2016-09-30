@@ -1628,24 +1628,24 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
                     //if (cantidad >= cantidad_nueva) {
-                        fila[4] = ven.formato_numero(cantidad_nueva);
+                    fila[4] = ven.formato_numero(cantidad_nueva);
                  //   } else {
-                 //       double exceso = cantidad_nueva - cantidad;
-                   //     cantidad_nueva = cantidad;
+                    //       double exceso = cantidad_nueva - cantidad;
+                    //     cantidad_nueva = cantidad;
                     //    fila[4] = ven.formato_numero(cantidad_nueva);
                     //    JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                  //  }
+                    //  }
 
                 }
             }
             fila[5] = und_med;
 
-            if (cantidad > 0.0) {
-                valida_tabla(Integer.parseInt(id_producto), fila);
-                txt_busqueda.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
-            }
+            //if (cantidad > 0.0) {
+            valida_tabla(Integer.parseInt(id_producto), fila);
+            btn_enviar.setEnabled(true);
+                                    //} else {
+            //    JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
+            //}
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
