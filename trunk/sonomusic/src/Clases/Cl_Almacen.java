@@ -8,6 +8,7 @@ package Clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -107,24 +108,35 @@ public class Cl_Almacen {
     }
     
     public String nom_alm (String dir) {
-        String nom = null;
+        String almacen = null;
         try {
             Statement st = con.conexion();
             String ver_id = "select nom_alm from almacen where dir_alm = '"+dir+"'";
             ResultSet rs = con.consulta(st, ver_id);
             if (rs.next()) {
-                nom = rs.getString("nom_alm");
+                almacen = rs.getString("nom_alm");
             }
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return nom;
-    }
-
-    public void setRuc(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        return almacen;
+    }    
     
+    public void ver_tiendas (JComboBox cb_tiendas) {
+        cb_tiendas.removeAllItems();
+        try {
+            Statement st = con.conexion();
+            String c_tienda = "select * from almacen order by idalmacen asc";
+            ResultSet rs = con.consulta(st, c_tienda);
+            while (rs.next()) {
+                cb_tiendas.addItem(rs.getString("nom_alm"));
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
 }

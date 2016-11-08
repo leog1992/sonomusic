@@ -1280,7 +1280,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     void obtener_datos(String ruc) {
         try {
-            Desktop.getDesktop().browse(new URI("http://ws.insite.pe/sunat/test_ruc.php?ruc=" + ruc));
+            Desktop.getDesktop().browse(new URI("http://www.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp"));
         } catch (URISyntaxException | IOException ex) {
             System.out.println(ex);
         }

@@ -34,6 +34,7 @@ import Vistas.frm_ver_compras;
 import Vistas.frm_ver_cotizacion;
 import Vistas.frm_ver_empleado;
 import Vistas.frm_ver_guias;
+import Vistas.frm_ver_inventarios;
 import Vistas.frm_ver_notas;
 import Vistas.frm_ver_prod_alm;
 import Vistas.frm_ver_prod_alm_det;
@@ -327,6 +328,7 @@ public final class frm_menu extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem47 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -1117,6 +1119,15 @@ public final class frm_menu extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem22);
+
+        jMenuItem47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/book.png"))); // NOI18N
+        jMenuItem47.setText("Inventario / Cuadre");
+        jMenuItem47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem47ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem47);
         jMenu4.add(jSeparator1);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -1982,6 +1993,11 @@ public final class frm_menu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE, HASTA LUEGO!!");
         j_cierre.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void jMenuItem47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem47ActionPerformed
+        frm_ver_inventarios inv = new frm_ver_inventarios();
+        ven.llamar_ventana(inv);
+    }//GEN-LAST:event_jMenuItem47ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -2093,6 +2109,7 @@ public final class frm_menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem44;
     private javax.swing.JMenuItem jMenuItem45;
     private javax.swing.JMenuItem jMenuItem46;
+    private javax.swing.JMenuItem jMenuItem47;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
