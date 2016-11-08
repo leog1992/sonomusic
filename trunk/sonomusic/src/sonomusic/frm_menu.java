@@ -130,7 +130,7 @@ public final class frm_menu extends javax.swing.JFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-    
+
     private void ver_id_almacen(String nom_alm) {
         try {
             Statement st = con.conexion();
@@ -1957,8 +1957,8 @@ public final class frm_menu extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         if (usu.getPer_ver_caja().equals("1")) {
-        frm_ver_cierres cierre = new frm_ver_cierres();
-        ven.llamar_ventana(cierre);
+            frm_ver_cierres cierre = new frm_ver_cierres();
+            ven.llamar_ventana(cierre);
         } else {
             JOptionPane.showMessageDialog(null, "UD NO TIENE PERMISOS PARA VER");
         }
@@ -1995,8 +1995,13 @@ public final class frm_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cerrarActionPerformed
 
     private void jMenuItem47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem47ActionPerformed
-        frm_ver_inventarios inv = new frm_ver_inventarios();
-        ven.llamar_ventana(inv);
+        if (usu.getPer_mod_almacen().equals("1")) {
+            frm_ver_inventarios inv = new frm_ver_inventarios();
+            ven.llamar_ventana(inv);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud., no tiene permisos para cambiar de tienda");
+            this.dispose();
+        }
     }//GEN-LAST:event_jMenuItem47ActionPerformed
     /**
      * @param args the command line arguments

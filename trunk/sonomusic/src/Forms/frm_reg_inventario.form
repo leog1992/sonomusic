@@ -2,6 +2,9 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
     <Property name="title" type="java.lang.String" value="Inventario / Cuadre de Mercaderia"/>
   </Properties>
   <SyntheticProperties>
@@ -69,6 +72,11 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
       </Properties>
 
       <Layout>
@@ -99,7 +107,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="cbx_tipo" min="-2" pref="199" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="246" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="242" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -199,13 +207,12 @@
         <Component class="javax.swing.JComboBox" name="cbx_tipo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
+              <StringArray count="5">
                 <StringItem index="0" value="INICIAL"/>
                 <StringItem index="1" value="PERIODICO"/>
                 <StringItem index="2" value="MUESTREO"/>
                 <StringItem index="3" value="CORRECIONAL"/>
                 <StringItem index="4" value="CIERRE"/>
-                <StringItem index="5" value=" "/>
               </StringArray>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
@@ -224,6 +231,11 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
       </Properties>
 
       <Layout>
@@ -240,7 +252,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="376" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="368" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -321,6 +333,11 @@
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
         </Property>
       </Properties>
 

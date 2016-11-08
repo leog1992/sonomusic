@@ -61,9 +61,9 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         t_productos.getColumnModel().getColumn(0).setPreferredWidth(40);
         t_productos.getColumnModel().getColumn(1).setPreferredWidth(380);
         t_productos.getColumnModel().getColumn(2).setPreferredWidth(70);
-        t_productos.getColumnModel().getColumn(2).setPreferredWidth(70);
         t_productos.getColumnModel().getColumn(3).setPreferredWidth(70);
         t_productos.getColumnModel().getColumn(4).setPreferredWidth(70);
+        t_productos.getColumnModel().getColumn(5).setPreferredWidth(70);
         ven.centrar_celda(t_productos, 0);
         ven.derecha_celda(t_productos, 2);
         ven.derecha_celda(t_productos, 3);
@@ -235,9 +235,11 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setTitle("Inventario / Cuadre de Mercaderia");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setText("Tienda:");
 
@@ -277,7 +279,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Tipo Inventario:");
 
-        cbx_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INICIAL", "PERIODICO", "MUESTREO", "CORRECIONAL", "CIERRE", " " }));
+        cbx_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INICIAL", "PERIODICO", "MUESTREO", "CORRECIONAL", "CIERRE" }));
         cbx_tipo.setEnabled(false);
         cbx_tipo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -310,7 +312,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                         .addComponent(btn_bus_responsable))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 246, Short.MAX_VALUE)))
+                        .addGap(0, 242, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -334,6 +336,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -361,7 +364,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -383,6 +386,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel4.setText("Buscar Productos:");
 
@@ -581,6 +585,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
 
     private void cbx_tiendaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tiendaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cbx_tienda.setEnabled(false);
             txt_fecha.setEnabled(true);
             alm.setId(cbx_tienda.getSelectedIndex() + 1);
             cargar_productos_txt(alm.getId());
@@ -652,6 +657,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_tipoKeyPressed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        btn_registrar.setEnabled(false);
         Calendar calendario = Calendar.getInstance();
         inv.setAnio(calendario.get(Calendar.YEAR));
         inv.setAlmacen(cbx_tienda.getSelectedIndex() + 1);
@@ -689,7 +695,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     //cuadra productos en almacen
                     try {
                         Statement st = con.conexion();
-                        String a_producto = "update producto_almacen set cant_actual = '" + cant_actual + "' where idproductos = '" + producto + "' and idalmacen = '" + inv.getAlmacen() + "'";
+                        String a_producto = "update producto_almacen set cant = '" + cant_fisico + "' where idproductos = '" + producto + "' and idalmacen = '" + inv.getAlmacen() + "'";
                         System.out.println(a_producto);
                         con.actualiza(st, a_producto);
                         con.cerrar(st);
@@ -703,21 +709,22 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     double cant_salida = 0;
                     double cant_ingreso = 0;
                     int tipo_documento = 5;
+                    if (diferencia > 0) {
+                        cant_salida = 0;
+                        cant_ingreso = diferencia;
+                    }
                     if (diferencia < 0) {
                         diferencia = cant_actual - cant_fisico;
                         cant_salida = diferencia;
                         cant_ingreso = 0;
                     }
 
-                    if (diferencia > 0) {
-                        cant_salida = 0;
-                        cant_ingreso = diferencia;
-                    }
+                    
 
                     try {
                         Statement st = con.conexion();
                         String ins_kardex = "insert into kardex Values (null, '" + inv.getFecha_ejecucion() + "', '" + producto + "', '" + cant_ingreso + "', '" + precio + "', '"
-                                + cant_salida + "', '" + precio + "','" + tipo_documento + "', '" + 0 + "', '" + 0 + "',"
+                                + cant_salida + "', '" + precio + "','0', '0', '" + tipo_documento + "',"
                                 + " '" + inv.getAlmacen() + "','00000000000', 'CUADRE INVENTARIO','13')";
                         System.out.println(ins_kardex);
                         con.actualiza(st, ins_kardex);
@@ -725,6 +732,8 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     } catch (Exception ex) {
                         System.err.print("Error en: " + ex.getLocalizedMessage());
                     }
+                    
+                    btn_cerrar.doClick();
                 }
             }
         }
