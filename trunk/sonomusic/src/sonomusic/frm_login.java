@@ -296,6 +296,7 @@ public class frm_login extends javax.swing.JFrame {
         if (txt_usu.getText().length() == 8) {
             evt.consume();
         }
+        ven.solo_numeros(evt);
     }//GEN-LAST:event_txt_usuKeyTyped
 
     private void btn_canActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_canActionPerformed

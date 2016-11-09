@@ -197,7 +197,7 @@ public class frm_ver_inventarios extends javax.swing.JInternalFrame {
             anio = t_inventario.getValueAt(fila_seleccionada, 1).toString();
             almacen = t_inventario.getValueAt(fila_seleccionada, 2).toString();
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("di", id);
+            parametros.put("id", id);
             parametros.put("anio", anio);
             parametros.put("almacen", almacen);
             ven.ver_reporte("rpt_inventario", parametros);
