@@ -598,7 +598,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             String ver_ing = "select k.idKardex, k.fecha, tm.nombre as tipomov, k.doc_nro, k.nombre as raz_soc, td.desc_tipd, k.serie, k.numero, k.cant_ing, k.pre_uni_ing from "
                     + "kardex as k inner join tipo_movimiento as tm on k.idtipo_movimiento = tm.idtipo_movimiento inner join tipo_doc as td on k.idtipo_doc = td.idtipo_doc"
-                    + " where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_sal = '0' and k.pre_uni_sal = '0' order by idKardex desc";
+                    + " where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_sal = '0' and k.pre_uni_sal = '0' order by k.fecha desc";
             ResultSet rs = con.consulta(st, ver_ing);
             while (rs.next()) {
                 fila_ing[0] = rs.getString("idKardex");
@@ -662,7 +662,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             String ver_ing = "select k.idKardex, k.fecha, tm.nombre as tipomov, k.doc_nro, k.nombre as raz_soc, td.desc_tipd, k.serie, k.numero, k.cant_sal, k.pre_uni_sal from "
                     + "kardex as k inner join tipo_movimiento as tm on k.idtipo_movimiento = tm.idtipo_movimiento inner join tipo_doc as td on k.idtipo_doc = td.idtipo_doc "
-                    + "where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_ing = '0' and k.pre_uni_ing = '0' order by idKardex desc";
+                    + "where k.idProductos = '" + idpro + "' and k.idAlmacen = '" + idalm + "' and k.cant_ing = '0' and k.pre_uni_ing = '0' order by k.fecha desc";
             ResultSet rs = con.consulta(st, ver_ing);
             while (rs.next()) {
                 fila_sal[0] = rs.getString("idKardex");

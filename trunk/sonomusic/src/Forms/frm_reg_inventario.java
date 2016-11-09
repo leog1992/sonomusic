@@ -703,29 +703,35 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     }
 
                     //ingresar al kardex (productos en el aire)
-                    //3 - 5
+                    //3 - -2
                     double diferencia = cant_fisico - cant_actual;
                     double cant_salida = 0;
                     double cant_ingreso = 0;
+                    double precio_ingreso = 0;
+                    double precio_salida = 0;
                     int tipo_documento = 5;
                     String descripcion = null;
                     if (diferencia > 0) {
                         descripcion = "POR AUMENTO PARA CUADRE";
                         cant_salida = 0;
                         cant_ingreso = diferencia;
+                        precio_salida = 0;
+                        precio_ingreso = precio;
                     }
                     if (diferencia < 0) {
                         descripcion = "POR DISMINUCION PARA CUADRE";
                         diferencia = cant_actual - cant_fisico;
                         cant_salida = diferencia;
                         cant_ingreso = 0;
+                        precio_salida = precio;
+                        precio_ingreso = 0;
                     }
 
                     if (diferencia > 0 || diferencia < 0) {
                         try {
                             Statement st = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + inv.getFecha_ejecucion() + "', '" + producto + "', '" + cant_ingreso + "', '" + precio + "', '"
-                                    + cant_salida + "', '" + precio + "','0', '0', '" + tipo_documento + "',"
+                            String ins_kardex = "insert into kardex Values (null, '" + inv.getFecha_ejecucion() + "', '" + producto + "', '" + cant_ingreso + "', '" + precio_ingreso + "', '"
+                                    + cant_salida + "', '" + precio_salida + "','0', '0', '" + tipo_documento + "',"
                                     + " '" + inv.getAlmacen() + "','00000000000', '" + descripcion + "','13')";
                             System.out.println(ins_kardex);
                             con.actualiza(st, ins_kardex);
