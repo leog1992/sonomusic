@@ -13,13 +13,15 @@ import java.sql.Statement;
  * @author Ricardo
  */
 public class Cl_Ofertas {
+
     Cl_Conectar con = new Cl_Conectar();
     private int id_ofe;
     private String nom_ofe;
     private String fec_ini;
     private String fec_fin;
     private String est_ofe = "1";
-        public Cl_Ofertas() {
+
+    public Cl_Ofertas() {
     }
 
     public Cl_Ofertas(int id_ofe, String nom_ofe, String fec_ini, String fec_fin) {
@@ -69,12 +71,12 @@ public class Cl_Ofertas {
         this.est_ofe = est_ofe;
     }
 
-    public Double precio_oferta (Integer idalm, Integer idpro) {
+    public Double precio_oferta(Integer idalm, Integer idpro) {
         Double precio = 0.0;
         try {
             Statement st = con.conexion();
             String ver_pre = "select do.precio from detalle_oferta as do inner join oferta as o on do.idOferta = o.idOferta "
-                    + "where do.idProductos = '"+idpro+"' and o.idAlmacen = '"+idalm+"' and (curdate() between o.fecha_ofer and o.fecha_venc)";
+                    + "where do.idProductos = '" + idpro + "' and o.idAlmacen = '" + idalm + "' and (curdate() between o.fecha_ofer and o.fecha_venc)";
             ResultSet rs = con.consulta(st, ver_pre);
             if (rs.next()) {
                 precio = rs.getDouble("precio");
