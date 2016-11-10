@@ -220,6 +220,12 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
         jLabel1.setText("Buscar por:");
 
+        txt_bus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_busKeyPressed(evt);
+            }
+        });
+
         btn_reg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/add.png"))); // NOI18N
         btn_reg.setText("Registrar");
         btn_reg.setMargin(new java.awt.Insets(2, 8, 2, 8));
@@ -524,6 +530,22 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
         ven.llamar_ventana(cuota);
         this.dispose();
     }//GEN-LAST:event_btn_pagarActionPerformed
+
+    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
+        String query = "";
+        String busqueda = txt_bus.getText();
+        if (cbx_bus.getSelectedIndex() == 0) {
+            query = "select c.idcompra, c.periodo, c.ruc_prov, pr.raz_soc_pro, c.fec_com, c.fec_pago, td.desc_tipd, c.serie, c.nro, m.nombre, m.simbolo, m.siglas, c.tc, c.base, c.empresa, "
+                    + "c.estado from compra as c inner join proveedor as pr on c.ruc_prov = pr.ruc_pro inner join tipo_doc as td on c.idtido = td.idtipo_doc inner join moneda as m on "
+                    + "c.idmon = m.idmoneda where c.ruc_prov = '" + busqueda + "' or pr.raz_soc_pro like '%" + busqueda + "%' order by c.periodo desc, c.idcompra desc";
+        }
+        if (cbx_bus.getSelectedIndex() == 1) {
+            query = "select c.idcompra, c.periodo, c.ruc_prov, pr.raz_soc_pro, c.fec_com, c.fec_pago, td.desc_tipd, c.serie, c.nro, m.nombre, m.simbolo, m.siglas, c.tc, c.base, c.empresa, "
+                    + "c.estado from compra as c inner join proveedor as pr on c.ruc_prov = pr.ruc_pro inner join tipo_doc as td on c.idtido = td.idtipo_doc inner join moneda as m on "
+                    + "c.idmon = m.idmoneda where c.periodo = '" + busqueda + "' order by c.periodo desc, c.idcompra desc";
+        }
+        ver_compras(query);
+    }//GEN-LAST:event_txt_busKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import java.awt.event.KeyEvent;
@@ -22,6 +23,7 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
 
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
+    Cl_Almacen alm = new Cl_Almacen();
     DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
     DecimalFormat formato = null;
     double arq;
@@ -32,6 +34,8 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
     public frm_cierre_caja() {
         initComponents();
         txt_fecha.setText(ven.fechaformateada(ven.getFechaActual()));
+        alm.ver_tiendas(cbx_tiendas);
+        cbx_tiendas.setSelectedIndex(frm_menu.alm.getId() - 1);
     }
 
     /**
@@ -48,6 +52,10 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txt_fecha = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cbx_tiendas = new javax.swing.JComboBox();
+        cbx_remoto = new javax.swing.JCheckBox();
+        txt_pass = new javax.swing.JPasswordField();
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
 
@@ -84,6 +92,31 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         jLabel8.setText("Arqueo de Caja:");
         jLabel8.setFocusable(false);
 
+        jLabel1.setForeground(java.awt.Color.red);
+        jLabel1.setText("Tienda:");
+
+        cbx_tiendas.setEnabled(false);
+        cbx_tiendas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbx_tiendasKeyPressed(evt);
+            }
+        });
+
+        cbx_remoto.setBackground(new java.awt.Color(255, 255, 255));
+        cbx_remoto.setText("Caja Remota?");
+        cbx_remoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_remotoActionPerformed(evt);
+            }
+        });
+
+        txt_pass.setEnabled(false);
+        txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -92,20 +125,33 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(55, 55, 55)
-                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_arqueo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_arqueo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel1))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbx_tiendas, 0, 180, Short.MAX_VALUE)
+                            .addComponent(cbx_remoto)
+                            .addComponent(txt_pass))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(cbx_remoto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_tiendas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,8 +229,9 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
         try {
             //calcular monto del sistema.
             double arqueo = Double.parseDouble(txt_arqueo.getText());
+            int tienda = cbx_tiendas.getSelectedIndex() + 1;
             Statement st = con.conexion();
-            String actualiza_caja = "update caja set monto_entrega = '" + arqueo + "', estado ='1' where fecha = current_date() and idalmacen = '" + frm_menu.alm.getId() + "'";
+            String actualiza_caja = "update caja set monto_entrega = '" + arqueo + "', estado ='1' where fecha = current_date() and idalmacen = '" + tienda + "' and estado = '0'";
             con.actualiza(st, actualiza_caja);
             System.out.println(actualiza_caja);
             con.cerrar(st);
@@ -197,14 +244,52 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btn_regActionPerformed
 
+    private void cbx_remotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_remotoActionPerformed
+        if (cbx_remoto.isSelected()) {
+            txt_pass.setEnabled(true);
+            txt_pass.requestFocus();
+        } else {
+            cbx_tiendas.setEnabled(false);
+            cbx_tiendas.setSelectedIndex(frm_menu.alm.getId() - 1);
+        }
+    }//GEN-LAST:event_cbx_remotoActionPerformed
+
+    private void cbx_tiendasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tiendasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_arqueo.setEnabled(true);
+            txt_arqueo.requestFocus();
+        }
+    }//GEN-LAST:event_cbx_tiendasKeyPressed
+
+    private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String texto = txt_pass.getText();
+            if (texto != null) {
+                if (texto.equals("CLAVE@/*321")) {
+                    cbx_tiendas.setEnabled(true);
+                    txt_pass.setText("");
+                    txt_pass.setEnabled(false);
+                } else {
+                    cbx_remoto.setSelected(false);
+                    txt_pass.setText("");
+                    txt_pass.setEnabled(false);
+                }
+            }
+        }
+    }//GEN-LAST:event_txt_passKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_reg;
+    private javax.swing.JCheckBox cbx_remoto;
+    private javax.swing.JComboBox cbx_tiendas;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txt_arqueo;
     private javax.swing.JFormattedTextField txt_fecha;
+    private javax.swing.JPasswordField txt_pass;
     // End of variables declaration//GEN-END:variables
 }
