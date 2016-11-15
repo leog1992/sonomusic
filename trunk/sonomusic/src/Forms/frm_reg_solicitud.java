@@ -40,7 +40,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
      */
     public frm_reg_solicitud() {
         initComponents();
-        cbx_des.requestFocus();
+        cbx_destino.requestFocus();
         detalle = new DefaultTableModel();
 // {@Override
 //     public boolean isCellEditable (int fila, int columna) {
@@ -72,7 +72,7 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String cap;
                 cap = rs.getString("nom_alm");
-                cbx_des.addItem(cap);
+                cbx_destino.addItem(cap);
             }
 
             con.cerrar(st);
@@ -95,14 +95,11 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         txt_id_ori = new javax.swing.JTextField();
         txt_nom_ori = new javax.swing.JTextField();
         txt_fec = new javax.swing.JFormattedTextField();
-        spn_dias = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txt_id_pro = new javax.swing.JTextField();
         txt_nom_pro = new javax.swing.JTextField();
         btn_bus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -110,7 +107,10 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         btn_cer = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
         btn_env = new javax.swing.JButton();
-        cbx_des = new javax.swing.JComboBox();
+        cbx_destino = new javax.swing.JComboBox();
+        cbx_busqueda = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        btn_productos_faltantes = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -123,24 +123,19 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         jLabel1.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel2.setForeground(java.awt.Color.red);
         jLabel2.setText("Tienda Origen:");
         jLabel2.setFocusable(false);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel3.setForeground(java.awt.Color.red);
         jLabel3.setText("Tienda Destino:");
         jLabel3.setFocusable(false);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(212, 2, 2));
+        jLabel4.setForeground(java.awt.Color.red);
         jLabel4.setText("Fecha Solicitud:");
         jLabel4.setFocusable(false);
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel5.setText("Dias Plazo:");
-        jLabel5.setFocusable(false);
 
         txt_id_ori.setEditable(false);
         txt_id_ori.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -163,36 +158,15 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
         });
 
-        spn_dias.setModel(new javax.swing.SpinnerNumberModel(0, 0, 9, 1));
-        spn_dias.setEnabled(false);
-        spn_dias.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                spn_diasKeyPressed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Detalle de Articulos:");
         jLabel7.setFocusable(false);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel8.setText("Id:");
+        jLabel8.setForeground(java.awt.Color.red);
+        jLabel8.setText("Buscar Productos:");
         jLabel8.setFocusable(false);
-
-        txt_id_pro.setEditable(false);
-        txt_id_pro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_id_pro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_id_proActionPerformed(evt);
-            }
-        });
-        txt_id_pro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_id_proKeyPressed(evt);
-            }
-        });
 
         txt_nom_pro.setEditable(false);
         txt_nom_pro.setFocusable(false);
@@ -261,11 +235,21 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
             }
         });
 
-        cbx_des.addKeyListener(new java.awt.event.KeyAdapter() {
+        cbx_destino.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_desKeyPressed(evt);
+                cbx_destinoKeyPressed(evt);
             }
         });
+
+        cbx_busqueda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGAR TODOS LOS PRODUCTOS", "SOLO PRODUCTOS FALTANTES" }));
+        cbx_busqueda.setEnabled(false);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel5.setForeground(java.awt.Color.red);
+        jLabel5.setText("Busqueda:");
+
+        btn_productos_faltantes.setText("Cargar Faltantes");
+        btn_productos_faltantes.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,44 +262,47 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_id_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_nom_pro)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btn_bus))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(12, 12, 12)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txt_id_ori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txt_nom_ori, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(cbx_des, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(41, 41, 41)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(spn_dias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel7))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btn_env)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_reg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_cer)))
+                        .addComponent(btn_cer))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_id_ori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_nom_ori, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbx_destino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(cbx_busqueda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_nom_pro)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_bus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_productos_faltantes, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -333,25 +320,22 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_des, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spn_dias, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbx_destino, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbx_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txt_id_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nom_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nom_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_productos_faltantes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,22 +363,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_fecKeyPressed
 
-    private void spn_diasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spn_diasKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!spn_dias.getValue().equals("0")) {
-                txt_id_pro.setEditable(true);
-                btn_bus.setEnabled(true);
-                txt_id_pro.requestFocus();
-            }
-        }
-    }//GEN-LAST:event_spn_diasKeyPressed
-
-    private void txt_id_proKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_id_proKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_F2) {
-            btn_bus.doClick();
-        }
-    }//GEN-LAST:event_txt_id_proKeyPressed
-
     private void btn_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_busActionPerformed
         // Buscar Productos que estan por terminar
         frm_ver_prod_alm mat = new frm_ver_prod_alm();
@@ -413,14 +381,10 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private void t_solicitudKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_solicitudKeyReleased
     }//GEN-LAST:event_t_solicitudKeyReleased
 
-    private void txt_id_proActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id_proActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_id_proActionPerformed
-
     private void llenar() {
         frm_menu menu = null;
         req.setAlm_ori(menu.alm.getId());
-        req.setAlm_des(cbx_des.getSelectedIndex() + 1);
+        req.setAlm_des(cbx_destino.getSelectedIndex() + 1);
         req.setDias(Integer.parseInt(spn_dias.getValue().toString()));
         req.setFec_rea("7000-01-01");
         req.setFec_sol(ven.fechabase(txt_fec.getText()));
@@ -574,22 +538,24 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btn_envActionPerformed
 
-    private void cbx_desKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_desKeyPressed
+    private void cbx_destinoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_destinoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_fec.setText(ven.fechaformateada(ven.getFechaActual()));
             txt_fec.setEditable(true);
             txt_fec.setFocusable(true);
             txt_fec.requestFocus();
         }
-    }//GEN-LAST:event_cbx_desKeyPressed
+    }//GEN-LAST:event_cbx_destinoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_bus;
     private javax.swing.JButton btn_cer;
     public static javax.swing.JButton btn_env;
+    private javax.swing.JButton btn_productos_faltantes;
     public static javax.swing.JButton btn_reg;
-    public static javax.swing.JComboBox cbx_des;
+    private javax.swing.JComboBox cbx_busqueda;
+    public static javax.swing.JComboBox cbx_destino;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -598,11 +564,9 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JSpinner spn_dias;
     public static javax.swing.JTable t_solicitud;
     public static javax.swing.JFormattedTextField txt_fec;
     public static javax.swing.JTextField txt_id_ori;
-    public static javax.swing.JTextField txt_id_pro;
     public static javax.swing.JTextField txt_nom_ori;
     private javax.swing.JTextField txt_nom_pro;
     // End of variables declaration//GEN-END:variables

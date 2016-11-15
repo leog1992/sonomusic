@@ -85,8 +85,8 @@ public final class frm_menu extends javax.swing.JFrame {
         txt_raz.setText(alm.getRaz_soc());
 
         // carga todas las notificacion primera vez
-        //noti = new Cl_Hilo_Notificacion();
-        //noti.start();
+        noti = new Cl_Hilo_Notificacion();
+        noti.start();
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
@@ -288,8 +288,8 @@ public final class frm_menu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lbl_pedidos = new javax.swing.JLabel();
+        lbl_traslados = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -685,29 +685,29 @@ public final class frm_menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios.png"))); // NOI18N
-        jLabel5.setText("Pedidos");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_pedidos.setBackground(new java.awt.Color(204, 204, 204));
+        lbl_pedidos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_pedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios.png"))); // NOI18N
+        lbl_pedidos.setText("Pedidos");
+        lbl_pedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_pedidos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_pedidos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lbl_pedidos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                lbl_pedidosMouseClicked(evt);
             }
         });
 
-        jLabel18.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios2.png"))); // NOI18N
-        jLabel18.setText("Traslados");
-        jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_traslados.setBackground(new java.awt.Color(204, 204, 204));
+        lbl_traslados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_traslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/envios2.png"))); // NOI18N
+        lbl_traslados.setText("Traslados");
+        lbl_traslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_traslados.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_traslados.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lbl_traslados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
+                lbl_trasladosMouseClicked(evt);
             }
         });
 
@@ -774,31 +774,31 @@ public final class frm_menu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_pedidos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_traslados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 486, Short.MAX_VALUE)
                 .addComponent(lbl_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_compra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbl_venta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_nro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lbl_venta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -809,18 +809,20 @@ public final class frm_menu extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(jLabel20)
                     .addComponent(jLabel19)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel5)
+                    .addComponent(lbl_traslados)
+                    .addComponent(lbl_pedidos)
                     .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lbl_compra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_venta)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_compra)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_venta))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(lbl_nro)))
@@ -1907,19 +1909,19 @@ public final class frm_menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel19MouseClicked
 
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+    private void lbl_trasladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_trasladosMouseClicked
         if (evt.getClickCount() == 2) {
             frm_ver_guias guia = new frm_ver_guias();
             ven.llamar_ventana(guia);
         }
-    }//GEN-LAST:event_jLabel18MouseClicked
+    }//GEN-LAST:event_lbl_trasladosMouseClicked
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void lbl_pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pedidosMouseClicked
         if (evt.getClickCount() == 2) {
             frm_ver_solicitudes solc = new frm_ver_solicitudes();
             ven.llamar_ventana(solc);
         }
-    }//GEN-LAST:event_jLabel5MouseClicked
+    }//GEN-LAST:event_lbl_pedidosMouseClicked
 
     private void jMenuItem46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem46ActionPerformed
         frm_ver_almacen almacen = new frm_ver_almacen();
@@ -2050,14 +2052,12 @@ public final class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -2147,7 +2147,9 @@ public final class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_compra;
     public static javax.swing.JLabel lbl_nro;
     private javax.swing.JLabel lbl_pc;
+    private javax.swing.JLabel lbl_pedidos;
     private javax.swing.JLabel lbl_salir;
+    public static javax.swing.JLabel lbl_traslados;
     public static javax.swing.JLabel lbl_user;
     private javax.swing.JLabel lbl_venta;
     private javax.swing.JMenuItem m_clientes;
