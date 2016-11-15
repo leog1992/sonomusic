@@ -355,8 +355,8 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
     private void txt_fecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec.getText().trim().length() == 10) {
-                spn_dias.setEnabled(true);
-                spn_dias.requestFocus();
+                cbx_busqueda.setEnabled(true);
+                cbx_busqueda.requestFocus();
             } else {
                 txt_fec.requestFocus();
             }
@@ -385,7 +385,6 @@ public class frm_reg_solicitud extends javax.swing.JInternalFrame {
         frm_menu menu = null;
         req.setAlm_ori(menu.alm.getId());
         req.setAlm_des(cbx_destino.getSelectedIndex() + 1);
-        req.setDias(Integer.parseInt(spn_dias.getValue().toString()));
         req.setFec_rea("7000-01-01");
         req.setFec_sol(ven.fechabase(txt_fec.getText()));
     }

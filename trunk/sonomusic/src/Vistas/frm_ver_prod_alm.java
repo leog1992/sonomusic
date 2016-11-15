@@ -483,43 +483,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             i = t_productos.getSelectedRow();
             btn_kar.setEnabled(true);
             btn_historial.setEnabled(true);
-            if (funcion.equals("solicitar")) {
-                Object fila[] = new Object[5];
-                fila[0] = t_productos.getValueAt(i, 0);                                         //COD PRO
-                fila[1] = t_productos.getValueAt(i, 1);                                         // DESCRIPCION
-                fila[2] = t_productos.getValueAt(i, 2);                                         // MARCA
-                fila[3] = t_productos.getValueAt(i, 6);                                         // CANTIDAD
-                fila[4] = t_productos.getValueAt(i, 4);                                         // UND MED
-
-                frm_reg_solicitud pedido = null;
-                pro.setId_pro((int) t_productos.getValueAt(i, 0));
-                Integer filas_tabla = pedido.t_solicitud.getRowCount();
-                Integer copiado = 0;
-                if (filas_tabla > 0) {
-                    for (int x = 0; x < filas_tabla; x++) {
-                        Integer id_pro_tabla;
-                        id_pro_tabla = Integer.parseInt(pedido.t_solicitud.getValueAt(x, 0).toString());
-                        if (id_pro_tabla == pro.getId_pro()) {
-                            copiado++;
-                        }
-                    }
-                    if (copiado == 0) {
-                        pedido.detalle.addRow(fila);
-                        pedido.txt_id_pro.requestFocus();
-                        pedido.btn_reg.setEnabled(true);
-                        funcion = "material_almacen";
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Se esta escogiendo un producto ya existente");
-                    }
-                } else {
-                    pedido.detalle.addRow(fila);
-                    pedido.txt_id_pro.requestFocus();
-                    pedido.btn_reg.setEnabled(true);
-                    funcion = "material_almacen";
-                    this.dispose();
-                }
-            }
 
             //traslado
             if (funcion.equals("traslado")) {

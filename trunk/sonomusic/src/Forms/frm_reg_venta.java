@@ -102,6 +102,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         ver_tipodoc(query);
         //mostrar vendedores activos
         ver_vendedores("" + frm_menu.alm.getId());
+        int contar_cbx = cbx_vendedor.getItemCount();
+        int repetido = 0;
+        for (int j = 0; j < contar_cbx; j++) {
+            if (cbx_vendedor.getItemAt(j).toString().equals(frm_menu.usu.getNick())) {
+                repetido++;
+            }
+        }
+        if (repetido == 0) {
+            cbx_vendedor.addItem(frm_menu.usu.getNick());
+        }
         cbx_vendedor.requestFocus();
     }
     //fin del constructor
@@ -1236,7 +1246,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     void cargar_datos_cliente() {
         cli.setNro_doc(txt_nro_doc.getText());
-        obtener_datos(cli.getNro_doc());
         try {
             Statement st = con.conexion();
             String ver_pro = "select * from cliente where nro_doc = '" + cli.getNro_doc() + "'";
@@ -1266,6 +1275,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     frm_reg_cliente.txt_nom.setEditable(true);
                     frm_reg_cliente.txt_nom.requestFocus();
                 } else if (txt_nro_doc.getText().length() == 11) {
+                    obtener_datos(cli.getNro_doc());
                     frm_reg_cliente.cbx_cli.setSelectedItem("RUC");
                     frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
                     frm_reg_cliente.txt_ndoc.setEditable(false);
@@ -1296,6 +1306,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 if (txt_nro_doc.getText().length() == 11) {
                     if (cbx_documento_venta.getSelectedItem().equals("FACTURA")) {
                         cargar_datos_cliente();
+                        //obtener_datos(cli.getNro_doc());
                     }
                 }
             } else {

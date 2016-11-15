@@ -98,6 +98,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                             String id_producto = array_producto[0].trim();
                             boolean norepite = verifica_repetido(Integer.parseInt(id_producto));
                             if (norepite == true) {
+                                boolean existencia = true;
                                 try {
                                     Statement st = con.conexion();
                                     String ver_producto = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
@@ -116,6 +117,9 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                                         txt_pcompra.setText(ven.formato_numero(rs.getDouble("costo_compra")));
                                         txt_und_med.setText(rs.getString("desc_und"));
                                         txt_cant_fisico.setEnabled(true);
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "NO EXISTE PRODUCTO EN LA TIENDA");
+                                        existencia = false;
                                     }
 
                                     con.cerrar(rs);
@@ -124,6 +128,31 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                                 } catch (SQLException | HeadlessException e) {
                                     System.out.println(e);
                                     JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+                                }
+
+                                if (existencia == false) {
+
+                                    try {
+                                        Statement stp = con.conexion();
+                                        String c_producto = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.costo_compra, p.precio_venta, u.desc_und "
+                                                + " from productos as p inner join und_medida as u on "
+                                                + "p.idUnd_Medida=u.idUnd_Medida where idproductos = '" + id_producto + "'";
+                                        ResultSet rsp = con.consulta(stp, c_producto);
+                                        if (rsp.next()) {
+                                            txt_busqueda.setText("");
+                                            txt_codigo.setText(rsp.getString("idProductos"));
+                                            txt_descripcion.setText(rsp.getString("desc_pro") + " " + rsp.getString("marca") + " " + rsp.getString("modelo") + " " + rsp.getString("serie"));
+                                            txt_cant_actual.setText("0.00");
+                                            txt_pventa.setText(ven.formato_numero(rsp.getDouble("precio_venta")));
+                                            txt_pcompra.setText(ven.formato_numero(rsp.getDouble("costo_compra")));
+                                            txt_und_med.setText(rsp.getString("desc_und"));
+                                            txt_cant_fisico.setEnabled(true);
+                                        }
+                                        con.cerrar(rsp);
+                                        con.cerrar(stp);
+                                    } catch (SQLException e) {
+                                        System.out.println(e.getLocalizedMessage());
+                                    }
                                 }
                             }
 
@@ -142,14 +171,11 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             autocompletar.setMode(0);
             autocompletar.setCaseSensitive(false);
             Statement st = con.conexion();
-            String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
-                    + " from producto_almacen as pa inner join productos as p"
-                    + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + almacen + "' ";
-            //+ "order by p.desc_pro asc, p.modelo asc";
+            String sql = "select p.idProductos,p.desc_pro, p.marca, p.modelo, p.serie "
+                    + " from productos as p";
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
-                autocompletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " " + rs.getString("p.marca") + " " + rs.getString("p.modelo")
-                        + " -- S/ " + rs.getString("pa.precio") + " -- Cant.: " + rs.getString("pa.cant"));
+                autocompletar.addItem(rs.getString("p.idProductos") + " - " + rs.getString("p.desc_pro") + " " + rs.getString("p.marca") + " " + rs.getString("p.modelo"));
             }
             con.cerrar(rs);
             con.cerrar(st);
@@ -241,6 +267,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel1.setForeground(java.awt.Color.red);
         jLabel1.setText("Tienda:");
 
         cbx_tienda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -249,6 +276,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setForeground(java.awt.Color.red);
         jLabel2.setText("Fecha:");
 
         try {
@@ -264,6 +292,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel3.setForeground(java.awt.Color.red);
         jLabel3.setText("Responsable:");
 
         btn_bus_responsable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/find.png"))); // NOI18N
@@ -276,6 +305,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
 
         txt_responsable.setEnabled(false);
 
+        jLabel9.setForeground(java.awt.Color.red);
         jLabel9.setText("Tipo Inventario:");
 
         cbx_tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INICIAL", "PERIODICO", "MUESTREO", "CORRECIONAL", "CIERRE" }));
@@ -387,6 +417,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel4.setForeground(java.awt.Color.red);
         jLabel4.setText("Buscar Productos:");
 
         txt_busqueda.setEnabled(false);
@@ -402,10 +433,13 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         txt_cant_actual.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_cant_actual.setEnabled(false);
 
+        jLabel5.setForeground(java.awt.Color.red);
         jLabel5.setText("Cantidad Actual:");
 
+        txt_und_med.setForeground(java.awt.Color.red);
         txt_und_med.setText("Und. Med.");
 
+        jLabel7.setForeground(java.awt.Color.red);
         jLabel7.setText("Cantidad Fisico:");
 
         txt_cant_fisico.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -416,6 +450,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setForeground(java.awt.Color.red);
         jLabel8.setText("Diferencia:");
 
         txt_diferencia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -440,6 +475,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setForeground(java.awt.Color.red);
         jLabel6.setText("Codigo Producto:");
 
         txt_codigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -447,6 +483,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
 
         txt_descripcion.setEnabled(false);
 
+        jLabel10.setForeground(java.awt.Color.red);
         jLabel10.setText("Precio Vta/Cpa");
 
         txt_pventa.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -692,14 +729,27 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     }
 
                     //cuadra productos en almacen
+                    int crear_producto = -1;
                     try {
                         Statement st = con.conexion();
                         String a_producto = "update producto_almacen set cant = '" + cant_fisico + "' where idproductos = '" + producto + "' and idalmacen = '" + inv.getAlmacen() + "'";
                         System.out.println(a_producto);
-                        con.actualiza(st, a_producto);
+                        crear_producto = con.actualiza(st, a_producto);
                         con.cerrar(st);
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
+                    }
+
+                    if (crear_producto > -1) {
+                        try {
+                            Statement st = con.conexion();
+                            String i_producto = "insert into producto_almacen values ('" + producto + "', '" + inv.getAlmacen() + "', '" + cant_fisico + "', '" + precio + "')";
+                            System.out.println(i_producto);
+                            con.actualiza(st, i_producto);
+                            con.cerrar(st);
+                        } catch (Exception e) {
+                            System.out.println(e.getLocalizedMessage());
+                        }
                     }
 
                     //ingresar al kardex (productos en el aire)
