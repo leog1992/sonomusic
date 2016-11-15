@@ -61,7 +61,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         mostrar.addColumn("Ingreso");
         mostrar.addColumn("Salida");
 
-        cargar_apertura();
+        //cargar_apertura();
         
         String query = "select * from movimiento where fec_mov = '" + fecha + "' and"
                 + " idAlmacen = '" + frm_menu.alm.getId() + "' order by idMovimiento asc";
@@ -109,7 +109,7 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
 
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
-
+            cargar_apertura();
             //Creando las filas para el JTable
             while (rs.next()) {
                 Object[] fila = new Object[5];
@@ -503,11 +503,11 @@ public class frm_movimientos extends javax.swing.JInternalFrame {
         rbt_ing.setEnabled(true);
         rbt_sal.setEnabled(true);
         txt_mot.setText("");
-        txt_mot.setEditable(false);
-        txt_monto.setEditable(false);
+        txt_mot.setEnabled(false);
+        txt_monto.setEnabled(false);
         txt_monto.setText("");
         txt_fecha.setText("");
-        txt_fecha.setEditable(false);
+        txt_fecha.setEnabled(false);
         btn_reg.setEnabled(false);
         rbt_ing.setSelected(false);
         rbt_sal.setSelected(true);
