@@ -248,7 +248,7 @@ ORDER BY
 			</staticText>
 			<image>
 				<reportElement mode="Transparent" x="0" y="0" width="121" height="75" uuid="1d43d716-8072-485f-b727-6f6454fe663a"/>
-				<imageExpression><![CDATA["logo_sonomusic.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://www.lunasystemsperu.com/uploads_sm/logo_sonomusic.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="121" y="61" width="224" height="15" uuid="227878cc-53dd-4823-902d-7d0946a303dc"/>

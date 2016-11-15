@@ -9,6 +9,7 @@ import Clases.Cl_Almacen;
 import Clases.Cl_Conectar;
 import Clases.Cl_Varios;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -226,21 +227,40 @@ public class frm_cierre_caja extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_arqueoKeyPressed
 
     private void btn_regActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regActionPerformed
+        boolean abierto = false;
+        int tienda = cbx_tiendas.getSelectedIndex() + 1;
         try {
-            //calcular monto del sistema.
-            double arqueo = Double.parseDouble(txt_arqueo.getText());
-            int tienda = cbx_tiendas.getSelectedIndex() + 1;
             Statement st = con.conexion();
-            String actualiza_caja = "update caja set monto_entrega = '" + arqueo + "', estado ='1' where fecha = current_date() and idalmacen = '" + tienda + "' and estado = '0'";
-            con.actualiza(st, actualiza_caja);
-            System.out.println(actualiza_caja);
+            String c_caja = "select monto_entrega from caja where estado = '0' and fecha = current_date() and idalmacen = '" + tienda + "'";
+            ResultSet rs = con.consulta(st, c_caja);
+            if (rs.next()) {
+                abierto = true;
+            }
+            con.cerrar(rs);
             con.cerrar(st);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getLocalizedMessage());
         }
-        JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE, HASTA LUEGO!!");
-        this.dispose();
-        System.exit(0);
+
+        if (abierto == true) {
+            try {
+                //calcular monto del sistema.
+                double arqueo = Double.parseDouble(txt_arqueo.getText());
+                Statement st = con.conexion();
+                String actualiza_caja = "update caja set monto_entrega = '" + arqueo + "', estado ='1' where fecha = current_date() and idalmacen = '" + tienda + "' and estado = '0'";
+                con.actualiza(st, actualiza_caja);
+                System.out.println(actualiza_caja);
+                con.cerrar(st);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE, HASTA LUEGO!!");
+            this.dispose();
+            System.exit(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR AL CERRAR LA CAJA, LA CAJA YA ESTA CERRADA");
+            this.dispose();
+        }
 
     }//GEN-LAST:event_btn_regActionPerformed
 

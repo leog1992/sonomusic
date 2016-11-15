@@ -51,7 +51,7 @@ public class frm_ver_inventarios extends javax.swing.JInternalFrame {
         try {
             Statement st = con.conexion();
             String c_inventario = "select i.id, i.anio, i.tipo, i.fecha_ejecucion, i.almacen, a.nom_alm from inventario as i inner join almacen as a "
-                    + "on i.almacen = a.idalmacen order by i.id asc, i.anio asc";
+                    + "on i.almacen = a.idalmacen order by i.fecha_ejecucion desc, i.id desc, i.anio asc";
             ResultSet rs = con.consulta(st, c_inventario);
             while (rs.next()) {
                 Object filas[] = new Object[6];
