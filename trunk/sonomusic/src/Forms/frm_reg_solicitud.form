@@ -40,7 +40,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btn_env" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btn_reg" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_enviar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_cer" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -76,7 +76,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_nom_pro" max="32767" attributes="0"/>
+                              <Component id="txt_buscar_producto" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -121,7 +121,7 @@
               <Group type="103" groupAlignment="2" attributes="0">
                   <Component id="jLabel8" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_bus" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_nom_pro" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_buscar_producto" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_productos_faltantes" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -129,7 +129,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_cer" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btn_reg" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btn_enviar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_env" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -240,7 +240,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_nom_pro">
+    <Component class="javax.swing.JTextField" name="txt_buscar_producto">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="focusable" type="boolean" value="false"/>
@@ -298,7 +298,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cerActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_reg">
+    <Component class="javax.swing.JButton" name="btn_enviar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Recursos/accept.png"/>
@@ -307,7 +307,7 @@
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_regActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_enviarActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

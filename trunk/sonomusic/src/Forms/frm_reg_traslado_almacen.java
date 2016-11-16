@@ -860,7 +860,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
     }
 
-    void cargar_productos_txt() {
+    private void cargar_productos_txt() {
         try {
             // autocompletar = new TextAutoCompleter(txt_buscar_producto);
             TextAutoCompleter autocompletar = new TextAutoCompleter(txt_buscar_producto, new AutoCompleterCallback() {

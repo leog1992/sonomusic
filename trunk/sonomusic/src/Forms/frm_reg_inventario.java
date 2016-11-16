@@ -172,14 +172,14 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             autocompletar.setCaseSensitive(false);
             Statement st = con.conexion();
             String sql = "select p.idProductos,p.desc_pro, p.marca, p.modelo, p.serie "
-                    + " from productos as p";
+                    + " from producto_almacen as pa inner join productos as p on pa.idproductos = p.idproductos where pa.idalmacen = '" + id_almacen + "'";
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
                 autocompletar.addItem(rs.getString("p.idProductos") + " - " + rs.getString("p.desc_pro") + " " + rs.getString("p.marca") + " " + rs.getString("p.modelo"));
             }
             con.cerrar(rs);
             con.cerrar(st);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
             System.out.println(e.getLocalizedMessage());
         }

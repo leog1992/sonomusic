@@ -271,8 +271,8 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
                 soli.txt_id_ori.setText(rs.getString("id_alm_ori"));
                 soli.cbx_destino.setSelectedIndex(rs.getInt("id_alm_des") - 1);
                 soli.txt_fec.setText(ven.fechaformateada(rs.getString("fec_sol")));
-                soli.btn_reg.setEnabled(false);
-                soli.btn_reg.setVisible(false);
+                soli.btn_enviar.setEnabled(false);
+                soli.btn_enviar.setVisible(false);
             }
             con.cerrar(rs);
             con.cerrar(st);
