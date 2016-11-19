@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import nicon.notify.core.Notification;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -313,7 +312,7 @@ public class frm_login extends javax.swing.JFrame {
         frm_menu menu = new frm_menu();
         menu.usu.setNick(usu.getNick());
         menu.lbl_user.setText(usu.getNick());
-        Notification.show("Inicio de Session", "Bienvenido Sr(a): " + usu.obtener_nombre(usu.getNick()));
+        Notification.show("Inicio de Session", "Bienvenido Sr(a): " + usu.obtener_nombre(usu.getNick()), Notification.CONFIRM_MESSAGE, Notification.NICON_LIGHT_THEME);    
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_entActionPerformed

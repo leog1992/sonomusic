@@ -26,6 +26,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import nicon.notify.core.Notification;
+import nicon.notify.gui.desktopNotify.DesktopNotify;
 import sonomusic.frm_menu;
 
 /**
@@ -2063,7 +2064,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 ven.llamar_ventana(venta);
             }
         } else {
-            Notification.show("Error", "Error al ingresar venta.!!");
+            Notification.show("Error", "Error al ingresar venta.!!", Notification.DISK_ICON,Notification.NICON_DARK_THEME);
         }
 
     }//GEN-LAST:event_btn_jd_registrarActionPerformed

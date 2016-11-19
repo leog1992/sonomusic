@@ -2147,7 +2147,7 @@ public final class frm_menu extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_compra;
     public static javax.swing.JLabel lbl_nro;
     private javax.swing.JLabel lbl_pc;
-    private javax.swing.JLabel lbl_pedidos;
+    public static javax.swing.JLabel lbl_pedidos;
     private javax.swing.JLabel lbl_salir;
     public static javax.swing.JLabel lbl_traslados;
     public static javax.swing.JLabel lbl_user;
