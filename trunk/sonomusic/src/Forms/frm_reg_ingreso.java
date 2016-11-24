@@ -197,8 +197,15 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                                         lbl_codigo.setText(id_producto);
                                         txt_busqueda.setText(rs.getString("desc_pro") + " " + rs.getString("marca") + " " + rs.getString("modelo") + " " + rs.getString("serie"));
                                         txt_precio.setText(ven.formato_numero(rs.getDouble("precio_venta")));
+                                        //txt_costo.setText(ven.formato_numero(rs.getDouble("costo_compra")));
                                         txt_unidad_medida.setText(rs.getString("desc_und"));
+                                        if (mon.getId() == 1) {
+                                            txt_costo.setText(ven.formato_numero(rs.getDouble("costo_compra")));
+                                        } else {
+                                            txt_costo.setText(ven.formato_numero(mon.cambio_compra_dolar(com.getFec_com(), mon.getId(), rs.getDouble("costo_compra"))));
+                                        }
                                         txt_costo.setEnabled(true);
+                                        txt_costo.selectAll();
                                         txt_costo.requestFocus();
                                     }
                                     con.cerrar(rs);
@@ -1056,6 +1063,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         for (int j = 0; j < filas; j++) {
             art.setId_pro(Integer.parseInt(t_detalle.getValueAt(j, 0).toString()));
             art.setCan(Double.parseDouble(t_detalle.getValueAt(j, 2).toString()));
+            double precio_venta = Double.parseDouble(t_detalle.getValueAt(j, 6).toString());
             Double precio_compra = Double.parseDouble(t_detalle.getValueAt(j, 4).toString());
             if (mon.getId() != 2) {
                 art.setCos_pro(precio_compra * tc);
@@ -1063,19 +1071,20 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 art.setCos_pro(precio_compra);
             }
             // buscar precio de prodcuto
-            try {
-                Statement st = con.conexion();
-                String ver_pre_ven = "select precio_venta from productos where idProductos = '" + art.getId_pro() + "'";
-                System.out.println(ver_pre_ven);
-                ResultSet rs = con.consulta(st, ver_pre_ven);
-                if (rs.next()) {
-                    art.setPre_pro(rs.getDouble("precio_venta"));
-                }
-                con.cerrar(rs);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
+//            try {
+//                Statement st = con.conexion();
+//                String ver_pre_ven = "select precio_venta from productos where idProductos = '" + art.getId_pro() + "'";
+//                System.out.println(ver_pre_ven);
+//                ResultSet rs = con.consulta(st, ver_pre_ven);
+//                if (rs.next()) {
+//                    art.setPre_pro(rs.getDouble("precio_venta"));
+//                }
+//                con.cerrar(rs);
+//                con.cerrar(st);
+//            } catch (Exception ex) {
+//                System.out.print(ex);
+//            }
+            art.setPre_pro(precio_venta);
             //Registrando detalle de compra
             try {
                 Statement st = con.conexion();
@@ -1121,7 +1130,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 art.setCan_act_pro(art.getCan_act_pro() + art.getCan());
                 Statement st = con.conexion();
                 String act_pro = "update productos set cant_actual = '" + art.getCan_act_pro() + "', costo_compra = "
-                        + "'" + art.getCos_pro() + "' where idProductos = '" + art.getId_pro() + "' ";
+                        + "'" + art.getCos_pro() + "', precio_venta = '" + art.getPre_pro() + "' where idProductos = '" + art.getId_pro() + "' ";
                 System.out.println(act_pro);
                 con.actualiza(st, act_pro);
                 con.cerrar(st);
@@ -1144,6 +1153,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     Statement st1 = con.conexion();
                     String act_mat_alm = "update producto_almacen set cant= '" + art.getCan_act_pro() + "', precio = '" + art.getPre_pro() + "' "
                             + "where idProductos = '" + art.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
+                    System.out.println(act_mat_alm);
                     con.actualiza(st1, act_mat_alm);
                     con.cerrar(st1);
                 } else {
@@ -1151,6 +1161,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     Statement st1 = con.conexion();
                     String add_pro_alm = "insert into producto_almacen Values ('" + art.getId_pro() + "', '" + alm.getId() + "', "
                             + "'" + art.getCan() + "', '" + art.getPre_pro() + "')";
+                    System.out.println(add_pro_alm);
                     con.actualiza(st1, add_pro_alm);
                     con.cerrar(st1);
                 }
@@ -1194,6 +1205,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private void txt_fec_comKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_comKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec_com.getText().length() == 10) {
+                com.setFec_com(ven.fechabase(txt_fec_com.getText()));
+                System.out.println(com.getFec_com());
                 txt_ruc.setEnabled(true);
                 txt_ruc.requestFocus();
                 btn_busp.setEnabled(true);
@@ -1203,10 +1216,10 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     private void cbx_monKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_monKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            com.setFec_com(txt_fec_com.getText());
             int moneda = cbx_mon.getSelectedIndex() + 1;
+            mon.setId(moneda);
             if (moneda != 2) {
-                txt_tc.setText(ven.formato_tc(mon.tc_compra(ven.fechabase(com.getFec_com()), moneda)));
+                txt_tc.setText(ven.formato_tc(mon.tc_compra(com.getFec_com(), moneda)));
             } else {
                 txt_tc.setText("1.000");
             }
@@ -1260,11 +1273,11 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             String texto = txt_precio.getText();
             if (ven.esDecimal(texto)) {
                 txt_precio.setText(ven.formato_numero(Double.parseDouble(texto)));
-                double costo, tc, precio, utilidad;
+                double costo, tcc, precio, utilidad;
                 costo = Double.parseDouble(txt_costo.getText());
-                tc = Double.parseDouble(txt_tc.getText());
+                tcc = Double.parseDouble(txt_tc.getText());
                 precio = Double.parseDouble(txt_precio.getText());
-                utilidad = precio - (costo * tc);
+                utilidad = precio - (costo * tcc);
                 if (utilidad < 0) {
                     JOptionPane.showMessageDialog(null, "ERROR UTILIDAD ES NEGATIVO");
                 }

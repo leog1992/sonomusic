@@ -120,6 +120,7 @@ public class Cl_Moneda {
         try {
             Statement st = con.conexion();
             String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            System.out.println(ver_tc);
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
                 precio = rs.getDouble("compra");
@@ -130,7 +131,7 @@ public class Cl_Moneda {
             monto = valor / precio;
             con.cerrar(rs);
             con.cerrar(st);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
         return monto;

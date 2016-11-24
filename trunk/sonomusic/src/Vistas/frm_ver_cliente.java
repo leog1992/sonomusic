@@ -111,7 +111,6 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
         btn_historial = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(254, 254, 254));
-        setClosable(true);
         setTitle("Ver Clientes");
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));

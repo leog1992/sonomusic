@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import nicon.notify.core.Notification;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -41,9 +42,7 @@ public class frm_login extends javax.swing.JFrame {
         URL url_ok = this.getClass().getResource(path_ok);
         icon_ok = new ImageIcon(url_ok);
 
-        //JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
-        //SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
 
     @SuppressWarnings("unchecked")
