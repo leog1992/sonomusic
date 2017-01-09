@@ -34,7 +34,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
     Cl_Almacen alm = new Cl_Almacen();
     Cl_Inventario inv = new Cl_Inventario();
     DefaultTableModel detalle;
-
+    int i;
     public static String responsable;
 
     /**
@@ -378,6 +378,16 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_productos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_productosMouseClicked(evt);
+            }
+        });
+        t_productos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                t_productosKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_productos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -831,6 +841,20 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         ven.llamar_ventana(inventario);
         this.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            i = t_productos.getSelectedRow();
+            detalle.removeRow(i);
+            txt_busqueda.requestFocus();
+        }
+    }//GEN-LAST:event_t_productosKeyPressed
+
+    private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
+        if (evt.getClickCount() == 2) {
+            i = t_productos.getSelectedRow();
+        }
+    }//GEN-LAST:event_t_productosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
