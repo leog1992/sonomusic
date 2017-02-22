@@ -2,6 +2,7 @@ package Forms;
 
 import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
+import Clases.Cl_Entidad;
 import Clases.Cl_Hilo_Imprime;
 import Clases.Cl_Moneda;
 import Clases.Cl_Ofertas;
@@ -23,10 +24,13 @@ import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import nicon.notify.core.Notification;
 import nicon.notify.gui.desktopNotify.DesktopNotify;
+import org.json.simple.parser.ParseException;
 import sonomusic.frm_menu;
 
 /**
@@ -113,6 +117,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         if (repetido == 0) {
             cbx_vendedor.addItem(frm_menu.usu.getNick());
         }
+        cbx_vendedor.setSelectedItem(frm_menu.usu.getNick());
         cbx_vendedor.requestFocus();
     }
     //fin del constructor
@@ -876,6 +881,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel12.setForeground(java.awt.Color.red);
         jLabel12.setText("Nombre:");
 
+        txt_nom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nomActionPerformed(evt);
+            }
+        });
         txt_nom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nomKeyPressed(evt);
@@ -1267,35 +1277,45 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 frm_reg_cliente cliente = new frm_reg_cliente();
                 cli.setNro_doc(txt_nro_doc.getText());
 
-                ven.llamar_ventana(cliente);
-                frm_reg_cliente.ventana = "reg_venta";
                 if (txt_nro_doc.getText().length() == 8) {
+                    ven.llamar_ventana(cliente);
+                    frm_reg_cliente.ventana = "reg_venta";
                     frm_reg_cliente.cbx_cli.setSelectedItem("DNI");
                     frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
                     frm_reg_cliente.txt_ndoc.setEditable(false);
                     frm_reg_cliente.txt_nom.setEditable(true);
                     frm_reg_cliente.txt_nom.requestFocus();
+
                 } else if (txt_nro_doc.getText().length() == 11) {
-                    obtener_datos(cli.getNro_doc());
-                    frm_reg_cliente.cbx_cli.setSelectedItem("RUC");
-                    frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
-                    frm_reg_cliente.txt_ndoc.setEditable(false);
-                    frm_reg_cliente.txt_nom.setEditable(true);
-                    frm_reg_cliente.txt_nom.requestFocus();
+                    JOptionPane.showMessageDialog(null, "Cargando Datos de la SUNAT");
+                    String json = Cl_Entidad.getJSON(cli.getNro_doc());
+                    //Lo mostramos
+                    String[] datos = Cl_Entidad.showJSON(json);
+                    String nombre = datos[0].trim();
+                    String direccion = datos[1].trim();
+                    JOptionPane.showMessageDialog(null, "DATOS DEL CLIENTE:\nRUC: " + cli.getNro_doc() + "\nRAZON SOCIAL: " + nombre + "\nDIRECCION: " + direccion);
+                    txt_nom.setText(nombre);
+                    Statement st1 = con.conexion();
+                    String inser_cli = "insert into cliente Values ('" + cli.getNro_doc() + "', 'RUC', "
+                            + "'" + nombre + "', '" + direccion + "', '0', '0', '" + 1 + "')";
+                    con.actualiza(st1, inser_cli);
+                    con.cerrar(st1);
+                    JOptionPane.showMessageDialog(null, "Se ha ingresado los datos correctamente");
+                    /* obtener_datos(cli.getNro_doc());
+                     frm_reg_cliente.cbx_cli.setSelectedItem("RUC");
+                     frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
+                     frm_reg_cliente.txt_ndoc.setEditable(false);
+                     frm_reg_cliente.txt_nom.setEditable(true);
+                     frm_reg_cliente.txt_nom.requestFocus();*/
                 }
             }
         } catch (SQLException ex) {
             System.out.print(ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(frm_reg_venta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    void obtener_datos(String ruc) {
-        try {
-            Desktop.getDesktop().browse(new URI("http://www.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp"));
-        } catch (URISyntaxException | IOException ex) {
-            System.out.println(ex);
-        }
-    }
     private void txt_nro_docKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nro_docKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_nro_doc.getText().isEmpty()) {
@@ -1583,8 +1603,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             String sql = "select pa.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, pa.cant, pa.precio"
                     + " from producto_almacen as pa inner join productos as p"
-                    + " on pa.idProductos=p.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "' "
-                    + "order by p.desc_pro asc, p.modelo asc";
+                    + " on p.idProductos = pa.idProductos where pa.idAlmacen ='" + frm_menu.alm.getId() + "' ";
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
                 autocompletar.addItem(rs.getString("pa.idProductos") + " - " + rs.getString("p.desc_pro") + " " + rs.getString("p.marca") + " " + rs.getString("p.modelo")
@@ -1659,10 +1678,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             j_productos.dispose();
             txt_buscar_producto.requestFocus();
         }
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             j_productos.dispose();
-            txt_buscar_producto.requestFocus();        }
+            txt_buscar_producto.requestFocus();
+        }
     }//GEN-LAST:event_txt_busquedaKeyPressed
 
     private int tot_reg() {
@@ -1706,15 +1726,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             if (texto != null) {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
-             //       if (cantidad >= cantidad_nueva) {
-                        fila[3] = ven.formato_numero(cantidad_nueva);
-             /*       } else {
-                        double exceso = cantidad_nueva - cantidad;
-                        cantidad_nueva = cantidad;
-                        fila[3] = ven.formato_numero(cantidad_nueva);
-                        JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
-                    }
-*/
+                    //       if (cantidad >= cantidad_nueva) {
+                    fila[3] = ven.formato_numero(cantidad_nueva);
+                    /*       } else {
+                     double exceso = cantidad_nueva - cantidad;
+                     cantidad_nueva = cantidad;
+                     fila[3] = ven.formato_numero(cantidad_nueva);
+                     JOptionPane.showMessageDialog(null, "NO HAY DEMASIADOS PRODUCTOS \n EXCESO DE " + exceso + " UNIDADES");
+                     }
+                     */
                 }
             }
             fila[4] = und_med;
@@ -2064,7 +2084,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 ven.llamar_ventana(venta);
             }
         } else {
-            Notification.show("Error", "Error al ingresar venta.!!", Notification.DISK_ICON,Notification.NICON_DARK_THEME);
+            Notification.show("Error", "Error al ingresar venta.!!", Notification.DISK_ICON, Notification.NICON_DARK_THEME);
         }
 
     }//GEN-LAST:event_btn_jd_registrarActionPerformed
@@ -2178,6 +2198,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void txt_jd_tipo_ventaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jd_tipo_ventaKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_jd_tipo_ventaKeyTyped
+
+    private void txt_nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_nomActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

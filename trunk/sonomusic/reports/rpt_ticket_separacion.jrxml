@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ticket" language="groovy" pageWidth="179" pageHeight="566" columnWidth="177" leftMargin="1" rightMargin="1" topMargin="1" bottomMargin="1" isIgnorePagination="true" uuid="adec48b7-0389-421d-9cd4-f3b81bfb9db3">
 	<property name="ireport.zoom" value="3.0052592036063106"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="624"/>
 	<parameter name="idped" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
