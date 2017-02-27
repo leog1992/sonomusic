@@ -178,11 +178,11 @@ public class Cl_Productos {
                 fila[2] = rs.getObject("marca");
                 fila[3] = rs.getObject("cant");
                 fila[4] = rs.getObject("desc_und");
-                if (ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos")) == 0.00) {
+               // if (ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos")) == 0.00) {
                     fila[5] = rs.getDouble("precio");
-                } else {
-                    fila[5] = ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos"));
-                }
+           //     } else {
+            //        fila[5] = ofe.precio_oferta(frm_menu.alm.getId(), rs.getInt("idProductos"));
+            //    }
                 fila[6] = rs.getObject("cant_min");
                 fila[7] = rs.getObject("desc_clas");
                 fila[8] = rs.getObject("grado");

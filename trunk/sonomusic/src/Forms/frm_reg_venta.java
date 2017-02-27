@@ -119,6 +119,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         }
         cbx_vendedor.setSelectedItem(frm_menu.usu.getNick());
         cbx_vendedor.requestFocus();
+
     }
     //fin del constructor
 
@@ -274,6 +275,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Buscar:");
 
+        txt_busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_busquedaActionPerformed(evt);
+            }
+        });
         txt_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_busquedaKeyPressed(evt);
@@ -950,6 +956,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         });
 
         txt_buscar_producto.setEnabled(false);
+        txt_buscar_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscar_productoActionPerformed(evt);
+            }
+        });
         txt_buscar_producto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_buscar_productoKeyPressed(evt);
@@ -1664,11 +1675,15 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void txt_busquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busquedaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String texto = txt_busqueda.getText();
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                    + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on p.idProductos=pa.idProductos "
+                    + "inner join clasificacion as c on c.id_clas = p.id_clas "
+                    + "inner join und_medida as u on u.idUnd_Medida=p.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo like '%" + texto + "%' "
+                    + "or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%') "
+                    + "order by p.desc_pro asc, p.modelo asc "
+                    + "limit 20";
             pro.mostrar_productos(query, t_productos);
             jLabel3.setText("" + tot_reg());
             t_productos.requestFocus();
@@ -2202,6 +2217,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private void txt_nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomActionPerformed
+
+    private void txt_buscar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscar_productoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_buscar_productoActionPerformed
+
+    private void txt_busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_busquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_busquedaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
