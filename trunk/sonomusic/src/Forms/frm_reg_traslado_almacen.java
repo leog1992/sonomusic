@@ -1228,7 +1228,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
                     try {
                         Statement st = con.conexion();
-                        String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "' where "
+                        String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "', ultima_salida = current_date() where "
                                 + "idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
                         con.actualiza(st, act_pro_alm);
                         con.cerrar(st);
@@ -1424,7 +1424,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     if (existe_producto) {
                         try {
                             Statement st = con.conexion();
-                            String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "' where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
+                            String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "', ultimo_ingreso = current_date() where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
                             con.actualiza(st, act_pro_alm);
                             System.out.println(act_pro_alm);
                             con.cerrar(st);
@@ -1434,7 +1434,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     } else {
                         try {
                             Statement st = con.conexion();
-                            String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "')";
+                            String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "', current_date(), '2010-01-01')";
                             con.actualiza(st, ins_pro_alm);
                             System.out.println(ins_pro_alm);
                             con.cerrar(st);

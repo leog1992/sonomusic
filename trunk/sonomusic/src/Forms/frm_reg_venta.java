@@ -1742,7 +1742,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
                     //       if (cantidad >= cantidad_nueva) {
-                    fila[3] = ven.formato_numero(cantidad_nueva);
+                    
                     /*       } else {
                      double exceso = cantidad_nueva - cantidad;
                      cantidad_nueva = cantidad;
@@ -1752,6 +1752,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                      */
                 }
             }
+            fila[3] = ven.formato_numero(cantidad_nueva);
             fila[4] = und_med;
             fila[5] = ven.formato_numero(precio);
             fila[6] = ven.formato_numero(precio * cantidad_nueva);
@@ -1924,75 +1925,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         con.cerrar(st);
                     } catch (Exception ex) {
                         System.err.print(ex.getLocalizedMessage());
-                    }
-                    if (tipo_venta.equals("VENTA")) {
-                        //insertar datos en kardex
-                        try {
-                            Statement st = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + ped.getFec_ped() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '"
-                                    + pro.getCan() + "', '" + pro.getPre_pro() + "','" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "',"
-                                    + " '" + frm_menu.alm.getId() + "','" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','1')";
-                            System.out.println(ins_kardex);
-                            con.actualiza(st, ins_kardex);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.err.print("Error en: " + ex.getLocalizedMessage());
-                        }
-
-                        //seleccionar cantidad de producto y restar
-                        try {
-                            Statement st = con.conexion();
-                            String bus_pro = "select cant_actual from productos where idProductos = '" + pro.getId_pro() + "'";
-                            System.out.println(bus_pro + "\n");
-                            ResultSet rs = con.consulta(st, bus_pro);
-                            if (rs.next()) {
-                                pro.setCan_act_pro(rs.getDouble("cant_actual"));
-                            }
-                            con.cerrar(rs);
-                            con.cerrar(st);
-                            pro.setCan_act_pro(pro.getCan_act_pro() - pro.getCan());
-                        } catch (SQLException ex) {
-                            System.err.print("Error en: " + ex.getLocalizedMessage());
-                        }
-                        //actualizar cantidad de productos en general
-                        try {
-                            Statement st = con.conexion();
-                            String act_pro = "update productos set cant_actual = '" + pro.getCan_act_pro() + "' where idProductos = '" + pro.getId_pro() + "' ";
-                            System.out.println(act_pro);
-                            con.actualiza(st, act_pro);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.err.print(ex.getLocalizedMessage());
-                        }
-
-                        //consultar cantidad de producto en tienda
-                        try {
-                            Statement st = con.conexion();
-                            String ver_prod_alm = "select idProductos, cant from producto_almacen where idAlmacen = '" + frm_menu.alm.getId() + "' "
-                                    + "and idProductos = '" + pro.getId_pro() + "'";
-                            System.out.println(ver_prod_alm + "\n");
-                            ResultSet rs = con.consulta(st, ver_prod_alm);
-                            if (rs.next()) {
-                                pro.setCan_act_pro(rs.getDouble("cant"));
-                            }
-                            pro.setCan_act_pro(pro.getCan_act_pro() - pro.getCan());
-                            con.cerrar(rs);
-                            con.cerrar(st);
-                        } catch (SQLException ex) {
-                            System.err.print(ex.getLocalizedMessage());
-                        }
-
-                        //actualizar cantidad de productos en tienda
-                        try {
-                            Statement st = con.conexion();
-                            String act_pro = "update producto_almacen set cant = '" + pro.getCan_act_pro() + "' where "
-                                    + "idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
-                            System.out.println(act_pro + "\n");
-                            con.actualiza(st, act_pro);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.err.print(ex.getLocalizedMessage());
-                        }
                     }
                 }
 

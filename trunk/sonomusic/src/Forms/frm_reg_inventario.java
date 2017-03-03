@@ -753,7 +753,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                     if (crear_producto > -1) {
                         try {
                             Statement st = con.conexion();
-                            String i_producto = "insert into producto_almacen values ('" + producto + "', '" + inv.getAlmacen() + "', '" + cant_fisico + "', '" + precio + "')";
+                            String i_producto = "insert into producto_almacen values ('" + producto + "', '" + inv.getAlmacen() + "', '" + cant_fisico + "', '" + precio + "', current_date(), '2010-01-01')";
                             System.out.println(i_producto);
                             con.actualiza(st, i_producto);
                             con.cerrar(st);

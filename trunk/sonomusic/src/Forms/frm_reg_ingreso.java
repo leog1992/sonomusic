@@ -1070,20 +1070,6 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             } else {
                 art.setCos_pro(precio_compra);
             }
-            // buscar precio de prodcuto
-//            try {
-//                Statement st = con.conexion();
-//                String ver_pre_ven = "select precio_venta from productos where idProductos = '" + art.getId_pro() + "'";
-//                System.out.println(ver_pre_ven);
-//                ResultSet rs = con.consulta(st, ver_pre_ven);
-//                if (rs.next()) {
-//                    art.setPre_pro(rs.getDouble("precio_venta"));
-//                }
-//                con.cerrar(rs);
-//                con.cerrar(st);
-//            } catch (Exception ex) {
-//                System.out.print(ex);
-//            }
             art.setPre_pro(precio_venta);
             //Registrando detalle de compra
             try {
@@ -1110,32 +1096,16 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 System.out.print(ex);
             }
 
-            //Ver Cantidad actual de Material
+            //actualizar precio compra producto general
             try {
-                Statement st = con.conexion();
-                String bus_pro = "select cant_actual from productos where idProductos = '" + art.getId_pro() + "'";
-                System.out.println(bus_pro);
-                ResultSet rs = con.consulta(st, bus_pro);
-                if (rs.next()) {
-                    art.setCan_act_pro(rs.getDouble("cant_actual"));
-                }
-                con.cerrar(rs);
-                con.cerrar(st);
-            } catch (SQLException ex) {
-                System.out.print(ex);
-            }
-
-            //Actualizando cantidad actual de material
-            try {
-                art.setCan_act_pro(art.getCan_act_pro() + art.getCan());
-                Statement st = con.conexion();
-                String act_pro = "update productos set cant_actual = '" + art.getCan_act_pro() + "', costo_compra = "
-                        + "'" + art.getCos_pro() + "', precio_venta = '" + art.getPre_pro() + "' where idProductos = '" + art.getId_pro() + "' ";
-                System.out.println(act_pro);
-                con.actualiza(st, act_pro);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
+                Statement st1 = con.conexion();
+                String act_mat = "update productos set costo_compra = '" + art.getCos_pro() + "' "
+                        + "where idProductos = '" + art.getId_pro() + "'";
+                System.out.println(act_mat);
+                con.actualiza(st1, act_mat);
+                con.cerrar(st1);
+            } catch (Exception e) {
+                System.out.println(e.getLocalizedMessage());
             }
 
             //Verificar producto en almacen
@@ -1151,16 +1121,23 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     art.setCan_act_pro(art.getCan_act_pro() + art.getCan());
                     //actualizar cantidad
                     Statement st1 = con.conexion();
-                    String act_mat_alm = "update producto_almacen set cant= '" + art.getCan_act_pro() + "', precio = '" + art.getPre_pro() + "' "
+                    String act_mat_alm = "update producto_almacen set cant= '" + art.getCan_act_pro() + "', precio = '" + art.getPre_pro() + "', ultimo_ingreso = current_date()"
                             + "where idProductos = '" + art.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
                     System.out.println(act_mat_alm);
                     con.actualiza(st1, act_mat_alm);
                     con.cerrar(st1);
+
+                    Statement st2 = con.conexion();
+                    String act_mat = "update producto_almacen set precio = '" + art.getPre_pro() + "' "
+                            + "where idProductos = '" + art.getId_pro() + "' and idAlmacen != '" + alm.getId() + "'";
+                    System.out.println(act_mat);
+                    con.actualiza(st2, act_mat);
+                    con.cerrar(st2);
                 } else {
                     //si producto no existe agregar
                     Statement st1 = con.conexion();
                     String add_pro_alm = "insert into producto_almacen Values ('" + art.getId_pro() + "', '" + alm.getId() + "', "
-                            + "'" + art.getCan() + "', '" + art.getPre_pro() + "')";
+                            + "'" + art.getCan() + "', '" + art.getPre_pro() + "', current_date(), '2010-01-01')";
                     System.out.println(add_pro_alm);
                     con.actualiza(st1, add_pro_alm);
                     con.cerrar(st1);
