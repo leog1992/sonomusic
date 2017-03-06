@@ -1112,158 +1112,162 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
 
     private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
-        btn_enviar.setEnabled(false);
-        llenar();
-        Integer alm_or = frm_menu.alm.getId();
-        Integer alm_de = cbx_alm_de.getSelectedIndex() + 1;
-        Double cant_act = 0.00;
-        Double nueva_cant = 0.00;
-        String ruc = "";
-        String raz = "";
-        String dir = "";
-        if (accion.equals("registrar")) {
-            String almacen = "HACIA TIENDA " + cbx_alm_de.getSelectedItem().toString();
-            try {
-                int idalma = cbx_alm_de.getSelectedIndex() + 1;
-                Statement st = con.conexion();
-                String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
-                ResultSet rs = con.consulta(st, ver_emp);
-                if (rs.next()) {
-                    ruc = rs.getString("ruc");
-                    raz = rs.getString("raz_soc");
-                    dir = rs.getString("dir_alm");
-                }
-                con.cerrar(rs);
-                con.cerrar(st);
-            } catch (SQLException ex) {
-                System.out.print(ex);
-            }
-            int registrar = -1;
-            try {
-                Statement st = con.conexion();
-                String ins_tras = "insert into traslado Values (null, '" + alb.getFecha() + "', '" + alb.getMotivo() + "', "
-                        + "'" + alb.getOrigen() + "', '" + alb.getDestino() + "', '" + ruc + "', '" + raz + "', '" + frm_menu.usu.getNick() + "',"
-                        + "'" + tido.getId() + "', '" + alb.getNro() + "', '" + alb.getSer() + "', '0', '" + alb.getRuc_tran() + "', '" + alb.getRaz_tran() + "', '" + alb.getMarca() + "'"
-                        + ", '" + alb.getPlaca() + "', '" + alb.getBrevete() + "', '" + alb.getConstancia() + "', '" + alb.getChofer() + "')";
-                registrar = con.actualiza(st, ins_tras);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-            if (registrar > -1) {
+        int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Realizar el Traslado?");
+
+        if (JOptionPane.OK_OPTION == confirmado) {
+            btn_enviar.setEnabled(false);
+            llenar();
+            Integer alm_or = frm_menu.alm.getId();
+            Integer alm_de = cbx_alm_de.getSelectedIndex() + 1;
+            Double cant_act = 0.00;
+            Double nueva_cant = 0.00;
+            String ruc = "";
+            String raz = "";
+            String dir = "";
+            if (accion.equals("registrar")) {
+                String almacen = "HACIA TIENDA " + cbx_alm_de.getSelectedItem().toString();
                 try {
+                    int idalma = cbx_alm_de.getSelectedIndex() + 1;
                     Statement st = con.conexion();
-                    String ver_tras = "select idTraslado from traslado where nick = '" + frm_menu.lbl_user.getText() + "' and ruc_dest = '" + ruc + "' order by idTraslado desc limit 1";
-                    ResultSet rs = con.consulta(st, ver_tras);
+                    String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
+                    ResultSet rs = con.consulta(st, ver_emp);
                     if (rs.next()) {
-                        alb.setId(rs.getInt("idTraslado"));
+                        ruc = rs.getString("ruc");
+                        raz = rs.getString("raz_soc");
+                        dir = rs.getString("dir_alm");
                     }
                     con.cerrar(rs);
                     con.cerrar(st);
                 } catch (SQLException ex) {
                     System.out.print(ex);
                 }
-                /*
-                 if (idsol != 0) {
-                 System.out.println("idsolicitud" + idsol);
-                 String fecha1 = ven.fechabase(txt_fec.getText());
-                 System.out.println(alb.getFecha());
-                 try {
-                 Statement st = con.conexion();
-                 String upd_sol = "update solicitud_articulos set estado = '1', fec_env = '" + fecha1 + "' where idsolicitud = '" + idsol + "'";
-                 con.actualiza(st, upd_sol);
-                 con.cerrar(st);
-                 } catch (Exception e) {
-                 System.out.println(e);
-                 }
-
-                 }
-                 */
-                //leer filas de tabla
-                Integer filas = t_detalle.getRowCount();
-                for (int x = 0; x < filas; x++) {
-                    pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
-                    pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 4).toString()));
-
+                int registrar = -1;
+                try {
+                    Statement st = con.conexion();
+                    String ins_tras = "insert into traslado Values (null, '" + alb.getFecha() + "', '" + alb.getMotivo() + "', "
+                            + "'" + alb.getOrigen() + "', '" + alb.getDestino() + "', '" + ruc + "', '" + raz + "', '" + frm_menu.usu.getNick() + "',"
+                            + "'" + tido.getId() + "', '" + alb.getNro() + "', '" + alb.getSer() + "', '0', '" + alb.getRuc_tran() + "', '" + alb.getRaz_tran() + "', '" + alb.getMarca() + "'"
+                            + ", '" + alb.getPlaca() + "', '" + alb.getBrevete() + "', '" + alb.getConstancia() + "', '" + alb.getChofer() + "')";
+                    registrar = con.actualiza(st, ins_tras);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    System.out.print(ex);
+                }
+                if (registrar > -1) {
                     try {
                         Statement st = con.conexion();
-                        String ver_pro_alm = "select costo_compra from productos where idProductos = '" + pro.getId_pro() + "'";
-                        ResultSet rs = con.consulta(st, ver_pro_alm);
+                        String ver_tras = "select idTraslado from traslado where nick = '" + frm_menu.lbl_user.getText() + "' and ruc_dest = '" + ruc + "' order by idTraslado desc limit 1";
+                        ResultSet rs = con.consulta(st, ver_tras);
                         if (rs.next()) {
-                            pro.setCos_pro(rs.getDouble("costo_compra"));
+                            alb.setId(rs.getInt("idTraslado"));
                         }
                         con.cerrar(rs);
                         con.cerrar(st);
                     } catch (SQLException ex) {
                         System.out.print(ex);
                     }
+                    /*
+                     if (idsol != 0) {
+                     System.out.println("idsolicitud" + idsol);
+                     String fecha1 = ven.fechabase(txt_fec.getText());
+                     System.out.println(alb.getFecha());
+                     try {
+                     Statement st = con.conexion();
+                     String upd_sol = "update solicitud_articulos set estado = '1', fec_env = '" + fecha1 + "' where idsolicitud = '" + idsol + "'";
+                     con.actualiza(st, upd_sol);
+                     con.cerrar(st);
+                     } catch (Exception e) {
+                     System.out.println(e);
+                     }
 
-                    //registrar detalle de traslado
-                    try {
-                        Statement st = con.conexion();
-                        String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0')";
-                        con.actualiza(st, ins_tras);
-                        con.cerrar(st);
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
+                     }
+                     */
+                    //leer filas de tabla
+                    Integer filas = t_detalle.getRowCount();
+                    for (int x = 0; x < filas; x++) {
+                        pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
+                        pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 4).toString()));
 
-                    //registrar retiro de primer almacen (actualizar cantidades)
-                    try {
-                        Statement st = con.conexion();
-                        String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
-                        ResultSet rs = con.consulta(st, ver_pro_alm);
-                        if (rs.next()) {
-                            cant_act = rs.getDouble("cant");
-                        } else {
-                            cant_act = 0.0;
+                        try {
+                            Statement st = con.conexion();
+                            String ver_pro_alm = "select costo_compra from productos where idProductos = '" + pro.getId_pro() + "'";
+                            ResultSet rs = con.consulta(st, ver_pro_alm);
+                            if (rs.next()) {
+                                pro.setCos_pro(rs.getDouble("costo_compra"));
+                            }
+                            con.cerrar(rs);
+                            con.cerrar(st);
+                        } catch (SQLException ex) {
+                            System.out.print(ex);
                         }
-                        con.cerrar(rs);
-                        con.cerrar(st);
-                    } catch (SQLException ex) {
-                        System.out.print(ex);
+
+                        //registrar detalle de traslado
+                        try {
+                            Statement st = con.conexion();
+                            String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0')";
+                            con.actualiza(st, ins_tras);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
+                        //registrar retiro de primer almacen (actualizar cantidades)
+                        try {
+                            Statement st = con.conexion();
+                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                            ResultSet rs = con.consulta(st, ver_pro_alm);
+                            if (rs.next()) {
+                                cant_act = rs.getDouble("cant");
+                            } else {
+                                cant_act = 0.0;
+                            }
+                            con.cerrar(rs);
+                            con.cerrar(st);
+                        } catch (SQLException ex) {
+                            System.out.print(ex);
+                        }
+
+                        nueva_cant = cant_act - pro.getCan();
+
+                        try {
+                            Statement st = con.conexion();
+                            String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "', ultima_salida = current_date() where "
+                                    + "idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
+                            con.actualiza(st, act_pro_alm);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
+                        try {
+                            Statement st = con.conexion();
+                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getCos_pro() + "',"
+                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
+                            con.actualiza(st, ins_kardex);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
                     }
 
-                    nueva_cant = cant_act - pro.getCan();
-
-                    try {
-                        Statement st = con.conexion();
-                        String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "', ultima_salida = current_date() where "
-                                + "idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
-                        con.actualiza(st, act_pro_alm);
-                        con.cerrar(st);
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
-
-                    try {
-                        Statement st = con.conexion();
-                        String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getCos_pro() + "',"
-                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
-                        con.actualiza(st, ins_kardex);
-                        con.cerrar(st);
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
+                    //modificar numero de documento.
+                    tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
 
                 }
-
-                //modificar numero de documento.
-                tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
-
             }
+
+            //imprimir detalle de envio
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idtraslado", alb.getId());
+            parametros.put("ruc", frm_menu.alm.getRuc());
+            parametros.put("razon_social", frm_menu.alm.getRaz_soc());
+            parametros.put("direccion", direccion_almacen(frm_menu.alm.getRuc()));
+            parametros.put("tienda", cbx_alm_de.getSelectedItem().toString());
+            ven.ver_reporte("rpt_ver_guia", parametros);
+
+            btn_cer.doClick();
         }
-
-        //imprimir detalle de envio
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("idtraslado", alb.getId());
-        parametros.put("ruc", frm_menu.alm.getRuc());
-        parametros.put("razon_social", frm_menu.alm.getRaz_soc());
-        parametros.put("direccion", direccion_almacen(frm_menu.alm.getRuc()));
-        parametros.put("tienda", cbx_alm_de.getSelectedItem().toString());
-        ven.ver_reporte("rpt_ver_guia", parametros);
-
-        btn_cer.doClick();
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private String direccion_almacen(String ruc) {
@@ -1361,126 +1365,37 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     private void btn_recibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recibirActionPerformed
         if (accion.equals("verificar")) {
-            btn_recibir.setEnabled(false);
-            int alm_destino = frm_menu.alm.getId();
-            int alm_origen = cbx_alm_de.getSelectedIndex() + 1;
-            String ruc = txt_ruc_alm.getText().toUpperCase();
-            String almacen = "DESDE TIENDA " + cbx_alm_de.getSelectedItem().toString();
-            llenar();
-            Integer filas = t_detalle.getRowCount();
-            for (int x = 0; x < filas; x++) {
-                pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
-                pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 6).toString()));
-                double cantidad_enviada = Double.parseDouble(t_detalle.getValueAt(x, 4).toString());
-                System.out.println(pro.getCan() + " - id: " + pro.getId_pro());
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Recibir el Traslado?");
 
-                try {
-                    Statement st = con.conexion();
-                    String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
-                    ResultSet rs = con.consulta(st, ver_pre);
-                    System.out.println(ver_pre);
-                    if (rs.next()) {
-                        pro.setPre_pro(rs.getDouble("precio_venta"));
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+            if (JOptionPane.OK_OPTION == confirmado) {
+                btn_recibir.setEnabled(false);
+                int alm_destino = frm_menu.alm.getId();
+                int alm_origen = cbx_alm_de.getSelectedIndex() + 1;
+                String ruc = txt_ruc_alm.getText().toUpperCase();
+                String almacen = "DESDE TIENDA " + cbx_alm_de.getSelectedItem().toString();
+                llenar();
+                Integer filas = t_detalle.getRowCount();
+                for (int x = 0; x < filas; x++) {
+                    pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
+                    pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 6).toString()));
+                    double cantidad_enviada = Double.parseDouble(t_detalle.getValueAt(x, 4).toString());
+                    System.out.println(pro.getCan() + " - id: " + pro.getId_pro());
 
-                try {
-                    Statement st = con.conexion();
-                    String act_pro_alm = "Update productos_traslado set recibido = '" + pro.getCan() + "' where idtraslado = '" + idtras + "' and idProductos= '" + pro.getId_pro() + "'";
-                    con.actualiza(st, act_pro_alm);
-                    System.out.println(act_pro_alm);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-
-                if (pro.getCan() > 0) {
-                    //registrar ingreso al segundo almacen (actualizar cantidades)
-                    boolean existe_producto = false;
                     try {
                         Statement st = con.conexion();
-                        String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
-                        ResultSet rs = con.consulta(st, ver_pro_alm);
-                        System.out.println(ver_pro_alm);
+                        String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
+                        ResultSet rs = con.consulta(st, ver_pre);
+                        System.out.println(ver_pre);
                         if (rs.next()) {
-                            System.out.println("almacen de destino: " + alm_destino + " Cambiando cantidad en almacen");
-                            pro.setCan_act_pro(rs.getDouble("cant"));
-                            pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
-                            existe_producto = true;
-                        } else {
-                            System.out.println("almacen de destino: " + alm_destino + " ingresando producto a almacen");
-                            pro.setCan_act_pro(0.0);
-                            pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
-                            existe_producto = false;
+                            pro.setPre_pro(rs.getDouble("precio_venta"));
                         }
-                        con.cerrar(rs);
-                        con.cerrar(st);
-                    } catch (SQLException ex) {
-                        System.out.print(ex);
-                    }
-
-                    if (existe_producto) {
-                        try {
-                            Statement st = con.conexion();
-                            String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "', ultimo_ingreso = current_date() where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
-                            con.actualiza(st, act_pro_alm);
-                            System.out.println(act_pro_alm);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-                    } else {
-                        try {
-                            Statement st = con.conexion();
-                            String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "', current_date(), '2010-01-01')";
-                            con.actualiza(st, ins_pro_alm);
-                            System.out.println(ins_pro_alm);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.println(ex);
-                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
                     }
 
                     try {
                         Statement st = con.conexion();
-                        String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00', "
-                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_destino + "', '" + ruc + "', '" + almacen + "', '11')";
-                        System.out.println(ins_kardex);
-                        con.actualiza(st, ins_kardex);
-                        con.cerrar(st);
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
-                }
-
-                if (pro.getCan() == 0 || pro.getCan() < cantidad_enviada) {
-                    //devolver productos a tienda de origen siempre cuando cantidad aceptada 
-                    // sea igual a 0 o cantidad es menor a la cantidad enviada
-
-                    //buscar cantidad actual de productos en tienda origen
-                    double cantidad_actual_origen = 0;
-                    try {
-                        Statement st = con.conexion();
-                        String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
-                        ResultSet rs = con.consulta(st, ver_pro_alm);
-                        System.out.println(ver_pro_alm);
-                        if (rs.next()) {
-                            cantidad_actual_origen = rs.getDouble("cant");
-                        }
-                        con.cerrar(st);
-                        con.cerrar(rs);
-                    } catch (SQLException e) {
-                        System.out.println(e.getLocalizedMessage());
-                    }
-
-                    double cantidad_regreso = cantidad_actual_origen - pro.getCan();
-
-                    //actualizando cantidad actual de tienda de origen
-                    try {
-                        Statement st = con.conexion();
-                        String act_pro_alm = "Update producto_almacen set cant = '" + cantidad_regreso + "' where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
+                        String act_pro_alm = "Update productos_traslado set recibido = '" + pro.getCan() + "' where idtraslado = '" + idtras + "' and idProductos= '" + pro.getId_pro() + "'";
                         con.actualiza(st, act_pro_alm);
                         System.out.println(act_pro_alm);
                         con.cerrar(st);
@@ -1488,32 +1403,125 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         System.out.print(ex);
                     }
 
-                    //guardando cambio en kardex de productos tienda de origen
-                    try {
-                        Statement st = con.conexion();
-                        String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', "
-                                + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_origen + "', '" + ruc + "', '" + almacen + "', '11')";
-                        System.out.println(ins_kardex);
-                        con.actualiza(st, ins_kardex);
-                        con.cerrar(st);
-                    } catch (Exception ex) {
-                        System.out.print(ex);
+                    if (pro.getCan() > 0) {
+                        //registrar ingreso al segundo almacen (actualizar cantidades)
+                        boolean existe_producto = false;
+                        try {
+                            Statement st = con.conexion();
+                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
+                            ResultSet rs = con.consulta(st, ver_pro_alm);
+                            System.out.println(ver_pro_alm);
+                            if (rs.next()) {
+                                System.out.println("almacen de destino: " + alm_destino + " Cambiando cantidad en almacen");
+                                pro.setCan_act_pro(rs.getDouble("cant"));
+                                pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
+                                existe_producto = true;
+                            } else {
+                                System.out.println("almacen de destino: " + alm_destino + " ingresando producto a almacen");
+                                pro.setCan_act_pro(0.0);
+                                pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
+                                existe_producto = false;
+                            }
+                            con.cerrar(rs);
+                            con.cerrar(st);
+                        } catch (SQLException ex) {
+                            System.out.print(ex);
+                        }
+
+                        if (existe_producto) {
+                            try {
+                                Statement st = con.conexion();
+                                String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "', ultimo_ingreso = current_date() where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
+                                con.actualiza(st, act_pro_alm);
+                                System.out.println(act_pro_alm);
+                                con.cerrar(st);
+                            } catch (Exception ex) {
+                                System.out.print(ex);
+                            }
+                        } else {
+                            try {
+                                Statement st = con.conexion();
+                                String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "', current_date(), '2010-01-01')";
+                                con.actualiza(st, ins_pro_alm);
+                                System.out.println(ins_pro_alm);
+                                con.cerrar(st);
+                            } catch (Exception ex) {
+                                System.out.println(ex);
+                            }
+                        }
+
+                        try {
+                            Statement st = con.conexion();
+                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00', "
+                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_destino + "', '" + ruc + "', '" + almacen + "', '11')";
+                            System.out.println(ins_kardex);
+                            con.actualiza(st, ins_kardex);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
                     }
 
+                    if (pro.getCan() == 0 || pro.getCan() < cantidad_enviada) {
+                    //devolver productos a tienda de origen siempre cuando cantidad aceptada 
+                        // sea igual a 0 o cantidad es menor a la cantidad enviada
+
+                        //buscar cantidad actual de productos en tienda origen
+                        double cantidad_actual_origen = 0;
+                        try {
+                            Statement st = con.conexion();
+                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
+                            ResultSet rs = con.consulta(st, ver_pro_alm);
+                            System.out.println(ver_pro_alm);
+                            if (rs.next()) {
+                                cantidad_actual_origen = rs.getDouble("cant");
+                            }
+                            con.cerrar(st);
+                            con.cerrar(rs);
+                        } catch (SQLException e) {
+                            System.out.println(e.getLocalizedMessage());
+                        }
+
+                        double cantidad_regreso = cantidad_actual_origen - pro.getCan();
+
+                        //actualizando cantidad actual de tienda de origen
+                        try {
+                            Statement st = con.conexion();
+                            String act_pro_alm = "Update producto_almacen set cant = '" + cantidad_regreso + "' where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
+                            con.actualiza(st, act_pro_alm);
+                            System.out.println(act_pro_alm);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
+                        //guardando cambio en kardex de productos tienda de origen
+                        try {
+                            Statement st = con.conexion();
+                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', "
+                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_origen + "', '" + ruc + "', '" + almacen + "', '11')";
+                            System.out.println(ins_kardex);
+                            con.actualiza(st, ins_kardex);
+                            con.cerrar(st);
+                        } catch (Exception ex) {
+                            System.out.print(ex);
+                        }
+
+                    }
                 }
-            }
 
-            try {
-                Statement st = con.conexion();
-                String upd_tra = "update traslado set estado = '1' where idTraslado = '" + idtras + "'";
-                con.actualiza(st, upd_tra);
-                System.out.println(upd_tra);
-                con.cerrar(st);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+                try {
+                    Statement st = con.conexion();
+                    String upd_tra = "update traslado set estado = '1' where idTraslado = '" + idtras + "'";
+                    con.actualiza(st, upd_tra);
+                    System.out.println(upd_tra);
+                    con.cerrar(st);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
 
-            btn_cer.doClick();
+                btn_cer.doClick();
+            }
         }
 
     }//GEN-LAST:event_btn_recibirActionPerformed
@@ -1629,7 +1637,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     cantidad_nueva = Double.parseDouble(texto);
                     //if (cantidad >= cantidad_nueva) {
                     fila[4] = ven.formato_numero(cantidad_nueva);
-                 //   } else {
+                    //   } else {
                     //       double exceso = cantidad_nueva - cantidad;
                     //     cantidad_nueva = cantidad;
                     //    fila[4] = ven.formato_numero(cantidad_nueva);
@@ -1643,7 +1651,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             //if (cantidad > 0.0) {
             valida_tabla(Integer.parseInt(id_producto), fila);
             btn_enviar.setEnabled(true);
-                                    //} else {
+            //} else {
             //    JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
             //}
         }

@@ -25,6 +25,7 @@ OutputDir=..\Ejecutable
 OutputBaseFilename=setup_smi
 Compression=lzma
 SolidCompression=yes
+PrivilegesRequired = lowest
 
 [Languages]
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
