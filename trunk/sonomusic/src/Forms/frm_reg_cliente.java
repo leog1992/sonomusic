@@ -351,9 +351,9 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
                         txt_ndoc.requestFocus();
                     } else {
 
-                        String json = Cl_Entidad.getJSON(cli.getNro_doc());
+                        String json = Cl_Entidad.getJSONRUC(cli.getNro_doc());
                         //Lo mostramos
-                        String[] datos = Cl_Entidad.showJSON(json);
+                        String[] datos = Cl_Entidad.showJSONRUC(json);
 
                         txt_nom.setText(datos[0].trim());
                         txt_dir.setText(datos[1].trim());

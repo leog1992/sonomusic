@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.print.event.PrintJobEvent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -22,15 +23,15 @@ import org.json.simple.parser.ParseException;
 public class Cl_Entidad {
 
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String SERVER_PATH = "http://lunasystemsperu.com/lsp/";
+    private static final String SERVER_PATH = "http://lunasystemsperu.com/";
 
-    public static String getJSON(String ruc) {
+    public static String getJSONRUC(String ruc) {
 
         StringBuffer response = null;
 
         try {
             //Generar la URL
-            String url = SERVER_PATH + "consulta_sunat.php?ruc=" + ruc;
+            String url = SERVER_PATH + "lsp/consulta_sunat.php?ruc=" + ruc;
             //Creamos un nuevo objeto URL con la url donde pedir el JSON
             URL obj = new URL(url);
             //Creamos un objeto de conexión
@@ -66,8 +67,50 @@ public class Cl_Entidad {
         return response.toString();
     }
 
-    public static String [] showJSON(String json) throws ParseException {
-        String[] datos = new String [2];
+    public static String getJSONDNI(String dni) {
+
+        StringBuffer response = null;
+
+        try {
+            //Generar la URL
+            String url = SERVER_PATH + "laravel_reniec/buscar_dni.php?dni=" + dni;
+            //Creamos un nuevo objeto URL con la url donde pedir el JSON
+            URL obj = new URL(url);
+            //Creamos un objeto de conexión
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            //Añadimos la cabecera
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            // Enviamos la petición por POST
+            con.setDoOutput(true);
+            //Capturamos la respuesta del servidor
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            //Mostramos la respuesta del servidor por consola
+            System.out.println("Respuesta del servidor: " + response);
+            System.out.println();
+            //cerramos la conexión
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
+    }
+
+    public static String[] showJSONRUC(String json) throws ParseException {
+        String[] datos = new String[2];
         System.out.println("INFORMACIÓN OBTENIDA DE LA BASE DE DATOS:");
 
         JSONParser parser = new JSONParser();
@@ -84,6 +127,27 @@ public class Cl_Entidad {
             //Mostrar la información en pantalla
             datos[0] = nombre;
             datos[1] = apellidos;
+        }
+        return datos;
+    }
+
+    public static String[] showJSONDNI(String json) throws ParseException {
+        String[] datos = new String[2];
+        System.out.println("INFORMACIÓN OBTENIDA DE LA BASE DE DATOS:");
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(json);
+        JSONArray array = new JSONArray();
+        array.add(obj);
+        
+        //Iterar el array y extraer la información
+        for (Object array_json : array) {
+            JSONObject row = (JSONObject) array_json;
+            String dni = (String) row.get("dni");
+            String nombres = (String) row.get("apellido_paterno") + ' ' + (String) row.get("apellido_materno")+ ' ' + (String) row.get("nombres");
+            //Mostrar la información en pantalla
+            datos[0] = dni;
+            datos[1] = nombres;
         }
         return datos;
     }

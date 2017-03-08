@@ -1293,15 +1293,21 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     frm_reg_cliente.ventana = "reg_venta";
                     frm_reg_cliente.cbx_cli.setSelectedItem("DNI");
                     frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
+                    String json = Cl_Entidad.getJSONDNI(cli.getNro_doc());
+                    //Lo mostramos
+                    String[] datos = Cl_Entidad.showJSONDNI(json);
+                    String dni = datos[0].trim();
+                    String nombres = datos[1].trim();
                     frm_reg_cliente.txt_ndoc.setEditable(false);
                     frm_reg_cliente.txt_nom.setEditable(true);
+                    frm_reg_cliente.txt_nom.setText(nombres.toUpperCase());
                     frm_reg_cliente.txt_nom.requestFocus();
 
                 } else if (txt_nro_doc.getText().length() == 11) {
                     JOptionPane.showMessageDialog(null, "Cargando Datos de la SUNAT");
-                    String json = Cl_Entidad.getJSON(cli.getNro_doc());
+                    String json = Cl_Entidad.getJSONRUC(cli.getNro_doc());
                     //Lo mostramos
-                    String[] datos = Cl_Entidad.showJSON(json);
+                    String[] datos = Cl_Entidad.showJSONRUC(json);
                     String nombre = datos[0].trim();
                     String direccion = datos[1].trim();
                     JOptionPane.showMessageDialog(null, "DATOS DEL CLIENTE:\nRUC: " + cli.getNro_doc() + "\nRAZON SOCIAL: " + nombre + "\nDIRECCION: " + direccion);

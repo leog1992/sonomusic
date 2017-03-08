@@ -290,6 +290,9 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_busKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_busKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_busKeyTyped(evt);
             }
@@ -464,16 +467,18 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String texto = txt_bus.getText();
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo "
-                    + "like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%')  order by p.desc_pro asc, p.modelo asc";
-            pro.mostrar_productos(query, t_productos);
-            jLabel3.setText("" + tot_reg());
-        }
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            String texto = txt_bus.getText();
+//            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+//                    + "from producto_almacen as pa "
+//                    + "inner join productos as p on pa.idProductos=p.idProductos "
+//                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+//                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+//                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%') "
+//                    + "order by p.desc_pro asc, p.modelo asc";
+//            pro.mostrar_productos(query, t_productos);
+//            jLabel3.setText("" + tot_reg());
+//        }
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
@@ -530,14 +535,14 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         frm_historial_producto historia = new frm_historial_producto();
         String idpro = t_productos.getValueAt(i, 0).toString();
         String idalm = txt_ida.getText();
-        
+
         historia.txt_idpo.setText(t_productos.getValueAt(i, 0).toString());
         historia.txt_desc.setText(t_productos.getValueAt(i, 1).toString());
         historia.txt_marca.setText(t_productos.getValueAt(i, 2).toString());
         historia.txt_cant.setText(ven.formato_numero(Double.parseDouble(t_productos.getValueAt(i, 3).toString())));
         historia.lbl_und.setText(t_productos.getValueAt(i, 4).toString());
         historia.txt_precio.setText(ven.formato_numero(Double.parseDouble(t_productos.getValueAt(i, 5).toString())));
-        
+
         //cargar ingresos
         DefaultTableModel model_ingreso;
         model_ingreso = new DefaultTableModel() {
@@ -601,7 +606,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         ven.derecha_celda(historia.t_ingresos, 7);
         ven.derecha_celda(historia.t_ingresos, 8);
         ven.derecha_celda(historia.t_ingresos, 9);
-        
+
         //cargar salidas
         DefaultTableModel model_salida;
         model_salida = new DefaultTableModel() {
@@ -666,7 +671,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         ven.derecha_celda(historia.t_salidas, 8);
         ven.derecha_celda(historia.t_salidas, 9);
         ven.llamar_ventana(historia);
-       //this.dispose();
+        //this.dispose();
 
     }//GEN-LAST:event_btn_historialActionPerformed
 
@@ -684,6 +689,22 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         //        ven.llamar_ventana(mat);
         this.dispose();
     }//GEN-LAST:event_btn_cerrarActionPerformed
+
+    private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
+        if (txt_bus.getText().length() > 2) {
+            String texto = txt_bus.getText();
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%') "
+                    + "order by p.desc_pro asc, p.modelo asc "
+                    + "limit 50";
+            pro.mostrar_productos(query, t_productos);
+            jLabel3.setText("" + tot_reg());
+        }
+    }//GEN-LAST:event_txt_busKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
