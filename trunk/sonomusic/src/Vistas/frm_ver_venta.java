@@ -12,6 +12,7 @@ import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
+import Clases.Print_Venta_Ticket;
 import static Vistas.frm_ver_letras_pedido.modelo;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -1022,7 +1023,12 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void t_facturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_facturasMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            i = t_facturas.getSelectedRow();
+            int venta  = Integer.parseInt(t_facturas.getValueAt(i, 0).toString());
+            Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+            ticket.generar(venta);
+        }
     }//GEN-LAST:event_t_facturasMouseClicked
 
 
