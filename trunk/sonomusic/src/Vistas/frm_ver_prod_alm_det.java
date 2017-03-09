@@ -156,7 +156,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(7).setPreferredWidth(100);
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(80);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(90);
-        //    TableRowSorter sorter = new TableRowSorter(mostrar);
+            //    TableRowSorter sorter = new TableRowSorter(mostrar);
             //  t_productos.setRowSorter(sorter);
             mostrar.fireTableDataChanged();
 
@@ -246,9 +246,6 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_busKeyReleased(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_busKeyTyped(evt);
-            }
         });
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
@@ -330,46 +327,11 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void t_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_productosKeyPressed
-    }//GEN-LAST:event_t_productosKeyPressed
-
-    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-        //   if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//        if (txt_bus.getText().length()>3) {
-//            if (cbx_clas.getSelectedIndex() == 0) {
-//                String texto = txt_bus.getText();
-//                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant,"
-//                        + " p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, "
-//                        + "p.grado,a.nom_alm from producto_almacen as pa inner join productos as p "
-//                        + "on pa.idProductos=p.idProductos inner join clasificacion as c "
-//                        + "on p.id_clas=c.id_clas inner join und_medida as u "
-//                        + "on p.idUnd_Medida=u.idUnd_Medida  inner join almacen as a"
-//                        + " on pa.idAlmacen=a.idAlmacen where (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%' "
-//                        + "or pa.precio like '%" + texto + "%') order by p.desc_pro asc, p.modelo asc;";
-//                ver_productos(query);
-//                t_productos.setDefaultRenderer(Object.class, new render_productos());
-//            } 
-//            
-//            if (cbx_clas.getSelectedIndex() > 0) {
-//                int almacen = cbx_clas.getSelectedIndex();
-//                String texto = txt_bus.getText();
-//                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado,a.nom_alm "
-//                        + "from producto_almacen as pa "
-//                        + "inner join productos as p on pa.idProductos=p.idProductos "
-//                        + "inner join clasificacion as c on p.id_clas=c.id_clas "
-//                        + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
-//                        + "inner join almacen as a on pa.idAlmacen=a.idAlmacen "
-//                        + "where pa.idalmacen = '"+almacen+"' and (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
-//                        + "order by p.desc_pro asc, p.modelo asc;";
-//                ver_productos(query);
-//                t_productos.setDefaultRenderer(Object.class, new render_productos());
-//            } 
-//        }
-
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txt_bus.setText("");
             txt_bus.requestFocus();
         }
-    }//GEN-LAST:event_txt_busKeyPressed
+    }//GEN-LAST:event_t_productosKeyPressed
 
     private void btn_cerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerActionPerformed
         funcion = "material_almacen";
@@ -407,8 +369,8 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
 //            ver_productos(query);
 //            t_productos.setDefaultRenderer(Object.class, new render_productos());
 //        }
-txt_bus.setText("");
-txt_bus.requestFocus();
+        txt_bus.setText("");
+        txt_bus.requestFocus();
     }//GEN-LAST:event_cbx_clasActionPerformed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
@@ -481,10 +443,6 @@ txt_bus.requestFocus();
         }
     }//GEN-LAST:event_btn_modActionPerformed
 
-    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-
-    }//GEN-LAST:event_txt_busKeyTyped
-
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
         if (txt_bus.getText().length() > 2) {
             if (cbx_clas.getSelectedIndex() == 0) {
@@ -495,7 +453,7 @@ txt_bus.requestFocus();
                         + "inner join clasificacion as c on p.id_clas=c.id_clas "
                         + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
                         + "inner join almacen as a on pa.idAlmacen=a.idAlmacen "
-                        + "where (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
+                        + "where (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
                         + "order by p.desc_pro asc, p.modelo asc "
                         + "limit 50";
                 ver_productos(query);
@@ -511,7 +469,7 @@ txt_bus.requestFocus();
                         + "inner join clasificacion as c on p.id_clas=c.id_clas "
                         + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
                         + "inner join almacen as a on pa.idAlmacen=a.idAlmacen "
-                        + "where pa.idalmacen = '" + almacen + "' and (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
+                        + "where pa.idalmacen = '" + almacen + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
                         + "order by p.desc_pro asc, p.modelo asc "
                         + "limit 50";
                 ver_productos(query);
@@ -519,6 +477,13 @@ txt_bus.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_busKeyReleased
+
+    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_bus.setText("");
+            txt_bus.requestFocus();
+        }
+    }//GEN-LAST:event_txt_busKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

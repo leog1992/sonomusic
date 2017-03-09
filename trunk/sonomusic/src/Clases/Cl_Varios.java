@@ -108,6 +108,7 @@ public class Cl_Varios {
         for (int a = 0; a < sonomusic.frm_menu.contenedor.getComponentCount(); a++) {     // verificar si es instancia de algun componente que ya este en el jdesktoppane
             if (ventana1.getClass().isInstance(sonomusic.frm_menu.contenedor.getComponent(a))) {
                 System.out.println("ya esta cargado, no se puede mostrar");
+                JOptionPane.showMessageDialog(null, "ESTA VENTANA YA ESTA ABIERTA, BUSQUELA, CIERRE, Y ABRA NUEVAMENTE");
                 mostrar = false;
             } else {
                 //System.out.println("no lo es, puede mostrarse");

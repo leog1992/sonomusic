@@ -257,6 +257,11 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         setTitle("Ver Productos en Almacen");
 
         jScrollPane1.setBackground(new java.awt.Color(254, 254, 254));
+        jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jScrollPane1KeyPressed(evt);
+            }
+        });
 
         t_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -293,9 +298,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_busKeyReleased(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_busKeyTyped(evt);
-            }
         });
 
         jLabel1.setForeground(new java.awt.Color(212, 2, 2));
@@ -327,6 +329,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         });
 
         cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "DISPONIBLES", "POR TERMINAR ", "TERMINADO" }));
+        cbx_bus.setEnabled(false);
         cbx_bus.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_busKeyPressed(evt);
@@ -454,10 +457,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         //falta demas oopciones del combo
     }//GEN-LAST:event_cbx_busKeyPressed
 
-    private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-
-    }//GEN-LAST:event_txt_busKeyTyped
-
     private int tot_reg() {
         int tot = 0;
         for (int j = 0; j < t_productos.getRowCount(); j++) {
@@ -465,21 +464,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         }
         return tot;
     }
-
-    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
-//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            String texto = txt_bus.getText();
-//            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
-//                    + "from producto_almacen as pa "
-//                    + "inner join productos as p on pa.idProductos=p.idProductos "
-//                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
-//                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
-//                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo like '%" + texto + "%' or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%') "
-//                    + "order by p.desc_pro asc, p.modelo asc";
-//            pro.mostrar_productos(query, t_productos);
-//            jLabel3.setText("" + tot_reg());
-//        }
-    }//GEN-LAST:event_txt_busKeyPressed
 
     private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
         if (evt.getClickCount() == 2) {
@@ -698,13 +682,27 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     + "inner join productos as p on pa.idProductos=p.idProductos "
                     + "inner join clasificacion as c on p.id_clas=c.id_clas "
                     + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
-                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.modelo, ' ' , p.marca) like '%" + texto + "%') "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%') "
                     + "order by p.desc_pro asc, p.modelo asc "
                     + "limit 50";
             pro.mostrar_productos(query, t_productos);
             jLabel3.setText("" + tot_reg());
         }
     }//GEN-LAST:event_txt_busKeyReleased
+
+    private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_bus.setText("");
+            txt_bus.requestFocus();
+        }
+    }//GEN-LAST:event_txt_busKeyPressed
+
+    private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
+if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_bus.setText("");
+            txt_bus.requestFocus();
+        }
+    }//GEN-LAST:event_jScrollPane1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

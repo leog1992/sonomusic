@@ -1023,12 +1023,12 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void t_facturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_facturasMouseClicked
-        if (evt.getClickCount() == 2) {
-            i = t_facturas.getSelectedRow();
-            int venta  = Integer.parseInt(t_facturas.getValueAt(i, 0).toString());
-            Print_Venta_Ticket ticket = new Print_Venta_Ticket();
-            ticket.generar(venta);
-        }
+//        if (evt.getClickCount() == 2) {
+//            i = t_facturas.getSelectedRow();
+//            int venta  = Integer.parseInt(t_facturas.getValueAt(i, 0).toString());
+//            Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+//            ticket.generar(venta);
+//        }
     }//GEN-LAST:event_t_facturasMouseClicked
 
 

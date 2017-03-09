@@ -12,6 +12,7 @@ import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
+import Clases.Print_Venta_Ticket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Color;
@@ -1748,7 +1749,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 if (ven.esDecimal(texto)) {
                     cantidad_nueva = Double.parseDouble(texto);
                     //       if (cantidad >= cantidad_nueva) {
-                    
+
                     /*       } else {
                      double exceso = cantidad_nueva - cantidad;
                      cantidad_nueva = cantidad;
@@ -1829,10 +1830,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_jd_cerrarActionPerformed
 
     private void btn_jd_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jd_registrarActionPerformed
-        tido.setId(frm_reg_venta.cbx_documento_venta.getSelectedIndex() + 1);
-        tido.setDesc(frm_reg_venta.cbx_documento_venta.getSelectedItem().toString());
-        tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
-        tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
+  //      tido.setId(frm_reg_venta.cbx_documento_venta.getSelectedIndex() + 1);
+    //    tido.setDesc(frm_reg_venta.cbx_documento_venta.getSelectedItem().toString());
+        
         ped.setFec_ped(ven.fechabase(frm_reg_venta.txt_fec.getText()));
         ped.setFec_pag_ped(ped.getFec_ped());
         ped.setTotal(total_new);
@@ -1850,8 +1850,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         btn_clo.setEnabled(false);
         String fecha = ven.fechabase(txt_fec.getText());
         tido.setId(cbx_documento_venta.getSelectedIndex() + 1);
-        tido.setSerie(Integer.parseInt(txt_jd_serie.getText()));
-        tido.setNro(Integer.parseInt(txt_jd_numero.getText()));
+        
         String fecha_pago;
         String estado;
         String tipo_venta = cbx_tipo_venta.getSelectedItem().toString();
@@ -1870,6 +1869,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 tipa.setId(1);
             }
         }
+        if (tido.getId() == 2 || tido.getId() == 3) {
+            //JOptionPane.showMessageDialog(null, "documento escogido = " + tido.getId());
+            tido.setId(6);
+        }
+        
+        tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
+        tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
 
         int id_venta = 0;
         int id_moneda = cbx_jd_moneda.getSelectedIndex() + 1;
@@ -1934,6 +1940,24 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     }
                 }
 
+                //IMPRIMIR TICKET
+                if (tipo_venta.equals("VENTA")) {
+                    int respuesta = 1;
+                    if (tido.getId() == 1) {
+                        int confirmado = JOptionPane.showConfirmDialog(null, "¿Desea Imprimir el ticket?");
+                        if (JOptionPane.OK_OPTION == confirmado) {
+                            respuesta = 1;
+                        } else {
+                            respuesta = 0;
+                        }
+                    }
+                    if (respuesta == 1) {
+                        int venta = Integer.parseInt(ped.getId_ped());
+                        Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+                        ticket.generar(venta);
+                    }
+                }
+
                 //guardar pago de la venta
                 double efectivo = Double.parseDouble(txt_jd_efectivo.getText());
                 double tarjeta = Double.parseDouble(txt_jd_tarjeta.getText());
@@ -1947,9 +1971,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 } else {
                     nuevo_efectivo = efectivo;
                 }
-
-                tido.setDesc(cbx_documento_venta.getSelectedItem().toString());
-
+                if (tido.getId() == 2 || tido.getId() == 3) {
+                    tido.setDesc("TICKET");
+                } else {
+                    tido.setDesc(cbx_documento_venta.getSelectedItem().toString());
+                }
                 int id_pago = 0;
                 if (nuevo_efectivo > 0) {
                     //registrar pago en detalle_pago

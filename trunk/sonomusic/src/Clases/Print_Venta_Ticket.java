@@ -5,9 +5,6 @@
  */
 package Clases;
 
-import Clases.Cl_Conectar;
-import Clases.Cl_Varios;
-import Clases.leer_numeros;
 import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
 import java.io.FileInputStream;
@@ -17,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -27,6 +23,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -74,7 +71,7 @@ public class Print_Venta_Ticket {
                 ntienda = rs.getString("nom_alm");
                 nombre_cliente = rs.getString("cli_doc");
                 tipo_documento = rs.getString("desc_tipd");
-                nro_cliente = rs.getString("nro_doc");
+                nro_cliente = rs.getString("cli_nom");
                 telefonos = rs.getString("telefono1") + " / " + rs.getString("telefono2");
                 //fecha_registro = ven.fecha_larga_tabla(rs.getString("fecha_registro"));
                 DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -88,30 +85,35 @@ public class Print_Venta_Ticket {
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
-//        int cantidad_filas_resultado = 0;
-//        try {
-//            Statement st = con.conexion();
-//            String c_filas = "SELECT count(dv.producto) as cantidad_producto, dv.venta "
-//                    + "FROM detalle_venta as dv "
-//                    + "where dv.tienda = '" + tienda + "' and dv.empresa = '" + empresa + "' and dv.venta = '" + venta + "' and dv.periodo = '" + periodo + "'";
-//            ResultSet rs = con.consulta(st, c_filas);
-//            if (rs.next()) {
-//                cantidad_filas_resultado = rs.getInt("cantidad_producto");
-//            }
-//            con.cerrar(rs);
-//            con.cerrar(st);
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//        }
-//        System.out.println(cantidad_filas_resultado + "cantidad de productos");
-//        //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
-//        if (id_tido == 9) {
-//            printer.setOutSize(29,40);
-//            //printer.setOutSize(20 + cantidad_filas_resultado, 40);
-//        } else {
-        printer.setOutSize(25, 40);
-//            //printer.setOutSize(20 + cantidad_filas_resultado, 40);
-//        }
+
+        int cantidad_filas_resultado = 0;
+        try {
+            Statement st = con.conexion();
+            String c_filas = "select count(*) as cantidad_filas "
+                    + "from detalle_pedido as dv "
+                    + "where dv.idpedido = '" + venta + "'";
+            ResultSet rs = con.consulta(st, c_filas);
+            if (rs.next()) {
+                cantidad_filas_resultado = rs.getInt("cantidad_filas");
+
+            }
+            if (cantidad_filas_resultado > 4) {
+                cantidad_filas_resultado = cantidad_filas_resultado + 2;
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        System.out.println(cantidad_filas_resultado + "cantidad de productos");
+        //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
+        if (id_tido == 6) {
+            // printer.setOutSize(29,40);
+            printer.setOutSize(30 + cantidad_filas_resultado, 40);
+        } else {
+            //printer.setOutSize(25, 40);
+            printer.setOutSize(24 + cantidad_filas_resultado, 40);
+        }
 
         //Imprimir * de la 2da linea a 25 en la columna 1;
         // printer.printCharAtLin(2, 25, 1, "*");
@@ -120,19 +122,23 @@ public class Print_Venta_Ticket {
         //Imprimir Encabezado nombre del La EMpresa
         printer.printTextLinCol(1, 1, varios_impresion.centrar_texto(40, "** SONO MUSIC IMPORT **"));
         //printer.printTextWrap(1, 3, 0, 40, varios_impresion.centrar_texto(40, ruc_empresa + " - " + razon_social.toUpperCase()+ " - " + "Tel: " + telefonos));
-        printer.printTextWrap(1, 3, 0, 40, ruc_empresa + " - " + razon_social.toUpperCase()+ " - " + "Tel: " + telefonos);
+        printer.printTextWrap(1, 3, 0, 40, ruc_empresa + " - " + razon_social.toUpperCase() + " - " + "Tel: " + telefonos);
         //printer.printTextLinCol(3, 1, varios_impresion.centrar_texto(40, "Tel: " + telefonos));
-        printer.printTextLinCol(4, 1, direccion);//.substring(0, 39)); //aplicar subString(0,39);
+        if (direccion.length() > 39) {
+            printer.printTextLinCol(4, 1, direccion.substring(0, 39)); //aplicar subString(0,39);
+        } else {
+            printer.printTextLinCol(4, 1, direccion);
+        }
         //printer.printTextWrap(linI, linE, colI, colE, null);
         printer.printTextLinCol(6, 1, "TIENDA: " + ntienda.toUpperCase());
         printer.printTextLinCol(7, 1, tipo_documento.toUpperCase() + " #: " + ven.ceros_izquierda(3, serie + "") + " - " + ven.ceros_izquierda(5, numero + ""));
         printer.printTextLinCol(8, 1, "FECHA EMISION: " + fecha_registro);
-        printer.printTextLinCol(9, 1, "SERIE: PSSFIKA16080306");
+        printer.printTextLinCol(9, 1, "SERIE: PSSFIKA15030062");
 
         int aumenta_fila = 0;
 
-        if (id_tido == 9) {
-            aumenta_fila = 2;
+        if (id_tido == 6) {
+            aumenta_fila = 3;
             int otra_fila = 0;
             printer.printTextLinCol(10, 1, "CLIENTE:");
             if (!nro_cliente.equals("00000000")) {
@@ -151,10 +157,11 @@ public class Print_Venta_Ticket {
                     + "inner join productos as p on p.idproductos = dv.idproductos "
                     + "where dv.idpedido = '" + venta + "'";
             ResultSet rs = con.consulta(st, c_detalle);
+            filas = filas + aumenta_fila;
+
             while (rs.next()) {
                 String producto;
                 producto = rs.getString("desc_pro").trim() + " " + rs.getString("marca").trim() + " " + rs.getString("modelo").trim();
-
                 int cantidad = rs.getInt("cantidad");
                 String parcial = ven.formato_totales(rs.getDouble("cantidad") * rs.getDouble("precio"));
                 if (cantidad > 1) {
@@ -163,17 +170,18 @@ public class Print_Venta_Ticket {
                     total = total + (rs.getDouble("precio"));
                 }
 
-                filas = filas + aumenta_fila;
+                int longitud_parcial = parcial.length();
                 filas++;
                 //printer.printTextLinCol(10 + filas, 1, cantidad + " - ");
                 if (producto.length() > 62) {
                     producto = producto.substring(0, 61);
                 }
+
                 printer.printTextWrap(9 + filas, 9 + filas + 1, 0, 40, cantidad + " - " + producto.trim());
-                if (producto.length() > 24) {
+                if ((cantidad + " - " + producto.trim()).length() > (40 - longitud_parcial - 3)) {
                     filas++;
                 }
-                printer.printTextLinCol(10 + filas, 33, " x " + varios_impresion.texto_derecha(5, parcial));
+                printer.printTextLinCol(10 + filas, 29, " x " + varios_impresion.texto_derecha(9, parcial));
             }
             con.cerrar(rs);
             con.cerrar(st);
@@ -183,29 +191,31 @@ public class Print_Venta_Ticket {
         leer_numeros leer = new leer_numeros();
         String texto_numero = leer.Convertir(ven.formato_numero(total), true) + " SOLES";
 
-        if (id_tido == 9) {
+        if (id_tido == 6) {
             printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "SUB TOTAL"));
             printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18)));
             printer.printTextLinCol(10 + filas + 3, 1, varios_impresion.texto_derecha(30, "IGV"));
             printer.printTextLinCol(10 + filas + 3, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18 * 0.18)));
             printer.printTextLinCol(10 + filas + 4, 1, varios_impresion.texto_derecha(30, "TOTAL"));
             printer.printTextLinCol(10 + filas + 4, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
-            printer.printTextLinCol(10 + filas + 5, 1, texto_numero);
+            printer.printTextWrap(10 + filas + 5, 10 + filas + 6, 0, 40, texto_numero);
+            //printer.printTextLinCol(10 + filas + 5, 1, texto_numero);
 
         } else {
             printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "TOTAL"));
             printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
-            printer.printTextLinCol(10 + filas + 3, 1, texto_numero);
+            //printer.printTextLinCol(10 + filas + 3, 1, texto_numero);
+            printer.printTextWrap(10 + filas + 3, 10 + filas + 4, 0, 40, texto_numero);
         }
         //      printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "TOTAL"));
         //      printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
 
-        byte[] initEP = new byte[]{0x1b, '@'};
-        byte[] cutP = new byte[]{0x1d, 'V', 1};
-        printer.printTextLinCol(10 + filas + 6, 1, (10 + filas + 6) + "");
-
+        //printer.printTextLinCol(10 + filas + 6, 1, (10 + filas + 6) + "");
+        // char[] initEP = new char[]{0x1b, '@'};
+        //char[] cutP = new char[]{0x1d, 'V', 1};
+        //   String ptxt = new String(initEP) + 'n';
         printer.show();
-        printer.printCharAtCol(10 + filas + 7, 1, 40, cutP.toString());
+        //printer.printCharAtCol(10 + filas + 7, 1, 40, cutP.toString());
         // printer.toPrinter("BIXOLON SRP-270", cutP);
         printer.toFile("impresion.txt");
 
@@ -219,33 +229,38 @@ public class Print_Venta_Ticket {
             return;
         }
 
+        byte[] initEP = new byte[]{0x1b, '@'};
+        byte[] cutP = new byte[]{0x1d, 'V', 1};
+
         PrinterService printerService = new PrinterService();
-        //printerService.printBytes("BIXOLON SRP-270", initEP);
-        printerService.printString("BIXOLON SRP-270", inputStream.toString());
+        printerService.printString("BIXOLON SRP-270", new String(initEP));
+         // printerService.printBytes("BIXOLON SRP-270", initEP );
 
-        /*
-         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-         Doc document = new SimpleDoc(inputStream, docFormat, null);
+        // printerService.printString("BIXOLON SRP-270", inputStream.toString());
+        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc document = new SimpleDoc(inputStream, docFormat, null);
 
-         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 
-         PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
 
-         if (defaultPrintService != null) {
-         DocPrintJob printJob = defaultPrintService.createPrintJob();
-         try {
-         printJob.print(document, attributeSet);
+        if (defaultPrintService != null) {
+            DocPrintJob printJob = defaultPrintService.createPrintJob();
+            try {
+                printJob.print(document, attributeSet);
 
-         } catch (Exception ex) {
-         ex.printStackTrace();
-         }
-         } else {
-         System.err.println("No existen impresoras instaladas");
-         }
-         */
-        //PrinterService printerService = new PrinterService();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "error al imprimir \n" + ex.getLocalizedMessage());
+            }
+        } else {
+            System.err.println("No existen impresoras instaladas");
+        }
+
+        //  PrinterService printerService = new PrinterService();
         //System.out.println(printerService.getPrinters());
         printerService.printBytes("BIXOLON SRP-270", cutP);
+        //printerService.printString("BIXOLON SRP-270", new String(cutP));
 
     }
 }
