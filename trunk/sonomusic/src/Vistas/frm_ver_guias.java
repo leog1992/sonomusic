@@ -42,9 +42,11 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     public frm_ver_guias() {
         initComponents();
         System.out.println(frm_menu.alm.getDireccion());
-        String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.estado = '0' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+        String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
+                + "from traslado as t "
+                + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                + "inner join almacen as ao on ao.dir_alm = t.origen "
+                + "where t.estado = '0' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
         ver_guia(query);
     }
 
@@ -619,17 +621,20 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             ver_guia(query);
         }
 
-        if (cbx_estado.getSelectedIndex() == 1) {
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                    + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.estado = '2' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                    + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+      /*  if (cbx_estado.getSelectedIndex() == 1) {
+            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
+                    + "from traslado as t "
+                    + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                    + "where t.estado = '2' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+            System.out.println(query);
             ver_guia(query);
-        }
+        }*/
 
         if (cbx_estado.getSelectedIndex() == 2) {
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                    + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.estado = '1' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                    + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
+                    + "from traslado as t "
+                    + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                    + "where t.estado = '1' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc limit 50";
             ver_guia(query);
         }
     }//GEN-LAST:event_cbx_estadoActionPerformed
