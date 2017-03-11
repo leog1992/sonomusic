@@ -50,11 +50,6 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 + "inner join empleados as em on em.dni = t.nick "
                 + "where t.estado = '0' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
                 + "order by t.fecha desc, t.idTraslado desc";
-        String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
-                + "from traslado as t "
-                + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
-                + "inner join almacen as ao on ao.dir_alm = t.origen "
-                + "where t.estado = '0' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
         ver_guia(query);
     }
 
