@@ -1921,7 +1921,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String ins_ven = "insert into pedido Values (null, '" + ped.getFec_ped() + "', '" + ped.getFec_pag_ped() + "', "
                     + "'" + tipa.getId() + "', '" + ped.getDes_ped() + "', '" + ped.getEst_ped() + "', '" + tido.getId() + "', "
                     + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + usu.getNick() + "', "
-                    + "'" + frm_menu.alm.getId() + "', current_time(), '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
+                    + "'" + frm_menu.alm.getId() + "', (select date_add(curtime(), interval 2 hour) as hora), '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "','" + ped.getTotal() + "')";
             System.out.println(ins_ven);
             registro = con.actualiza(st, ins_ven);
             con.cerrar(st);
@@ -1934,7 +1934,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             //buscar ultimo pedido
             try {
                 Statement st = con.conexion();
-                String buscar_pedido = "select max(idPedido) from pedido "
+                String buscar_pedido = "select max(idPedido) as idPedido from pedido "
                         + "where nro_doc = '" + tido.getNro() + "' and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
                 System.out.println(buscar_pedido + "\n");
                 ResultSet rs = con.consulta(st, buscar_pedido);
@@ -2084,7 +2084,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 ven.llamar_ventana(venta);
             }
         } else {
-            Notification.show("Error", "Error al ingresar venta.!!", Notification.DISK_ICON, Notification.NICON_DARK_THEME);
+            Notification.show("Error", "Error al ingresar venta.!!", Notification.DISK_ICON, Notification.NICON_LIGHT_THEME);
         }
 
     }//GEN-LAST:event_btn_jd_registrarActionPerformed
