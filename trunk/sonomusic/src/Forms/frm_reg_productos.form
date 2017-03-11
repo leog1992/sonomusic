@@ -106,12 +106,10 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="txt_com" min="-2" pref="68" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cbx_todo" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -183,7 +181,6 @@
                           <Component id="jLabel8" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="txt_pcom" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="2" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="cbx_todo" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
@@ -628,7 +625,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="211" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="219" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -656,14 +653,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="cbx_todo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Todas las tiendas"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_todoActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

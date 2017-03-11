@@ -39,7 +39,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     public static DefaultTableModel detalle;
     public static int idsol = 0;
     public static int idtras = 0;
-    public static String accion = "traslado";
+    public static String accion;
     Integer i;
 
     /**
@@ -133,27 +133,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jd_transportista = new javax.swing.JDialog();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        txt_marca1 = new javax.swing.JTextField();
-        txt_modelo = new javax.swing.JTextField();
-        txt_placa1 = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        rbt_si = new javax.swing.JRadioButton();
-        rbt_no = new javax.swing.JRadioButton();
-        jLabel25 = new javax.swing.JLabel();
-        txt_ruc_transporte = new javax.swing.JTextField();
-        txt_razon_transporte = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel26 = new javax.swing.JLabel();
-        txt_brevete = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        txt_inscripcion = new javax.swing.JTextField();
-        jLabel28 = new javax.swing.JLabel();
-        txt_chofer1 = new javax.swing.JTextField();
         j_productos = new javax.swing.JDialog();
         jLabel6 = new javax.swing.JLabel();
         txt_busqueda = new javax.swing.JTextField();
@@ -184,174 +163,17 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         txt_raz_alm = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btn_cer = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        txt_motivo = new javax.swing.JTextField();
+        btn_verificar = new javax.swing.JButton();
+        btn_recibir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txt_partida = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         txt_llegada = new javax.swing.JTextField();
-        btn_transportista = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
         txt_buscar_producto = new javax.swing.JTextField();
-        btn_recibir = new javax.swing.JButton();
-        btn_verificar = new javax.swing.JButton();
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Vehiculo"));
-
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Marca:");
-
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Modelo:");
-
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Placa:");
-
-        txt_marca1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txt_modelo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txt_placa1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jLabel24.setText("Vehiculo Externo??");
-
-        rbt_si.setText("Si");
-
-        rbt_no.setText("No");
-
-        jLabel25.setText("RUC:");
-
-        txt_ruc_transporte.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel22)
-                    .addComponent(jLabel23))
-                .addGap(51, 51, 51)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_modelo, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(txt_marca1))
-                .addGap(79, 79, 79)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_ruc_transporte, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(177, 177, 177))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addGap(41, 41, 41)
-                        .addComponent(rbt_si)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbt_no)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(txt_razon_transporte)
-                        .addContainerGap())))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_marca1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbt_si, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbt_no, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_ruc_transporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_placa1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_razon_transporte, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Chofer"));
-
-        jLabel26.setText("Brevete:");
-
-        txt_brevete.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jLabel27.setText("Certificado de Inscripcion:");
-
-        txt_inscripcion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jLabel28.setText("Chofer:");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel28))
-                .addGap(48, 48, 48)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(txt_brevete, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel27)
-                        .addGap(32, 32, 32)
-                        .addComponent(txt_inscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 113, Short.MAX_VALUE))
-                    .addComponent(txt_chofer1))
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_brevete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_inscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_chofer1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jd_transportistaLayout = new javax.swing.GroupLayout(jd_transportista.getContentPane());
-        jd_transportista.getContentPane().setLayout(jd_transportistaLayout);
-        jd_transportistaLayout.setHorizontalGroup(
-            jd_transportistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_transportistaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jd_transportistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jd_transportistaLayout.setVerticalGroup(
-            jd_transportistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_transportistaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Buscar:");
@@ -581,15 +403,21 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setForeground(java.awt.Color.red);
-        jLabel5.setText("Motivo:");
+        btn_verificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrow_redo.png"))); // NOI18N
+        btn_verificar.setText("Verificar Cantidad");
+        btn_verificar.setEnabled(false);
+        btn_verificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_verificarActionPerformed(evt);
+            }
+        });
 
-        txt_motivo.setEditable(false);
-        txt_motivo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_motivo.setText("0");
-        txt_motivo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_motivoKeyPressed(evt);
+        btn_recibir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_producto.png"))); // NOI18N
+        btn_recibir.setText("Recibir");
+        btn_recibir.setEnabled(false);
+        btn_recibir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_recibirActionPerformed(evt);
             }
         });
 
@@ -630,10 +458,11 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                         .addComponent(btn_cer))
                     .addComponent(txt_raz_alm)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(82, 82, 82)
-                        .addComponent(txt_motivo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_recibir)
+                        .addGap(71, 71, 71)
+                        .addComponent(btn_verificar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -654,7 +483,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_ruc_alm, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_num, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -663,8 +492,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fec, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_motivo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_verificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_recibir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -708,17 +537,8 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_llegada, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
-
-        btn_transportista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carro.png"))); // NOI18N
-        btn_transportista.setText("Transportista");
-        btn_transportista.setEnabled(false);
-        btn_transportista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_transportistaActionPerformed(evt);
-            }
-        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle del Traslado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.red));
 
@@ -759,7 +579,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         txt_buscar_producto.setToolTipText("Escribir para buscar Productos");
@@ -767,24 +587,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         txt_buscar_producto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_buscar_productoKeyPressed(evt);
-            }
-        });
-
-        btn_recibir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/compra_producto.png"))); // NOI18N
-        btn_recibir.setText("Recibir");
-        btn_recibir.setEnabled(false);
-        btn_recibir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_recibirActionPerformed(evt);
-            }
-        });
-
-        btn_verificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrow_redo.png"))); // NOI18N
-        btn_verificar.setText("Verificar Cantidad");
-        btn_verificar.setEnabled(false);
-        btn_verificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_verificarActionPerformed(evt);
             }
         });
 
@@ -801,17 +603,11 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_el)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_verificar)
-                        .addGap(145, 145, 145)
-                        .addComponent(btn_recibir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_enviar)
                         .addGap(11, 11, 11))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_transportista)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_buscar_producto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_add)))
@@ -826,7 +622,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_transportista, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -835,9 +630,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_el, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_recibir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_verificar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -869,7 +662,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                     txt_buscar_producto.setText("");
                     txt_buscar_producto.requestFocus();
                     String cadena = selectedItem.toString();
-                    JOptionPane.showMessageDialog(null, "El usuario seleccionó: " + cadena);
+                    // JOptionPane.showMessageDialog(null, "El usuario seleccionó: " + cadena);
                     if (cadena.length() > 0) {
                         boolean contiene_guion = false;
                         for (int j = 0; j < cadena.length(); j++) {
@@ -889,7 +682,7 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                                         + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
                                         + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
                                         + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and p.idProductos = '" + id_producto + "'";
-                                System.out.println(ver_producto);
+                                //System.out.println(ver_producto);
                                 ResultSet rs = con.consulta(st, ver_producto);
                                 if (rs.next()) {
                                     Object fila[] = new Object[6];
@@ -1068,46 +861,13 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
     private void llenar() {
         alb.setFecha(ven.fechabase(txt_fec.getText()));
-        alb.setMotivo("TRASLADO");
-        try {
-            Integer id = frm_menu.alm.getId();
-            Statement st = con.conexion();
-            String ver_dir = "select dir_alm from almacen where idAlmacen='" + id + "'";
-            ResultSet rs = con.consulta(st, ver_dir);
-            if (rs.next()) {
-                alb.setOrigen(rs.getString("dir_alm"));
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (SQLException ex) {
-            System.out.print(ex);
-        }
+        alb.setUsuario(frm_menu.usu.getNick());
+        alb.setOrigen(frm_menu.alm.getId());
+        alb.setDestino(cbx_alm_de.getSelectedIndex() + 1);
+        alb.setTipo_documento(cbx_documento.getSelectedIndex() + 1);
+        alb.setSerie(Integer.parseInt(txt_ser.getText()));
+        alb.setNumero(Integer.parseInt(txt_num.getText()));
 
-        try {
-            Integer id = cbx_alm_de.getSelectedIndex() + 1;
-            Statement st = con.conexion();
-            String ver_dir = "select dir_alm from almacen where idAlmacen='" + id + "'";
-            ResultSet rs = con.consulta(st, ver_dir);
-            if (rs.next()) {
-                alb.setDestino(rs.getString("dir_alm"));
-            }
-            con.cerrar(rs);
-            con.cerrar(st);
-        } catch (SQLException ex) {
-            System.out.print(ex);
-        }
-        tido.setId(cbx_documento.getSelectedIndex() + 1);
-        alb.setSer(Integer.parseInt(txt_ser.getText()));
-        alb.setNro(Integer.parseInt(txt_num.getText()));
-        tido.setSerie(Integer.parseInt(txt_ser.getText()));
-        tido.setNro(Integer.parseInt(txt_num.getText()));
-        alb.setBrevete(txt_brevete.getText());
-        alb.setRuc_tran(txt_ruc_transporte.getText());
-        alb.setRaz_tran(txt_razon_transporte.getText());
-        alb.setChofer(txt_chofer1.getText());
-        alb.setConstancia(txt_inscripcion.getText());
-        alb.setMarca(txt_marca1.getText());
-        alb.setPlaca(txt_placa1.getText());
     }
 
 
@@ -1117,154 +877,54 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         if (JOptionPane.OK_OPTION == confirmado) {
             btn_enviar.setEnabled(false);
             llenar();
-            Integer alm_or = frm_menu.alm.getId();
-            Integer alm_de = cbx_alm_de.getSelectedIndex() + 1;
             Double cant_act = 0.00;
             Double nueva_cant = 0.00;
-            String ruc = "";
-            String raz = "";
-            String dir = "";
-            if (accion.equals("registrar")) {
-                String almacen = "HACIA TIENDA " + cbx_alm_de.getSelectedItem().toString();
+            String almacen = "HACIA TIENDA " + cbx_alm_de.getSelectedItem().toString();
+            int registrar = alb.i_traslado();
+            if (registrar > -1) {
                 try {
-                    int idalma = cbx_alm_de.getSelectedIndex() + 1;
                     Statement st = con.conexion();
-                    String ver_emp = "select * from almacen where idAlmacen = '" + idalma + "'";
-                    ResultSet rs = con.consulta(st, ver_emp);
+                    String ver_tras = "select max(idTraslado) as idTraslado from traslado where nick = '" + frm_menu.lbl_user.getText() + "' and almacen_origen = '" + alb.getOrigen() + "' and almacen_destino = '" + alb.getDestino() + "'";
+                    ResultSet rs = con.consulta(st, ver_tras);
+                    System.out.println(ver_tras);
                     if (rs.next()) {
-                        ruc = rs.getString("ruc");
-                        raz = rs.getString("raz_soc");
-                        dir = rs.getString("dir_alm");
+                        alb.setId(rs.getInt("idTraslado"));
                     }
                     con.cerrar(rs);
                     con.cerrar(st);
                 } catch (SQLException ex) {
                     System.out.print(ex);
                 }
-                int registrar = -1;
-                try {
-                    Statement st = con.conexion();
-                    String ins_tras = "insert into traslado Values (null, '" + alb.getFecha() + "', '" + alb.getMotivo() + "', "
-                            + "'" + alb.getOrigen() + "', '" + alb.getDestino() + "', '" + ruc + "', '" + raz + "', '" + frm_menu.usu.getNick() + "',"
-                            + "'" + tido.getId() + "', '" + alb.getNro() + "', '" + alb.getSer() + "', '0', '" + alb.getRuc_tran() + "', '" + alb.getRaz_tran() + "', '" + alb.getMarca() + "'"
-                            + ", '" + alb.getPlaca() + "', '" + alb.getBrevete() + "', '" + alb.getConstancia() + "', '" + alb.getChofer() + "')";
-                    registrar = con.actualiza(st, ins_tras);
-                    con.cerrar(st);
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                }
-                if (registrar > -1) {
+                //leer filas de tabla
+                Integer filas = t_detalle.getRowCount();
+                for (int x = 0; x < filas; x++) {
+                    pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
+                    pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 4).toString()));
+
+                    //registrar detalle de traslado
                     try {
                         Statement st = con.conexion();
-                        String ver_tras = "select idTraslado from traslado where nick = '" + frm_menu.lbl_user.getText() + "' and ruc_dest = '" + ruc + "' order by idTraslado desc limit 1";
-                        ResultSet rs = con.consulta(st, ver_tras);
-                        if (rs.next()) {
-                            alb.setId(rs.getInt("idTraslado"));
-                        }
-                        con.cerrar(rs);
+                        String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0')";
+                        con.actualiza(st, ins_tras);
                         con.cerrar(st);
-                    } catch (SQLException ex) {
+                    } catch (Exception ex) {
                         System.out.print(ex);
                     }
-                    /*
-                     if (idsol != 0) {
-                     System.out.println("idsolicitud" + idsol);
-                     String fecha1 = ven.fechabase(txt_fec.getText());
-                     System.out.println(alb.getFecha());
-                     try {
-                     Statement st = con.conexion();
-                     String upd_sol = "update solicitud_articulos set estado = '1', fec_env = '" + fecha1 + "' where idsolicitud = '" + idsol + "'";
-                     con.actualiza(st, upd_sol);
-                     con.cerrar(st);
-                     } catch (Exception e) {
-                     System.out.println(e);
-                     }
+                }
 
-                     }
-                     */
-                    //leer filas de tabla
-                    Integer filas = t_detalle.getRowCount();
-                    for (int x = 0; x < filas; x++) {
-                        pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
-                        pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 4).toString()));
+                //modificar numero de documento.
+                tido.act_doc(alb.getSerie(), alb.getNumero() + 1, frm_menu.alm.getId(), alb.getTipo_documento());
 
-                        try {
-                            Statement st = con.conexion();
-                            String ver_pro_alm = "select costo_compra from productos where idProductos = '" + pro.getId_pro() + "'";
-                            ResultSet rs = con.consulta(st, ver_pro_alm);
-                            if (rs.next()) {
-                                pro.setCos_pro(rs.getDouble("costo_compra"));
-                            }
-                            con.cerrar(rs);
-                            con.cerrar(st);
-                        } catch (SQLException ex) {
-                            System.out.print(ex);
-                        }
+                int confirmado_guia = JOptionPane.showConfirmDialog(null, "¿Desea ver el Envio en un Archivo?");
 
-                        //registrar detalle de traslado
-                        try {
-                            Statement st = con.conexion();
-                            String ins_tras = "insert into productos_traslado Values ('" + alb.getId() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0')";
-                            con.actualiza(st, ins_tras);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
+                if (JOptionPane.OK_OPTION == confirmado_guia) {
 
-                        //registrar retiro de primer almacen (actualizar cantidades)
-                        try {
-                            Statement st = con.conexion();
-                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
-                            ResultSet rs = con.consulta(st, ver_pro_alm);
-                            if (rs.next()) {
-                                cant_act = rs.getDouble("cant");
-                            } else {
-                                cant_act = 0.0;
-                            }
-                            con.cerrar(rs);
-                            con.cerrar(st);
-                        } catch (SQLException ex) {
-                            System.out.print(ex);
-                        }
-
-                        nueva_cant = cant_act - pro.getCan();
-
-                        try {
-                            Statement st = con.conexion();
-                            String act_pro_alm = "Update producto_almacen set cant = '" + nueva_cant + "', ultima_salida = current_date() where "
-                                    + "idAlmacen = '" + alm_or + "' and idProductos= '" + pro.getId_pro() + "'";
-                            con.actualiza(st, act_pro_alm);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-
-                        try {
-                            Statement st = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getCos_pro() + "',"
-                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_or + "', '" + ruc + "', '" + almacen + "', '11')";
-                            con.actualiza(st, ins_kardex);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-
-                    }
-
-                    //modificar numero de documento.
-                    tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
-
+                    //imprimir detalle de envio
+                    Map<String, Object> parametros = new HashMap<>();
+                    parametros.put("idtraslado", alb.getId());
+                    ven.ver_reporte("rpt_ver_guia", parametros);
                 }
             }
-
-            //imprimir detalle de envio
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("idtraslado", alb.getId());
-            parametros.put("ruc", frm_menu.alm.getRuc());
-            parametros.put("razon_social", frm_menu.alm.getRaz_soc());
-            parametros.put("direccion", direccion_almacen(frm_menu.alm.getRuc()));
-            parametros.put("tienda", cbx_alm_de.getSelectedItem().toString());
-            ven.ver_reporte("rpt_ver_guia", parametros);
 
             btn_cer.doClick();
         }
@@ -1294,7 +954,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
             if (!almacen_destino.equals(frm_menu.alm.getNom())) {
                 int idalm = cbx_alm_de.getSelectedIndex() + 1;
                 datos_tienda(idalm);
-                btn_transportista.setEnabled(true);
                 btn_add.setEnabled(true);
                 txt_buscar_producto.setEnabled(true);
                 txt_buscar_producto.requestFocus();
@@ -1316,13 +975,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private void txt_fecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fecActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fecActionPerformed
-
-    private void btn_transportistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transportistaActionPerformed
-        jd_transportista.setSize(800, 300);
-        jd_transportista.setModal(true);
-        jd_transportista.setLocationRelativeTo(null);
-        jd_transportista.setVisible(true);
-    }//GEN-LAST:event_btn_transportistaActionPerformed
 
     private void cbx_documentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_documentoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -1352,10 +1004,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cbx_documentoKeyPressed
 
-    private void txt_motivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_motivoKeyPressed
-
     private void txt_buscar_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_productoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             txt_buscar_producto.setText("");
@@ -1369,30 +1017,10 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
 
             if (JOptionPane.OK_OPTION == confirmado) {
                 btn_recibir.setEnabled(false);
-                int alm_destino = frm_menu.alm.getId();
-                int alm_origen = cbx_alm_de.getSelectedIndex() + 1;
-                String ruc = txt_ruc_alm.getText().toUpperCase();
-                String almacen = "DESDE TIENDA " + cbx_alm_de.getSelectedItem().toString();
-                llenar();
                 Integer filas = t_detalle.getRowCount();
                 for (int x = 0; x < filas; x++) {
                     pro.setId_pro(Integer.parseInt(t_detalle.getValueAt(x, 0).toString()));
                     pro.setCan(Double.parseDouble(t_detalle.getValueAt(x, 6).toString()));
-                    double cantidad_enviada = Double.parseDouble(t_detalle.getValueAt(x, 4).toString());
-                    System.out.println(pro.getCan() + " - id: " + pro.getId_pro());
-
-                    try {
-                        Statement st = con.conexion();
-                        String ver_pre = "select precio_venta from Productos where idProductos  = '" + pro.getId_pro() + "'";
-                        ResultSet rs = con.consulta(st, ver_pre);
-                        System.out.println(ver_pre);
-                        if (rs.next()) {
-                            pro.setPre_pro(rs.getDouble("precio_venta"));
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-
                     try {
                         Statement st = con.conexion();
                         String act_pro_alm = "Update productos_traslado set recibido = '" + pro.getCan() + "' where idtraslado = '" + idtras + "' and idProductos= '" + pro.getId_pro() + "'";
@@ -1401,112 +1029,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
                         con.cerrar(st);
                     } catch (Exception ex) {
                         System.out.print(ex);
-                    }
-
-                    if (pro.getCan() > 0) {
-                        //registrar ingreso al segundo almacen (actualizar cantidades)
-                        boolean existe_producto = false;
-                        try {
-                            Statement st = con.conexion();
-                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
-                            ResultSet rs = con.consulta(st, ver_pro_alm);
-                            System.out.println(ver_pro_alm);
-                            if (rs.next()) {
-                                System.out.println("almacen de destino: " + alm_destino + " Cambiando cantidad en almacen");
-                                pro.setCan_act_pro(rs.getDouble("cant"));
-                                pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
-                                existe_producto = true;
-                            } else {
-                                System.out.println("almacen de destino: " + alm_destino + " ingresando producto a almacen");
-                                pro.setCan_act_pro(0.0);
-                                pro.setCan_act_pro(pro.getCan_act_pro() + pro.getCan());
-                                existe_producto = false;
-                            }
-                            con.cerrar(rs);
-                            con.cerrar(st);
-                        } catch (SQLException ex) {
-                            System.out.print(ex);
-                        }
-
-                        if (existe_producto) {
-                            try {
-                                Statement st = con.conexion();
-                                String act_pro_alm = "Update producto_almacen set cant = '" + pro.getCan_act_pro() + "', ultimo_ingreso = current_date() where idAlmacen = '" + alm_destino + "' and idProductos= '" + pro.getId_pro() + "'";
-                                con.actualiza(st, act_pro_alm);
-                                System.out.println(act_pro_alm);
-                                con.cerrar(st);
-                            } catch (Exception ex) {
-                                System.out.print(ex);
-                            }
-                        } else {
-                            try {
-                                Statement st = con.conexion();
-                                String ins_pro_alm = "insert into producto_almacen Values ('" + pro.getId_pro() + "', '" + alm_destino + "', '" + pro.getCan_act_pro() + "', '" + pro.getPre_pro() + "', current_date(), '2010-01-01')";
-                                con.actualiza(st, ins_pro_alm);
-                                System.out.println(ins_pro_alm);
-                                con.cerrar(st);
-                            } catch (Exception ex) {
-                                System.out.println(ex);
-                            }
-                        }
-
-                        try {
-                            Statement st = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00', "
-                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_destino + "', '" + ruc + "', '" + almacen + "', '11')";
-                            System.out.println(ins_kardex);
-                            con.actualiza(st, ins_kardex);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-                    }
-
-                    if (pro.getCan() == 0 || pro.getCan() < cantidad_enviada) {
-                    //devolver productos a tienda de origen siempre cuando cantidad aceptada 
-                        // sea igual a 0 o cantidad es menor a la cantidad enviada
-
-                        //buscar cantidad actual de productos en tienda origen
-                        double cantidad_actual_origen = 0;
-                        try {
-                            Statement st = con.conexion();
-                            String ver_pro_alm = "select cant from producto_almacen where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
-                            ResultSet rs = con.consulta(st, ver_pro_alm);
-                            System.out.println(ver_pro_alm);
-                            if (rs.next()) {
-                                cantidad_actual_origen = rs.getDouble("cant");
-                            }
-                            con.cerrar(st);
-                            con.cerrar(rs);
-                        } catch (SQLException e) {
-                            System.out.println(e.getLocalizedMessage());
-                        }
-
-                        double cantidad_regreso = cantidad_actual_origen - pro.getCan();
-
-                        //actualizando cantidad actual de tienda de origen
-                        try {
-                            Statement st = con.conexion();
-                            String act_pro_alm = "Update producto_almacen set cant = '" + cantidad_regreso + "' where idAlmacen = '" + alm_origen + "' and idProductos= '" + pro.getId_pro() + "'";
-                            con.actualiza(st, act_pro_alm);
-                            System.out.println(act_pro_alm);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-
-                        //guardando cambio en kardex de productos tienda de origen
-                        try {
-                            Statement st = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '0.00', '0.00', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', "
-                                    + "'" + alb.getSer() + "', '" + alb.getNro() + "', '" + tido.getId() + "', '" + alm_origen + "', '" + ruc + "', '" + almacen + "', '11')";
-                            System.out.println(ins_kardex);
-                            con.actualiza(st, ins_kardex);
-                            con.cerrar(st);
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-
                     }
                 }
 
@@ -1675,7 +1197,6 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_el;
     public static javax.swing.JButton btn_enviar;
     public static javax.swing.JButton btn_recibir;
-    private javax.swing.JButton btn_transportista;
     public static javax.swing.JButton btn_verificar;
     public static javax.swing.JComboBox cbx_alm_de;
     public static javax.swing.JComboBox cbx_documento;
@@ -1687,51 +1208,28 @@ public final class frm_reg_traslado_almacen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog j_productos;
-    private javax.swing.JDialog jd_transportista;
     public static javax.swing.JLabel lbl_tienda;
-    private javax.swing.JRadioButton rbt_no;
-    private javax.swing.JRadioButton rbt_si;
     public static javax.swing.JTable t_detalle;
     public static javax.swing.JTable t_productos;
-    public static javax.swing.JTextField txt_brevete;
     private javax.swing.JTextField txt_buscar_producto;
     private javax.swing.JTextField txt_busqueda;
-    public static javax.swing.JTextField txt_chofer1;
     public static javax.swing.JFormattedTextField txt_fec;
-    public static javax.swing.JTextField txt_inscripcion;
     public static javax.swing.JTextField txt_llegada;
-    public static javax.swing.JTextField txt_marca1;
-    public static javax.swing.JTextField txt_modelo;
-    public static javax.swing.JTextField txt_motivo;
     public static javax.swing.JTextField txt_num;
     public static javax.swing.JTextField txt_partida;
-    public static javax.swing.JTextField txt_placa1;
     public static javax.swing.JTextField txt_raz_alm;
-    public static javax.swing.JTextField txt_razon_transporte;
     public static javax.swing.JTextField txt_ruc_alm;
-    public static javax.swing.JTextField txt_ruc_transporte;
     public static javax.swing.JTextField txt_ser;
     // End of variables declaration//GEN-END:variables
 }

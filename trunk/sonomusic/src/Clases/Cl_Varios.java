@@ -275,4 +275,43 @@ public class Cl_Varios {
             return false;
         }
     }
+    
+    
+    public Boolean validar_RUC(String ruc) {
+        Boolean validado = false;
+        int dig[] = new int[10];
+        int factores[] = {5, 4, 3, 2, 7, 6, 5, 4, 3, 2};
+        //  System.out.println("digitos del ruc");
+        for (int i = 0; i < 10; i++) {
+            dig[i] = Integer.parseInt(ruc.charAt(i) + "");
+            //      System.out.println(dig[i] + "\t");
+        }
+        int producto[] = new int[10];
+        //   System.out.println("producto de cada digito");
+        for (int i = 0; i < 10; i++) {
+            producto[i] = dig[i] * factores[i];
+            //   System.out.println(producto[i]);
+        }
+        int suma_producto = 0;
+        //     System.out.println("suma total del producto");
+        for (int i = 0; i < 10; i++) {
+            suma_producto += producto[i];
+        }
+        //     System.out.println(suma_producto);
+        //     System.out.println("Resultado de formula");
+        int formula = 11 - (suma_producto % 11);
+        //       System.out.println(formula);
+        String resultado = formula + "";
+//        System.out.println("longitud de resultado " + resultado.length());
+        int longitud = resultado.length();
+        String ultimo = resultado.charAt(longitud - 1) + "";
+        //       System.out.println("ultimo digito " + ultimo);
+        int dig11 = Integer.parseInt(ruc.charAt(10) + "");
+        //       System.out.println("comparando " + ultimo + " = " + dig11);
+        if (dig11 == Integer.parseInt(ultimo)) {
+            validado = true;
+        }
+//        System.out.println(validado);
+        return validado;
+    }
 }

@@ -186,7 +186,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         for (int i = 0; i < totalRow; i++) {
             double precio = Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 5)));
             double cantidad = Double.parseDouble(String.valueOf(t_detalle.getValueAt(i, 3)));
-            suma_parcial += precio * cantidad;
+            if (precio > 0) {
+                suma_parcial += precio * cantidad;
+            } else {
+                JOptionPane.showMessageDialog(null, "PRECIO CERO, MODIFIQUE EN LA FILA NRO: " + (i + 1));
+            }
         }
         sub_total = suma_parcial / 1.18;
         return sub_total;
@@ -269,9 +273,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         cbx_vendedor = new javax.swing.JComboBox();
         txt_vend = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
+        lbl_ayuda = new javax.swing.JLabel();
 
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Buscar:");
@@ -710,6 +712,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             }
         });
         t_detalle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                t_detalleFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 t_detalleFocusLost(evt);
             }
@@ -824,6 +829,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jPanel1.setFocusable(false);
 
         cbx_documento_venta.setEnabled(false);
+        cbx_documento_venta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_documento_ventaFocusGained(evt);
+            }
+        });
         cbx_documento_venta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_documento_ventaKeyPressed(evt);
@@ -863,6 +873,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         cbx_tipo_venta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "VENTA", "SEPARACION" }));
         cbx_tipo_venta.setEnabled(false);
+        cbx_tipo_venta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_tipo_ventaFocusGained(evt);
+            }
+        });
         cbx_tipo_venta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_tipo_ventaKeyPressed(evt);
@@ -871,6 +886,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
         txt_nro_doc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nro_doc.setEnabled(false);
+        txt_nro_doc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_nro_docFocusGained(evt);
+            }
+        });
         txt_nro_doc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_nro_docKeyPressed(evt);
@@ -891,6 +911,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nomActionPerformed(evt);
+            }
+        });
+        txt_nom.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_nomFocusGained(evt);
             }
         });
         txt_nom.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -962,6 +987,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 txt_buscar_productoActionPerformed(evt);
             }
         });
+        txt_buscar_producto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_buscar_productoFocusGained(evt);
+            }
+        });
         txt_buscar_producto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_buscar_productoKeyPressed(evt);
@@ -973,6 +1003,11 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         jLabel3.setForeground(java.awt.Color.red);
         jLabel3.setText("Vendedor:");
 
+        cbx_vendedor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_vendedorFocusGained(evt);
+            }
+        });
         cbx_vendedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cbx_vendedorKeyPressed(evt);
@@ -982,14 +1017,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         txt_vend.setEditable(false);
         txt_vend.setFocusable(false);
 
-        jLabel11.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
-        jLabel11.setText("F3 - Realizar Venta");
-
-        jLabel16.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
-        jLabel16.setText("F1 - Buscar Productos");
-
-        jLabel27.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
-        jLabel27.setText("F2 - Buscar Producto en otra ventana");
+        lbl_ayuda.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
+        lbl_ayuda.setText("F1 - Buscar Productos            F2 - Buscar Productos en otra Ventana            F3 - Realizar Venta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1035,11 +1064,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_vend))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel27)
-                        .addGap(95, 95, 95)
-                        .addComponent(jLabel11)
+                        .addComponent(lbl_ayuda)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1047,10 +1072,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel27))
+                .addComponent(lbl_ayuda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1134,9 +1156,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_regActionPerformed
 
     void calcular_total() {
-        txt_subt.setText(ven.formato_numero(subtotal()));
-        txt_igv.setText(ven.formato_numero(subtotal() * 0.18));
-        lbl_tot.setText("S/. " + ven.formato_numero(subtotal() * 1.18));
+        double subtotal = subtotal();
+        txt_subt.setText(ven.formato_numero(subtotal));
+        txt_igv.setText(ven.formato_numero(subtotal * 0.18));
+        lbl_tot.setText("S/. " + ven.formato_numero(subtotal * 1.18));
         txt_buscar_producto.setText("");
         txt_buscar_producto.requestFocus();
     }
@@ -1206,6 +1229,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     if (cbx_tipo_venta.getSelectedItem().equals("VENTA")) {
                         txt_nro_doc.setText("00000000");
                         txt_nom.setText("CLIENTES GENERALES");
+                        txt_nom.setEditable(false);
                         txt_nro_doc.setEnabled(false);
                         txt_fec.setEnabled(true);
                         txt_fec.requestFocus();
@@ -1214,6 +1238,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     } else {
                         txt_nro_doc.setText("");
                         txt_nom.setText("");
+                        txt_nom.setEditable(false);
                         txt_nro_doc.setEnabled(true);
                         txt_nro_doc.requestFocus();
                         txt_nro_doc.setBackground(Color.red);
@@ -1233,6 +1258,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                             txt_nro_doc.requestFocus();
                             txt_nro_doc.setBackground(Color.red);
                             txt_nro_doc.setForeground(Color.white);
+                            txt_nom.setText("");
+                            txt_nom.setEditable(false);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUEDE SELECCIONAR ESTE DOCUMENTO");
@@ -1246,6 +1273,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         txt_nro_doc.requestFocus();
                         txt_nro_doc.setBackground(Color.red);
                         txt_nro_doc.setForeground(Color.white);
+                        txt_nom.setText("");
+                        txt_nom.setEditable(false);
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUEDE SELECCIONAR ESTE DOCUMENTO");
                         cbx_documento_venta.setSelectedIndex(0);
@@ -1305,6 +1334,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     frm_reg_cliente.txt_nom.requestFocus();
 
                 } else if (txt_nro_doc.getText().length() == 11) {
+
                     JOptionPane.showMessageDialog(null, "Cargando Datos de la SUNAT");
                     String json = Cl_Entidad.getJSONRUC(cli.getNro_doc());
                     //Lo mostramos
@@ -1344,7 +1374,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 }
                 if (txt_nro_doc.getText().length() == 11) {
                     if (cbx_documento_venta.getSelectedItem().equals("FACTURA")) {
-                        cargar_datos_cliente();
+                        if (tido.validar_RUC(txt_nro_doc.getText()) == true) {
+                            cargar_datos_cliente();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "RUC INCORRECTO, CORREGIR POR FAVOR");
+                            txt_nro_doc.setText("");
+                            txt_nro_doc.requestFocus();
+                        }
                         //obtener_datos(cli.getNro_doc());
                     }
                 }
@@ -1432,35 +1468,39 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void t_detalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_detalleKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            Double precio = Double.parseDouble(t_detalle.getValueAt(i, 5).toString());
-            Double cantidad = Double.parseDouble(t_detalle.getValueAt(i, 3).toString());
-            double precio_nuevo = 0.0;
-            try {
-                Statement st = con.conexion();
-                String pre_com = "select costo_compra from productos where idProductos='" + t_detalle.getValueAt(i, 0) + "'";
-                ResultSet rs = con.consulta(st, pre_com);
+            int nro_filas = t_detalle.getRowCount();
+            for (int j = 0; j < nro_filas; j++) {
+                Double precio = Double.parseDouble(t_detalle.getValueAt(j, 5).toString());
+                Double cantidad = Double.parseDouble(t_detalle.getValueAt(j, 3).toString());
+                String id_producto = t_detalle.getValueAt(j, 0).toString();
+                double precio_nuevo;
                 double precio_b = 0;
-                if (rs.next()) {
-                    precio_b = rs.getDouble("costo_compra") * 1.2;
-                }
-                con.cerrar(st);
-                con.cerrar(rs);
+                try {
+                    Statement st = con.conexion();
+                    String pre_com = "select costo_compra from productos where idProductos='" + id_producto + "'";
+                    ResultSet rs = con.consulta(st, pre_com);
+                    if (rs.next()) {
+                        precio_b = rs.getDouble("costo_compra") * 1.2;
+                    }
+                    con.cerrar(st);
+                    con.cerrar(rs);
 
-                if (precio >= precio_b) {
-                    precio_nuevo = precio;
-                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
-                } else {
-                    precio_nuevo = precio_b;
-                    JOptionPane.showMessageDialog(null, "No se puede establecer ese precio");
-                    t_detalle.setValueAt(ven.formato_numero(precio_nuevo), i, 5);
-                }
-                double parcial = cantidad * precio_nuevo;
-                t_detalle.setValueAt(ven.formato_numero(parcial), i, 6);
-                calcular_total();
+                    if (precio >= precio_b) {
+                        precio_nuevo = precio;
+                        t_detalle.setValueAt(ven.formato_numero(precio_nuevo), j, 5);
+                    } else {
+                        precio_nuevo = precio_b;
+                        JOptionPane.showMessageDialog(null, "No se puede establecer ese precio");
+                        t_detalle.setValueAt(ven.formato_numero(precio_nuevo), j, 5);
+                    }
+                    double parcial = cantidad * precio_nuevo;
+                    t_detalle.setValueAt(ven.formato_numero(parcial), j, 6);
 
-            } catch (SQLException | HeadlessException e) {
-                JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
+                } catch (SQLException | HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
+                }
             }
+            calcular_total();
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -1494,6 +1534,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         }
 
         if (evt.getKeyCode() == KeyEvent.VK_F3) {
+            calcular_total();
             txt_buscar_producto.setText("");
             cbx_tipo_venta.setEnabled(true);
             cbx_tipo_venta.requestFocus();
@@ -1534,7 +1575,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     txt_buscar_producto.setText("");
                     txt_buscar_producto.requestFocus();
                     String cadena = selectedItem.toString();
-                    JOptionPane.showMessageDialog(null, "El usuario seleccionó: " + cadena);
+                    //JOptionPane.showMessageDialog(null, "El usuario seleccionó: " + cadena);
                     if (cadena.length() > 0) {
                         boolean contiene_guion = false;
                         for (int j = 0; j < cadena.length(); j++) {
@@ -1588,7 +1629,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
                                     // if (cantidad > 0.0) {
                                     valida_tabla(Integer.parseInt(id_producto), fila);
-                                    calcular_total();
+                                    //calcular_total();
                                     // } else {
                                     //     JOptionPane.showMessageDialog(null, "No existe suficiente cantidad para agregar el producto.");
                                     // }
@@ -1684,11 +1725,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             String texto = txt_busqueda.getText();
             String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
                     + "from producto_almacen as pa "
-                    + "inner join productos as p on p.idProductos=pa.idProductos "
+                    + "inner join productos as p on p.idProductos= pa.idProductos "
                     + "inner join clasificacion as c on c.id_clas = p.id_clas "
                     + "inner join und_medida as u on u.idUnd_Medida=p.idUnd_Medida "
-                    + "where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and (p.desc_pro like '%" + texto + "%' or p.modelo like '%" + texto + "%' "
-                    + "or p.serie like '%" + texto + "%' or p.marca like '%" + texto + "%') "
+                    + "where pa.idAlmacen = '" + frm_menu.alm.getId() + "' and (concat (p.desc_pro, ' ', p.marca, ' ', p.modelo) like '%" + texto + "%') "
                     + "order by p.desc_pro asc, p.modelo asc "
                     + "limit 20";
             pro.mostrar_productos(query, t_productos);
@@ -1792,11 +1832,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
     private void cbx_jd_monedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_jd_monedaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            double sub_total = subtotal();
             if (cbx_jd_moneda.getSelectedIndex() == 1) {
-                lbl_total.setText("S/. " + ven.formato_totales(subtotal() * 1.18));
-                total_new = Double.parseDouble(ven.formato_numero(subtotal() * 1.18));
+                lbl_total.setText("S/. " + ven.formato_totales(sub_total * 1.18));
+                total_new = Double.parseDouble(ven.formato_numero(sub_total * 1.18));
             } else {
-                Double convertido = mon.cambio_venta_dolar(ven.fechabase(txt_fec.getText()), cbx_jd_moneda.getSelectedIndex() + 1, subtotal() * 1.18);
+                Double convertido = mon.cambio_venta_dolar(ven.fechabase(txt_fec.getText()), cbx_jd_moneda.getSelectedIndex() + 1, sub_total * 1.18);
                 lbl_total.setText("US$/€ " + ven.formato_totales(convertido));
                 total_new = Double.parseDouble(ven.formato_numero(convertido));
             }
@@ -1830,9 +1871,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_jd_cerrarActionPerformed
 
     private void btn_jd_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_jd_registrarActionPerformed
-  //      tido.setId(frm_reg_venta.cbx_documento_venta.getSelectedIndex() + 1);
-    //    tido.setDesc(frm_reg_venta.cbx_documento_venta.getSelectedItem().toString());
-        
         ped.setFec_ped(ven.fechabase(frm_reg_venta.txt_fec.getText()));
         ped.setFec_pag_ped(ped.getFec_ped());
         ped.setTotal(total_new);
@@ -1843,14 +1881,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         cli.setNom_cli(frm_reg_venta.txt_nom.getText().toUpperCase());
         ped.setTotal(ped.getTotal() + comision_tarjeta);
 
-        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
         btn_jd_registrar.setEnabled(false);
         btn_jd_cerrar.setEnabled(false);
         btn_reg.setEnabled(false);
         btn_clo.setEnabled(false);
         String fecha = ven.fechabase(txt_fec.getText());
         tido.setId(cbx_documento_venta.getSelectedIndex() + 1);
-        
+
         String fecha_pago;
         String estado;
         String tipo_venta = cbx_tipo_venta.getSelectedItem().toString();
@@ -1873,17 +1910,9 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             //JOptionPane.showMessageDialog(null, "documento escogido = " + tido.getId());
             tido.setId(6);
         }
-        
+
         tido.setSerie(tido.ver_ser(tido.getId(), frm_menu.alm.getId()));
         tido.setNro(tido.ver_num(tido.getId(), frm_menu.alm.getId()));
-
-        int id_venta = 0;
-        int id_moneda = cbx_jd_moneda.getSelectedIndex() + 1;
-        String nro_documento = txt_nro_doc.getText();
-        String nom_cliente = txt_nom.getText().toUpperCase();
-        String anio_periodo = fecha.charAt(0) + "" + fecha.charAt(1) + fecha.charAt(2) + fecha.charAt(3);
-        String mes_periodo = fecha.charAt(5) + "" + fecha.charAt(6);
-        String periodo = mes_periodo + "-" + anio_periodo;
 
         //registrar venta
         int registro = -1;
@@ -1905,9 +1934,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
             //buscar ultimo pedido
             try {
                 Statement st = con.conexion();
-                String buscar_pedido = "select idPedido from pedido where nro_doc = '" + tido.getNro() + "' "
-                        + "and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = "
-                        + "'" + frm_menu.alm.getId() + "' order by idPedido desc limit 1";
+                String buscar_pedido = "select max(idPedido) from pedido "
+                        + "where nro_doc = '" + tido.getNro() + "' and fec_ped = '" + ped.getFec_ped() + "' and idAlmacen = '" + frm_menu.alm.getId() + "'";
                 System.out.println(buscar_pedido + "\n");
                 ResultSet rs = con.consulta(st, buscar_pedido);
                 if (rs.next()) {
@@ -2050,13 +2078,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 //actualizar documento de la tienda
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
 
-                //imprimir ticket
-                imprime.setTipo_venta(tipo_venta);
-                imprime.set_tipv(tido.getDesc());
-                imprime.set_idped(ped.getId_ped());
-                System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-                //imprime.start();
-
                 j_fin_venta.dispose();
                 this.dispose();
                 frm_reg_venta venta = new frm_reg_venta();
@@ -2190,6 +2211,34 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_busquedaActionPerformed
 
+    private void cbx_vendedorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_vendedorFocusGained
+        lbl_ayuda.setText("ENTER - Elegir y Cargar Productos");
+    }//GEN-LAST:event_cbx_vendedorFocusGained
+
+    private void txt_buscar_productoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscar_productoFocusGained
+        lbl_ayuda.setText("F1 - Buscar Productos            F2 - Buscar Productos en otra Ventana            F3 - Finalizar Venta");
+    }//GEN-LAST:event_txt_buscar_productoFocusGained
+
+    private void t_detalleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_t_detalleFocusGained
+        lbl_ayuda.setText("ENTER - Calcular total y Buscar otro producto         F3 - Finalizar Venta");
+    }//GEN-LAST:event_t_detalleFocusGained
+
+    private void cbx_tipo_ventaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_tipo_ventaFocusGained
+        lbl_ayuda.setText("ENTER - Continuar        Flecha Arriba y Abajo / = Seleccionar tipo de Venta");
+    }//GEN-LAST:event_cbx_tipo_ventaFocusGained
+
+    private void cbx_documento_ventaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_documento_ventaFocusGained
+        lbl_ayuda.setText("ENTER - Continuar        Flecha Arriba y Abajo / = Seleccionar documento");
+    }//GEN-LAST:event_cbx_documento_ventaFocusGained
+
+    private void txt_nro_docFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_nro_docFocusGained
+        lbl_ayuda.setText("ENTER - Continuar        Ingresar Nro de DNI o RUC");
+    }//GEN-LAST:event_txt_nro_docFocusGained
+
+    private void txt_nomFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_nomFocusGained
+        lbl_ayuda.setText("ENTER - Continuar      ");
+    }//GEN-LAST:event_txt_nomFocusGained
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_add_pro;
@@ -2209,12 +2258,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     public static javax.swing.JCheckBox chk_incluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -2226,7 +2273,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -2243,6 +2289,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog j_fin_venta;
     private javax.swing.JDialog j_productos;
+    private javax.swing.JLabel lbl_ayuda;
     public static javax.swing.JLabel lbl_tot;
     public static javax.swing.JLabel lbl_total;
     private javax.swing.JLabel lblcod_alm1;

@@ -42,9 +42,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     public frm_ver_guias() {
         initComponents();
         System.out.println(frm_menu.alm.getDireccion());
-        String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.estado = '0' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+        String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
+                + "from traslado as t "
+                + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
+                + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                + "inner join empleados as em on em.dni = t.nick "
+                + "where t.estado = '0' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                + "order by t.fecha desc, t.idTraslado desc";
         ver_guia(query);
     }
 
@@ -56,12 +61,11 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                 return false;
             }
         };
-        modelo.addColumn("Motivo");
-        modelo.addColumn("Fecha");
         modelo.addColumn("Id");
+        modelo.addColumn("Fecha");
         modelo.addColumn("Origen");
-        modelo.addColumn("Raz. Social");
-        modelo.addColumn("Dir. Destino");
+        modelo.addColumn("Raz. Social Destino");
+        modelo.addColumn("Destino");
         modelo.addColumn("Documento");
         modelo.addColumn("Usuario");
         modelo.addColumn("Estado");
@@ -69,31 +73,28 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
-                Object[] fila = new Object[9];
-                fila[0] = rs.getString("motivo");
+                Object[] fila = new Object[8];
+                fila[0] = rs.getString("idtraslado");
                 fila[1] = ven.fechaformateada(rs.getString("fecha"));
-                fila[2] = rs.getString("idTraslado");
-                String origen = rs.getString("origen");
-                fila[3] = alm.nom_alm(origen);
-                fila[4] = rs.getString("raz_soc_dest");
-                String destino = rs.getString("destino");
-                fila[5] = alm.nom_alm(destino);
+                fila[2] = rs.getString("origen");
+                fila[3] = rs.getString("raz_soc");
+                fila[4] = rs.getString("destino");
                 if (rs.getInt("ser_doc") == 0 && rs.getInt("nro_doc") == 0) {
-                    fila[6] = "------";
+                    fila[5] = "------";
                 } else {
-                    fila[6] = rs.getString("tipo_documento") + " / " + rs.getString("ser_doc") + " - " + rs.getString("nro_doc");
+                    fila[5] = rs.getString("tipo_documento") + " / " + rs.getString("ser_doc") + " - " + rs.getString("nro_doc");
                 }
-                String nick = rs.getString("nick");
-                fila[7] = emp.nom_emp(nick);
+                String nick = rs.getString("nom_per");
+                fila[6] = nick;
                 switch (rs.getString("estado")) {
                     case "0":
-                        fila[8] = "PENDIENTE";
+                        fila[7] = "PENDIENTE";
                         break;
                     case "1":
-                        fila[8] = "APROBADO";
+                        fila[7] = "APROBADO";
                         break;
                     case "2":
-                        fila[8] = "ANULADO";
+                        fila[7] = "ANULADO";
                         break;
                 }
 
@@ -101,21 +102,19 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             }
             t_guias.setModel(modelo);
             t_guias.getColumnModel().getColumn(0).setPreferredWidth(60);
-            t_guias.getColumnModel().getColumn(1).setPreferredWidth(70);
-            t_guias.getColumnModel().getColumn(2).setPreferredWidth(40);
-            t_guias.getColumnModel().getColumn(3).setPreferredWidth(90);
-            t_guias.getColumnModel().getColumn(4).setPreferredWidth(250);
-            t_guias.getColumnModel().getColumn(5).setPreferredWidth(90);
+            t_guias.getColumnModel().getColumn(1).setPreferredWidth(90);
+            t_guias.getColumnModel().getColumn(2).setPreferredWidth(100);
+            t_guias.getColumnModel().getColumn(3).setPreferredWidth(250);
+            t_guias.getColumnModel().getColumn(4).setPreferredWidth(100);
+            t_guias.getColumnModel().getColumn(5).setPreferredWidth(250);
             t_guias.getColumnModel().getColumn(6).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(7).setPreferredWidth(200);
-            t_guias.getColumnModel().getColumn(8).setPreferredWidth(80);
+            t_guias.getColumnModel().getColumn(7).setPreferredWidth(80);
             ven.centrar_celda(t_guias, 0);
             ven.centrar_celda(t_guias, 1);
             ven.centrar_celda(t_guias, 2);
-            ven.centrar_celda(t_guias, 3);
+            ven.centrar_celda(t_guias, 4);
             ven.centrar_celda(t_guias, 5);
-            ven.centrar_celda(t_guias, 6);
-            ven.centrar_celda(t_guias, 8);
+            ven.centrar_celda(t_guias, 7);
             con.cerrar(rs);
             con.cerrar(st);
         } catch (SQLException ex) {
@@ -173,11 +172,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         ));
         t_guias.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_guias.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                t_guiasMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                t_guiasMouseReleased(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_guiasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(t_guias);
@@ -295,7 +291,6 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         if (usu.getPer_reg_traslado().equals("1")) {
             frm_reg_traslado_almacen tras = new frm_reg_traslado_almacen();
             frm_reg_traslado_almacen.accion = "registrar";
-            frm_reg_traslado_almacen.txt_motivo.setText("TRASLADAR PRODUCTOS");
             frm_reg_traslado_almacen.btn_enviar.setVisible(true);
             frm_reg_traslado_almacen.btn_recibir.setVisible(false);
             ven.llamar_ventana(tras);
@@ -329,29 +324,21 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         // cargar datos en frm_reg_traslado
         frm_reg_traslado_almacen traslado = new frm_reg_traslado_almacen();
         frm_reg_traslado_almacen.accion = "verificar";
-        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 0).toString()));
         try {
             Statement st = con.conexion();
             String ver_guia = "select * from traslado where idTraslado = '" + alb.getId() + "'";
             ResultSet rs = con.consulta(st, ver_guia);
             if (rs.next()) {
-                frm_reg_traslado_almacen.txt_motivo.setText("RECIBIR TRASLADO");
                 frm_reg_traslado_almacen.cbx_documento.setEnabled(false);
                 frm_reg_traslado_almacen.idtras = alb.getId();
                 frm_reg_traslado_almacen.txt_fec.setText(ven.fechaformateada(rs.getString("fecha")));
                 frm_reg_traslado_almacen.lbl_tienda.setText("Tienda Origen:");
-                frm_reg_traslado_almacen.cbx_alm_de.setSelectedIndex(alm.id_alm_dir(rs.getString("origen")) - 1);
-                datos_tienda(alm.id_alm_dir(rs.getString("origen")));
+                frm_reg_traslado_almacen.cbx_alm_de.setSelectedIndex(rs.getInt("almacen_origen") - 1);
+                datos_tienda(rs.getInt("almacen_origen"));
                 frm_reg_traslado_almacen.cbx_documento.setSelectedIndex(rs.getInt("tipo_documento") - 1);
                 frm_reg_traslado_almacen.txt_ser.setText(rs.getString("ser_doc"));
                 frm_reg_traslado_almacen.txt_num.setText(rs.getString("nro_doc"));
-                frm_reg_traslado_almacen.txt_ruc_transporte.setText(rs.getString("ruc_trans"));
-                frm_reg_traslado_almacen.txt_razon_transporte.setText(rs.getString("raz_trans"));
-                frm_reg_traslado_almacen.txt_marca1.setText(rs.getString("marca_veh"));
-                frm_reg_traslado_almacen.txt_placa1.setText(rs.getString("placa_veh"));
-                frm_reg_traslado_almacen.txt_brevete.setText(rs.getString("brevete"));
-                frm_reg_traslado_almacen.txt_inscripcion.setText(rs.getString("constancia"));
-                frm_reg_traslado_almacen.txt_chofer1.setText(rs.getString("chofer"));
                 frm_reg_traslado_almacen.txt_llegada.setText(frm_menu.alm.getDireccion());
                 llenar_tguias(alb.getId());
                 frm_reg_traslado_almacen.btn_verificar.setEnabled(true);
@@ -369,52 +356,10 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_envioActionPerformed
 
-    private void t_guiasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMousePressed
-        i = t_guias.getSelectedRow();
-        btn_guia.setEnabled(true);
-
-        switch (t_guias.getValueAt(i, 8).toString()) {
-            case "APROBADO":
-                btn_anu.setEnabled(false);
-                btn_envio.setEnabled(false);
-                break;
-            case "ANULADO":
-                btn_anu.setEnabled(false);
-                btn_envio.setEnabled(false);
-                break;
-            default:
-                btn_anu.setEnabled(true);
-                break;
-        }
-
-        if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 5).toString())) {
-            btn_envio.setEnabled(true);
-        } else {
-            btn_envio.setEnabled(false);
-        }
-        if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 3).toString())) {
-            btn_anu.setEnabled(true);
-        } else {
-            btn_anu.setEnabled(false);
-        }
-    }//GEN-LAST:event_t_guiasMousePressed
-
     private void btn_guiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guiaActionPerformed
-        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+        alb.setId(Integer.parseInt(t_guias.getValueAt(i, 0).toString()));
         Map<String, Object> parametros = new HashMap<>();
-        String tienda = t_guias.getValueAt(i, 3).toString();
-        String tienda_destino = t_guias.getValueAt(i, 5).toString();
-        int id_almacen = ver_id_alm(tienda);
-        String ruc_almacen = ruc_alm(id_almacen + "");
-        System.out.println(ruc_almacen);
-        String razon_social = raz_soc(id_almacen + "");
-        System.out.println(razon_social);
-        String direccion_almacen = direccion_almacen(ruc_almacen);
         parametros.put("idtraslado", alb.getId());
-        parametros.put("ruc", ruc_almacen);
-        parametros.put("razon_social", razon_social);
-        parametros.put("direccion", direccion_almacen);
-        parametros.put("tienda", tienda_destino);
         ven.ver_reporte("rpt_ver_guia", parametros);
     }//GEN-LAST:event_btn_guiaActionPerformed
 
@@ -492,7 +437,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
             int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el traslado?");
             if (JOptionPane.OK_OPTION == confirmado) {
                 //anular guia si es pendiente
-                alb.setId(Integer.parseInt(t_guias.getValueAt(i, 2).toString()));
+                alb.setId(Integer.parseInt(t_guias.getValueAt(i, 0).toString()));
                 String est_guia = t_guias.getValueAt(i, 8).toString();
 
                 if (est_guia.equals("PENDIENTE")) {
@@ -503,8 +448,8 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                         ResultSet rs = con.consulta(st, ver_det_env);
                         if (rs.next()) {
                             alb.setFecha(rs.getString("fecha"));
-                            alb.setSer(rs.getInt("ser_doc"));
-                            alb.setNro(rs.getInt("nro_doc"));
+                            alb.setSerie(rs.getInt("ser_doc"));
+                            alb.setNumero(rs.getInt("nro_doc"));
                         }
                     } catch (Exception ex) {
                         System.out.println(ex);
@@ -512,7 +457,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
 
                     Cl_Productos pro = new Cl_Productos();
 
-                    String nom_alm_or = t_guias.getValueAt(i, 3).toString();
+                    String nom_alm_or = t_guias.getValueAt(i, 2).toString();
                     //ver id almacen origen:
                     int id_ao = ver_id_alm(nom_alm_or);
                     System.out.println("almacen origen " + id_ao + "\n");
@@ -555,7 +500,7 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                             try {
                                 Statement st1 = con.conexion();
                                 String ins_kardex = "insert into kardex Values (null, '" + alb.getFecha() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '0.00' , '0.00', '0.00', "
-                                        + "'" + alb.getSer() + "', '" + alb.getNro() + "', '4', '" + id_ao + "', '" + ruc + "', '" + raz + "', '5')";
+                                        + "'" + alb.getSerie() + "', '" + alb.getNumero() + "', '4', '" + id_ao + "', '" + ruc + "', '" + raz + "', '5')";
                                 con.actualiza(st1, ins_kardex);
                                 con.cerrar(st1);
                             } catch (Exception ex) {
@@ -596,10 +541,6 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_anuActionPerformed
 
-    private void t_guiasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t_guiasMouseReleased
-
     private void txt_busquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busquedaKeyPressed
         String texto = txt_busqueda.getText();
         if (cbx_bus.getSelectedIndex() == 0) {
@@ -637,6 +578,36 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
     private void cbx_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_busActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbx_busActionPerformed
+
+    private void t_guiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_guiasMouseClicked
+        i = t_guias.getSelectedRow();
+        btn_guia.setEnabled(true);
+
+        switch (t_guias.getValueAt(i, 7).toString()) {
+            case "APROBADO":
+                btn_anu.setEnabled(false);
+                btn_envio.setEnabled(false);
+                break;
+            case "ANULADO":
+                btn_anu.setEnabled(false);
+                btn_envio.setEnabled(false);
+                break;
+            default:
+                btn_anu.setEnabled(true);
+                break;
+        }
+
+        if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 4).toString())) {
+            btn_envio.setEnabled(true);
+        } else {
+            btn_envio.setEnabled(false);
+        }
+        if (frm_menu.alm.getNom().equals(t_guias.getValueAt(i, 2).toString())) {
+            btn_anu.setEnabled(true);
+        } else {
+            btn_anu.setEnabled(false);
+        }
+    }//GEN-LAST:event_t_guiasMouseClicked
 
     private void llenar_tguias(int idtra) {
         frm_reg_traslado_almacen.detalle.addColumn("Cant. Rec.");

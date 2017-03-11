@@ -57,7 +57,7 @@ public class Cl_Hilo_Notificacion extends Thread {
         int cantidad = 0;
         try {
             Statement st = con.conexion();
-            String ver_ped = "select count(nick) as nro from traslado where destino = '" + frm_menu.alm.getDireccion() + "' and estado = '0'";
+            String ver_ped = "select count(nick) as nro from traslado where almacen_destino = '" + frm_menu.alm.getId()+ "' and estado = '0'";
             System.out.println(ver_ped);
             ResultSet rs = con.consulta(st, ver_ped);
             if (rs.next()) {

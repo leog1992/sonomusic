@@ -8,6 +8,7 @@ package Forms;
 import Clases.Cl_Almacen;
 import Clases.Cl_Compra;
 import Clases.Cl_Conectar;
+import Clases.Cl_Entidad;
 import Clases.Cl_Moneda;
 import Clases.Cl_Productos;
 import Clases.Cl_Proveedor;
@@ -25,8 +26,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.json.simple.parser.ParseException;
 import sonomusic.frm_menu;
 
 /**
@@ -903,12 +907,28 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                             cbx_alm.setEnabled(true);
                             cbx_alm.requestFocus();
                         } else {
-                            txt_ruc.setText("");
+                            //txt_ruc.setText("");
                             txt_ruc.requestFocus();
-                            JOptionPane.showMessageDialog(null, "El Proveedor no existe \nPor favor ingrese otro nro de RUC");
+                            JOptionPane.showMessageDialog(null, "El Proveedor no existe \nSe Registrara");
+                            String json = Cl_Entidad.getJSONRUC(pro.getRuc());
+                            //Lo mostramos
+                            String[] datos = Cl_Entidad.showJSONRUC(json);
+                            String nombre = datos[0].trim();
+                            String direccion = datos[1].trim();
+                            //JOptionPane.showMessageDialog(null, "DATOS DEL CLIENTE:\nRUC: " + cli.getNro_doc() + "\nRAZON SOCIAL: " + nombre + "\nDIRECCION: " + direccion);
+                            txt_raz.setText(nombre);
+                            txt_dir.setText(direccion);
+                            Statement st1 = con.conexion();
+                            String inser_cli = "insert into proveedor Values ('" + pro.getRuc() + "', '" + nombre + "', '" + direccion + "', '0', '-', '-', '0', '0','-',1)";
+                            con.actualiza(st1, inser_cli);
+                            con.cerrar(st1);
+                            cbx_alm.setEnabled(true);
+                            cbx_alm.requestFocus();
                         }
                     } catch (SQLException ex) {
                         System.out.print(ex);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(frm_reg_ingreso.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     txt_ruc.setText("");
@@ -960,7 +980,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     private void btn_buspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buspActionPerformed
         frm_ver_proveedores proveedor = new frm_ver_proveedores();
-        proveedor.funcion = "ingreso_almacen";
+        frm_ver_proveedores.funcion = "ingreso_almacen";
         ven.llamar_ventana(proveedor);
     }//GEN-LAST:event_btn_buspActionPerformed
 
@@ -1075,79 +1095,13 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             try {
                 Statement st = con.conexion();
                 String ins_det_com = "insert into detalle_ingreso Values ('" + com.getId() + "', "
-                        + "'" + art.getId_pro() + "', '" + art.getCan() + "', '" + art.getCos_pro() + "')";
+                        + "'" + art.getId_pro() + "', '" + art.getCan() + "', '" + art.getCos_pro() + "', '" + art.getPre_pro()+ "')";
                 System.out.println(ins_det_com);
                 con.actualiza(st, ins_det_com);
                 con.cerrar(st);
             } catch (Exception ex) {
                 System.out.print(ex);
             }
-
-            //Registrar Movimiento en kardex
-            try {
-                Statement st = con.conexion();
-                String ins_kar = "insert into kardex Values (null, '" + com.getFec_com() + "', '" + art.getId_pro() + "', '" + art.getCan() + "', '" + art.getCos_pro() + "', "
-                        + "'0.00', '0.00', '" + com.getSerie() + "', '" + com.getNro() + "', '" + tido.getId() + "', '" + alm.getId() + "', '" + pro.getRuc() + "',"
-                        + "'" + pro.getRaz() + "', '2')";
-                System.out.println(ins_kar);
-                con.actualiza(st, ins_kar);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-
-            //actualizar precio compra producto general
-            try {
-                Statement st1 = con.conexion();
-                String act_mat = "update productos set costo_compra = '" + art.getCos_pro() + "' "
-                        + "where idProductos = '" + art.getId_pro() + "'";
-                System.out.println(act_mat);
-                con.actualiza(st1, act_mat);
-                con.cerrar(st1);
-            } catch (Exception e) {
-                System.out.println(e.getLocalizedMessage());
-            }
-
-            //Verificar producto en almacen
-            try {
-                Statement st = con.conexion();
-                String ver_mat_alm = "select idProductos, cant from producto_almacen "
-                        + "where idAlmacen = '" + alm.getId() + "' and idProductos = '" + art.getId_pro() + "'";
-                System.out.println(ver_mat_alm);
-                ResultSet rs = con.consulta(st, ver_mat_alm);
-                if (rs.next()) {
-                    //seleccionando cantidad
-                    art.setCan_act_pro(rs.getDouble("cant"));
-                    art.setCan_act_pro(art.getCan_act_pro() + art.getCan());
-                    //actualizar cantidad
-                    Statement st1 = con.conexion();
-                    String act_mat_alm = "update producto_almacen set cant= '" + art.getCan_act_pro() + "', precio = '" + art.getPre_pro() + "', ultimo_ingreso = current_date()"
-                            + "where idProductos = '" + art.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
-                    System.out.println(act_mat_alm);
-                    con.actualiza(st1, act_mat_alm);
-                    con.cerrar(st1);
-
-                    Statement st2 = con.conexion();
-                    String act_mat = "update producto_almacen set precio = '" + art.getPre_pro() + "' "
-                            + "where idProductos = '" + art.getId_pro() + "' and idAlmacen != '" + alm.getId() + "'";
-                    System.out.println(act_mat);
-                    con.actualiza(st2, act_mat);
-                    con.cerrar(st2);
-                } else {
-                    //si producto no existe agregar
-                    Statement st1 = con.conexion();
-                    String add_pro_alm = "insert into producto_almacen Values ('" + art.getId_pro() + "', '" + alm.getId() + "', "
-                            + "'" + art.getCan() + "', '" + art.getPre_pro() + "', current_date(), '2010-01-01')";
-                    System.out.println(add_pro_alm);
-                    con.actualiza(st1, add_pro_alm);
-                    con.cerrar(st1);
-                }
-                con.cerrar(rs);
-                con.cerrar(st);
-            } catch (Exception ex) {
-                System.out.print(ex);
-            }
-
         }
 
         frm_ver_ingresos compra = new frm_ver_ingresos();
@@ -1278,6 +1232,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_cantidadKeyPressed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        int cantidad_filas = t_detalle.getRowCount();
+        if (cantidad_filas < 29) {
         double cantidad = Double.parseDouble(txt_cantidad.getText());
         double costo = Double.parseDouble(txt_costo.getText());
         double parcial = cantidad * costo;
@@ -1305,6 +1261,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         btn_add.setEnabled(false);
 
         btn_registrar.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "SE HA LLEGADO AL TOPE DE FILAS INGRESADAS = 28");
+        }
 
     }//GEN-LAST:event_btn_addActionPerformed
 

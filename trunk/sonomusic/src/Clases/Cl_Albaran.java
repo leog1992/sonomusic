@@ -5,40 +5,25 @@
  */
 package Clases;
 
+import java.sql.Statement;
+
 /**
  *
  * @author Dereck
  */
 public class Cl_Albaran {
 
+    Cl_Conectar con = new Cl_Conectar();
+    Cl_Varios ven = new Cl_Varios();
+
     private Integer id;
     private String fecha;
-    private String motivo;
-    private String origen;
-    private String destino;
-    private String ruc_des;
-    private String raz_soc_des;
-    private Integer nro;
-    private Integer ser;
-    private String ruc_tran;
-    private String raz_tran;
-    private String marca;
-    private String placa;
-    private String brevete;
-    private String chofer;
-    private String constancia;
-
-    public Cl_Albaran(Integer id, String fecha, String motivo, String origen, String destino, String ruc_des, String raz_soc_des, Integer nro, Integer ser) {
-        this.id = id;
-        this.fecha = fecha;
-        this.motivo = motivo;
-        this.origen = origen;
-        this.destino = destino;
-        this.ruc_des = ruc_des;
-        this.raz_soc_des = raz_soc_des;
-        this.nro = nro;
-        this.ser = ser;
-    }
+    private int origen;
+    private int destino;
+    private String usuario;
+    private Integer numero;
+    private Integer serie;
+    private int tipo_documento;
 
     public Cl_Albaran() {
     }
@@ -59,115 +44,65 @@ public class Cl_Albaran {
         this.fecha = fecha;
     }
 
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public String getOrigen() {
+    public int getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen) {
+    public void setOrigen(int origen) {
         this.origen = origen;
     }
 
-    public String getDestino() {
+    public int getDestino() {
         return destino;
     }
 
-    public void setDestino(String destino) {
+    public void setDestino(int destino) {
         this.destino = destino;
     }
 
-    public String getRuc_des() {
-        return ruc_des;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setRuc_des(String ruc_des) {
-        this.ruc_des = ruc_des;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getRaz_soc_des() {
-        return raz_soc_des;
+    public Integer getNumero() {
+        return numero;
     }
 
-    public void setRaz_soc_des(String raz_soc_des) {
-        this.raz_soc_des = raz_soc_des;
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
-    public Integer getNro() {
-        return nro;
+    public Integer getSerie() {
+        return serie;
     }
 
-    public void setNro(Integer nro) {
-        this.nro = nro;
+    public void setSerie(Integer serie) {
+        this.serie = serie;
     }
 
-    public Integer getSer() {
-        return ser;
+    public int getTipo_documento() {
+        return tipo_documento;
     }
 
-    public void setSer(Integer ser) {
-        this.ser = ser;
+    public void setTipo_documento(int tipo_documento) {
+        this.tipo_documento = tipo_documento;
     }
 
-    public String getRuc_tran() {
-        return ruc_tran;
+    public int i_traslado() {
+        int resultado = -1;
+        try {
+            Statement st = con.conexion();
+            String i_traslado = "insert into traslado values (null, '" + fecha + "', '" + origen + "', '" + destino + "', '" + usuario + "', '" + tipo_documento + "','" + numero + "', '" + serie + "','0')";
+            resultado = con.actualiza(st, i_traslado);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return resultado;
     }
 
-    public void setRuc_tran(String ruc_tran) {
-        this.ruc_tran = ruc_tran;
-    }
-
-    public String getRaz_tran() {
-        return raz_tran;
-    }
-
-    public void setRaz_tran(String raz_tran) {
-        this.raz_tran = raz_tran;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getBrevete() {
-        return brevete;
-    }
-
-    public void setBrevete(String brevete) {
-        this.brevete = brevete;
-    }
-
-    public String getChofer() {
-        return chofer;
-    }
-
-    public void setChofer(String chofer) {
-        this.chofer = chofer;
-    }
-
-    public String getConstancia() {
-        return constancia;
-    }
-
-    public void setConstancia(String constancia) {
-        this.constancia = constancia;
-    }
 }

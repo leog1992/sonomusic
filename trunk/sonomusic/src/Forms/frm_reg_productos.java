@@ -131,7 +131,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jp_img = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         txt_img = new javax.swing.JTextField();
-        cbx_todo = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(254, 254, 254));
         setClosable(true);
@@ -380,7 +379,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jp_img.setLayout(jp_imgLayout);
         jp_imgLayout.setHorizontalGroup(
             jp_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 211, Short.MAX_VALUE)
+            .addGap(0, 219, Short.MAX_VALUE)
         );
         jp_imgLayout.setVerticalGroup(
             jp_imgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,13 +391,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jLabel15.setText("Imagen:");
 
         txt_img.setEditable(false);
-
-        cbx_todo.setText("Todas las tiendas");
-        cbx_todo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_todoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -468,9 +460,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbx_todo)
-                                            .addComponent(jLabel11))))))
+                                        .addComponent(jLabel11)))
+                                .addGap(49, 49, 49)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jp_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -524,8 +515,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                             .addComponent(txt_pven, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_pcom, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_todo))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -704,15 +694,14 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                     } catch (Exception e) {
                         System.out.println(e.getLocalizedMessage());
                     }
-                    if (cbx_todo.isSelected()) {
-                        try {
-                            Statement st = con.conexion();
-                            String update = "update producto_almacen set precio = '" + pro.getPre_pro() + "' where idProductos = '" + pro.getId_pro() + "'";
-                            con.actualiza(st, update);
-                            con.cerrar(st);
-                        } catch (Exception e) {
-                            System.out.println(e.getLocalizedMessage());
-                        }
+
+                    try {
+                        Statement st = con.conexion();
+                        String update = "update producto_almacen set precio = '" + pro.getPre_pro() + "' where idProductos = '" + pro.getId_pro() + "'";
+                        con.actualiza(st, update);
+                        con.cerrar(st);
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
                     }
 
                     win = "reg";
@@ -966,10 +955,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jp_imgMousePressed
 
-    private void cbx_todoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_todoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbx_todoActionPerformed
-
     public class ImagenLOCAL extends javax.swing.JPanel {
 
         public ImagenLOCAL() {
@@ -992,7 +977,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btn_reg;
     public static javax.swing.JComboBox cbo_gra;
     public static javax.swing.JComboBox cbx_cla;
-    private javax.swing.JCheckBox cbx_todo;
     public static javax.swing.JComboBox cbx_und;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
