@@ -51,12 +51,14 @@ public class Print_Venta_Ticket {
         String tipo_documento = "";
         String fecha_registro = "";
         String telefonos = "";
+        int vtienda = 0;
+        String serie_ticketera = "";
         int id_tido = 0;
         int serie = 0;
         int numero = 0;
         try {
             Statement st = con.conexion();
-            String c_cabezera = "select a.nom_alm, a.dir_alm, a.ruc, a.raz_soc, a.telefono1, a.telefono2, td.desc_tipd, v.fec_ped, v.est_ped, v.idtipo_doc, v.serie_doc, v.nro_doc, c.dir_per, v.cli_doc, v.cli_nom, v.total "
+            String c_cabezera = "select v.idalmacen, a.nom_alm, a.dir_alm, a.ruc, a.raz_soc, a.telefono1, a.telefono2, td.desc_tipd, v.fec_ped, v.est_ped, v.idtipo_doc, v.serie_doc, v.nro_doc, c.dir_per, v.cli_doc, v.cli_nom, v.total "
                     + "from pedido as v "
                     + "inner join almacen as a on a.idalmacen = v.idalmacen "
                     + "inner join tipo_doc as td on td.idtipo_doc = v.idtipo_doc "
@@ -65,13 +67,14 @@ public class Print_Venta_Ticket {
             System.out.println(c_cabezera);
             ResultSet rs = con.consulta(st, c_cabezera);
             if (rs.next()) {
+                vtienda = rs.getInt("idalmacen");
                 ruc_empresa = rs.getString("ruc");
                 razon_social = rs.getString("raz_soc");
                 direccion = rs.getString("dir_alm");
                 ntienda = rs.getString("nom_alm");
-                nombre_cliente = rs.getString("cli_doc");
+                nombre_cliente = rs.getString("cli_nom");
                 tipo_documento = rs.getString("desc_tipd");
-                nro_cliente = rs.getString("cli_nom");
+                nro_cliente = rs.getString("cli_doc");
                 telefonos = rs.getString("telefono1") + " / " + rs.getString("telefono2");
                 //fecha_registro = ven.fecha_larga_tabla(rs.getString("fecha_registro"));
                 DateFormat hourdateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -84,6 +87,30 @@ public class Print_Venta_Ticket {
             con.cerrar(st);
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
+        }
+        
+        if (vtienda == 2) {
+            serie_ticketera = "PSSFIKA15030062";
+        }
+        
+        if (vtienda == 3) {
+            serie_ticketera = "PSSFIKA15030061";
+        }
+        
+        if (vtienda == 4) {
+            serie_ticketera = "PSSFIKA15030091";
+        }
+        
+        if (vtienda == 5) {
+            serie_ticketera = "PSSFIKA15030063";
+        }
+        
+        if (vtienda == 6) {
+            serie_ticketera = "PSSFIKA15030092";
+        }
+        
+        if (vtienda == 7) {
+            serie_ticketera = "PSSFIKA15030093";
         }
 
         int cantidad_filas_resultado = 0;
@@ -133,7 +160,7 @@ public class Print_Venta_Ticket {
         printer.printTextLinCol(6, 1, "TIENDA: " + ntienda.toUpperCase());
         printer.printTextLinCol(7, 1, tipo_documento.toUpperCase() + " #: " + ven.ceros_izquierda(3, serie + "") + " - " + ven.ceros_izquierda(5, numero + ""));
         printer.printTextLinCol(8, 1, "FECHA EMISION: " + fecha_registro);
-        printer.printTextLinCol(9, 1, "SERIE: PSSFIKA15030062");
+        printer.printTextLinCol(9, 1, "SERIE: " + serie_ticketera);
 
         int aumenta_fila = 0;
 

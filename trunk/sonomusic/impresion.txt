@@ -4,23 +4,16 @@
 JR. ALFONSO UGARTE 760 2DO PISO         
                                         
 TIENDA: PRINCIPAL                       
-TICKET #: 000 - 00007                   
-FECHA EMISION: 08/03/2017 19:28:59      
-SERIE: PSSFIKA16080306                  
-CLIENTE:                                
-LUIS ENRIQUE OYANGUREN GIRON            
-10469932091                             
+NOTA DE VENTA #: 000 - 00282            
+FECHA EMISION: 08/03/2017 20:02:01      
+SERIE: PSSFIKA15030062                  
                                         
-1 - BATERIA MAPEX HORIZONT HX5254 BLACK 
-                             x  2,300.00
-1 - PEDESTAL P/ PLATILLO MAPEX B500     
-                             x    280.00
+1 - PLUMILLA DUNLOP TORTEX 0.73 MM - AMA
+RILLO                        x      3.00
                                         
-                     SUB TOTAL  2,186.44
-                           IGV    393.56
-                         TOTAL  2,580.00
+                         TOTAL      3.00
                                         
-DOS MIL QUINIENTOS OCHENTA 00/100 SOLES 
+TRES 00/100 SOLES                       
                                         
                                         
                                         
