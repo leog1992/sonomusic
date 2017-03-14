@@ -56,10 +56,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         try {
             fecha_hoy = ven.getFechaActual();
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' order by p.idPedido asc";
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         } catch (Exception e) {
             System.out.println("error " + e);
@@ -958,11 +963,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 //        } catch (Exception e) {
 //            System.out.println(e.getLocalizedMessage());
 //        }
-        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
-        imprime.set_tipv("BOLETA");
-        imprime.set_idped(ped.getId_ped());
-        System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-        imprime.start();
+//        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+//        imprime.set_tipv("BOLETA");
+//        imprime.set_idped(ped.getId_ped());
+//        System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+//        imprime.start();
+        int venta = Integer.parseInt(ped.getId_ped());
+        Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+        ticket.generar(venta);
 
         fecha_hoy = ven.getFechaActual();
         String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "

@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import static com.lowagie.text.pdf.PdfFileSpecification.url;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -36,6 +37,9 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JExcelApiExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -82,7 +86,7 @@ public class Cl_Varios {
                     (desktopSize.height - jInternalFrameSize.height) / 2);
         }
     }
-    
+
     public void solo_numeros(KeyEvent evt) {
         char car = evt.getKeyChar();
         if ((car < '0' || car > '9')) {
@@ -201,6 +205,8 @@ public class Cl_Varios {
         }
     }
 
+   
+
     public void imp_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();
 
@@ -275,8 +281,7 @@ public class Cl_Varios {
             return false;
         }
     }
-    
-    
+
     public Boolean validar_RUC(String ruc) {
         Boolean validado = false;
         int dig[] = new int[10];

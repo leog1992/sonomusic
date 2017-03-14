@@ -98,7 +98,7 @@ public final class frm_menu extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     ver_tipo_cambio();
                     cargar_permisos();
-                    System.out.println("ejecutando timer");
+                    System.out.println("preguntando por el tipo de cambio");
                 }
             });
             timer.start();
@@ -961,7 +961,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem28.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem28.setText("Rpt. Venta Total x Empresa");
+        jMenuItem28.setText("Rpt. SUNAT - Selecciona Empresa");
         jMenuItem28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem28.setPreferredSize(new java.awt.Dimension(250, 23));
         jMenuItem28.addActionListener(new java.awt.event.ActionListener() {

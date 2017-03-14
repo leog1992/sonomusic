@@ -41,7 +41,6 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
      */
     public frm_ver_guias() {
         initComponents();
-        System.out.println(frm_menu.alm.getDireccion());
         String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
                 + "from traslado as t "
                 + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
@@ -532,9 +531,14 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
                     }
                 }
             }
-            String query = "select motivo, fecha, idTraslado, origen, raz_soc_dest, destino, ser_doc, nro_doc, nick, "
-                    + "estado from traslado where origen = '" + frm_menu.alm.getDireccion() + "' or destino = "
-                    + "'" + frm_menu.alm.getDireccion() + "' order by fecha desc, idTraslado desc";
+            String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
+                    + "from traslado as t "
+                    + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                    + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
+                    + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                    + "inner join empleados as em on em.dni = t.nick "
+                    + "where t.estado = '0' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                    + "order by t.fecha desc, t.idTraslado desc";
             ver_guia(query);
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
@@ -545,35 +549,52 @@ public class frm_ver_guias extends javax.swing.JInternalFrame {
         String texto = txt_busqueda.getText();
         if (cbx_bus.getSelectedIndex() == 0) {
             texto = ven.fechabase(texto);
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                    + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.fecha = '" + texto + "' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                    + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+            String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
+                    + "from traslado as t "
+                    + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                    + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
+                    + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                    + "inner join empleados as em on em.dni = t.nick "
+                    + "where t.fecha = '" + texto + "' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                    + "order by t.fecha desc, t.idTraslado desc";
             ver_guia(query);
         }
     }//GEN-LAST:event_txt_busquedaKeyPressed
 
     private void cbx_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_estadoActionPerformed
         if (cbx_estado.getSelectedIndex() == 0) {
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, "
-                    + "t.estado from traslado as t inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento where t.estado = '0' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = "
-                    + "'" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
+            String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
+                    + "from traslado as t "
+                    + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                    + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
+                    + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
+                    + "inner join empleados as em on em.dni = t.nick "
+                    + "where t.estado = '0' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                    + "order by t.fecha desc, t.idTraslado desc";
             ver_guia(query);
         }
 
-      /*  if (cbx_estado.getSelectedIndex() == 1) {
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
+        if (cbx_estado.getSelectedIndex() == 1) {
+            String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
                     + "from traslado as t "
+                    + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                    + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
                     + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
-                    + "where t.estado = '2' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc";
-            System.out.println(query);
+                    + "inner join empleados as em on em.dni = t.nick "
+                    + "where year(t.fecha) = 2017 and t.estado = '2' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                    + "order by t.fecha desc, t.idTraslado desc";
             ver_guia(query);
-        }*/
+        }
 
         if (cbx_estado.getSelectedIndex() == 2) {
-            String query = "select t.motivo, t.fecha, t.idTraslado, t.origen, t.raz_soc_dest, t.destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, t.nick, t.estado "
+            String query = "select t.fecha, t.idTraslado, ao.nom_alm as origen, ad.raz_soc, ad.nom_alm as destino, td.desc_tipd as tipo_documento, t.ser_doc, t.nro_doc, em.nom_per, t.estado "
                     + "from traslado as t "
+                    + "inner join almacen as ao on ao.idalmacen = t.almacen_origen "
+                    + "inner join almacen as ad on ad.idalmacen = t.almacen_destino "
                     + "inner join tipo_doc as td on td.idtipo_doc = t.tipo_documento "
-                    + "where t.estado = '1' and (t.origen = '" + frm_menu.alm.getDireccion() + "' or t.destino = '" + frm_menu.alm.getDireccion() + "') order by t.fecha desc, t.idTraslado desc limit 50";
+                    + "inner join empleados as em on em.dni = t.nick "
+                    + "where year(t.fecha) = 2017 and t.estado = '1' and (t.almacen_origen = '" + frm_menu.alm.getId() + "' or t.almacen_destino = '" + frm_menu.alm.getId() + "') "
+                    + "order by t.fecha desc, t.idTraslado desc";
             ver_guia(query);
         }
     }//GEN-LAST:event_cbx_estadoActionPerformed

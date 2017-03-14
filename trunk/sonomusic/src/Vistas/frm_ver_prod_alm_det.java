@@ -170,7 +170,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
         try {
             ArrayList almacen = new ArrayList();
             Statement st = con.conexion();
-            String query = "select nom_alm from almacen where idalmacen != 1 order by idAlmacen asc";
+            String query = "select nom_alm from almacen order by idAlmacen asc";
             ResultSet rs = con.consulta(st, query);
             while (rs.next()) {
                 almacen.add(rs.getString("nom_alm"));
@@ -453,9 +453,8 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                         + "inner join clasificacion as c on p.id_clas=c.id_clas "
                         + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
                         + "inner join almacen as a on pa.idAlmacen=a.idAlmacen "
-                        + "where pa.idalmacen != 1 and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
-                        + "order by p.desc_pro asc, p.modelo asc "
-                        + "limit 50";
+                        + "where concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%' or pa.precio like '%" + texto + "%' "
+                        + "order by p.desc_pro asc, p.modelo asc";
                 ver_productos(query);
                 t_productos.setDefaultRenderer(Object.class, new render_productos());
             }
@@ -470,8 +469,7 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                         + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
                         + "inner join almacen as a on pa.idAlmacen=a.idAlmacen "
                         + "where pa.idalmacen = '" + almacen + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%' or pa.precio like '%" + texto + "%') "
-                        + "order by p.desc_pro asc, p.modelo asc "
-                        + "limit 50";
+                        + "order by p.desc_pro asc, p.modelo asc";
                 ver_productos(query);
                 t_productos.setDefaultRenderer(Object.class, new render_productos());
             }

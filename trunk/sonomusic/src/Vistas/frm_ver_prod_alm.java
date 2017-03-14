@@ -84,6 +84,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         btn_historial = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        cbx_coincidencia = new javax.swing.JCheckBox();
 
         lbl_und.setText("jLabel5");
 
@@ -348,6 +349,13 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
         jLabel4.setText("encontrados");
 
+        cbx_coincidencia.setText("Buscar por la Primera palabra");
+        cbx_coincidencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_coincidenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -376,6 +384,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(btn_kar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_historial)
+                        .addGap(86, 86, 86)
+                        .addComponent(cbx_coincidencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
@@ -399,7 +409,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_historial, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_historial, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_coincidencia))
                 .addContainerGap())
         );
 
@@ -677,16 +688,27 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     private void txt_busKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyReleased
         if (txt_bus.getText().length() > 2) {
             String texto = txt_bus.getText();
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
-                    + "from producto_almacen as pa "
-                    + "inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
-                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
-                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%') "
-                    + "order by p.desc_pro asc, p.modelo asc "
-                    + "limit 50";
-            pro.mostrar_productos(query, t_productos);
-            jLabel3.setText("" + tot_reg());
+            if (cbx_coincidencia.isSelected()) {
+                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                        + "from producto_almacen as pa "
+                        + "inner join productos as p on pa.idProductos=p.idProductos "
+                        + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                        + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                        + "where pa.idAlmacen = '" + txt_ida.getText() + "' and ((concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '" + texto + "%') or p.desc_pro like '" + texto + "%')"
+                        + "order by p.desc_pro asc, p.modelo asc ";
+                pro.mostrar_productos(query, t_productos);
+                jLabel3.setText("" + tot_reg());
+            } else {
+                String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                        + "from producto_almacen as pa "
+                        + "inner join productos as p on pa.idProductos=p.idProductos "
+                        + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                        + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                        + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + texto + "%') "
+                        + "order by p.desc_pro asc, p.modelo asc ";
+                pro.mostrar_productos(query, t_productos);
+                jLabel3.setText("" + tot_reg());
+            }
         }
     }//GEN-LAST:event_txt_busKeyReleased
 
@@ -698,11 +720,16 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
-if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txt_bus.setText("");
             txt_bus.requestFocus();
         }
     }//GEN-LAST:event_jScrollPane1KeyPressed
+
+    private void cbx_coincidenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_coincidenciaActionPerformed
+        txt_bus.setText("");
+        txt_bus.requestFocus();
+    }//GEN-LAST:event_cbx_coincidenciaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -711,6 +738,7 @@ if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
     private javax.swing.JButton btn_historial;
     private javax.swing.JButton btn_kar;
     private javax.swing.JComboBox cbx_bus;
+    private javax.swing.JCheckBox cbx_coincidencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

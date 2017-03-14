@@ -3,7 +3,6 @@ package Forms;
 import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
 import Clases.Cl_Entidad;
-import Clases.Cl_Hilo_Imprime;
 import Clases.Cl_Moneda;
 import Clases.Cl_Ofertas;
 import Clases.Cl_Pedido;
@@ -12,16 +11,13 @@ import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
+import Clases.Print_Separacion_Ticket;
 import Clases.Print_Venta_Ticket;
 import com.mxrck.autocompleter.AutoCompleterCallback;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,7 +26,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import nicon.notify.core.Notification;
-import nicon.notify.gui.desktopNotify.DesktopNotify;
 import org.json.simple.parser.ParseException;
 import sonomusic.frm_menu;
 
@@ -1970,20 +1965,29 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
                 //IMPRIMIR TICKET
                 if (tipo_venta.equals("VENTA")) {
-                    int respuesta = 1;
+                    int respuesta;
                     if (tido.getId() == 1) {
+                        respuesta = 0;
                         int confirmado = JOptionPane.showConfirmDialog(null, "¿Desea Imprimir el ticket?");
                         if (JOptionPane.OK_OPTION == confirmado) {
                             respuesta = 1;
                         } else {
                             respuesta = 0;
                         }
+                    } else {
+                        respuesta = 1;
                     }
                     if (respuesta == 1) {
                         int venta = Integer.parseInt(ped.getId_ped());
                         Print_Venta_Ticket ticket = new Print_Venta_Ticket();
                         ticket.generar(venta);
                     }
+                }
+
+                if (tipo_venta.equals("SEPARACION")) {
+                    int venta = Integer.parseInt(ped.getId_ped());
+                    Print_Separacion_Ticket ticket = new Print_Separacion_Ticket();
+                    ticket.generar(venta);
                 }
 
                 //guardar pago de la venta

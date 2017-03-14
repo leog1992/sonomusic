@@ -338,6 +338,8 @@
                       <Component id="btn_kar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_historial" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                      <Component id="cbx_coincidencia" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_cer" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -367,6 +369,7 @@
                   <Component id="btn_cer" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_kar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_historial" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="cbx_coincidencia" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -506,6 +509,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="encontrados"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cbx_coincidencia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar por la Primera palabra"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_coincidenciaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
