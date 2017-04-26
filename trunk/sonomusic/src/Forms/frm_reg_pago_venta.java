@@ -3,6 +3,7 @@ package Forms;
 import Clases.Cl_Conectar;
 import Clases.Cl_Pedido;
 import Clases.Cl_Varios;
+import Clases.Print_Separacion_Ticket;
 import Vistas.frm_ver_ingresos;
 import Vistas.frm_ver_letras_pedido;
 import java.awt.event.KeyEvent;
@@ -340,12 +341,9 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             System.out.println(pagado);
 
             // TICKET DE SEPARACION
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("idped", ped.getId_ped());
-            parametros.put("Adelanto", monto);
-            parametros.put("Acumulado", pagado);
-            String filename = "rpt_ticket_separacion";
-            ven.imp_reporte(filename, parametros);
+            int venta = Integer.parseInt(ped.getId_ped());
+            Print_Separacion_Ticket ticket = new Print_Separacion_Ticket();
+            ticket.generar(venta);
         }
         //REGISTRO DE MOVIMIENTO EN CAJA
         if (tipa.equals("EFECTIVO")) {

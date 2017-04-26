@@ -13,6 +13,7 @@ import java.sql.Statement;
  * @author Usuario
  */
 public class Cl_Caja {
+
     Cl_Conectar con = new Cl_Conectar();
     private int id;
     private String nom;
@@ -41,12 +42,12 @@ public class Cl_Caja {
     public void setMonto(Double monto) {
         this.monto = monto;
     }
-    
-    public int id_caja (int idalm) {
+
+    public int id_caja(int idalm) {
         int id_caja = 0;
         try {
             Statement st = con.conexion();
-            String ver_id = "select idcaja from caja where idAlmacen = '"+idalm+"'";
+            String ver_id = "select idcaja from caja where idAlmacen = '" + idalm + "'";
             ResultSet rs = con.consulta(st, ver_id);
             if (rs.next()) {
                 id_caja = rs.getInt("idcaja");
@@ -58,5 +59,22 @@ public class Cl_Caja {
         }
         return id_caja;
     }
-    
+
+    public double apertura(int almacen, String fecha) {
+        double apertura = 0;
+        try {
+            Statement st = con.conexion();
+            String ver_monto = "select apertura from caja where idalmacen = '" + almacen + "' and fecha = '" + fecha + "'";
+            ResultSet rs = con.consulta(st, ver_monto);
+            if (rs.next()) {
+                apertura = rs.getDouble("apertura");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return apertura;
+    }
+
 }

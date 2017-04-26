@@ -2,13 +2,17 @@ package Forms;
 
 import Clases.Cl_Cliente;
 import Clases.Cl_Conectar;
+import Clases.Cl_Entidad;
 import Clases.Cl_Varios;
 import Vistas.frm_ver_cliente;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.json.simple.parser.ParseException;
 import sonomusic.frm_menu;
 
 /**
@@ -346,11 +350,20 @@ public class frm_reg_cliente extends javax.swing.JInternalFrame {
                         txt_ndoc.setText("");
                         txt_ndoc.requestFocus();
                     } else {
+
+                        String json = Cl_Entidad.getJSONRUC(cli.getNro_doc());
+                        //Lo mostramos
+                        String[] datos = Cl_Entidad.showJSONRUC(json);
+
+                        txt_nom.setText(datos[0].trim());
+                        txt_dir.setText(datos[1].trim());
                         txt_nom.setEditable(true);
                         txt_nom.requestFocus();
                     }
                 } catch (SQLException ex) {
                     System.out.print(ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(frm_reg_cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

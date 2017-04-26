@@ -7,7 +7,7 @@
     </Property>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Detalle de Guias"/>
+    <Property name="title" type="java.lang.String" value="Listado de Traslados --  Enviados / Recibidos"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -31,13 +31,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="1008" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="974" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="156" max="-2" attributes="0"/>
+                      <Component id="txt_busqueda" min="-2" pref="156" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbx_bus" min="-2" pref="108" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -66,7 +66,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_busqueda" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btn_envio" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="cbx_bus" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -94,9 +94,9 @@
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txt_busqueda">
       <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyPressed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_busquedaKeyPressed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -118,10 +118,10 @@
                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
               </Table>
             </Property>
+            <Property name="autoResizeMode" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="t_guiasMousePressed"/>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="t_guiasMouseReleased"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="t_guiasMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
@@ -190,10 +190,11 @@
     <Component class="javax.swing.JComboBox" name="cbx_estado">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
+          <StringArray count="4">
             <StringItem index="0" value="PENDIENTE"/>
             <StringItem index="1" value="ANULADOS"/>
-            <StringItem index="2" value="TODOS"/>
+            <StringItem index="2" value="RECIBIDOS"/>
+            <StringItem index="3" value="TODOS"/>
           </StringArray>
         </Property>
       </Properties>

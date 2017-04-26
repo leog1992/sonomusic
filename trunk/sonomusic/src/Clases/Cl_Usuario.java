@@ -5,11 +5,16 @@
  */
 package Clases;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author Dereck
  */
 public class Cl_Usuario {
+    
+    Cl_Conectar con = new Cl_Conectar();
 
     private String nick;
     private String contra;
@@ -230,6 +235,23 @@ public class Cl_Usuario {
     public void setPer_cuentas(String per_cuentas) {
         this.per_cuentas = per_cuentas;
     }    
+    
+    public String obtener_nombre (String nick) {
+        String nombre = "";
+        try {
+            Statement st = con.conexion();
+            String ver_nombre =  "select nom_per from empleados where dni = '"+nick+"'";
+            ResultSet rs  =con.consulta(st, ver_nombre);
+            if (rs.next()) {
+                nombre = rs.getString("nom_per");
+            }
+            con.cerrar(rs);
+            con.cerrar(st);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        return nombre;
+    }
     
     
 }

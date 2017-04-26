@@ -2,21 +2,19 @@ package Vistas;
 
 import Clases.*;
 import Forms.frm_reg_empleado;
+import Forms.frm_reg_inventario;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class frm_ver_empleado extends javax.swing.JInternalFrame {
-    
+
     Cl_Varios ven = new Cl_Varios();
     Cl_Conectar con = new Cl_Conectar();
     Cl_Empleado emp = new Cl_Empleado();
@@ -25,18 +23,16 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     String valor;
     DefaultTableModel mostrar;
     public static String fecha;
-    DecimalFormatSymbols sim = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", sim);
-    
+
     public frm_ver_empleado() {
         initComponents();
-        
+
         String query = "select e.dni, e.nom_per, e.tel_per, e.tel2_per, e.est_per, a.nom_alm, c.tipo_cargo from empleados as e "
                 + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join cargo as c "
                 + "on e.idCargo=c.idCargo where e.est_per = '1' order by a.nom_alm asc, dni asc";
         ver_empleado(query);
     }
-    
+
     private void ver_empleado(String query) {
         try {
             mostrar = new DefaultTableModel() {
@@ -64,7 +60,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 fila[4] = rs.getObject("tel2_per");
                 fila[5] = rs.getObject("nom_alm");
                 fila[2] = rs.getObject("tipo_cargo");
-                
+
                 String estado = rs.getString("est_per");
                 if (estado.equals("1")) {
                     fila[6] = "ACTIVO";
@@ -86,9 +82,9 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.print(e);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -303,27 +299,13 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_regActionPerformed
 
     private void t_empleadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMousePressed
-        i = t_empleado.getSelectedRow();
-        btn_mod.setEnabled(true);
-        
-        String estado = t_empleado.getValueAt(i, 6).toString();
-        if (estado.equals("-")) {
-            btn_act.setEnabled(true);
-            btn_ret.setEnabled(false);
-            btn_adel.setEnabled(false);
-            btn_rem.setEnabled(false);
-        } else {
-            btn_act.setEnabled(false);
-            btn_ret.setEnabled(true);
-            btn_adel.setEnabled(true);
-            btn_rem.setEnabled(true);
-        }
+
     }//GEN-LAST:event_t_empleadoMousePressed
 
     private void btn_modActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modActionPerformed
         //if (frm_menu.usu.getPem_emp().equals("1")) {
         frm_reg_empleado empleado = new frm_reg_empleado();
-        
+
         empleado.win = "mod";
         emp.setDni((int) t_empleado.getValueAt(i, 0));
         try {
@@ -396,13 +378,13 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
                 valor = "nom_per";
             }
             if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                
+
                 String buscar = txt_bus.getText();
                 String query = "select e.dni,e.nom_per,e.tel_per,e.tel2_per,e.est_per,a.nom_alm,m.monto,c.tipo_cargo from empleados as e\n"
                         + "inner join almacen as a on e.idAlmacen=a.idAlmacen inner join metas as m on e.idMetas=m.idMetas inner join cargo as c \n"
                         + "on e.idCargo=c.idCargo where " + valor + " like '%" + buscar + "%' order by nom_per asc";
                 ver_empleado(query);
-                
+
             }
         } catch (Exception e) {
             System.out.println("error " + e.getMessage() + " en " + e.getLocalizedMessage());
@@ -436,29 +418,28 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_empleadoKeyPressed
 
     private void t_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_empleadoMouseClicked
+        i = t_empleado.getSelectedRow();
+        btn_mod.setEnabled(true);
+
+        String estado = t_empleado.getValueAt(i, 6).toString();
+        if (estado.equals("-")) {
+            btn_act.setEnabled(true);
+            btn_ret.setEnabled(false);
+            btn_adel.setEnabled(false);
+            btn_rem.setEnabled(false);
+        } else {
+            btn_act.setEnabled(false);
+            btn_ret.setEnabled(true);
+            btn_adel.setEnabled(true);
+            btn_rem.setEnabled(true);
+        }
+
         if (evt.getClickCount() == 2) {
-            if (ventana.equals("movimiento")) {
-                frm_movimientos movi = null;
-                emp.setDni((int) t_empleado.getValueAt(i, 0));
-                try {
-                    Statement st = con.conexion();
-                    String ver_pro = "select * from empleados where dni = '" + emp.getDni() + "'";
-                    ResultSet rs = con.consulta(st, ver_pro);
-                    if (rs.next()) {
-                        movi.txt_dni.setText(emp.getDni() + "");
-                        movi.txt_nom.setText(rs.getString("nom_per"));
-                        movi.rbt_ini.setEnabled(true);
-                        movi.rbt_ing.setEnabled(true);
-                        movi.rbt_ing.setSelected(true);
-                        movi.rbt_sal.setEnabled(true);
-                        movi.txt_mot.setEditable(true);
-                        movi.txt_mot.requestFocus();
-                        this.dispose();
-                    }
-                } catch (SQLException ex) {
-                    System.out.print(ex);
-                }
-            }
+            frm_reg_inventario.responsable = t_empleado.getValueAt(i, 0).toString();
+            frm_reg_inventario.txt_responsable.setText(t_empleado.getValueAt(i, 1).toString());
+            frm_reg_inventario.cbx_tipo.setEnabled(true);
+            frm_reg_inventario.cbx_tipo.requestFocus();
+            this.dispose();
         }
     }//GEN-LAST:event_t_empleadoMouseClicked
 
@@ -505,7 +486,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
         ven.llamar_ventana(pago);
         this.dispose();
     }//GEN-LAST:event_btn_remActionPerformed
-    
+
     void cargar_remuneracion(String sql) {
         DefaultTableModel modelo;
         modelo = new DefaultTableModel() {
@@ -523,7 +504,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             modelo.addColumn("Adelantos");
             modelo.addColumn("Otros Descuentos");
             modelo.addColumn("Salario");
-            
+
             ResultSet rs = con.consulta(st, sql);
             Object[] dato = new Object[7];
             while (rs.next()) {
@@ -550,7 +531,7 @@ public class frm_ver_empleado extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
-    
+
     private void cargar_adelanto(String dni) {
         DefaultTableModel modelo;
         modelo = new DefaultTableModel() {

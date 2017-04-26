@@ -5,8 +5,10 @@
  */
 package Clases;
 
+import static com.lowagie.text.pdf.PdfFileSpecification.url;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
@@ -34,6 +37,9 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JExcelApiExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -81,11 +87,32 @@ public class Cl_Varios {
         }
     }
 
+    public void solo_numeros(KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
+    }
+
+    public void solo_precio(KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9') && car != '.') {
+            evt.consume();
+        }
+    }
+
+    public void limitar_caracteres(KeyEvent evt, JTextField txt, int longitud) {
+        if (txt.getText().length() == longitud) {
+            evt.consume();
+        }
+    }
+
     public static boolean mostrar(JInternalFrame ventana1) {
         boolean mostrar = true;
         for (int a = 0; a < sonomusic.frm_menu.contenedor.getComponentCount(); a++) {     // verificar si es instancia de algun componente que ya este en el jdesktoppane
             if (ventana1.getClass().isInstance(sonomusic.frm_menu.contenedor.getComponent(a))) {
                 System.out.println("ya esta cargado, no se puede mostrar");
+                JOptionPane.showMessageDialog(null, "ESTA VENTANA YA ESTA ABIERTA, BUSQUELA, CIERRE, Y ABRA NUEVAMENTE");
                 mostrar = false;
             } else {
                 //System.out.println("no lo es, puede mostrarse");
@@ -178,6 +205,8 @@ public class Cl_Varios {
         }
     }
 
+   
+
     public void imp_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();
 
@@ -233,5 +262,61 @@ public class Cl_Varios {
         } else {
             return string;
         }
+    }
+
+    public boolean esEntero(String numero) {
+        try {
+            Integer.parseInt(numero);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+
+    public boolean esDecimal(String numero) {
+        try {
+            Double.parseDouble(numero);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+
+    public Boolean validar_RUC(String ruc) {
+        Boolean validado = false;
+        int dig[] = new int[10];
+        int factores[] = {5, 4, 3, 2, 7, 6, 5, 4, 3, 2};
+        //  System.out.println("digitos del ruc");
+        for (int i = 0; i < 10; i++) {
+            dig[i] = Integer.parseInt(ruc.charAt(i) + "");
+            //      System.out.println(dig[i] + "\t");
+        }
+        int producto[] = new int[10];
+        //   System.out.println("producto de cada digito");
+        for (int i = 0; i < 10; i++) {
+            producto[i] = dig[i] * factores[i];
+            //   System.out.println(producto[i]);
+        }
+        int suma_producto = 0;
+        //     System.out.println("suma total del producto");
+        for (int i = 0; i < 10; i++) {
+            suma_producto += producto[i];
+        }
+        //     System.out.println(suma_producto);
+        //     System.out.println("Resultado de formula");
+        int formula = 11 - (suma_producto % 11);
+        //       System.out.println(formula);
+        String resultado = formula + "";
+//        System.out.println("longitud de resultado " + resultado.length());
+        int longitud = resultado.length();
+        String ultimo = resultado.charAt(longitud - 1) + "";
+        //       System.out.println("ultimo digito " + ultimo);
+        int dig11 = Integer.parseInt(ruc.charAt(10) + "");
+        //       System.out.println("comparando " + ultimo + " = " + dig11);
+        if (dig11 == Integer.parseInt(ultimo)) {
+            validado = true;
+        }
+//        System.out.println(validado);
+        return validado;
     }
 }

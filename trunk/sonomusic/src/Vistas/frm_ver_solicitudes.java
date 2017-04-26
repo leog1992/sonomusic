@@ -196,6 +196,11 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         btn_imp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
         btn_imp.setText("Imp. Ped.");
         btn_imp.setEnabled(false);
+        btn_imp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_impActionPerformed(evt);
+            }
+        });
 
         btn_eli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cross.png"))); // NOI18N
         btn_eli.setText("Eliminar");
@@ -249,7 +254,7 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
         frm_menu menu = null;
         solicitud.txt_id_ori.setText("" + menu.alm.getId());
         solicitud.txt_nom_ori.setText(menu.alm.getNom());
-        solicitud.cbx_des.requestFocus();
+        solicitud.cbx_destino.requestFocus();
         ven.llamar_ventana(solicitud);
         this.dispose();
     }//GEN-LAST:event_btn_regActionPerformed
@@ -264,12 +269,10 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
             ResultSet rs = con.consulta(st, ver_sol);
             if (rs.next()) {
                 soli.txt_id_ori.setText(rs.getString("id_alm_ori"));
-                soli.cbx_des.setSelectedIndex(rs.getInt("id_alm_des") - 1);
+                soli.cbx_destino.setSelectedIndex(rs.getInt("id_alm_des") - 1);
                 soli.txt_fec.setText(ven.fechaformateada(rs.getString("fec_sol")));
-                soli.spn_dias.setValue(rs.getInt("plazo"));
-                //soli.btn_env.setEnabled(true);
-                soli.btn_reg.setEnabled(false);
-                soli.btn_reg.setVisible(false);
+                soli.btn_enviar.setEnabled(false);
+                soli.btn_enviar.setVisible(false);
             }
             con.cerrar(rs);
             con.cerrar(st);
@@ -364,6 +367,10 @@ public class frm_ver_solicitudes extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btn_eliActionPerformed
+
+    private void btn_impActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_impActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_impActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

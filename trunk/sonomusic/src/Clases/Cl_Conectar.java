@@ -20,12 +20,15 @@ public class Cl_Conectar {
 
     private static Connection conexion = null;
     private static String bd = "sonomusic"; // Nombre de BD.
-    private static String user = "lspserver"; // Usuario de BD.
+    private static String user = "smi_lsp"; // Usuario de BD.
+    //private static String user = "lspserver"; // Usuario de BD.
     private static String password = "root/*123"; // Password de BD.
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
     String url_server = leer_archivo("server.txt");
-    String server = "jdbc:mysql://" + url_server + ":3306/" + bd;
+    //String server = "jdbc:mysql://smidns.ddns.net:3306/" + bd;
+    String server = "jdbc:mysql://lunasystemsperu.com:3306/" + bd;
+    //String server = "jdbc:mysql://" + url_server + ":3306/" + bd;
 
     /**
      * Método neecesario para conectarse al Driver y poder usar MySQL.
@@ -35,6 +38,7 @@ public class Cl_Conectar {
 
             Class.forName(driver);
             conexion = DriverManager.getConnection(server, user, password);
+            System.out.println("Conectando al Servidor: " + server);
 
         } catch (ClassNotFoundException | SQLException e) {
             //JOptionPane.showMessageDialog(null, "Error: Imposible realizar la conexion a BD." + server + "," + user + "," + password);

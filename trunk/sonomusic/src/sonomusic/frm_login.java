@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import nicon.notify.core.Notification;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 public class frm_login extends javax.swing.JFrame {
@@ -41,9 +42,7 @@ public class frm_login extends javax.swing.JFrame {
         URL url_ok = this.getClass().getResource(path_ok);
         icon_ok = new ImageIcon(url_ok);
 
-        //JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
-        //SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceRaspberryTheme");
     }
 
     @SuppressWarnings("unchecked")
@@ -295,6 +294,7 @@ public class frm_login extends javax.swing.JFrame {
         if (txt_usu.getText().length() == 8) {
             evt.consume();
         }
+        ven.solo_numeros(evt);
     }//GEN-LAST:event_txt_usuKeyTyped
 
     private void btn_canActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_canActionPerformed
@@ -311,6 +311,7 @@ public class frm_login extends javax.swing.JFrame {
         frm_menu menu = new frm_menu();
         menu.usu.setNick(usu.getNick());
         menu.lbl_user.setText(usu.getNick());
+        Notification.show("Inicio de Session", "Bienvenido Sr(a): " + usu.obtener_nombre(usu.getNick()), Notification.CONFIRM_MESSAGE, Notification.NICON_LIGHT_THEME);    
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_entActionPerformed

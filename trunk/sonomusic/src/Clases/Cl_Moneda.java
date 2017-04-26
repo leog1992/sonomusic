@@ -101,7 +101,7 @@ public class Cl_Moneda {
             if (rs.next()) {
                 precio = rs.getDouble("venta");
             } else {
-                precio = 0.0;
+                precio = 1.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
             }
             monto = valor / precio;
@@ -120,17 +120,18 @@ public class Cl_Moneda {
         try {
             Statement st = con.conexion();
             String ver_tc = "select compra from tipo_cambio where fecha = '" + fecha + "' and idmon = '" + moneda + "'";
+            System.out.println(ver_tc);
             ResultSet rs = con.consulta(st, ver_tc);
             if (rs.next()) {
                 precio = rs.getDouble("compra");
             } else {
-                precio = 0.0;
+                precio = 1.0;
                 JOptionPane.showMessageDialog(null, "EL TIPO DE CAMBIO DEL DIA " + ven.fechaformateada(fecha) + " NO EXISTE");
             }
             monto = valor / precio;
             con.cerrar(rs);
             con.cerrar(st);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
         }
         return monto;

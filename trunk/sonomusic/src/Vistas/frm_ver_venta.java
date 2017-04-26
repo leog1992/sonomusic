@@ -12,6 +12,7 @@ import Clases.Cl_Tipo_Documentos;
 import Clases.Cl_Tipo_Pago;
 import Clases.Cl_Usuario;
 import Clases.Cl_Varios;
+import Clases.Print_Venta_Ticket;
 import static Vistas.frm_ver_letras_pedido.modelo;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -44,8 +45,6 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     public static String id;
 
     DefaultTableModel mostrar;
-    DecimalFormatSymbols simbolo = new DecimalFormatSymbols(Locale.US);
-    DecimalFormat formato = new DecimalFormat("####0.00", simbolo);
     Integer i;
     String fecha_hoy;
 
@@ -57,10 +56,15 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         try {
             fecha_hoy = ven.getFechaActual();
             String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' order by p.idPedido asc";
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         } catch (Exception e) {
             System.out.println("error " + e);
@@ -69,6 +73,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         txt_bus.requestFocus();
     }
     //
+
+    void cargar_permiso() {
+        if (frm_menu.usu.getPer_ver_caja().equals("1")) {
+            txt_bus.setEnabled(false);
+
+        }
+    }
 
     double pagados() {
         double pag = 0;
@@ -102,60 +113,63 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             mostrar.addColumn("D.N.I / R.U.C");
             mostrar.addColumn("Cliente");
             mostrar.addColumn("Total");
-            mostrar.addColumn("Tipo Pago");
             mostrar.addColumn("Vendedor");
             mostrar.addColumn("Almacen");
             mostrar.addColumn("Estado");
             double sum = 0.0;
             //Creando las filas para el JTable
             while (rs.next()) {
-                Object[] fila = new Object[11];
+                Object[] fila = new Object[10];
                 fila[0] = rs.getObject("idPedido");
-                String tido = rs.getString("idtipo_doc");
+                String tipodoc = rs.getString("idtipo_doc");
                 String dtido = rs.getString("desc_tipd");
                 String serie = rs.getString("serie_doc");
                 String nro = rs.getString("nro_doc");
 
                 fila[1] = ven.fechaformateada(rs.getString("fec_ped"));
                 fila[2] = ven.fechaformateada(rs.getString("fec_pago"));
-                if (tido.equals("1") & serie.equals("000") & nro.equals("0000000")) {
+                if (tipodoc.equals("1") & serie.equals("000") & nro.equals("0000000")) {
                     fila[3] = "VENTA SIN DOCUMENTO";
                 } else {
                     fila[3] = dtido + " / " + serie + " - " + nro;
                 }
                 fila[4] = rs.getObject("cli_doc");
                 fila[5] = rs.getString("nom_per");
-                fila[6] = formato.format(rs.getDouble("total"));
+                if (frm_menu.usu.getPer_ver_caja().equals("0") && rs.getString("est_ped").equals("1")) {
+                    fila[6] = "0.00";
+                } else {
+                    fila[6] = ven.formato_numero(rs.getDouble("total"));
+                }
 
-                fila[7] = rs.getString("desc");
-                fila[8] = rs.getString("nick");
-                fila[9] = rs.getString("nom_alm");
+                fila[7] = rs.getString("nick");
+                fila[8] = rs.getString("nom_alm");
 
                 if (rs.getString("est_ped").equals("1")) {
-                    fila[10] = "PAGADO";
+                    fila[9] = "PAGADO";
                 }
                 if (rs.getString("est_ped").equals("2")) {
-                    fila[10] = "SEPARADO";
+                    fila[9] = "SEPARADO";
                 }
                 if (rs.getString("est_ped").equals("3")) {
-                    fila[10] = "ANULADO";
+                    fila[9] = "ANULADO";
                 }
                 if (rs.getString("est_ped").equals("4")) {
-                    fila[10] = "POR RECOGER";
+                    fila[9] = "POR RECOGER";
                 }
                 if (rs.getString("est_ped").equals("5")) {
-                    fila[10] = "ENTREGADO";
+                    fila[9] = "ENTREGADO";
                 }
                 if (rs.getString("est_ped").equals("6")) {
-                    fila[10] = "POR COBRAR";
+                    fila[9] = "POR COBRAR";
                 }
-                if (rs.getString("est_ped").equals("1")) {
+
+                if (frm_menu.usu.getPer_ver_caja().equals("1")) {
                     sum += (rs.getDouble("total"));
                 }
 
                 mostrar.addRow(fila);
             }
-            txt_tot.setText(formato.format(sum));
+            txt_tot.setText(ven.formato_totales(sum));
             con.cerrar(st);
             con.cerrar(rs);
             t_facturas.setModel(mostrar);
@@ -165,20 +179,11 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             t_facturas.getColumnModel().getColumn(3).setPreferredWidth(170);
             t_facturas.getColumnModel().getColumn(4).setPreferredWidth(80);
             t_facturas.getColumnModel().getColumn(5).setPreferredWidth(170);
+            t_facturas.getColumnModel().getColumn(6).setPreferredWidth(80);
             t_facturas.getColumnModel().getColumn(7).setPreferredWidth(80);
             t_facturas.getColumnModel().getColumn(8).setPreferredWidth(80);
             t_facturas.getColumnModel().getColumn(9).setPreferredWidth(80);
-            t_facturas.getColumnModel().getColumn(10).setPreferredWidth(80);
-            ven.derecha_celda(t_facturas, 0);
-            ven.centrar_celda(t_facturas, 1);
-            ven.centrar_celda(t_facturas, 2);
-            ven.centrar_celda(t_facturas, 4);
-            ven.derecha_celda(t_facturas, 6);
-            ven.centrar_celda(t_facturas, 7);
-            ven.centrar_celda(t_facturas, 8);
-            ven.centrar_celda(t_facturas, 9);
-            ven.centrar_celda(t_facturas, 10);
-            mostrar.fireTableDataChanged();
+            t_facturas.setDefaultRenderer(Object.class, new Clases.render_ventas());
         } catch (SQLException e) {
             System.out.println("GRAVE ERROR: " + e + " EN " + e.getLocalizedMessage());
         }
@@ -188,7 +193,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     void calcula_total() {
         double total = 0.0;
         for (int j = 0; j < t_facturas.getRowCount(); j++) {
-            if (t_facturas.getValueAt(j, 10).toString().equals("PAGADO")) {
+            if (t_facturas.getValueAt(j, 9).toString().equals("PAGADO")) {
                 double subtot = (double) t_facturas.getValueAt(j, 5);
                 total += subtot;
             }
@@ -245,13 +250,13 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
         t_facturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"2", "B/001-00025", "C0U944", "LUIS ENRIQUE OYANGUREN GIRON", "S/. 59.00", "Pendiente de Pago", null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Ped.", "Glosa", "Nro Placa.", "Cliente", "Monto", "Estado", "Title 7", "Title 8", "Title 9", "Title 10"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
             }
         ));
         t_facturas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -345,7 +350,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         .addComponent(txt_bus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbx_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 375, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_anu)
@@ -637,17 +642,23 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
     private void t_facturasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_facturasMousePressed
         i = t_facturas.getSelectedRow();
-        String est = t_facturas.getValueAt(i, 10).toString();
+        String est = t_facturas.getValueAt(i, 9).toString();
+
         switch (est) {
             case "PAGADO":
                 btn_anu.setEnabled(true);
-                btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
-                btn_pagar.setEnabled(true);
+                if (frm_menu.usu.getPer_ver_caja().equals("1")) {
+                    btn_det.setEnabled(true);
+                    btn_pagar.setEnabled(true);
+                } else {
+                    btn_det.setEnabled(false);
+                    btn_pagar.setEnabled(false);
+                }
                 break;
             case "ANULADO":
                 btn_anu.setEnabled(false);
-                btn_det.setEnabled(false);
+                btn_det.setEnabled(true);
                 btn_ent.setEnabled(false);
                 btn_pagar.setEnabled(false);
                 break;
@@ -680,7 +691,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
     private void btn_pagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pagarActionPerformed
         frm_ver_letras_pedido letras = new frm_ver_letras_pedido();
-        String est = t_facturas.getValueAt(i, 10).toString();
+        String est = t_facturas.getValueAt(i, 9).toString();
         if (est.equals("PAGADO")) {
             letras.btn_registrar.setEnabled(false);
         }
@@ -738,8 +749,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         detalle.txt_tipd.setText(t_facturas.getValueAt(i, 3).toString());
         detalle.txt_fec.setText(t_facturas.getValueAt(i, 1).toString());
         detalle.lbl_id.setText(t_facturas.getValueAt(i, 0).toString());
-        detalle.txt_pago.setText(t_facturas.getValueAt(i, 7).toString());
-        detalle.txt_tipv.setText(t_facturas.getValueAt(i, 10).toString());
+        detalle.txt_pago.setText(t_facturas.getValueAt(i, 9).toString());
+        detalle.txt_tipv.setText(t_facturas.getValueAt(i, 9).toString());
         ped.setId_ped(t_facturas.getValueAt(i, 0).toString());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -759,9 +770,9 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 fila[0] = rs.getString("idProductos");
                 fila[1] = rs.getString("desc_pro") + " - " + rs.getString("modelo");
                 fila[2] = rs.getString("marca");
-                fila[3] = formato.format(rs.getDouble("cantidad"));
+                fila[3] = ven.formato_numero(rs.getDouble("cantidad"));
                 fila[4] = rs.getString("desc_und");
-                fila[5] = formato.format(rs.getDouble("precio"));
+                fila[5] = ven.formato_numero(rs.getDouble("precio"));
                 modelo.addRow(fila);
                 total += rs.getDouble("sump");
             }
@@ -778,9 +789,9 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
             ven.derecha_celda(detalle.t_detalle, 5);
             double sub = total / 1.18;
             double igv = sub * 0.18;
-            detalle.txt_sub.setText(formato.format(sub));
-            detalle.txt_igv.setText(formato.format(igv));
-            detalle.txt_tot.setText(formato.format(total));
+            detalle.txt_sub.setText(ven.formato_numero(sub));
+            detalle.txt_igv.setText(ven.formato_numero(igv));
+            detalle.txt_tot.setText(ven.formato_numero(total));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -952,11 +963,14 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 //        } catch (Exception e) {
 //            System.out.println(e.getLocalizedMessage());
 //        }
-        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
-        imprime.set_tipv("BOLETA");
-        imprime.set_idped(ped.getId_ped());
-        System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
-        imprime.start();
+//        Cl_Hilo_Imprime imprime = new Cl_Hilo_Imprime();
+//        imprime.set_tipv("BOLETA");
+//        imprime.set_idped(ped.getId_ped());
+//        System.out.println(imprime.get_idped() + " - " + imprime.get_tipv());
+//        imprime.start();
+        int venta = Integer.parseInt(ped.getId_ped());
+        Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+        ticket.generar(venta);
 
         fecha_hoy = ven.getFechaActual();
         String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
@@ -1017,7 +1031,12 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void t_facturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_facturasMouseClicked
-        // TODO add your handling code here:
+//        if (evt.getClickCount() == 2) {
+//            i = t_facturas.getSelectedRow();
+//            int venta  = Integer.parseInt(t_facturas.getValueAt(i, 0).toString());
+//            Print_Venta_Ticket ticket = new Print_Venta_Ticket();
+//            ticket.generar(venta);
+//        }
     }//GEN-LAST:event_t_facturasMouseClicked
 
 

@@ -274,6 +274,7 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fec.getText().length() == 10) {
                 cbx_mon.setEnabled(true);
+                cbx_mon.setSelectedIndex(2);
                 cbx_mon.requestFocus();
             }
         }
@@ -336,6 +337,8 @@ public class frm_tipo_cambio extends javax.swing.JInternalFrame {
             txt_com.setEnabled(false);
             txt_fec.requestFocus();
         }
+        
+        btn_cer.doClick();
     }//GEN-LAST:event_btn_addActionPerformed
 
     private boolean existe_tc(String fecha, String idmon) {
