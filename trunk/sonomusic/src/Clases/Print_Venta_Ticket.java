@@ -48,9 +48,11 @@ public class Print_Venta_Ticket {
         String ntienda = "";
         String nro_cliente = "";
         String nombre_cliente = "";
+        String direccion_cliente = "";
         String tipo_documento = "";
         String fecha_registro = "";
         String telefonos = "";
+        String nombre_documento = "";
         int vtienda = 0;
         String serie_ticketera = "";
         int id_tido = 0;
@@ -74,6 +76,7 @@ public class Print_Venta_Ticket {
                 direccion = rs.getString("dir_alm");
                 ntienda = rs.getString("nom_alm");
                 nombre_cliente = rs.getString("cli_nom");
+                direccion_cliente = rs.getString("dir_per");
                 tipo_documento = rs.getString("desc_tipd");
                 nro_cliente = rs.getString("cli_doc");
                 telefonos = rs.getString("telefono1") + " / " + rs.getString("telefono2");
@@ -89,27 +92,27 @@ public class Print_Venta_Ticket {
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
-        
+
         if (vtienda == 2) {
             serie_ticketera = "PSSFIKA15030062";
         }
-        
+
         if (vtienda == 3) {
             serie_ticketera = "PSSFIKA15030061";
         }
-        
+
         if (vtienda == 4) {
             serie_ticketera = "PSSFIKA15030091";
         }
-        
+
         if (vtienda == 5) {
             serie_ticketera = "PSSFIKA15030063";
         }
-        
+
         if (vtienda == 6) {
             serie_ticketera = "PSSFIKA15030092";
         }
-        
+
         if (vtienda == 7) {
             serie_ticketera = "PSSFIKA15030093";
         }
@@ -136,6 +139,11 @@ public class Print_Venta_Ticket {
         System.out.println(cantidad_filas_resultado + "cantidad de productos");
         //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
         if (id_tido == 6) {
+            if (nro_cliente.length() == 8) {
+                nombre_documento = "TICKET BOLETA";
+            } else {
+                nombre_documento = "TICKET FACTURA";
+            }
             // printer.setOutSize(29,40);
             printer.setOutSize(30 + cantidad_filas_resultado, 40);
         } else {
@@ -159,21 +167,26 @@ public class Print_Venta_Ticket {
         }
         //printer.printTextWrap(linI, linE, colI, colE, null);
         printer.printTextLinCol(6, 1, "TIENDA: " + ntienda.toUpperCase());
-        printer.printTextLinCol(7, 1, tipo_documento.toUpperCase() + " #: " + ven.ceros_izquierda(3, serie + "") + " - " + ven.ceros_izquierda(5, numero + ""));
+        printer.printTextLinCol(7, 1, nombre_documento.toUpperCase() + " #: " + ven.ceros_izquierda(3, serie + "") + " - " + ven.ceros_izquierda(5, numero + ""));
         printer.printTextLinCol(8, 1, "FECHA EMISION: " + fecha_registro);
         printer.printTextLinCol(9, 1, "SERIE: " + serie_ticketera);
 
         int aumenta_fila = 0;
 
         if (id_tido == 6) {
-            aumenta_fila = 3;
+            aumenta_fila = 4;
             int otra_fila = 0;
             printer.printTextLinCol(10, 1, "CLIENTE:");
             if (!nro_cliente.equals("00000000")) {
                 printer.printTextLinCol(11, 1, nro_cliente);
                 otra_fila++;
+                printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
+                otra_fila++;
+                printer.printTextLinCol(11 + otra_fila, 1, direccion_cliente);
+                otra_fila++;
+            } else {
+                printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
             }
-            printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
         }
 
         int filas = 0;
@@ -220,15 +233,21 @@ public class Print_Venta_Ticket {
         String texto_numero = leer.Convertir(ven.formato_numero(total), true) + " SOLES";
 
         if (id_tido == 6) {
-            printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "SUB TOTAL"));
-            printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18)));
-            printer.printTextLinCol(10 + filas + 3, 1, varios_impresion.texto_derecha(30, "IGV"));
-            printer.printTextLinCol(10 + filas + 3, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18 * 0.18)));
-            printer.printTextLinCol(10 + filas + 4, 1, varios_impresion.texto_derecha(30, "TOTAL"));
-            printer.printTextLinCol(10 + filas + 4, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
-            printer.printTextWrap(10 + filas + 5, 10 + filas + 6, 0, 40, texto_numero);
-            //printer.printTextLinCol(10 + filas + 5, 1, texto_numero);
-
+            if (nro_cliente.length() == 8) {
+                printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "TOTAL"));
+                printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
+                //printer.printTextLinCol(10 + filas + 3, 1, texto_numero);
+                printer.printTextWrap(10 + filas + 3, 10 + filas + 4, 0, 40, texto_numero);
+            } else {
+                printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "SUB TOTAL"));
+                printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18)));
+                printer.printTextLinCol(10 + filas + 3, 1, varios_impresion.texto_derecha(30, "IGV"));
+                printer.printTextLinCol(10 + filas + 3, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total / 1.18 * 0.18)));
+                printer.printTextLinCol(10 + filas + 4, 1, varios_impresion.texto_derecha(30, "TOTAL"));
+                printer.printTextLinCol(10 + filas + 4, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
+                printer.printTextWrap(10 + filas + 5, 10 + filas + 6, 0, 40, texto_numero);
+                //printer.printTextLinCol(10 + filas + 5, 1, texto_numero);
+            }
         } else {
             printer.printTextLinCol(10 + filas + 2, 1, varios_impresion.texto_derecha(30, "TOTAL"));
             printer.printTextLinCol(10 + filas + 2, 31, varios_impresion.texto_derecha(10, ven.formato_totales(total)));
@@ -262,7 +281,7 @@ public class Print_Venta_Ticket {
 
         PrinterService printerService = new PrinterService();
         printerService.printString("BIXOLON SRP-270", new String(initEP));
-         // printerService.printBytes("BIXOLON SRP-270", initEP );
+        // printerService.printBytes("BIXOLON SRP-270", initEP );
 
         // printerService.printString("BIXOLON SRP-270", inputStream.toString());
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;

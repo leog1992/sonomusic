@@ -48,9 +48,11 @@ public class Print_Separacion_Ticket {
         String ntienda = "";
         String nro_cliente = "";
         String nombre_cliente = "";
+        String direccion_cliente = "";
         String tipo_documento = "";
         String fecha_registro = "";
         String telefonos = "";
+        String nombre_documento = "";
         int vtienda = 0;
         String serie_ticketera = "";
         int id_tido = 0;
@@ -73,6 +75,7 @@ public class Print_Separacion_Ticket {
                 direccion = rs.getString("dir_alm");
                 ntienda = rs.getString("nom_alm");
                 nombre_cliente = rs.getString("cli_nom");
+                direccion_cliente = rs.getString("dir_per");
                 tipo_documento = rs.getString("desc_tipd");
                 nro_cliente = rs.getString("cli_doc");
                 telefonos = rs.getString("telefono1") + " / " + rs.getString("telefono2");
@@ -181,14 +184,19 @@ public class Print_Separacion_Ticket {
 
         int aumenta_fila = 0;
 
-        aumenta_fila = 3;
+        aumenta_fila = 4;
         int otra_fila = 0;
         printer.printTextLinCol(10, 1, "CLIENTE:");
         if (!nro_cliente.equals("00000000")) {
             printer.printTextLinCol(11, 1, nro_cliente);
             otra_fila++;
+            printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
+            otra_fila++;
+            printer.printTextLinCol(11 + otra_fila, 1, direccion_cliente);
+            otra_fila++;
+        } else {
+            printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
         }
-        printer.printTextLinCol(11 + otra_fila, 1, nombre_cliente);
 
         int filas = 0;
         double total = 0;
@@ -278,7 +286,7 @@ public class Print_Separacion_Ticket {
 
         PrinterService printerService = new PrinterService();
         printerService.printString("BIXOLON SRP-270", new String(initEP));
-         // printerService.printBytes("BIXOLON SRP-270", initEP );
+        // printerService.printBytes("BIXOLON SRP-270", initEP );
 
         // printerService.printString("BIXOLON SRP-270", inputStream.toString());
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;

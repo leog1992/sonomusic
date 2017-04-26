@@ -408,10 +408,6 @@ public class frm_ver_prod_alm_det extends javax.swing.JInternalFrame {
                     prod.txt_mar.setEditable(false);
                     prod.txt_mod.setText(rs.getString("modelo"));
                     prod.txt_mod.setEditable(false);
-                    prod.txt_ser.setText(rs.getString("serie"));
-                    prod.txt_ser.setEditable(false);
-                    prod.cbo_gra.setSelectedItem(rs.getString("grado"));
-                    prod.cbo_gra.setEnabled(false);
                     prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
                     prod.cbx_und.setEnabled(false);
                     prod.txt_pcom.setText(rs.getString("costo_compra"));

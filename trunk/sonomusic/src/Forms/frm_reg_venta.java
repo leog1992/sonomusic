@@ -1968,12 +1968,12 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     int respuesta;
                     if (tido.getId() == 1) {
                         respuesta = 0;
-                        int confirmado = JOptionPane.showConfirmDialog(null, "¿Desea Imprimir el ticket?");
-                        if (JOptionPane.OK_OPTION == confirmado) {
-                            respuesta = 1;
-                        } else {
-                            respuesta = 0;
-                        }
+//                        int confirmado = JOptionPane.showConfirmDialog(null, "¿Desea Imprimir el ticket?");
+//                        if (JOptionPane.OK_OPTION == confirmado) {
+//                            respuesta = 1;
+//                        } else {
+//                            respuesta = 0;
+//                        }
                     } else {
                         respuesta = 1;
                     }
@@ -1982,12 +1982,6 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         Print_Venta_Ticket ticket = new Print_Venta_Ticket();
                         ticket.generar(venta);
                     }
-                }
-
-                if (tipo_venta.equals("SEPARACION")) {
-                    int venta = Integer.parseInt(ped.getId_ped());
-                    Print_Separacion_Ticket ticket = new Print_Separacion_Ticket();
-                    ticket.generar(venta);
                 }
 
                 //guardar pago de la venta
@@ -2079,6 +2073,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
                     }
                 }
+                
+                if (tipo_venta.equals("SEPARACION")) {
+                    int venta = Integer.parseInt(ped.getId_ped());
+                    Print_Separacion_Ticket ticket = new Print_Separacion_Ticket();
+                    ticket.generar(venta);
+                }
+                
+                
                 //actualizar documento de la tienda
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
 

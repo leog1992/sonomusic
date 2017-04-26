@@ -376,10 +376,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_mar.setEditable(true);
                     prod.txt_mod.setText(rs.getString("modelo"));
                     prod.txt_mod.setEditable(true);
-                    prod.txt_ser.setText(rs.getString("serie"));
-                    prod.txt_ser.setEditable(true);
-                    prod.cbo_gra.setSelectedItem(rs.getString("grado"));
-                    prod.cbo_gra.setEnabled(true);
                     prod.cbx_und.setSelectedIndex(rs.getInt("idUnd_medida") - 1);
                     prod.cbx_und.setEnabled(true);
                     prod.txt_pcom.setText(rs.getString("costo_compra"));
@@ -394,17 +390,17 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     prod.txt_com.setEditable(true);
                     prod.btn_reg.setEnabled(true);
 
-                    //cargar imagen 
-                    ImagenURL Imagen = new ImagenURL();
-                    String imgname = rs.getString("nom_img");
-                    prod.txt_img.setText(imgname);
-                    prod.pro.setImg(imgname);
-                    String url;
-                    url = "http://conmetal.pe/images/productos/" + imgname;
-                    Imagen.setUrl(url);
-                    prod.jp_img.add(Imagen);
-                    prod.jp_img.repaint();
-                    //fin de carga
+//                    //cargar imagen 
+//                    ImagenURL Imagen = new ImagenURL();
+//                    String imgname = rs.getString("nom_img");
+//                    prod.txt_img.setText(imgname);
+//                    prod.pro.setImg(imgname);
+//                    String url;
+//                    url = "http://conmetal.pe/images/productos/" + imgname;
+//                    Imagen.setUrl(url);
+//                    prod.jp_img.add(Imagen);
+//                    prod.jp_img.repaint();
+//                    //fin de carga
                 }
 
                 prod.win = "mod";

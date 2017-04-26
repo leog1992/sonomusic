@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.print.event.PrintJobEvent;
+import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -99,6 +100,7 @@ public class Cl_Entidad {
             }
             //Mostramos la respuesta del servidor por consola
             System.out.println("Respuesta del servidor: " + response);
+            JOptionPane.showMessageDialog(null, "Respuesta del servidor: " + response);
             System.out.println();
             //cerramos la conexión
             in.close();

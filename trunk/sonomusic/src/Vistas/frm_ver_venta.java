@@ -55,8 +55,8 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
         initComponents();
         try {
             fecha_hoy = ven.getFechaActual();
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, c.nom_per, p.cli_doc "
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
                     + "from pedido as p "
                     + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
                     + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
@@ -131,10 +131,18 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 if (tipodoc.equals("1") & serie.equals("000") & nro.equals("0000000")) {
                     fila[3] = "VENTA SIN DOCUMENTO";
                 } else {
+                    if (tipodoc.equals("6")) {
+                        if (rs.getString("cli_doc").length() == 8) {
+                            dtido = "TICKET BOLETA";
+                        }
+                        if (rs.getString("cli_doc").length() == 11) {
+                            dtido = "TICKET FACTURA";
+                        }
+                    }
                     fila[3] = dtido + " / " + serie + " - " + nro;
                 }
                 fila[4] = rs.getObject("cli_doc");
-                fila[5] = rs.getString("nom_per");
+                fila[5] = rs.getString("cli_nom");
                 if (frm_menu.usu.getPer_ver_caja().equals("0") && rs.getString("est_ped").equals("1")) {
                     fila[6] = "0.00";
                 } else {
@@ -490,41 +498,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         Double new_can = 0.00;
                         Double pro_can_alm = 0.00;
                         Double new_can_alm = 0.00;
-                        try {
-                            Statement st1 = con.conexion();
-                            String ver_pro = "select cant_actual from productos where idProductos = '" + pro.getId_pro() + "'";
-                            System.out.println(ver_pro);
-                            ResultSet rs1 = con.consulta(st1, ver_pro);
-                            if (rs1.next()) {
-                                pro_can = rs1.getDouble("cant_actual");
-                            }
-                            con.cerrar(rs1);
-                            con.cerrar(st1);
-                            new_can = pro.getCan() + pro_can;
-                            System.out.println("Cantidad actual" + new_can + " del producto " + pro.getId_pro() + "\n");
-                        } catch (SQLException ex1) {
-                            System.out.print(ex1);
-                        }
 
                         try {
                             Statement st1 = con.conexion();
-                            String ver_pro = "select cant from producto_almacen where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
-                            System.out.println(ver_pro);
-                            ResultSet rs1 = con.consulta(st1, ver_pro);
-                            if (rs1.next()) {
-                                pro_can_alm = rs1.getDouble("cant");
-                            }
-                            con.cerrar(rs1);
-                            con.cerrar(st1);
-                            new_can_alm = pro.getCan() + pro_can_alm;
-                            System.out.println("Cantidad Nueva" + new_can_alm + " del producto " + pro.getId_pro() + "en el almacen " + alm.getId() + "\n");
-                        } catch (SQLException ex1) {
-                            System.out.print(ex1);
-                        }
-
-                        try {
-                            Statement st1 = con.conexion();
-                            String upt_pro_alm = "update producto_almacen set cant = '" + new_can_alm + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
+                            String upt_pro_alm = "update producto_almacen set cant = cant + '" + new_can_alm + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
                             System.out.println(upt_pro_alm);
                             con.actualiza(st1, upt_pro_alm);
                             con.cerrar(st1);
@@ -535,7 +512,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
                         try {
                             Statement st1 = con.conexion();
-                            String upt_pro = "update productos set cant_actual = '" + new_can + "' where idProductos = '" + pro.getId_pro() + "'";
+                            String upt_pro = "update productos set cant_actual = cant_actual + '" + new_can + "' where idProductos = '" + pro.getId_pro() + "'";
                             System.out.println(upt_pro);
                             con.actualiza(st1, upt_pro);
                             con.cerrar(st1);
@@ -546,7 +523,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
                         try {
                             Statement st1 = con.conexion();
-                            String ins_kardex = "insert into kardex Values (null, '" + ped.getFec_ped() + "', '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00',"
+                            String ins_kardex = "insert into kardex Values (null, current_date(), '" + pro.getId_pro() + "', '" + pro.getCan() + "', '" + pro.getPre_pro() + "', '0.00', '0.00',"
                                     + "'" + tido.getSerie() + "', '" + tido.getNro() + "', '" + tido.getId() + "', '" + alm.getId() + "', '" + cli.getNro_doc() + "', '" + cli.getNom_cli() + "', '5')";
                             System.out.println(ins_kardex);
                             con.actualiza(st1, ins_kardex);
@@ -580,7 +557,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                             mov.setFec_mov(rs.getString("fecha"));
                             mov.setEgreso(rs.getDouble("monto"));
                             Statement st1 = con.conexion();
-                            String ins_mov = "insert into movimiento Values (null, '" + mov.getGlosa() + "', '" + mov.getFec_mov() + "' , "
+                            String ins_mov = "insert into movimiento Values (null, '" + mov.getGlosa() + "', current_date() , "
                                     + "'0.00', '" + mov.getEgreso() + "' , '" + sonomusic.frm_menu.lbl_user.getText() + "', "
                                     + "'" + alm.getId() + "', 'C', '" + frm_menu.caja.getId() + "')";
                             System.out.println(ins_mov);
@@ -595,7 +572,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                             mov.setFec_mov(rs.getString("fecha"));
                             mov.setEgreso(rs.getDouble("monto"));
                             Statement st1 = con.conexion();
-                            String ins_mov = "insert into movimiento Values (null, '" + mov.getGlosa() + "', '" + mov.getFec_mov() + "' , "
+                            String ins_mov = "insert into movimiento Values (null, '" + mov.getGlosa() + "', current_date() , "
                                     + "'0.00', '" + mov.getEgreso() + "' , '" + sonomusic.frm_menu.lbl_user.getText() + "', "
                                     + "'" + alm.getId() + "', 'B', '" + frm_menu.caja.getId() + "')";
                             System.out.println(ins_mov);

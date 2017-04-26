@@ -74,26 +74,28 @@ public class PrinterService {
 
         PrintService printService[] = PrintServiceLookup.lookupPrintServices(
                 flavor, pras);
-        PrintService service = findPrintService(printerName, printService);
 
-        DocPrintJob job = service.createPrintJob();
+        if (printService.length > 0) {
+            PrintService service = findPrintService(printerName, printService);
 
-        try {
+            DocPrintJob job = service.createPrintJob();
 
-            byte[] bytes;
+            try {
 
-            // important for umlaut chars
-            bytes = text.getBytes("CP437");
+                byte[] bytes;
 
-            Doc doc = new SimpleDoc(bytes, flavor, null);
+                // important for umlaut chars
+                bytes = text.getBytes("CP437");
 
-            job.print(doc, null);
+                Doc doc = new SimpleDoc(bytes, flavor, null);
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+                job.print(doc, null);
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-
     }
 
     public void printBytes(String printerName, byte[] bytes) {

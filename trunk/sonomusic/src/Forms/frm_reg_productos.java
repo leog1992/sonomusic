@@ -41,16 +41,15 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     FTPUploader ftpUploader;
     String filename;
     String name;
-    public static DecimalFormat formato = new DecimalFormat("####0.00");
 
     public frm_reg_productos() {
         initComponents();
-        try {
-            this.ftpUploader = new FTPUploader();
-        } catch (Exception ex) {
-            System.out.print(ex);
-            JOptionPane.showMessageDialog(null, "FTP: Error " + ex);
-        }
+//        try {
+//            this.ftpUploader = new FTPUploader();
+//        } catch (Exception ex) {
+//            System.out.print(ex);
+//            JOptionPane.showMessageDialog(null, "FTP: Error " + ex);
+//        }
         String query = "select desc_clas from clasificacion";
         ver_clasificacion(query);
         String und = "select desc_und from und_medida";
@@ -101,7 +100,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -118,13 +116,10 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btn_reg = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        txt_ser = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txt_gan = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txt_cod = new javax.swing.JTextField();
-        cbo_gra = new javax.swing.JComboBox();
         txt_com = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -164,10 +159,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(212, 2, 2));
         jLabel4.setText("Modelo:");
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel5.setText("Grado:");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
@@ -238,6 +229,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
         txt_pcom.setEditable(false);
         txt_pcom.setForeground(new java.awt.Color(0, 0, 153));
+        txt_pcom.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_pcom.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_pcomKeyPressed(evt);
@@ -249,6 +241,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
         txt_pven.setEditable(false);
         txt_pven.setForeground(new java.awt.Color(0, 0, 153));
+        txt_pven.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_pven.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_pvenActionPerformed(evt);
@@ -306,25 +299,13 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(212, 2, 2));
-        jLabel10.setText("Serie:");
-
-        txt_ser.setEditable(false);
-        txt_ser.setForeground(new java.awt.Color(0, 0, 153));
-        txt_ser.setText("-");
-        txt_ser.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_serKeyPressed(evt);
-            }
-        });
-
         jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(212, 2, 2));
         jLabel12.setText("Ganancia:");
 
         txt_gan.setEditable(false);
         txt_gan.setForeground(new java.awt.Color(0, 0, 204));
+        txt_gan.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_gan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_ganKeyPressed(evt);
@@ -346,16 +327,9 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             }
         });
 
-        cbo_gra.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NUEVO", "SEGUNDA", "REPARADO", " " }));
-        cbo_gra.setEnabled(false);
-        cbo_gra.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbo_graKeyPressed(evt);
-            }
-        });
-
         txt_com.setEditable(false);
         txt_com.setForeground(new java.awt.Color(0, 0, 204));
+        txt_com.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_com.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_comKeyPressed(evt);
@@ -414,8 +388,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                 .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(15, 15, 15)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -424,12 +397,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txt_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbo_gra, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txt_des)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -460,9 +427,8 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txt_com, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel11)))
-                                .addGap(49, 49, 49)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel11)))))
+                        .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jp_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -496,13 +462,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                                     .addComponent(txt_mar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txt_ser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbo_gra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                .addGap(60, 60, 60)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_cantm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,7 +492,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbx_cla, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 21, Short.MAX_VALUE)
+                        .addGap(18, 25, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_reg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -641,11 +601,11 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
     private void llenar() {
         pro.setId_pro(id);
-        pro.setDes_pro(txt_des.getText());
-        pro.setMar_pro(txt_mar.getText());
-        pro.setMod_pro(txt_mod.getText());
-        pro.setSer_pro(txt_ser.getText());
-        pro.setGra_pro(cbo_gra.getSelectedItem().toString());
+        pro.setDes_pro(txt_des.getText().trim());
+        pro.setMar_pro(txt_mar.getText().trim());
+        pro.setMod_pro(txt_mod.getText().trim());
+        pro.setSer_pro("-");
+        pro.setGra_pro("NUEVO");
         pro.setCos_pro(Double.parseDouble(txt_pcom.getText()));
         pro.setPre_pro(Double.parseDouble(txt_pven.getText()));
         cla.setId(cbx_cla.getSelectedIndex() + 1);
@@ -659,13 +619,13 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         if (ventana.equals("producto")) {
             // EJECUTAR SOLO CUANDO EXISTA UNA IMAGEN
             if (!pro.getImg().equals("noimage.jpg")) {
-                try {
-                    ftpUploader.uploadFile(filename, name, "/public_html/images/productos/");
-                    ftpUploader.disconnect();
-                } catch (Exception ex) {
-                    System.out.print(ex);
-                    JOptionPane.showMessageDialog(null, ex);
-                }
+//                try {
+//                    ftpUploader.uploadFile(filename, name, "/public_html/images/productos/");
+//                    ftpUploader.disconnect();
+//                } catch (Exception ex) {
+//                    System.out.print(ex);
+//                    JOptionPane.showMessageDialog(null, ex);
+//                }
             }
 
             try {
@@ -754,20 +714,11 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     private void txt_modKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_modKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_mod.getText().isEmpty()) {
-                txt_ser.setEditable(true);
-                txt_ser.requestFocus();
+                txt_cantm.setEditable(true);
+                txt_cantm.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_modKeyPressed
-
-    private void txt_serKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txt_ser.getText().isEmpty()) {
-                cbo_gra.setEnabled(true);
-                cbo_gra.requestFocus();
-            }
-        }
-    }//GEN-LAST:event_txt_serKeyPressed
 
     private void txt_cantmKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantmKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -798,7 +749,7 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
                 Double pven = Double.parseDouble(txt_pven.getText());
                 Double pcom = Double.parseDouble(txt_pcom.getText());
                 Double gan = pven - pcom;
-                txt_gan.setText(formato.format(gan));
+                txt_gan.setText(ven.formato_numero(gan));
                 txt_com.setEditable(true);
                 txt_com.requestFocus();
 
@@ -844,13 +795,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_codKeyTyped
-
-    private void cbo_graKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbo_graKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_cantm.setEditable(true);
-            txt_cantm.requestFocus();
-        }
-    }//GEN-LAST:event_cbo_graKeyPressed
 
     private void txt_ganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ganKeyPressed
 
@@ -908,10 +852,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
         txt_mar.setEditable(false);
         txt_mod.setText("");
         txt_mod.setEditable(false);
-        txt_ser.setText("");
-        txt_ser.setEditable(false);
-        cbo_gra.setSelectedIndex(0);
-        cbo_gra.setEnabled(false);
         txt_cantm.setText("");
         txt_cantm.setEditable(false);
         cbx_und.setSelectedIndex(0);
@@ -975,13 +915,11 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_reg;
-    public static javax.swing.JComboBox cbo_gra;
     public static javax.swing.JComboBox cbx_cla;
     public static javax.swing.JComboBox cbx_und;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -990,7 +928,6 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1006,6 +943,5 @@ public class frm_reg_productos extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txt_mod;
     public static javax.swing.JTextField txt_pcom;
     public static javax.swing.JTextField txt_pven;
-    public static javax.swing.JTextField txt_ser;
     // End of variables declaration//GEN-END:variables
 }
