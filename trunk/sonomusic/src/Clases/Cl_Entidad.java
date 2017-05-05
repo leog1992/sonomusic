@@ -89,21 +89,72 @@ public class Cl_Entidad {
             int responseCode = con.getResponseCode();
             System.out.println("\nSending 'POST' request to URL : " + url);
             System.out.println("Response Code : " + responseCode);
+            //JOptionPane.showMessageDialog(null, "Respuesta del servidor: " + responseCode);
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            response = new StringBuffer();
+            if (responseCode == 200) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                //Mostramos la respuesta del servidor por consola
+                System.out.println("Respuesta del servidor: " + response);
+                System.out.println();
+                //cerramos la conexión
+                in.close();
+            } else {
+                response = null;
             }
-            //Mostramos la respuesta del servidor por consola
-            System.out.println("Respuesta del servidor: " + response);
-            JOptionPane.showMessageDialog(null, "Respuesta del servidor: " + response);
-            System.out.println();
-            //cerramos la conexión
-            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
+    }
+
+    public static String getJSONRUCL(String ruc) {
+
+        StringBuffer response = null;
+
+        try {
+            //Generar la URL
+            String url = SERVER_PATH + "laravel_reniec/buscar_ruc.php?ruc=" + ruc;
+            //Creamos un nuevo objeto URL con la url donde pedir el JSON
+            URL obj = new URL(url);
+            //Creamos un objeto de conexión
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            //Añadimos la cabecera
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", USER_AGENT);
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            // Enviamos la petición por POST
+            con.setDoOutput(true);
+            //Capturamos la respuesta del servidor
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            //JOptionPane.showMessageDialog(null, "Respuesta del servidor: " + responseCode);
+
+            if (responseCode == 200) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                //Mostramos la respuesta del servidor por consola
+                System.out.println("Respuesta del servidor: " + response);
+                System.out.println();
+                //cerramos la conexión
+                in.close();
+            } else {
+                response = null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,6 +184,23 @@ public class Cl_Entidad {
         return datos;
     }
 
+    public static String[] showJSONRUCL(String json) throws ParseException {
+        String[] datos = new String[2];
+        System.out.println("INFORMACIÓN OBTENIDA DE LA BASE DE DATOS:");
+
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(json);
+        for (Object array_json : jsonArray) {
+            JSONObject row = (JSONObject) array_json;
+            String nombre = (String) row.get("razon_social");
+            String apellidos = (String) row.get("direccion");
+            //  Mostrar la información en pantalla
+            datos[0] = nombre;
+            datos[1] = apellidos;
+        }
+        return datos;
+    }
+
     public static String[] showJSONDNI(String json) throws ParseException {
         String[] datos = new String[2];
         System.out.println("INFORMACIÓN OBTENIDA DE LA BASE DE DATOS:");
@@ -141,12 +209,12 @@ public class Cl_Entidad {
         Object obj = parser.parse(json);
         JSONArray array = new JSONArray();
         array.add(obj);
-        
+
         //Iterar el array y extraer la información
         for (Object array_json : array) {
             JSONObject row = (JSONObject) array_json;
             String dni = (String) row.get("dni");
-            String nombres = (String) row.get("apellido_paterno") + ' ' + (String) row.get("apellido_materno")+ ' ' + (String) row.get("nombres");
+            String nombres = (String) row.get("apellido_paterno") + ' ' + (String) row.get("apellido_materno") + ' ' + (String) row.get("nombres");
             //Mostrar la información en pantalla
             datos[0] = dni;
             datos[1] = nombres;

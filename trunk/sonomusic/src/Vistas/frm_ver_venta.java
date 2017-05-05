@@ -494,14 +494,10 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                         pro.setCan(rs.getDouble("cantidad"));
                         pro.setPre_pro(rs.getDouble("precio"));
                         suma_pro = pro.getCan() * pro.getPre_pro();
-                        Double pro_can = 0.00;
-                        Double new_can = 0.00;
-                        Double pro_can_alm = 0.00;
-                        Double new_can_alm = 0.00;
 
                         try {
                             Statement st1 = con.conexion();
-                            String upt_pro_alm = "update producto_almacen set cant = cant + '" + new_can_alm + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
+                            String upt_pro_alm = "update producto_almacen set cant = cant + '" + pro.getCan() + "' where idProductos = '" + pro.getId_pro() + "' and idAlmacen = '" + alm.getId() + "'";
                             System.out.println(upt_pro_alm);
                             con.actualiza(st1, upt_pro_alm);
                             con.cerrar(st1);
@@ -512,7 +508,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
                         try {
                             Statement st1 = con.conexion();
-                            String upt_pro = "update productos set cant_actual = cant_actual + '" + new_can + "' where idProductos = '" + pro.getId_pro() + "'";
+                            String upt_pro = "update productos set cant_actual = cant_actual + '" + pro.getCan() + "' where idProductos = '" + pro.getId_pro() + "'";
                             System.out.println(upt_pro);
                             con.actualiza(st1, upt_pro);
                             con.cerrar(st1);
@@ -602,11 +598,16 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
 
             }
 
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "'";
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.fec_ped='" + fecha_hoy + "' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
             cbx_estado.setSelectedIndex(0);
             txt_bus.requestFocus();
@@ -962,47 +963,72 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         //seleccionar separaciones
         if (jComboBox1.getSelectedIndex() == 0) {
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '2' order by p.idPedido asc";
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '2' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         }
         //seleccionar creditos
         if (jComboBox1.getSelectedIndex() == 1) {
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '6' order by p.idPedido asc";
-            ver_pedidos(ver_ped);
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '6' "
+                    + "order by p.idPedido asc";
+            ver_pedidos(ver_ped);            
         }
         //seleccionar por entregar
         if (jComboBox1.getSelectedIndex() == 2) {
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '4' order by p.idPedido asc";
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '4' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         }
         //seleccionar entregados
         if (jComboBox1.getSelectedIndex() == 3) {
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '5' order by p.idPedido asc";
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '5' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         }
         //seleccionar anulados
         if (jComboBox1.getSelectedIndex() == 4) {
-            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago,p.idAlmacen,t.desc,p.idTipo_pago,p.total,p.est_ped,td.idtipo_doc,td.desc_tipd , "
-                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped,c.nom_per,p.cli_doc from pedido as p inner join tipo_pago as t "
-                    + "on p.idTipo_pago=t.idTipo_pago inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc inner join usuario as u "
-                    + "on p.nick = u.nick inner join  almacen as a on p.idAlmacen=a.idAlmacen inner join cliente as c on p.cli_doc=c.nro_doc  "
-                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '3' order by p.idPedido asc";
+            String ver_ped = "select p.idPedido, p.fec_ped , p.fec_pago, p.idAlmacen, t.desc, p.idTipo_pago, p.total, p.est_ped, td.idtipo_doc, td.desc_tipd , "
+                    + "p.serie_doc, p.nro_doc, u.nick, a.nom_alm , t.desc , p.est_ped, p.cli_nom, c.nom_per, p.cli_doc "
+                    + "from pedido as p "
+                    + "inner join tipo_pago as t on p.idTipo_pago=t.idTipo_pago "
+                    + "inner join tipo_doc as td on p.idtipo_doc=td.idtipo_doc "
+                    + "inner join usuario as u on p.nick = u.nick "
+                    + "inner join  almacen as a on p.idAlmacen=a.idAlmacen "
+                    + "inner join cliente as c on p.cli_doc=c.nro_doc  "
+                    + "where p.idAlmacen='" + sonomusic.frm_menu.alm.getId() + "' and p.est_ped = '3' "
+                    + "order by p.idPedido asc";
             ver_pedidos(ver_ped);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed

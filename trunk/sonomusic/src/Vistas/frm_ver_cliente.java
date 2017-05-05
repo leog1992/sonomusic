@@ -32,7 +32,7 @@ public class frm_ver_cliente extends javax.swing.JInternalFrame {
     Cl_Cliente cli = new Cl_Cliente();
     public static String ventana = "cliente";
     public static String win = "reg";
-    public static String rpt;
+    public static String rpt = "";
     Integer i;
     DefaultTableModel mostrar;
 

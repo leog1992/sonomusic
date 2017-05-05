@@ -5,9 +5,11 @@
  */
 package sonomusic;
 
+import Clases.Cl_Entidad;
 import java.net.ServerSocket;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -19,7 +21,7 @@ public class Sonomusic {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         frm_login loader = new frm_login();
 //        try {
 //            SERVER_SOCKET = new ServerSocket(1338);

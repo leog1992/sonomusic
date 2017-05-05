@@ -1320,29 +1320,33 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                     frm_reg_cliente.txt_ndoc.setText(cli.getNro_doc());
                     String json = Cl_Entidad.getJSONDNI(cli.getNro_doc());
                     //Lo mostramos
-                    String[] datos = Cl_Entidad.showJSONDNI(json);
-                    String dni = datos[0].trim();
-                    String nombres = datos[1].trim();
-                    frm_reg_cliente.txt_ndoc.setEditable(false);
+                    
+                    if (json != null) {
+                        String[] datos = Cl_Entidad.showJSONDNI(json);
+                        String dni = datos[0].trim();
+                        String nombres = datos[1].trim();
+                        frm_reg_cliente.txt_ndoc.setEditable(false);
+                        frm_reg_cliente.txt_nom.setEditable(true);
+                        frm_reg_cliente.txt_nom.setText(nombres.toUpperCase());
+                    }
                     frm_reg_cliente.txt_nom.setEditable(true);
-                    frm_reg_cliente.txt_nom.setText(nombres.toUpperCase());
                     frm_reg_cliente.txt_nom.requestFocus();
 
                 } else if (txt_nro_doc.getText().length() == 11) {
 
                     JOptionPane.showMessageDialog(null, "Cargando Datos de la SUNAT");
-                    String json = Cl_Entidad.getJSONRUC(cli.getNro_doc());
+                    String json = Cl_Entidad.getJSONRUCL(cli.getNro_doc());
                     //Lo mostramos
-                    String[] datos = Cl_Entidad.showJSONRUC(json);
+                    String[] datos = Cl_Entidad.showJSONRUCL(json);
                     String nombre = datos[0].trim();
                     String direccion = datos[1].trim();
                     JOptionPane.showMessageDialog(null, "DATOS DEL CLIENTE:\nRUC: " + cli.getNro_doc() + "\nRAZON SOCIAL: " + nombre + "\nDIRECCION: " + direccion);
                     txt_nom.setText(nombre);
-                    Statement st1 = con.conexion();
-                    String inser_cli = "insert into cliente Values ('" + cli.getNro_doc() + "', 'RUC', "
-                            + "'" + nombre + "', '" + direccion + "', '0', '0', '" + 1 + "')";
-                    con.actualiza(st1, inser_cli);
-                    con.cerrar(st1);
+//                    Statement st1 = con.conexion();
+//                    String inser_cli = "insert into cliente Values ('" + cli.getNro_doc() + "', 'RUC', "
+//                            + "'" + nombre + "', '" + direccion + "', '0', '0', '" + 1 + "')";
+//                    con.actualiza(st1, inser_cli);
+//                    con.cerrar(st1);
                     JOptionPane.showMessageDialog(null, "Se ha ingresado los datos correctamente");
                     /* obtener_datos(cli.getNro_doc());
                      frm_reg_cliente.cbx_cli.setSelectedItem("RUC");
@@ -2073,14 +2077,13 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
 
                     }
                 }
-                
+
                 if (tipo_venta.equals("SEPARACION")) {
                     int venta = Integer.parseInt(ped.getId_ped());
                     Print_Separacion_Ticket ticket = new Print_Separacion_Ticket();
                     ticket.generar(venta);
                 }
-                
-                
+
                 //actualizar documento de la tienda
                 tido.act_doc(tido.getSerie(), tido.getNro() + 1, frm_menu.alm.getId(), tido.getId());
 
