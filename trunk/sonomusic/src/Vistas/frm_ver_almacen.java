@@ -386,7 +386,7 @@ public class frm_ver_almacen extends javax.swing.JInternalFrame {
                 int id = (int) t_almacen.getValueAt(i, 0);
                 Map<String, Object> parametros = new HashMap<>();
                 parametros.put("idalm", id);
-                ven.ver_reporte("rpt_prod_alm", parametros);
+                ven.ver_reporte_excel("rpt_prod_alm", parametros, "productos_tienda");
                 this.dispose();
             }
             // VALORIZACION DE ARTICULOS EN ALMACEN

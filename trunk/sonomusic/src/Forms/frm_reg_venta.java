@@ -269,6 +269,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         cbx_vendedor = new javax.swing.JComboBox();
         txt_vend = new javax.swing.JTextField();
         lbl_ayuda = new javax.swing.JLabel();
+        btn_act_prod = new javax.swing.JButton();
 
         jLabel6.setForeground(new java.awt.Color(212, 2, 2));
         jLabel6.setText("Buscar:");
@@ -1015,6 +1016,14 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         lbl_ayuda.setFont(new java.awt.Font("DialogInput", 0, 11)); // NOI18N
         lbl_ayuda.setText("F1 - Buscar Productos            F2 - Buscar Productos en otra Ventana            F3 - Realizar Venta");
 
+        btn_act_prod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrow_redo.png"))); // NOI18N
+        btn_act_prod.setText("actualizar Prod.");
+        btn_act_prod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_act_prodActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1039,10 +1048,10 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                 .addComponent(btn_add_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_reg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_clo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_reg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_clo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel8)
@@ -1051,7 +1060,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_subt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txt_igv, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lbl_tot, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lbl_tot, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_act_prod, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1077,7 +1087,8 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btn_add_pro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_act_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -2164,7 +2175,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                 txt_jd_deuda_actual.setText("0.00");
             }
 
-            if (suma_pago > 0.0) {
+            if (suma_pago >= 0.0) {
                 btn_jd_registrar.setEnabled(true);
                 btn_jd_registrar.requestFocus();
             }
@@ -2248,8 +2259,16 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
         lbl_ayuda.setText("ENTER - Continuar      ");
     }//GEN-LAST:event_txt_nomFocusGained
 
+    private void btn_act_prodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_act_prodActionPerformed
+cargar_productos_txt();
+                txt_buscar_producto.setEnabled(true);
+                btn_add_pro.setEnabled(true);
+                txt_buscar_producto.requestFocus();
+    }//GEN-LAST:event_btn_act_prodActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_act_prod;
     public static javax.swing.JButton btn_add_pro;
     private javax.swing.JButton btn_cam_can;
     private javax.swing.JButton btn_cer;

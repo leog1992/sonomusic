@@ -30,12 +30,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JExcelApiExporterParameter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
 
 /**
  *
@@ -201,7 +206,32 @@ public class Cl_Varios {
         }
     }
 
-   
+    public void ver_reporte_excel(String filename, Map<String, Object> parametros, String salida) {
+        Connection st = con.conx();
+
+         String sourceFileName = "reports//" + filename + ".jasper";
+      String printFileName = null;
+         
+        try {
+         printFileName = JasperFillManager.fillReportToFile(sourceFileName,
+            parametros, st);
+         if (printFileName != null) {
+            /**
+             * 3- export to Excel sheet
+             */
+            JRXlsExporter exporter = new JRXlsExporter();
+
+            exporter.setParameter(JRExporterParameter.INPUT_FILE_NAME,
+               printFileName);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME,
+               "C://"+ salida +".xls");
+
+            exporter.exportReport();
+         }
+      } catch (JRException e) {
+         e.printStackTrace();
+      }
+    }
 
     public void imp_reporte(String filename, Map<String, Object> parametros) {
         Connection st = con.conx();

@@ -830,6 +830,9 @@ public final class frm_menu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        contenedor.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        contenedor.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
         contenedor.setLayout(contenedorLayout);
         contenedorLayout.setHorizontalGroup(
@@ -844,8 +847,6 @@ public final class frm_menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 543, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        contenedor.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        contenedor.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setBackground(new java.awt.Color(212, 2, 2));
         jMenuBar1.setForeground(new java.awt.Color(254, 254, 254));
@@ -1062,7 +1063,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem31.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem31.setText("Rpt. Compras por Empresa");
+        jMenuItem31.setText("Rpt. SUNAT - Compras por Empresa");
         jMenuItem31.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1097,12 +1098,12 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenu4.setBackground(new java.awt.Color(212, 2, 2));
         jMenu4.setForeground(new java.awt.Color(254, 254, 254));
-        jMenu4.setText("Almacen");
+        jMenu4.setText("Almacenes");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/almacen.png"))); // NOI18N
-        jMenuItem3.setText("Almacenes");
+        jMenuItem3.setText("Tiendas");
         jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1134,7 +1135,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/articulos_almacen.png"))); // NOI18N
-        jMenuItem5.setText("Articulos en Almacen");
+        jMenuItem5.setText("Articulos en Tiendas");
         jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1145,7 +1146,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/house.png"))); // NOI18N
-        jMenuItem6.setText("Articulos x Almacen");
+        jMenuItem6.setText("Articulos x Tiendas");
         jMenuItem6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1224,7 +1225,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem27.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem27.setText("Rotulos por Almacen");
+        jMenuItem27.setText("Rotulos por Tienda");
         jMenuItem27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1235,7 +1236,7 @@ public final class frm_menu extends javax.swing.JFrame {
 
         jMenuItem34.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jMenuItem34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/clipboard_text.png"))); // NOI18N
-        jMenuItem34.setText("Rpt. Articulos x Almacen");
+        jMenuItem34.setText("Rpt. Articulos x Tienda");
         jMenuItem34.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1613,9 +1614,14 @@ public final class frm_menu extends javax.swing.JFrame {
         Cl_Productos prod = new Cl_Productos();
         frm_ver_prod_alm mat = new frm_ver_prod_alm();
         String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.costo_compra, p.estado, c.desc_clas, "
-                + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos inner join clasificacion as "
-                + "c on p.id_clas=c.id_clas inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + alm.getId() + "'"
-                + "order by p.desc_pro asc, p.modelo asc limit 0";
+                + "u.desc_und, p.grado "
+                + "from producto_almacen as pa "
+                + "inner join productos as p on pa.idProductos=p.idProductos "
+                + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                + "where pa.idAlmacen = '" + alm.getId() + "' "
+                + "order by p.desc_pro asc, p.modelo asc "
+                + "limit 0";
         prod.mostrar_productos(query, mat.t_productos);
         mat.txt_ida.setText("" + alm.getId());
         mat.txt_noma.setText(alm.getNom());

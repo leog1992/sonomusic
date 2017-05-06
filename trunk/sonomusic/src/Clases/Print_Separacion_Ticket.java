@@ -156,10 +156,10 @@ public class Print_Separacion_Ticket {
         //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
         if (id_tido == 6) {
             // printer.setOutSize(29,40);
-            printer.setOutSize(30 + cantidad_filas_resultado, 40);
+            printer.setOutSize(38 + cantidad_filas_resultado, 40);
         } else {
             //printer.setOutSize(25, 40);
-            printer.setOutSize(24 + cantidad_filas_resultado, 40);
+            printer.setOutSize(32 + cantidad_filas_resultado, 40);
         }
 
         //Imprimir * de la 2da linea a 25 en la columna 1;

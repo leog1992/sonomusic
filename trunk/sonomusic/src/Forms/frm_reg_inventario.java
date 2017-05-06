@@ -43,6 +43,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
     public frm_reg_inventario() {
         initComponents();
         alm.ver_tiendas(cbx_tienda);
+        cbx_tienda.setSelectedItem(frm_menu.alm.getNom());
 
         //mostrar nombres de columnas
         detalle = new DefaultTableModel() {

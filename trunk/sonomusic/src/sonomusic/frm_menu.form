@@ -629,7 +629,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/clipboard_text.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Rpt. Compras por Empresa"/>
+                <Property name="text" type="java.lang.String" value="Rpt. SUNAT - Compras por Empresa"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
@@ -682,7 +682,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="fe" green="fe" red="fe" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Almacen"/>
+            <Property name="text" type="java.lang.String" value="Almacenes"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -696,7 +696,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/almacen.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Almacenes"/>
+                <Property name="text" type="java.lang.String" value="Tiendas"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
@@ -743,7 +743,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/articulos_almacen.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Articulos en Almacen"/>
+                <Property name="text" type="java.lang.String" value="Articulos en Tiendas"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
@@ -760,7 +760,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/house.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Articulos x Almacen"/>
+                <Property name="text" type="java.lang.String" value="Articulos x Tiendas"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
@@ -882,7 +882,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/clipboard_text.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Rotulos por Almacen"/>
+                <Property name="text" type="java.lang.String" value="Rotulos por Tienda"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>
@@ -899,7 +899,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/clipboard_text.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Rpt. Articulos x Almacen"/>
+                <Property name="text" type="java.lang.String" value="Rpt. Articulos x Tienda"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Mano"/>
                 </Property>

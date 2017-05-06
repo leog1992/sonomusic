@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import sonomusic.frm_menu;
 
 /**
  *
@@ -85,6 +86,7 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         btn_historial = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         cbx_coincidencia = new javax.swing.JCheckBox();
+        btn_eliminar = new javax.swing.JButton();
 
         lbl_und.setText("jLabel5");
 
@@ -356,6 +358,15 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/bin_closed.png"))); // NOI18N
+        btn_eliminar.setText("Eliminar");
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -386,6 +397,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                         .addComponent(btn_historial)
                         .addGap(86, 86, 86)
                         .addComponent(cbx_coincidencia)
+                        .addGap(144, 144, 144)
+                        .addComponent(btn_eliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_cer)))
                 .addContainerGap())
@@ -410,7 +423,8 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
                     .addComponent(btn_cer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_kar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_historial, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_coincidencia))
+                    .addComponent(cbx_coincidencia)
+                    .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -478,11 +492,12 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 
     private void t_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_productosMouseClicked
         if (evt.getClickCount() == 2) {
-            txt_bus.setText("");
+            //txt_bus.setText("");
             txt_bus.requestFocus();
             i = t_productos.getSelectedRow();
             btn_kar.setEnabled(true);
             btn_historial.setEnabled(true);
+            btn_eliminar.setEnabled(true);
 
             //traslado
             if (funcion.equals("traslado")) {
@@ -731,10 +746,46 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         txt_bus.requestFocus();
     }//GEN-LAST:event_cbx_coincidenciaActionPerformed
 
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        if (frm_menu.usu.getPer_eli_producto().equals("1")) {
+            int id_producto = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
+            int id_almacen = Integer.parseInt(txt_ida.getText());
+            if (i > -1) {
+                int confirmado = JOptionPane.showConfirmDialog(null, "¿Confirma eliminar el producto?");
+                if (JOptionPane.OK_OPTION == confirmado) {
+                    try {
+                        Statement st = con.conexion();
+                        String d_productos = "delete from producto_almacen where idproductos = '" + id_producto + "' and idalmacen = '" + id_almacen + "'";
+                        System.out.println(d_productos);
+                        con.actualiza(st, d_productos);
+                        con.cerrar(st);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                        System.err.print("Error en:" + ex.getLocalizedMessage());
+                    }
+
+                    String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                            + "from producto_almacen as pa "
+                            + "inner join productos as p on pa.idProductos=p.idProductos "
+                            + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                            + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                            + "where pa.idAlmacen = '" + txt_ida.getText() + "' and (concat(p.desc_pro, ' ' , p.marca, ' ' , p.modelo) like '%" + txt_bus.getText() + "%') "
+                            + "order by p.desc_pro asc, p.modelo asc ";
+                    pro.mostrar_productos(query, t_productos);
+                    jLabel3.setText("" + tot_reg());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
+        }
+        btn_eliminar.setEnabled(false);
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cer;
     private javax.swing.JButton btn_cerrar;
+    private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_historial;
     private javax.swing.JButton btn_kar;
     private javax.swing.JComboBox cbx_bus;

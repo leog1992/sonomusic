@@ -52,12 +52,15 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     public frm_ver_productos() {
         initComponents();
-        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, "
-                + "c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado from productos as p inner join "
-                + "und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on "
-                + "p.id_clas = c.id_clas  order by p.desc_pro asc, p.modelo asc limit 0";
+        String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado "
+                + "from productos as p "
+                + "inner join und_medida as u on p.idUnd_medida = u.idUnd_medida "
+                + "inner join clasificacion as c on p.id_clas = c.id_clas "
+                + "where p.estado = 1 "
+                + "order by p.desc_pro asc, p.modelo asc "
+                + "limit 0";
         ver_productos(query);
-        t_productos.setDefaultRenderer(Object.class, new render_productos());
+        //t_productos.setDefaultRenderer(Object.class, new render_productos());
 
         String clas = "select * from clasificacion order by id_clas asc";
         ver_clasificacion(clas);
@@ -89,7 +92,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     return false;
                 }
             };
-        //    TableRowSorter sorter = new TableRowSorter(mostrar);
+            //    TableRowSorter sorter = new TableRowSorter(mostrar);
             Statement st = con.conexion();
             ResultSet rs = con.consulta(st, query);
 
@@ -147,7 +150,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             t_productos.getColumnModel().getColumn(8).setPreferredWidth(40);
             t_productos.getColumnModel().getColumn(9).setPreferredWidth(40);
             t_productos.setDefaultRenderer(Object.class, new render_productos());
-         //   t_productos.setRowSorter(sorter);
+            //   t_productos.setRowSorter(sorter);
 
         } catch (SQLException e) {
             System.out.print(e);
@@ -431,17 +434,24 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                 pro.setId_pro((int) t_productos.getValueAt(i, 0));
                 try {
                     Statement st = con.conexion();
-                    String query = "delete from productos where idProductos ='" + pro.getId_pro() + "'";
+                    String query = "update productos set estado = 0 where idProductos ='" + pro.getId_pro() + "'";
                     con.actualiza(st, query);
                     con.cerrar(st);
-                    String query1 = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado"
-                            + " from productos as p inner join und_medida as u on p.idUnd_medida = u.idUnd_medida inner join clasificacion as c on p.id_clas = c.id_clas  order by p.desc_pro asc";
-                    ver_productos(query1);
                     btn_eli.setEnabled(false);
                     btn_mod.setEnabled(false);
                 } catch (Exception ex) {
                     System.out.print(ex + " " + ex.getLocalizedMessage() + " " + ex.getCause());
                 }
+
+                String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado "
+                        + "from productos as p "
+                        + "inner join und_medida as u on p.idUnd_medida = u.idUnd_medida "
+                        + "inner join clasificacion as c on p.id_clas = c.id_clas "
+                        + "where p.estado = 1 "
+                        + "order by p.desc_pro asc, p.modelo asc "
+                        + "limit 0";
+                ver_productos(query);
+                t_productos.setDefaultRenderer(Object.class, new render_productos());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
@@ -451,12 +461,12 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     private void cbx_claActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_claActionPerformed
         if (cbx_cla.getSelectedIndex() == 0) {
             String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
-                    + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  order by p.desc_pro asc";
+                    + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas where p.estado = 1 order by p.desc_pro asc";
             ver_productos(query);
         } else {
             Integer idcla = cbx_cla.getSelectedIndex();
             String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
-                    + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.id_clas= '" + idcla + "' order by p.desc_pro asc";
+                    + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas  where p.estado = 1 and p.id_clas= '" + idcla + "' order by p.desc_pro asc";
             ver_productos(query);
 
         }
@@ -489,7 +499,6 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             int a = t_productos.getSelectedRow();
             System.out.println(ventana + "\n");
             System.out.println(t_productos.getValueAt(a, 0).toString());
-
 
             if (ventana.equals("ingreso_productos")) {
                 int id = Integer.parseInt(t_productos.getValueAt(a, 0).toString());
@@ -537,7 +546,7 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
             }
             ventana = "productos";
         }
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txt_bus.setText("");
             txt_bus.requestFocus();

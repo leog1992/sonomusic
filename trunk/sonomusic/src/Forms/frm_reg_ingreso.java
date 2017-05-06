@@ -192,7 +192,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                             if (incluir_producto == true) {
                                 try {
                                     Statement st = con.conexion();
-                                    String ver_producto = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, p.costo_compra, p.precio_venta, u.desc_und, p.grado from productos as p "
+                                    String ver_producto = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, p.costo_compra, p.precio_venta, u.desc_und, p.grado "
+                                            + "from productos as p "
                                             + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
                                             + "where p.idProductos = '" + id_producto + "'";
                                     System.out.println(ver_producto);
@@ -237,7 +238,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             autocompletar.setCaseSensitive(false);
             Statement st = con.conexion();
             String sql = "select p.idProductos,p.desc_pro, p.marca, p.modelo, p.serie, p.precio_venta"
-                    + " from productos as p order by p.desc_pro asc, p.modelo asc";
+                    + " from productos as p where p.estado = 1 order by p.desc_pro asc, p.modelo asc";
             ResultSet rs = con.consulta(st, sql);
             while (rs.next()) {
                 autocompletar.addItem(rs.getString("p.idProductos") + " - " + rs.getString("p.desc_pro") + " " + rs.getString("p.marca") + " " + rs.getString("p.modelo"));
@@ -925,6 +926,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                             cbx_alm.setEnabled(true);
                             cbx_alm.requestFocus();
                         }
+                        cbx_alm.setSelectedItem(frm_menu.alm.getNom());
                     } catch (SQLException ex) {
                         System.out.print(ex);
                     } catch (ParseException ex) {
@@ -948,7 +950,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private void cbx_almKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_almKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cbx_mon.setEnabled(true);
-            cbx_mon.setSelectedIndex(2);
+            cbx_mon.setSelectedIndex(1);
             cbx_mon.requestFocus();
         }
     }//GEN-LAST:event_cbx_almKeyPressed
