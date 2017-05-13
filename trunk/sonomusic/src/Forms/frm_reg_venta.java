@@ -1267,6 +1267,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                             txt_nom.setText("");
                             txt_nom.setEditable(false);
                         }
+                        cbx_documento_venta.setSelectedIndex(5);
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUEDE SELECCIONAR ESTE DOCUMENTO");
                         cbx_documento_venta.setSelectedIndex(0);
@@ -1281,6 +1282,7 @@ public class frm_reg_venta extends javax.swing.JInternalFrame {
                         txt_nro_doc.setForeground(Color.white);
                         txt_nom.setText("");
                         txt_nom.setEditable(false);
+                        cbx_documento_venta.setSelectedIndex(5);
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUEDE SELECCIONAR ESTE DOCUMENTO");
                         cbx_documento_venta.setSelectedIndex(0);

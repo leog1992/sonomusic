@@ -319,7 +319,7 @@ public class frm_reg_pago_venta extends javax.swing.JInternalFrame {
             monto = restante;
             try {
                 Statement st = con.conexion();
-                String upd_com = "update pedido set est_ped = '4' where idPedido = '" + ped.getId_ped() + "'";
+                String upd_com = "update pedido set est_ped = '4', fec_pago = '" + fecha + "' where idPedido = '" + ped.getId_ped() + "'";
                 con.actualiza(st, upd_com);
                 con.cerrar(st);
             } catch (Exception ex) {
