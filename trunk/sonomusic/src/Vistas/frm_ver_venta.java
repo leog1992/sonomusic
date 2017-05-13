@@ -176,7 +176,7 @@ public class frm_ver_venta extends javax.swing.JInternalFrame {
                 }
 
                 if (frm_menu.usu.getPer_ver_caja().equals("1")) {
-                    sum += (rs.getDouble("total"));
+                    sum += (rs.getDouble("pagados"));
                 }
 
                 mostrar.addRow(fila);
