@@ -332,10 +332,9 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         });
 
         cbx_bus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "DISPONIBLES", "POR TERMINAR ", "TERMINADO" }));
-        cbx_bus.setEnabled(false);
-        cbx_bus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbx_busKeyPressed(evt);
+        cbx_bus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_busActionPerformed(evt);
             }
         });
 
@@ -452,35 +451,6 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
 //        i = t_productos.getSelectedRow();
 //        btn_kar.setEnabled(true);
     }//GEN-LAST:event_t_productosMousePressed
-
-    private void cbx_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_busKeyPressed
-        if (cbx_bus.getSelectedIndex() == 0) {
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' order by p.desc_pro asc";
-            pro.mostrar_productos(query, t_productos);
-        } else if (cbx_bus.getSelectedIndex() == 1) {
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > p.cant_min order by p.desc_pro asc";
-            pro.mostrar_productos(query, t_productos);
-        } else if (cbx_bus.getSelectedIndex() == 2) {
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant < p.cant_min and pa.cant > 0 order by p.desc_pro asc";
-            pro.mostrar_productos(query, t_productos);
-        } else {
-            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, "
-                    + "u.desc_und, p.grado from producto_almacen as pa inner join productos as p on pa.idProductos=p.idProductos "
-                    + "inner join clasificacion as c on p.id_clas=c.id_clas inner join und_medida as u on "
-                    + "p.idUnd_Medida=u.idUnd_Medida where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant = 0 order by p.desc_pro asc";
-            pro.mostrar_productos(query, t_productos);
-        }
-        //falta demas oopciones del combo
-    }//GEN-LAST:event_cbx_busKeyPressed
 
     private int tot_reg() {
         int tot = 0;
@@ -732,6 +702,18 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
             txt_bus.setText("");
             txt_bus.requestFocus();
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+            pro.mostrar_productos(query, t_productos);
+            jLabel3.setText("" + tot_reg());
+        }
     }//GEN-LAST:event_txt_busKeyPressed
 
     private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
@@ -780,6 +762,48 @@ public class frm_ver_prod_alm extends javax.swing.JInternalFrame {
         }
         btn_eliminar.setEnabled(false);
     }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void cbx_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_busActionPerformed
+        String query = "";
+        if (cbx_bus.getSelectedIndex() == 0) {
+            query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+        }
+        if (cbx_bus.getSelectedIndex() == 1) {
+            query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant > 0  and pa.cant > p.cant_min "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+        }
+        if (cbx_bus.getSelectedIndex() == 2) {
+            query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant <= p.cant_min and pa.cant > 0 "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+        }
+        if (cbx_bus.getSelectedIndex() == 3) {
+            query = "select p.idProductos, p.desc_pro, p.modelo, p.serie, p.marca, pa.cant, p.cant_min, pa.precio, p.estado, c.desc_clas, u.desc_und, p.grado "
+                    + "from producto_almacen as pa "
+                    + "inner join productos as p on pa.idProductos=p.idProductos "
+                    + "inner join clasificacion as c on p.id_clas=c.id_clas "
+                    + "inner join und_medida as u on p.idUnd_Medida=u.idUnd_Medida "
+                    + "where pa.idAlmacen = '" + txt_ida.getText() + "' and pa.cant <= 0 "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+        }
+        pro.mostrar_productos(query, t_productos);
+        jLabel3.setText("" + tot_reg());
+    }//GEN-LAST:event_cbx_busActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

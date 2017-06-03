@@ -721,11 +721,11 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             int nro_filas = t_productos.getRowCount();
 
             if (nro_filas > 0) {
-                for (int i = 0; i < nro_filas; i++) {
-                    int producto = Integer.parseInt(t_productos.getValueAt(i, 0).toString());
-                    double precio = Double.parseDouble(t_productos.getValueAt(i, 2).toString());
-                    double cant_actual = Double.parseDouble(t_productos.getValueAt(i, 3).toString());
-                    double cant_fisico = Double.parseDouble(t_productos.getValueAt(i, 4).toString());
+                for (int j = 0; j < nro_filas; j++) {
+                    int producto = Integer.parseInt(t_productos.getValueAt(j, 0).toString());
+                    double precio = Double.parseDouble(t_productos.getValueAt(j, 2).toString());
+                    double cant_actual = Double.parseDouble(t_productos.getValueAt(j, 3).toString());
+                    double cant_fisico = Double.parseDouble(t_productos.getValueAt(j, 4).toString());
 
                     //registrar detalle
                     try {
@@ -802,10 +802,11 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                         }
                     }
 
-                    btn_cerrar.doClick();
+                    
                 }
             }
         }
+        btn_cerrar.doClick();
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_add_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_productoActionPerformed

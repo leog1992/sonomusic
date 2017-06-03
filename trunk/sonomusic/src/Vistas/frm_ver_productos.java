@@ -345,15 +345,14 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
 
     private void txt_busKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String bus = txt_bus.getText();
-            String query = "select p.idProductos , p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.costo_compra, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual,p.cant_min, p.estado "
-                    + "from productos as p inner join und_medida as u on p.idUnd_medida=u.idUnd_medida inner join clasificacion as c on p.id_clas=c.id_clas "
-                    //+ "WHERE MATCH (p.desc_pro, p.modelo, p.serie, p.marca) AGAINST ('%" + bus + "%') "
-                    + "where p.desc_pro like '%" + bus + "%' "
-                    + "or p.modelo like '%" + bus + "%' or p.serie like '%" + bus + "%' or p.marca like '%" + bus + "%'"
-                    + " order by p.desc_pro asc, p.modelo asc";
+            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado "
+                    + "from productos as p "
+                    + "inner join und_medida as u on p.idUnd_medida = u.idUnd_medida "
+                    + "inner join clasificacion as c on p.id_clas = c.id_clas "
+                    + "where p.estado = 1 "
+                    + "order by p.desc_pro asc, p.modelo asc ";
             ver_productos(query);
-            t_productos.requestFocus();
+            // t_productos.requestFocus();
         }
     }//GEN-LAST:event_txt_busKeyPressed
 
@@ -443,15 +442,25 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
                     System.out.print(ex + " " + ex.getLocalizedMessage() + " " + ex.getCause());
                 }
 
+                try {
+                    Statement st = con.conexion();
+                    String d_productos = "delete from producto_almacen where idproductos = '" + pro.getId_pro() + "'";
+                    System.out.println(d_productos);
+                    con.actualiza(st, d_productos);
+                    con.cerrar(st);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+                    System.err.print("Error en:" + ex.getLocalizedMessage());
+                }
+
+                String texto = txt_bus.getText();
                 String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado "
                         + "from productos as p "
                         + "inner join und_medida as u on p.idUnd_medida = u.idUnd_medida "
                         + "inner join clasificacion as c on p.id_clas = c.id_clas "
-                        + "where p.estado = 1 "
-                        + "order by p.desc_pro asc, p.modelo asc "
-                        + "limit 0";
+                        + "where p.estado = 1 and (p.idProductos like '%" + texto + "%' or p.desc_pro like '%" + texto + "%' or p.marca like '%" + texto + "%' or p.modelo like '%" + texto + "%' or concat(p.desc_pro, ' ', p.marca, ' ', p.modelo) like '%" + texto + "%') "
+                        + "order by p.desc_pro asc, p.modelo asc ";
                 ver_productos(query);
-                t_productos.setDefaultRenderer(Object.class, new render_productos());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ud No tiene permisos");
@@ -731,7 +740,17 @@ public class frm_ver_productos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_productosKeyReleased
 
     private void txt_busKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_busKeyTyped
-
+        if (txt_bus.getText().length() > 2) {
+            String texto = txt_bus.getText();
+            String query = "select p.idProductos, p.desc_pro, p.marca, p.modelo, p.serie, p.grado, p.precio_venta, c.desc_clas, u.desc_und, p.cant_actual, p.cant_min, p.estado "
+                    + "from productos as p "
+                    + "inner join und_medida as u on p.idUnd_medida = u.idUnd_medida "
+                    + "inner join clasificacion as c on p.id_clas = c.id_clas "
+                    + "where p.estado = 1 and (p.idProductos like '%" + texto + "%' or p.desc_pro like '%" + texto + "%' or p.marca like '%" + texto + "%' or p.modelo like '%" + texto + "%' or concat(p.desc_pro, ' ', p.marca, ' ', p.modelo) like '%" + texto + "%') "
+                    + "order by p.desc_pro asc, p.modelo asc ";
+            ver_productos(query);
+            //t_productos.requestFocus();
+        }
     }//GEN-LAST:event_txt_busKeyTyped
 
 
